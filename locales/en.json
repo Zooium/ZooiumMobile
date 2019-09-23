@@ -17,5 +17,9 @@
     },
     
     "Menu": "Menu",
-    "Nearby": "Nearby"
+    "Nearby": "Nearby",
+
+    "Login": "Login",
+    "Username": "Username",
+    "Password": "Password",
 }

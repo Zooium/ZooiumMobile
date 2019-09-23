@@ -1,14 +1,15 @@
-// Import React navigation functions.
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import React from 'react';
+import theme from '@src/theme.js'
+import { mapping } from '@eva-design/eva';
+import AppContainer from '@routes/AppContainer.js';
+import { ApplicationProvider } from 'react-native-ui-kitten';
 
-// Import navigator instances.
-import AuthNavigator from './navigators/AuthNavigator.js';
-import MainNavigator from './navigators/MainNavigator.js';
-
-// Create and return new app container.
-export default createAppContainer(
-    createSwitchNavigator({
-        Auth: AuthNavigator,
-        Main: MainNavigator,
-    }),
-);
+export default class App extends React.Component {
+    render() {
+        return (
+            <ApplicationProvider mapping={mapping} theme={theme}>
+                <AppContainer />
+            </ApplicationProvider>
+        );
+    }
+}

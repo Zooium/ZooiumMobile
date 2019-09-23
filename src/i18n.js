@@ -1,7 +1,7 @@
 import i18n from 'i18n-js';
 import * as Localization from 'expo-localization';
 
-import en from '../locales/en.json';
+import en from '@locales/en.json';
 
 i18n.fallbacks = true;
 i18n.translations = { en };

@@ -1,9 +1,9 @@
 import { createStackNavigator } from 'react-navigation-stack';
 
 import Popovers from './Popovers.js'
-import ListAnimals from '../screens/General/Animals/ListAnimalsScreen.js';
+import Nearby from '@screens/Nearby/NearbyScreen.js';
 
 export default createStackNavigator({
-    ListAnimals,
+    Nearby,
     ...Popovers,
 });

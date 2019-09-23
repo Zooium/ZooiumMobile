@@ -1,7 +1,7 @@
 import React from 'react';
-import i18n from '../src/i18n.js';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import i18n from '@src/i18n.js';
 import { FontAwesome5 } from '@expo/vector-icons'; 
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import MenuNavigator from './MenuNavigator.js';
 import NearbyNavigator from './NearbyNavigator.js';
