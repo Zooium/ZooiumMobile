@@ -1,4 +1,5 @@
 import React from 'react';
+import i18n from '../src/i18n.js';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 
@@ -11,6 +12,7 @@ export default createBottomTabNavigator({
     Animals: {
         screen: AnimalsNavigator,
         navigationOptions: {
+            title: i18n.t('Animal', { count: 2 }),
             tabBarIcon: ({ tintColor }) => {
                 return <FontAwesome5 name="dove" size={22} color={tintColor} />;
             },
@@ -20,6 +22,7 @@ export default createBottomTabNavigator({
     Enclosures: {
         screen: EnclosuresNavigator,
         navigationOptions: {
+            title: i18n.t('Enclosure', { count: 2 }),
             tabBarIcon: ({ tintColor }) => {
                 return <FontAwesome5 name="map-marked-alt" size={22} color={tintColor} />;
             },
@@ -29,6 +32,7 @@ export default createBottomTabNavigator({
     Nearby: {
         screen: NearbyNavigator,
         navigationOptions: {
+            title: i18n.t('Nearby'),
             tabBarIcon: ({ tintColor }) => {
                 return <FontAwesome5 name="street-view" size={22} color={tintColor} />;
             },
@@ -38,7 +42,7 @@ export default createBottomTabNavigator({
     Menu: {
         screen: MenuNavigator,
         navigationOptions: {
-            title: 'More',
+            title: i18n.t('Menu'),
             tabBarIcon: ({ tintColor }) => {
                 return <FontAwesome5 name="ellipsis-h" size={22} color={tintColor} />;
             },

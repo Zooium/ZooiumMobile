@@ -1,0 +1,21 @@
+{
+    "Animal": {
+        "one": "Animal",
+        "other": "Animals"
+    },
+    "Specie": {
+        "one": "Specie",
+        "other": "Species"
+    },
+    "Location": {
+        "one": "Location",
+        "other": "Locations"
+    },
+    "Enclosure": {
+        "one": "Enclosure",
+        "other": "Enclosures"
+    },
+    
+    "Menu": "Menu",
+    "Nearby": "Nearby"
+}
