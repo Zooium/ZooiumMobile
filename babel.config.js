@@ -13,6 +13,7 @@ module.exports = function(api) {
                     '@routes': './src/routes',
                     '@styles': './src/styles',
                     '@screens': './src/screens',
+                    '@graphql': './src/graphql',
                     '@components': './src/components',
                 },
             }],

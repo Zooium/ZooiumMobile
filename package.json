@@ -8,9 +8,19 @@
 		"eject": "expo eject"
 	},
 	"dependencies": {
+		"@apollo/react-hooks": "^3.1.1",
 		"@eva-design/eva": "^1.0.1",
+		"apollo-cache-inmemory": "^1.6.3",
+		"apollo-client": "^2.6.4",
+		"apollo-link": "^1.2.13",
+		"apollo-link-context": "^1.0.19",
+		"apollo-link-error": "^1.1.12",
+		"apollo-upload-client": "^11.0.0",
 		"expo": "^34.0.1",
 		"expo-localization": "~6.0.0",
+		"expo-secure-store": "~6.0.0",
+		"graphql": "^14.5.7",
+		"graphql-tag": "^2.10.1",
 		"i18n-js": "^3.3.0",
 		"react": "16.8.3",
 		"react-dom": "^16.8.6",
@@ -21,7 +31,8 @@
 		"react-native-web": "^0.11.4",
 		"react-navigation": "^4.0.5",
 		"react-navigation-stack": "^1.8.0",
-		"react-navigation-tabs": "^2.5.3"
+		"react-navigation-tabs": "^2.5.3",
+		"redux": "^4.0.4"
 	},
 	"devDependencies": {
 		"babel-plugin-module-resolver": "^3.2.0",

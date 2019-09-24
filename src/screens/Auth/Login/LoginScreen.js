@@ -1,21 +1,39 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import theme from '@src/theme.js'
+import theme from '@src/theme.js';
+import apollo from '@src/apollo.js';
 import SafeView from '@components/SafeView.js';
-import { View, Image, ScrollView, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+import LOGIN_MUTATION from '@graphql/mutations/LoginMutation.gql.js'
 import { Text, Input, Button, Layout } from 'react-native-ui-kitten';
+import { View, Image, ScrollView, StyleSheet, KeyboardAvoidingView } from 'react-native';
 
 export default class LoginScreen extends React.Component {
     state = {
-        username: '',
-        password: '',
+        username: 'demo',
+        password: 'password',
     }
 
     password = React.createRef()
 
     submit = () => {
-        // @wip
-        this.props.navigation.navigate('Main');
+        apollo.mutate({
+            mutation: LOGIN_MUTATION,
+            variables: {
+                username: this.state.username,
+                password: this.state.password,
+            },
+        }).then(({ data: { login: { user, token } } }) => {
+            // @wip
+            SecureStore.setItemAsync('user', JSON.stringify(user));
+            SecureStore.setItemAsync('token', token);
+
+            // Navigate to the main app.
+            this.props.navigation.navigate('Main');
+        }).catch(error => {
+            // @wip
+            console.log(error)
+        })
     }
 
     render = () => (
@@ -53,7 +71,7 @@ export default class LoginScreen extends React.Component {
                                 style={s.input}
                             />
 
-                            <Button status="white" size="giant" onPress={this.submit}>
+                            <Button status="white" size="giant" onPress={this.submit} disabled={! this.state.username || ! this.state.password}>
                                 {i18n.t('Login')}
                             </Button>
                         </View>
@@ -72,7 +90,7 @@ let s = StyleSheet.create({
 
     scroll: {
         flexGrow: 1,
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
     },
 
     brand: {
@@ -81,7 +99,6 @@ let s = StyleSheet.create({
     },
 
     form: {
-        flex: 1,
         padding: '5%',
         justifyContent: 'center',
     },
