@@ -6,11 +6,17 @@ import ResourceList from '@components/ResourceList.js';
 import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js'
 
 export default function ListAnimalsScreen() {
+    specieText = (specie) => {
+        return specie
+            ? specie[i18n.localeName()] || specie.english_name || specie.scientifi
+            : '(' + i18n.t('not provided') + ')';
+    }
+
     preview = ({ item }) => {
         return (
             <View>
                 <Text category="h6">{ item.name || item.identifier || '(' + i18n.t('name not set') + ')' }</Text>
-                <Text>{ item.specie[i18n.localeName()] || item.specie.english_name || item.specie.scientific }</Text>
+                <Text>{ specieText(item.specie) }</Text>
             </View>
         );
     }
