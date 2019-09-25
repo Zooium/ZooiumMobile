@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export default gql`
+export default FULL_USER = gql`
     fragment fullUser on User {
         id
         name

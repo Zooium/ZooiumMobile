@@ -9,11 +9,11 @@ import { ApplicationProvider } from 'react-native-ui-kitten';
 export default class App extends React.Component {
     render() {
         return (
-            <ApolloProvider client={client}>
-                <ApplicationProvider mapping={mapping} theme={theme}>
+            <ApplicationProvider mapping={mapping} theme={theme}>
+                <ApolloProvider client={client}>
                     <AppContainer />
-                </ApplicationProvider>
-            </ApolloProvider>
+                </ApolloProvider>
+            </ApplicationProvider>
         );
     }
 }

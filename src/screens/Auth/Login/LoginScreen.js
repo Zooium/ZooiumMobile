@@ -4,7 +4,7 @@ import theme from '@src/theme.js';
 import apollo from '@src/apollo.js';
 import SafeView from '@components/SafeView.js';
 import * as SecureStore from 'expo-secure-store';
-import LOGIN_MUTATION from '@graphql/mutations/LoginMutation.gql.js'
+import LOGIN_MUTATION from '@graphql/mutations/Auth/login.gql.js'
 import { Text, Input, Button, Layout } from 'react-native-ui-kitten';
 import { View, Image, ScrollView, StyleSheet, KeyboardAvoidingView } from 'react-native';
 
@@ -16,7 +16,13 @@ export default class LoginScreen extends React.Component {
 
     password = React.createRef()
 
-    submit = () => {
+    logout = () => {
+        // @wip
+        SecureStore.deleteItemAsync('user');
+        SecureStore.deleteItemAsync('token');
+    }
+
+    login = () => {
         apollo.mutate({
             mutation: LOGIN_MUTATION,
             variables: {
@@ -36,50 +42,54 @@ export default class LoginScreen extends React.Component {
         })
     }
 
-    render = () => (
-        <Layout style={s.background}>
-            <SafeView style={{ flex: 1 }}>
-                <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-                    <ScrollView contentContainerStyle={s.scroll}>
-                        <View style={s.brand}>
-                            <Image style={s.logo} source={require('@assets/icon.png')} />
-                            <Text category="h3" style={s.brandText}>Zooium</Text>
-                        </View>
+    render() {
+        this.logout();
 
-                        <View style={s.form}>
-                            <Input
-                                value={this.state.username}
-                                returnKeyType="next"
-                                blurOnSubmit={false}
-                                onChangeText={username => this.setState({ username })}
-                                onSubmitEditing={() => this.password.current.focus()}
-                                size="large"
-                                textContentType="username"
-                                placeholder={i18n.t('Username')}
-                                style={s.input}
-                            />
-                            
-                            <Input
-                                ref={this.password}
-                                value={this.state.password}
-                                onChangeText={password => this.setState({ password })}
-                                onSubmitEditing={this.submit}
-                                size="large"
-                                textContentType="password"
-                                placeholder={i18n.t('Password')}
-                                secureTextEntry={true}
-                                style={s.input}
-                            />
+        return (
+            <Layout style={s.background}>
+                <SafeView style={{ flex: 1 }}>
+                    <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+                        <ScrollView contentContainerStyle={s.scroll}>
+                            <View style={s.brand}>
+                                <Image style={s.logo} source={require('@assets/icon.png')} />
+                                <Text category="h3" style={s.brandText}>Zooium</Text>
+                            </View>
 
-                            <Button status="white" size="giant" onPress={this.submit} disabled={! this.state.username || ! this.state.password}>
-                                {i18n.t('Login')}
-                            </Button>
-                        </View>
-                    </ScrollView>
-                </KeyboardAvoidingView>
-            </SafeView>
-        </Layout>
-    );
+                            <View style={s.form}>
+                                <Input
+                                    value={this.state.username}
+                                    returnKeyType="next"
+                                    blurOnSubmit={false}
+                                    onChangeText={username => this.setState({ username })}
+                                    onSubmitEditing={() => this.password.current.focus()}
+                                    size="large"
+                                    textContentType="username"
+                                    placeholder={i18n.t('Username')}
+                                    style={s.input}
+                                />
+                                
+                                <Input
+                                    ref={this.password}
+                                    value={this.state.password}
+                                    onChangeText={password => this.setState({ password })}
+                                    onSubmitEditing={this.login}
+                                    size="large"
+                                    textContentType="password"
+                                    placeholder={i18n.t('Password')}
+                                    secureTextEntry={true}
+                                    style={s.input}
+                                />
+
+                                <Button status="white" size="giant" onPress={this.login} disabled={! this.state.username || ! this.state.password}>
+                                    {i18n.t('Login')}
+                                </Button>
+                            </View>
+                        </ScrollView>
+                    </KeyboardAvoidingView>
+                </SafeView>
+            </Layout>
+        );
+    }
 }
 
 let s = StyleSheet.create({

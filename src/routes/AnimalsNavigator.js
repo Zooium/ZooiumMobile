@@ -1,9 +1,14 @@
-import { createStackNavigator } from 'react-navigation-stack';
-
+import i18n from '@src/i18n.js';
 import Popovers from './Popovers.js'
+import { createStackNavigator } from 'react-navigation-stack';
 import ListAnimals from '@screens/General/Animals/ListAnimalsScreen.js';
 
 export default createStackNavigator({
-    ListAnimals,
+    ListAnimals: {
+        screen: ListAnimals,
+        navigationOptions: {
+            title: i18n.t('Animal', { count: 2 }),
+        },
+    },
     ...Popovers,
 });
