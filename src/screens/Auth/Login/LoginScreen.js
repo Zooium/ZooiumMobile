@@ -1,15 +1,29 @@
 import React from 'react';
+import Auth from '@src/Auth.js'
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
-import apollo from '@src/apollo.js';
-import SafeView from '@components/SafeView.js';
-import * as SecureStore from 'expo-secure-store';
-import LOGIN_MUTATION from '@graphql/mutations/Auth/login.gql.js'
 import { Text, Input, Button, Layout } from 'react-native-ui-kitten';
 import { View, Image, ScrollView, StyleSheet, KeyboardAvoidingView } from 'react-native';
 
-export default class LoginScreen extends React.Component {
-    state = {
+export default function LoginScreen() {
+    //
+    auth = new Auth();
+
+    authenticate = async () => {
+        let authed = await auth.authorize();
+        console.log(authed);
+        // @wip
+    };
+
+    return (
+        <Layout style={s.background}>
+            <Button onPress={authenticate}>Button</Button>
+        </Layout>
+    );
+}
+
+//export default class LoginScreen extends React.Component {
+    /*state = {
         username: 'demo',
         password: 'password',
     }
@@ -89,8 +103,8 @@ export default class LoginScreen extends React.Component {
                 </SafeView>
             </Layout>
         );
-    }
-}
+    }*/
+//}
 
 let s = StyleSheet.create({
     background: {
