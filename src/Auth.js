@@ -6,8 +6,8 @@ import * as SecureStore from 'expo-secure-store';
 
 export default class Auth {
     oauth = {
-        client_id: 4,
-        domain: 'https://92794275.ngrok.io',
+        client_id: 3,
+        domain: 'https://app.zooium.com',
         redirect: AuthSession.getRedirectUrl(),
 
         pkce: {
@@ -29,7 +29,6 @@ export default class Auth {
     }
 
     constructor() {
-        console.log(this.oauth.redirect);
         // Return instance if exists.
         if (Auth.instance) {
             return Auth.instance;
@@ -44,7 +43,10 @@ export default class Auth {
         let auth = new Auth();
 
         // Load saved items from secure store.
-        auth.load();
+        await auth.load();
+
+        // Return singleton instance.
+        return auth;
     }
 
     isAuthenticated() {
@@ -53,6 +55,7 @@ export default class Auth {
 
     async load() {
         this.state = await SecureStore.getItemAsync('auth_state');
+        return this.fetch();
     }
 
     async save() {
@@ -69,21 +72,25 @@ export default class Auth {
 
         // Generate token from code.
         let token = await this.getToken(code);
-        console.log(token);
         if (! token.access_token) return false;
 
         // Save token details in object state.
         this.state.token.access = token.access_token;
         this.state.token.refresh = token.refresh_token;
 
-        // @wip - fetch user
+        // Fetch the user instance.
+        await this.fetch();
 
-        // @wip
+        // Return user authed.
         return true;
     }
 
     async refresh() {
         // @wip
+    }
+
+    async fetch() {
+        // @wip -fetch user.
     }
 
     replaces(str) {
