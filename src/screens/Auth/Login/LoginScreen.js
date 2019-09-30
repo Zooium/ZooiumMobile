@@ -1,30 +1,36 @@
-import React from 'react';
-import Auth from '@src/Auth.js'
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import { SplashScreen } from 'expo';
+import React, { useState } from 'react';
 import SafeView from '@components/SafeView.js';
-import { Text, Button, Layout } from 'react-native-ui-kitten';
+import AuthManager from '@utils/AuthManager.js';
+import { Text, Layout } from 'react-native-ui-kitten';
+import LoadingButton from '@components/LoadingButton.js';
 import { View, Image, StyleSheet, StatusBar } from 'react-native';
 
-export default function LoginScreen() {
-    // Initialize new auth instance.
-    let auth = null;
-    Auth.init().then(instance => {
+export default function LoginScreen({ navigation }) {
+    const [loading, setLoading] = useState(false);
+
+    // Load auth state from storage.
+    AuthManager.init().then(loggedIn => {
         // Navigate to main if authenticated.
-        auth = instance;
-        if (instance.isAuthenticated()) {
-            this.props.navigation.navigate('Main');
-        }
+        if (loggedIn) navigation.navigate('Main');
     }).finally(() => {
         // Hide the splash screen.
         SplashScreen.hide();
     });
 
     authenticate = async () => {
-        // Navigate to the main app if authorized.
-        if (await auth.authorize()) {
-            this.props.navigation.navigate('Main');
+        // Enable loading state.
+        setLoading(true);
+
+        // Wait for authorization and disable loading.
+        let authed = await AuthManager.authorize();
+        setLoading(false);
+
+        // Redirect to app if authed.
+        if (authed) {
+            navigation.navigate('Main');
         }
     };
 
@@ -37,9 +43,9 @@ export default function LoginScreen() {
                     <Text category="h3" style={s.brandText}>Zooium</Text>
                 </View>
 
-                <Button status="white" size="giant" onPress={authenticate} style={s.auth}>
+                <LoadingButton loading={loading} status="white" size="giant" onPress={authenticate} style={s.auth}>
                     {i18n.t('Login')}
-                </Button>
+                </LoadingButton>
             </SafeView>
         </Layout>
     );
@@ -67,6 +73,6 @@ let s = StyleSheet.create({
     },
 
     auth: {
-        marginHorizontal: 20,
+        margin: 20,
     },
 })

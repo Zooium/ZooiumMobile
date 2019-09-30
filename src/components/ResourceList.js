@@ -1,6 +1,8 @@
 import React from 'react';
 import theme from '@src/theme.js';
 import Loader from '@components/Loader.js';
+import AuthState from '@utils/AuthState.js';
+import AuthManager from '@utils/AuthManager.js';
 import { useQuery } from '@apollo/react-hooks';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
@@ -8,9 +10,10 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import { View, StyleSheet, TouchableOpacity, TouchableHighlight } from 'react-native';
 
 export default withNavigation(function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: Preview, navigation }) {
+    const team = AuthState.currentTeam();
     const { loading, data, fetchMore } = useQuery(fetch, {
         variables: {
-            team_id: 'y1dJ46', // @wip
+            team_id: team && team.id,
             ...variables,
         },
     });

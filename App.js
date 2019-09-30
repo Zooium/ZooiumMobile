@@ -5,18 +5,19 @@ import { SplashScreen } from 'expo';
 import { mapping } from '@eva-design/eva';
 import AppContainer from '@routes/AppContainer.js';
 import { ApolloProvider } from '@apollo/react-hooks';
+import NavigationService from '@utils/NavigationService.js';
 import { ApplicationProvider } from 'react-native-ui-kitten';
 
 export default class App extends React.Component {
     componentDidMount() {
-      SplashScreen.preventAutoHide();
+        SplashScreen.preventAutoHide();
     }
 
     render() {
         return (
             <ApplicationProvider mapping={mapping} theme={theme}>
                 <ApolloProvider client={client}>
-                    <AppContainer />
+                    <AppContainer ref={i => NavigationService.setInstance(i)} />
                 </ApolloProvider>
             </ApplicationProvider>
         );
