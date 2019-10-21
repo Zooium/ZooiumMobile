@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import { FontAwesome5 } from '@expo/vector-icons'; 
+import BottomTabStyle from './styles/BottomTabStyle.js';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import MenuNavigator from './MenuNavigator.js';
@@ -48,4 +49,4 @@ export default createBottomTabNavigator({
             },
         },
     },
-});
+}, BottomTabStyle);
