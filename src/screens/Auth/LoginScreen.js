@@ -1,7 +1,7 @@
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import { SplashScreen } from 'expo';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SafeView from '@components/SafeView.js';
 import AuthManager from '@utils/AuthManager.js';
 import { Text, Layout } from 'react-native-ui-kitten';
@@ -24,8 +24,11 @@ export default function LoginScreen({ navigation }) {
         // Enable loading state.
         setLoading(true);
 
-        // Wait for authorization and disable loading.
+        // Wait for authorization response.
         let authed = await AuthManager.authorize();
+        if (authed === undefined) return;
+
+        // Disable loading state.
         setLoading(false);
 
         // Redirect to app if authed.

@@ -2,6 +2,7 @@ import { AuthSession } from 'expo';
 import Settings from '@utils/Settings.js';
 import ME from '@graphql/queries/me.gql.js';
 import AuthState from '@utils/AuthState.js';
+import router from '@utils/NavigationService.js';
 import { print } from 'graphql/language/printer';
 import AuthChallenge from '@utils/AuthChallenge.js';
 import LOGOUT from '@graphql/mutations/Auth/logout.gql.js';
@@ -39,15 +40,15 @@ export default class AuthManager {
 
         // Get authorization code from web.
         let code = await AuthManager.getCode();
-        if (! code) return false;
+        if (! code) return code;
 
         // Generate token from code.
         let token = await AuthManager.getToken(code);
-        if (! token) return false;
+        if (! token) return token;
 
         // Fetch the user instance.
         let user = await AuthManager.getUser();
-        if (! user) return false;
+        if (! user) return user;
 
         // Save state and return success.
         await AuthState.saveState();
@@ -62,7 +63,7 @@ export default class AuthManager {
         }
 
         // Fetch the user instance.
-        if (! await AuthManager.fetchAccount()) {
+        if (! await AuthManager.getUser()) {
             await AuthState.reset();
             return false;
         }
@@ -75,7 +76,7 @@ export default class AuthManager {
     static async logout() {
         // Attempt to logout user.
         try {
-            await fetch(Settings.queryUrl, {
+            fetch(Settings.queryUrl, {
                 method: 'POST',
                 body: JSON.stringify({
                     query: print(LOGOUT),
@@ -99,7 +100,7 @@ export default class AuthManager {
         // Attempt to fetch user.
         try {
             // Fetch authenticated user from back-end.
-            let { data: { me } } = await (await fetch(Settings.queryUrl, {
+            let response = await fetch(Settings.queryUrl, {
                 method: 'POST',
                 body: JSON.stringify({
                     query: print(ME),
@@ -109,12 +110,22 @@ export default class AuthManager {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + AuthState.accessToken(),
                 },
-            })).json();
+            });
+
+            // Throw exception if not 200 error code.
+            if (response.status < 200 || response.status > 299) {
+                throw Error(response.status);
+            }
+
+            // Convert response to json and deconstruct.
+            let { data: { me } } = await response.json();
 
             // Set and return found user.
             await AuthState.setUser(me);
-            return me;
-        } catch(e) { return false; }
+            return me || false;
+        } catch(e) {
+            return AuthManager.handleError(e);
+        }
     }
 
     static async getCode() {
@@ -130,14 +141,14 @@ export default class AuthManager {
             });
 
             // Return the found response code.
-            return response && response.params && response.params.code;
+            return response && response.params && response.params.code || false;
         } catch { return false; }
     }
 
     static async getToken(code, refresh = false) {
         try {
             // Request token for the passed code.
-            let token = await (await fetch(AuthManager.oauth.domain + '/token', {
+            let response = await fetch(AuthManager.oauth.domain + '/token', {
                 method: 'POST',
                 body: JSON.stringify({
                     'code': (refresh ? undefined : code),
@@ -151,14 +162,35 @@ export default class AuthManager {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 }),
-            })).json();
+            });
+
+            // Throw exception if not 200 error code.
+            if (response.status < 200 || response.status > 299) {
+                throw Error(response.status);
+            }
+
+            // Convert response to json and deconstruct.
+            let token = await response.json();
 
             // Return out if invalid response.
-            if (! token.access_token) return false;
+            if (! token || ! token.access_token) return false;
 
             // Save and return tokens in state.
             AuthState.setToken(token.access_token, token.refresh_token);
-            return token;
-        } catch { return false; }
+            return token || false;
+        } catch(e) {
+            return AuthManager.handleError(e);
+        }
+    }
+
+    static handleError(error) {
+        // Redirect to maintenance page if 503.
+        if (error.message == 503) {
+            router.push('Auth', 'Maintenance');
+            return undefined;
+        }
+
+        // Return default false failure.
+        return false;
     }
 }

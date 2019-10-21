@@ -7,6 +7,15 @@ export default class NavigationService {
         NavigationService.instance = navigator;
     }
 
+    static push(key, route = false) {
+        return NavigationService.navigate({
+            routeName: key,
+            action: route ? NavigationActions.navigate({
+                routeName: route,
+            }) : undefined,
+        });
+    }
+
     static navigate(params) {
         return NavigationService.instance.dispatch(
             NavigationActions.navigate(params)

@@ -4,11 +4,11 @@ import AuthState from '@utils/AuthState.js';
 import { onError } from 'apollo-link-error';
 import { ApolloClient } from 'apollo-client';
 import AuthManager from '@utils/AuthManager.js';
+import router from '@utils/NavigationService.js';
 import { setContext } from 'apollo-link-context';
 import { NavigationActions } from 'react-navigation';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createUploadLink } from 'apollo-upload-client';
-import NavigationService from '@utils/NavigationService.js';
 
 // Define request authorization context setter.
 const RequestAuthorizer = setContext((_, { headers }) => {
@@ -25,7 +25,7 @@ const RequestAuthorizer = setContext((_, { headers }) => {
 // Define failed request error handler.
 const ErrorHandler = onError(({ networkError: network, graphQLErrors: errors, forward, operation }) => {
     // Get the current route name.
-    let route = NavigationService.currentRoute().routeName;
+    let route = router.currentRoute().routeName;
     
     // Check if unauthorized error. @wip - differentiate between unauthed and unauthorized.
     if (errors && errors[0] && errors[0].message == 'Unauthorized' && route !== 'Login') {
@@ -35,16 +35,16 @@ const ErrorHandler = onError(({ networkError: network, graphQLErrors: errors, fo
             if (result) return forward(operation);
         }).finally(() => {
             // Delete auth state and redirect.
-        AuthState.resetAndRedirect();
-            router.push({ name: 'login' });
+            AuthState.resetAndRedirect();
+            router.push('Auth', 'Login');
         });
     }
 
-    // @wip - Check if in maintenance mode.
-    /*if (network && network.statusCode && network.statusCode === 503 && route.name !== '503') {
+    // Check if back-end is in maintenance mode.
+    if (network && network.statusCode && network.statusCode === 503 && route !== 'Maintenance') {
         // Redirect to maintenance page.
-        router.push({ name: '503' })
-    }*/
+        router.push('Auth', 'Maintenance');
+    }
 })
 
 // Export the appollo client instance.
