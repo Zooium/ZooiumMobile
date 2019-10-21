@@ -46,7 +46,7 @@ export default function LoginScreen({ navigation }) {
                     <Text category="h3" style={s.brandText}>Zooium</Text>
                 </View>
 
-                <LoadingButton loading={loading} status="white" size="giant" onPress={authenticate} style={s.auth}>
+                <LoadingButton loading={loading} status="basic" size="giant" onPress={authenticate} style={s.auth} textStyle={s.authText}>
                     {i18n.t('Login')}
                 </LoadingButton>
             </SafeView>
@@ -77,5 +77,10 @@ let s = StyleSheet.create({
 
     auth: {
         margin: 20,
+        backgroundColor: 'white',
+    },
+
+    authText: {
+        color: theme['color-primary-500'],
     },
 })
