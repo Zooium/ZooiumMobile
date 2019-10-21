@@ -23,16 +23,21 @@ const RequestAuthorizer = setContext((_, { headers }) => {
 })
 
 // Define failed request error handler.
-const ErrorHandler = onError(({ networkError: network, graphQLErrors: errors, operation }) => {
+const ErrorHandler = onError(({ networkError: network, graphQLErrors: errors, forward, operation }) => {
     // Get the current route name.
     let route = NavigationService.currentRoute().routeName;
     
     // Check if unauthorized error. @wip - differentiate between unauthed and unauthorized.
     if (errors && errors[0] && errors[0].message == 'Unauthorized' && route !== 'Login') {
-        // @wip - Attempt to refresh auth and retry.
-
-        // Delete auth state from storage.
+        // Attempt to refresh auth and retry.
+        AuthManager.refresh().then(result => {
+            // Retry the operation if refeshed.
+            if (result) return forward(operation);
+        }).finally(() => {
+            // Delete auth state and redirect.
         AuthState.resetAndRedirect();
+            router.push({ name: 'login' });
+        });
     }
 
     // @wip - Check if in maintenance mode.

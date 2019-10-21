@@ -1,16 +1,14 @@
 import { AuthSession } from 'expo';
-import apollo from '@src/apollo.js';
 import Settings from '@utils/Settings.js';
 import ME from '@graphql/queries/me.gql.js';
 import AuthState from '@utils/AuthState.js';
+import { print } from 'graphql/language/printer';
 import AuthChallenge from '@utils/AuthChallenge.js';
-import { NavigationActions } from 'react-navigation';
 import LOGOUT from '@graphql/mutations/Auth/logout.gql.js';
-import NavigationService from '@utils/NavigationService.js';
 
 export default class AuthManager {
     static oauth = {
-        client_id: 3,
+        client_id: Settings.client,
         domain: Settings.authUrl,
         redirect: AuthSession.getRedirectUrl(),
     }
@@ -77,7 +75,17 @@ export default class AuthManager {
     static async logout() {
         // Attempt to logout user.
         try {
-            apollo.mutation({ query: LOGOUT });
+            await fetch(Settings.queryUrl, {
+                method: 'POST',
+                body: JSON.stringify({
+                    query: print(LOGOUT),
+                }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + AuthState.accessToken(),
+                },
+            });
         } catch { /* Left blank intentionally */ }
 
         // Delete state from storage and redirect.
@@ -91,19 +99,29 @@ export default class AuthManager {
         // Attempt to fetch user.
         try {
             // Fetch authenticated user from back-end.
-            let { data: { me } } = await apollo.query({ query: ME });
+            let { data: { me } } = await (await fetch(Settings.queryUrl, {
+                method: 'POST',
+                body: JSON.stringify({
+                    query: print(ME),
+                }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + AuthState.accessToken(),
+                },
+            })).json();
 
             // Set and return found user.
             await AuthState.setUser(me);
             return me;
-        } catch { return false; }
+        } catch(e) { return false; }
     }
 
     static async getCode() {
         try {
             // Request user to authorize login attempt.
             let response = await AuthSession.startAsync({
-                authUrl: AuthManager.oauth.domain + '/oauth/authorize' +
+                authUrl: AuthManager.oauth.domain + '/authorize' +
                     '?response_type=code' +
                     '&code_challenge=' + AuthChallenge.state.challenge +
                     '&code_challenge_method=' + AuthChallenge.settings.crypto_name +
@@ -119,7 +137,7 @@ export default class AuthManager {
     static async getToken(code, refresh = false) {
         try {
             // Request token for the passed code.
-            let token = await (await fetch(AuthManager.oauth.domain + '/oauth/token', {
+            let token = await (await fetch(AuthManager.oauth.domain + '/token', {
                 method: 'POST',
                 body: JSON.stringify({
                     'code': (refresh ? undefined : code),
