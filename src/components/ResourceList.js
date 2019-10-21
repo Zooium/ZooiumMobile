@@ -1,8 +1,8 @@
-import React from 'react';
+import { merge } from 'lodash';
 import theme from '@src/theme.js';
+import React, { useState } from 'react';
 import Loader from '@components/Loader.js';
 import AuthState from '@utils/AuthState.js';
-import AuthManager from '@utils/AuthManager.js';
 import { useQuery } from '@apollo/react-hooks';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
@@ -10,21 +10,52 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import { View, StyleSheet, TouchableOpacity, TouchableHighlight } from 'react-native';
 
 export default withNavigation(function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: Preview, navigation }) {
+    const [page, setPage] = useState(1);
+
     const team = AuthState.currentTeam();
-    const { loading, data, fetchMore } = useQuery(fetch, {
+    const { loading, data, refetch, fetchMore } = useQuery(fetch, {
         variables: {
             team_id: team && team.id,
             ...variables,
         },
     });
 
-    response = data ? data[Object.keys(data)[0]] : [];
+    key = data && Object.keys(data)[0] || undefined;
+    response = key && data && data[key] || [];
 
-    if (loading) return <Loader />;
+    if (loading && page === 1) return <Loader />;
+
+    refresh = () => {
+        setPage(1);
+        refetch();
+    }
 
     loadMore = () => {
-        // Check if has more items to show. @wip
-        // if (data.animals.total <= (data.animals.per_page * this.state.page)) return;
+        // Skip if loading or has no more items to show.
+        if (loading || response.total <= (response.per_page * page)) return;
+
+        // Determine next page.
+        let nextPage = page + 1;
+        setPage(nextPage);
+
+        // Fetch more results.
+        fetchMore({
+            variables: { page: nextPage },
+            updateQuery: (previous, { fetchMoreResult: results }) => {
+                // Return previous if has no results.
+                if (! results || ! results[key] || ! results[key].data) return previous;
+
+                // Merge the two data sources.
+                let data = merge({}, results);
+                data[key].data = [
+                    ...previous[key].data,
+                    ...results[key].data,
+                ];
+
+                // Return new list.
+                return data;
+            },
+        });
     }
 
     viewItem = (item) => {
@@ -65,14 +96,16 @@ export default withNavigation(function ResourceList({ fetch, variables = {}, rou
 
     return (
         <SwipeListView
-            data={response ? response.data : []}
+            keyExtractor={item => item.id}
+            data={response && response.data || []}
             renderItem={item}
             renderHiddenItem={actions} 
-            keyExtractor={item => item.id}
+            onRefresh={refresh}
+            refreshing={loading}
             onEndReached={loadMore}
-            leftOpenValue={75}
+            leftOpenValue={85}
             stopLeftSwipe={85}
-            rightOpenValue={-75}
+            rightOpenValue={-85}
             stopRightSwipe={-85}
         />
     );
