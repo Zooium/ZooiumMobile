@@ -1,8 +1,13 @@
 import React from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
-export default function SearchableHeader({ value, toggle }) {
+export default function SearchableHeader(props) {
+    const { value, toggle } = props;
+
     return (
-        <FontAwesome5 name="search" size={20} color="white" style={{ marginRight: 20 }} onPress={() => toggle(! value)} />
+        <HeaderButtons>
+            <Item title="search" iconName="search" onPress={() => toggle(! value)} {...props} />
+        </HeaderButtons>
     )
 }

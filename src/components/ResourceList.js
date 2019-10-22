@@ -156,11 +156,11 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
 
 ResourceList.navigationOptions = ({ navigation }) => ({
     headerLeft: (
-        <AddingHeader onPress={() => navigation.getParam('editItem')()} />
+        <AddingHeader style={{ marginLeft: 10 }} onPress={() => navigation.getParam('editItem')()} />
     ),
 
     headerRight: (
-        <SearchableHeader value={navigation.getParam('showSearch')} toggle={navigation.getParam('setShowSearch')} />
+        <SearchableHeader style={{ marginRight: 10 }} value={navigation.getParam('showSearch')} toggle={navigation.getParam('setShowSearch')} />
     ),
 
     headerTitleStyle: {

@@ -1,8 +1,10 @@
 import React from 'react';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
 export default function AddingHeader(props) {
     return (
-        <FontAwesome5 name="plus" size={20} color="white" style={{ marginLeft: 20 }} {...props} />
+        <HeaderButtons>
+            <Item title="add" iconName="plus" {...props} />
+        </HeaderButtons>
     )
 }
