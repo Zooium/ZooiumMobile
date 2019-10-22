@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import SexPreview from './components/SexPreview.js';
 import { Text, Layout } from 'react-native-ui-kitten';
 import ResourceList from '@components/ResourceList.js';
-import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js'
+import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js';
 
 export default function ListAnimalsScreen() {
     specieText = (specie) => {
@@ -33,7 +33,7 @@ export default function ListAnimalsScreen() {
                         <Text style={{ fontWeight: 'bold' }}>
                             {i18n.t('Enclosure', { count: 1 })}
                         </Text>
-                        
+
                         <Text>{ item.enclosure.name }</Text>
                     </View>
                 }
@@ -54,3 +54,5 @@ export default function ListAnimalsScreen() {
         </Layout>
     );
 }
+
+ListAnimalsScreen.navigationOptions = ResourceList.navigationOptions;

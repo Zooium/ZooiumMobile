@@ -1,20 +1,42 @@
 import { merge } from 'lodash';
 import theme from '@src/theme.js';
-import React, { useState } from 'react';
 import Loader from '@components/Loader.js';
 import AuthState from '@utils/AuthState.js';
 import { useQuery } from '@apollo/react-hooks';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
+import React, { useState, useEffect } from 'react';
+import DebouncedInput from '@components/DebouncedInput.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
-import { View, StyleSheet, TouchableOpacity, TouchableHighlight } from 'react-native';
+import SearchableHeader from '@components/SearchableHeader.js';
+import { View, TouchableHighlight, TouchableOpacity, StyleSheet } from 'react-native';
 
-export default withNavigation(function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: Preview, navigation }) {
+function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: Preview, navigation }) {
     const [page, setPage] = useState(1);
+    const [query, setQuery] = useState('');
+    const [showSearch, setShowSearch] = useState(false);
+
+    let searchInput = React.createRef();
+
+    useEffect(() => {
+        // Focus search input if shown and not focused.
+        if (showSearch && searchInput.current && ! searchInput.current.isFocused()) {
+            searchInput.current.focus();
+        }
+
+        // Pass search value and toggle to navigator.
+        if (navigation.getParam('showSearch') !== showSearch) {
+            navigation.setParams({
+                showSearch: showSearch,
+                setShowSearch: setShowSearch,
+            })
+        }
+    }, [showSearch]);
 
     const team = AuthState.currentTeam();
     const { loading, data, refetch, fetchMore } = useQuery(fetch, {
         variables: {
+            search: showSearch && query || undefined,
             team_id: team && team.id,
             ...variables,
         },
@@ -23,7 +45,7 @@ export default withNavigation(function ResourceList({ fetch, variables = {}, rou
     key = data && Object.keys(data)[0] || undefined;
     response = key && data && data[key] || [];
 
-    if (loading && page === 1) return <Loader />;
+    if (loading && page === 1 && ! query) return <Loader />;
 
     refresh = () => {
         setPage(1);
@@ -95,21 +117,40 @@ export default withNavigation(function ResourceList({ fetch, variables = {}, rou
     }
 
     return (
-        <SwipeListView
-            keyExtractor={item => item.id}
-            data={response && response.data || []}
-            renderItem={item}
-            renderHiddenItem={actions} 
-            onRefresh={refresh}
-            refreshing={loading}
-            onEndReached={loadMore}
-            leftOpenValue={85}
-            stopLeftSwipe={85}
-            rightOpenValue={-85}
-            stopRightSwipe={-85}
-        />
+        <View>
+            {showSearch &&
+                <DebouncedInput ref={searchInput} get={query} set={setQuery} style={{
+                    borderRadius: 0,
+                    borderTopWidth: 0,
+                    borderLeftWidth: 0,
+                    borderRightWidth: 0,
+                }} />
+            }
+
+            <SwipeListView
+                keyExtractor={item => item.id}
+                data={response && response.data || []}
+                renderItem={item}
+                renderHiddenItem={actions} 
+                onRefresh={refresh}
+                refreshing={loading}
+                onEndReached={loadMore}
+                leftOpenValue={85}
+                stopLeftSwipe={85}
+                rightOpenValue={-85}
+                stopRightSwipe={-85}
+            />
+        </View>
     );
-})
+}
+
+ResourceList.navigationOptions = ({ navigation }) => ({
+    headerRight: (
+        <SearchableHeader value={navigation.getParam('showSearch')} toggle={navigation.getParam('setShowSearch')} />
+    ),
+});
+
+export default withNavigation(ResourceList);
 
 let s = StyleSheet.create({
     frontRow: {
