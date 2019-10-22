@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
 import React, { useState, useEffect } from 'react';
+import AddingHeader from '@components/AddingHeader.js';
 import DebouncedInput from '@components/DebouncedInput.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import SearchableHeader from '@components/SearchableHeader.js';
@@ -17,6 +18,15 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
     const [showSearch, setShowSearch] = useState(false);
 
     let searchInput = React.createRef();
+
+    viewItem = (item) => navigation.navigate(view, { item });
+    editItem = (item = undefined) => navigation.navigate(edit, { item });
+
+    useEffect(() => {
+        navigation.setParams({
+            editItem: editItem,
+        });
+    }, []);
 
     useEffect(() => {
         // Focus search input if shown and not focused.
@@ -78,14 +88,6 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
                 return data;
             },
         });
-    }
-
-    viewItem = (item) => {
-        navigation.navigate(view, { item });
-    }
-
-    editItem = (item) => {
-        navigation.navigate(edit, { item });
     }
 
     deleteItem = (item) => {
@@ -153,9 +155,18 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
 }
 
 ResourceList.navigationOptions = ({ navigation }) => ({
+    headerLeft: (
+        <AddingHeader onPress={() => navigation.getParam('editItem')()} />
+    ),
+
     headerRight: (
         <SearchableHeader value={navigation.getParam('showSearch')} toggle={navigation.getParam('setShowSearch')} />
     ),
+
+    headerTitleStyle: {
+        flex: 1,
+        textAlign: 'center',
+    },
 });
 
 export default withNavigation(ResourceList);

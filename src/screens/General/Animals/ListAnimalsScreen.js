@@ -48,7 +48,7 @@ export default function ListAnimalsScreen() {
                 fetch={LIST_ANIMALS}
                 routes={{
                     view: 'ViewAnimal',
-                    edit: 'EditAnimal'
+                    edit: 'EditAnimal',
                 }}
             />
         </Layout>
