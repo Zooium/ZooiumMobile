@@ -7,7 +7,7 @@ export default function EditAnimalScreen({ navigation }) {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>EditAnimalScreen</Text>
-            <Text>Item: {item ? JSON.stringify(item) : 'creating'}</Text>
+            <Text>Item: {item ? JSON.stringify(item, null, 2) : 'creating'}</Text>
         </View>
     );
 }
