@@ -120,11 +120,19 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
         <View>
             {showSearch &&
                 <DebouncedInput ref={searchInput} get={query} set={setQuery} style={{
+                    zIndex: 1,
                     borderRadius: 0,
-                    borderTopWidth: 0,
-                    borderLeftWidth: 0,
-                    borderRightWidth: 0,
-                }} />
+                    borderColor: 'white',
+
+                    shadowRadius: 4,
+                    shadowColor: '#000',
+                    shadowOpacity: 0.1,
+                    shadowOffset: { width: 0, height: 2 },
+
+                    elevation: 3,
+                }} onIconPress={() => setShowSearch(false)} icon={() => (
+                    <FontAwesome5 name="times" size={22} color="#000" style={{ opacity: .4 }} />
+                )} />
             }
 
             <SwipeListView
