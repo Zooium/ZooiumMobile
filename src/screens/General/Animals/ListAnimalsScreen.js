@@ -8,13 +8,11 @@ import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 
 export default function ListAnimalsScreen() {
-    specieText = (specie) => {
-        return specie
-            ? specie[i18n.localeName()] || specie.english_name || specie.scientifi
-            : '(' + i18n.t('not provided') + ')';
-    }
-
     preview = ({ item }) => {
+        const specieText = item.specie
+            ? item.specie[i18n.localeName()] || item.specie.english_name || item.specie.scientific
+            : '(' + i18n.t('not provided') + ')';
+
         return (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 1 }}>
@@ -26,7 +24,7 @@ export default function ListAnimalsScreen() {
                         </Text>
                     </View>
 
-                    <Text>{ specieText(item.specie) }</Text>
+                    <Text>{ specieText }</Text>
                 </View>
 
                 {item.enclosure &&
