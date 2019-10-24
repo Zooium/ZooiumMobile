@@ -28,5 +28,6 @@
 
     "Under maintenance": "Under maintenance",
 
-    "Enter criteria to search": "Enter criteria to search..."
+    "Enter criteria to search": "Enter criteria to search...",
+    "No resource matched the given criteria": "No %{resource} matched the given criteria."
 }

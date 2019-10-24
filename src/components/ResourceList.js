@@ -12,7 +12,7 @@ import AddingHeader from '@components/AddingHeader.js';
 import DebouncedInput from '@components/DebouncedInput.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import SearchableHeader from '@components/SearchableHeader.js';
-import { View, TouchableHighlight, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TouchableHighlight, TouchableOpacity, StyleSheet } from 'react-native';
 
 function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: Preview, navigation }) {
     const [page, setPage] = useState(1);
@@ -121,6 +121,18 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
         );
     }
 
+    empty = () => {
+        return (
+            <View style={{ alignItems: 'center', paddingVertical: 12 }}>
+                <Text>
+                    {i18n.t('No resource matched the given criteria', {
+                        resource: i18n.t('Animal', { count: 2 }).toLowerCase(),
+                    })}
+                </Text>
+            </View>
+        );
+    }
+
     footer = () => {
         return (loading &&
             <View style={{ alignItems: 'center', paddingVertical: 12 }}>
@@ -160,6 +172,7 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
                 stopLeftSwipe={85}
                 rightOpenValue={-75}
                 stopRightSwipe={-85}
+                ListEmptyComponent={empty}
                 ListFooterComponent={footer}
             />
         </View>
