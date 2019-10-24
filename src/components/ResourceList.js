@@ -7,7 +7,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { Spinner } from 'react-native-ui-kitten';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import AddingHeader from '@components/AddingHeader.js';
 import DebouncedInput from '@components/DebouncedInput.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -15,20 +15,14 @@ import SearchableHeader from '@components/SearchableHeader.js';
 import { Text, View, TouchableHighlight, TouchableOpacity, StyleSheet } from 'react-native';
 
 function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: Preview, navigation }) {
+    const searchInput = createRef();
     const [page, setPage] = useState(1);
     const [query, setQuery] = useState('');
     const [showSearch, setShowSearch] = useState(false);
 
-    let searchInput = React.createRef();
-
     viewItem = (item) => navigation.navigate(view, { item });
     editItem = (item = undefined) => navigation.navigate(edit, { item });
-
-    useEffect(() => {
-        navigation.setParams({
-            editItem: editItem,
-        });
-    }, []);
+    deleteItem = (item) => { /* @wip */ };
 
     useEffect(() => {
         // Focus search input if shown and not focused.
@@ -39,9 +33,11 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
         // Pass search value and toggle to navigator.
         if (navigation.getParam('showSearch') !== showSearch) {
             navigation.setParams({
+                editItem: editItem,
+
                 showSearch: showSearch,
                 setShowSearch: setShowSearch,
-            })
+            });
         }
     }, [showSearch]);
 
@@ -55,10 +51,8 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
         },
     });
 
-    key = data && Object.keys(data)[0] || undefined;
-    response = key && data && data[key] || [];
-
-    if (loading && page === 1 && ! query) return <Loader />;
+    const key = data && Object.keys(data)[0] || undefined;
+    const response = key && data && data[key] || [];
 
     refresh = () => {
         setPage(1);
@@ -93,8 +87,24 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
         });
     }
 
-    deleteItem = (item) => {
-        // @wip
+    empty = () => {
+        return (
+            <View style={s.itemSpacer}>
+                <Text>
+                    {i18n.t('No resource matched the given criteria', {
+                        resource: i18n.t('Animal', { count: 2 }).toLowerCase(),
+                    })}
+                </Text>
+            </View>
+        );
+    }
+
+    footer = () => {
+        return (loading &&
+            <View style={s.itemSpacer}>
+                <Spinner />
+            </View>
+        );
     }
 
     item = ({ item }) => {
@@ -121,43 +131,19 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
         );
     }
 
-    empty = () => {
-        return (
-            <View style={{ alignItems: 'center', paddingVertical: 12 }}>
-                <Text>
-                    {i18n.t('No resource matched the given criteria', {
-                        resource: i18n.t('Animal', { count: 2 }).toLowerCase(),
-                    })}
-                </Text>
-            </View>
-        );
-    }
-
-    footer = () => {
-        return (loading &&
-            <View style={{ alignItems: 'center', paddingVertical: 12 }}>
-                <Spinner />
-            </View>
-        );
-    }
-
-    return (
+    return (loading && page === 1 && ! query ? <Loader /> : (
         <View style={{flex:1}}>
             {showSearch &&
-                <DebouncedInput placeholder={i18n.t('Enter criteria to search')} ref={searchInput} style={{
-                    zIndex: 1,
-                    borderRadius: 0,
-                    borderColor: 'white',
-
-                    shadowRadius: 4,
-                    shadowColor: '#000',
-                    shadowOpacity: 0.1,
-                    shadowOffset: { width: 0, height: 2 },
-
-                    elevation: 3,
-                }} get={query} set={setQuery} onIconPress={() => setShowSearch(false)} icon={() => (
-                    <FontAwesome5 name="times" size={22} color="#000" style={{ opacity: .4 }} />
-                )} />
+                <DebouncedInput
+                    get={query}
+                    set={setQuery}
+                    ref={searchInput}
+                    style={s.searchInput}
+                    placeholder={i18n.t('Enter criteria to search')}
+                    onIconPress={() => setShowSearch(false)} icon={() => (
+                        <FontAwesome5 name="times" size={22} color="#000" style={{ opacity: .4 }} />
+                    )}
+                />
             }
 
             <SwipeListView
@@ -176,7 +162,7 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
                 ListFooterComponent={footer}
             />
         </View>
-    );
+    ));
 }
 
 ResourceList.navigationOptions = ({ navigation }) => ({
@@ -240,5 +226,22 @@ let s = StyleSheet.create({
 
         paddingHorizontal: 25,
         backgroundColor: theme['color-primary-500'],
+    },
+
+    searchInput: {
+        zIndex: 1,
+        borderRadius: 0,
+        borderColor: 'white',
+
+        elevation: 3,
+        shadowRadius: 4,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 2 },
+    },
+
+    itemSpacer: {
+        alignItems: 'center',
+        paddingVertical: 12,
     },
 });
