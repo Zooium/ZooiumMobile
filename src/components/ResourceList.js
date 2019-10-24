@@ -1,4 +1,5 @@
 import { merge } from 'lodash';
+import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import Loader from '@components/Loader.js';
 import AuthState from '@utils/AuthState.js';
@@ -121,7 +122,7 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
     return (
         <View style={{flex:1}}>
             {showSearch &&
-                <DebouncedInput ref={searchInput} get={query} set={setQuery} style={{
+                <DebouncedInput placeholder={i18n.t('Enter criteria to search')} ref={searchInput} style={{
                     zIndex: 1,
                     borderRadius: 0,
                     borderColor: 'white',
@@ -132,7 +133,7 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
                     shadowOffset: { width: 0, height: 2 },
 
                     elevation: 3,
-                }} onIconPress={() => setShowSearch(false)} icon={() => (
+                }} get={query} set={setQuery} onIconPress={() => setShowSearch(false)} icon={() => (
                     <FontAwesome5 name="times" size={22} color="#000" style={{ opacity: .4 }} />
                 )} />
             }
