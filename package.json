@@ -18,6 +18,7 @@
 		"apollo-upload-client": "^11.0.0",
 		"buffer": "^5.4.3",
 		"expo": "^34.0.1",
+		"expo-constants": "~6.0.0",
 		"expo-crypto": "~6.0.0",
 		"expo-localization": "~6.0.0",
 		"expo-location": "~6.0.0",

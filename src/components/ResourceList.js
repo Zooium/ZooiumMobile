@@ -119,7 +119,7 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
     }
 
     return (
-        <View>
+        <View style={{flex:1}}>
             {showSearch &&
                 <DebouncedInput ref={searchInput} get={query} set={setQuery} style={{
                     zIndex: 1,

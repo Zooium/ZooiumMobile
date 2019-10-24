@@ -5,6 +5,7 @@ import SexPreview from './components/SexPreview.js';
 import { Text, Layout } from 'react-native-ui-kitten';
 import ResourceList from '@components/ResourceList.js';
 import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js';
+import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 
 export default function ListAnimalsScreen() {
     specieText = (specie) => {
@@ -42,16 +43,18 @@ export default function ListAnimalsScreen() {
     }
 
     return (
-        <Layout style={{ flex: 1 }}>
-            <ResourceList
-                preview={preview}
-                fetch={LIST_ANIMALS}
-                routes={{
-                    view: 'ViewAnimal',
-                    edit: 'EditAnimal',
-                }}
-            />
-        </Layout>
+        <KeyboardAvoidingLayout>
+            <Layout style={{ flex: 1 }}>
+                <ResourceList
+                    preview={preview}
+                    fetch={LIST_ANIMALS}
+                    routes={{
+                        view: 'ViewAnimal',
+                        edit: 'EditAnimal',
+                    }}
+                />
+            </Layout>
+        </KeyboardAvoidingLayout>
     );
 }
 
