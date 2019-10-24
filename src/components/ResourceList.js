@@ -145,9 +145,9 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
                 onRefresh={refresh}
                 refreshing={loading}
                 onEndReached={loadMore}
-                leftOpenValue={85}
+                leftOpenValue={75}
                 stopLeftSwipe={85}
-                rightOpenValue={-85}
+                rightOpenValue={-75}
                 stopRightSwipe={-85}
             />
         </View>
