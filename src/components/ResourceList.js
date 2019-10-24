@@ -4,6 +4,7 @@ import theme from '@src/theme.js';
 import Loader from '@components/Loader.js';
 import AuthState from '@utils/AuthState.js';
 import { useQuery } from '@apollo/react-hooks';
+import { Spinner } from 'react-native-ui-kitten';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
 import React, { useState, useEffect } from 'react';
@@ -46,6 +47,7 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
 
     const team = AuthState.currentTeam();
     const { loading, data, refetch, fetchMore } = useQuery(fetch, {
+        notifyOnNetworkStatusChange: true,
         variables: {
             search: showSearch && query || undefined,
             team_id: team && team.id,
@@ -119,6 +121,14 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
         );
     }
 
+    footer = () => {
+        return (loading &&
+            <View style={{ alignItems: 'center', paddingVertical: 12 }}>
+                <Spinner />
+            </View>
+        );
+    }
+
     return (
         <View style={{flex:1}}>
             {showSearch &&
@@ -150,6 +160,7 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview: 
                 stopLeftSwipe={85}
                 rightOpenValue={-75}
                 stopRightSwipe={-85}
+                ListFooterComponent={footer}
             />
         </View>
     );
