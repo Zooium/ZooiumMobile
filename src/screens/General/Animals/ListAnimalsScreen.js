@@ -3,7 +3,7 @@ import i18n from '@src/i18n.js';
 import { View } from 'react-native';
 import SexPreview from './components/SexPreview.js';
 import { Text, Layout } from 'react-native-ui-kitten';
-import ResourceList from '@components/ResourceList.js';
+import ResourceList from '@components/resource/ResourceList.js';
 import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 
