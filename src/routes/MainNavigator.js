@@ -1,6 +1,6 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import { FontAwesome5 } from '@expo/vector-icons'; 
+import { Icon } from 'react-native-ui-kitten';
 import BottomTabStyle from './styles/BottomTabStyle.js';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
@@ -15,7 +15,7 @@ export default createBottomTabNavigator({
         navigationOptions: {
             title: i18n.t('Animal', { count: 2 }),
             tabBarIcon: ({ tintColor }) => {
-                return <FontAwesome5 name="dove" size={22} color={tintColor} />;
+                return <Icon name="dove" size={22} color={tintColor} />;
             },
         },
     },
@@ -25,7 +25,7 @@ export default createBottomTabNavigator({
         navigationOptions: {
             title: i18n.t('Enclosure', { count: 2 }),
             tabBarIcon: ({ tintColor }) => {
-                return <FontAwesome5 name="map-marked-alt" size={22} color={tintColor} />;
+                return <Icon name="map-marked-alt" size={22} color={tintColor} />;
             },
         },
     },
@@ -35,7 +35,7 @@ export default createBottomTabNavigator({
         navigationOptions: {
             title: i18n.t('Nearby'),
             tabBarIcon: ({ tintColor }) => {
-                return <FontAwesome5 name="street-view" size={22} color={tintColor} />;
+                return <Icon name="street-view" size={22} color={tintColor} />;
             },
         },
     },
@@ -45,7 +45,7 @@ export default createBottomTabNavigator({
         navigationOptions: {
             title: i18n.t('Menu'),
             tabBarIcon: ({ tintColor }) => {
-                return <FontAwesome5 name="ellipsis-h" size={22} color={tintColor} />;
+                return <Icon name="ellipsis-h" size={22} color={tintColor} />;
             },
         },
     },

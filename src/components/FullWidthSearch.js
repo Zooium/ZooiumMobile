@@ -1,6 +1,6 @@
-import React, { forwardRef } from 'react';
 import i18n from '@src/i18n.js';
-import { FontAwesome5 } from '@expo/vector-icons';
+import React, { forwardRef } from 'react';
+import { Icon } from 'react-native-ui-kitten';
 import DebouncedInput from '@components/DebouncedInput.js';
 
 export default forwardRef((props, ref) => {
@@ -10,7 +10,7 @@ export default forwardRef((props, ref) => {
             placeholder={i18n.t('Enter criteria to search')}
             onIconPress={() => props.setShowSearch(false)}
             icon={() => (
-                <FontAwesome5 name="times" size={22} color="#000" style={{ opacity: .4 }} />
+                <Icon name="times" size={22} color="#000" style={{ opacity: .4 }} />
             )}
             style={{
                 zIndex: 1,

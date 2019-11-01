@@ -1,6 +1,6 @@
 import React from 'react';
 import theme from '@src/theme.js';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { Icon } from 'react-native-ui-kitten';
 
 export default function SexPreview(props) {
     const sex = {
@@ -21,6 +21,6 @@ export default function SexPreview(props) {
     }[props.sex || 'unknown'];
 
     return (
-        <FontAwesome5 name={sex.icon} color={sex.color} {...props} />
+        <Icon name={sex.icon} color={sex.color} {...props} />
     );
 }

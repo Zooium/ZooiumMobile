@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { Icon } from 'react-native-ui-kitten';
 import { View, TouchableOpacity } from 'react-native';
 
 export default memo(({ item, editItem, deleteItem }) => {
@@ -18,7 +18,7 @@ export default memo(({ item, editItem, deleteItem }) => {
                 paddingHorizontal: 25,
                 backgroundColor: theme['color-danger-500'],
             }} onPress={() => deleteItem(item)}>
-                <FontAwesome5 name="trash-alt" size={22} color="white" style={{ opacity: .8 }} />
+                <Icon name="trash-alt" size={22} color="white" style={{ opacity: .8 }} />
             </TouchableOpacity>
 
             <TouchableOpacity style={{
@@ -29,7 +29,7 @@ export default memo(({ item, editItem, deleteItem }) => {
                 paddingHorizontal: 25,
                 backgroundColor: theme['color-primary-500'],
             }} onPress={() => editItem(item)}>
-                <FontAwesome5 name="pencil-alt" size={22} color="white" style={{ opacity: .8 }} />
+                <Icon name="pencil-alt" size={22} color="white" style={{ opacity: .8 }} />
             </TouchableOpacity>
         </View>
     );
