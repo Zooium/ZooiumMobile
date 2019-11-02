@@ -13,9 +13,15 @@ export default function LoginScreen({ navigation }) {
 
     // Load auth state from storage.
     AuthManager.init().then(loggedIn => {
-        // Navigate to main if authenticated.
-        if (loggedIn) navigation.navigate('Main');
-    }).finally(() => {
+        // Navigate to main if authenticated or hide splash screen.
+        if (loggedIn) {
+            navigation.navigate('Main', {
+                hideSplash: true,
+            })
+        } else {
+            SplashScreen.hide();
+        }
+    }).catch(() => {
         // Hide the splash screen.
         SplashScreen.hide();
     });
@@ -33,7 +39,9 @@ export default function LoginScreen({ navigation }) {
 
         // Redirect to app if authed.
         if (authed) {
-            navigation.navigate('Main');
+            navigation.navigate('Main', {
+                hideSplash: true,
+            });
         }
     };
 
