@@ -1,10 +1,9 @@
 import { merge } from 'lodash';
 import i18n from '@src/i18n.js';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import Loader from '@components/Loader.js';
 import AuthState from '@utils/AuthState.js';
 import { useQuery } from '@apollo/react-hooks';
-import { Spinner } from 'react-native-ui-kitten';
 import { withNavigation } from 'react-navigation';
 import ResourceListItem from './ResourceListItem.js';
 import ResourceListEmpty from './ResourceListEmpty.js';
