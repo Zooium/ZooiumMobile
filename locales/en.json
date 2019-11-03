@@ -35,6 +35,8 @@
     "Retry": "Retry",
     "Open Settings": "Open Settings",
 
+    "Scan code": "Scan code",
+    "Use location": "Use location",
     "In order to use this feature you must allow access to your camera": "In order to use this feature you must allow access to your camera!",
     "In order to use this feature you must allow access to location services": "In order to use this feature you must allow access to location services!"
 }
