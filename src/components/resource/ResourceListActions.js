@@ -1,3 +1,4 @@
+import theme from '@src/theme.js';
 import React, { memo } from 'react';
 import { Icon } from 'react-native-ui-kitten';
 import { View, TouchableOpacity } from 'react-native';
