@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import i18n from '@src/i18n.js';
+import { View } from 'react-native';
 import * as Location from 'expo-location';
-import { Text, View } from 'react-native';
+import Loader from '@components/Loader.js';
+import { Text } from 'react-native-ui-kitten';
 import * as Permissions from 'expo-permissions';
+import React, { useState, useEffect } from 'react';
+import PermissionDenied from '@components/PermissionDenied.js';
 
 export default function LocationNearby(props) {
     const [status, setStatus] = useState('undetermined');
@@ -45,8 +49,16 @@ export default function LocationNearby(props) {
         }
     }, [watcher]);
 
+    // Return permission status based views.
+    if (status === 'undetermined') {
+        return <Loader />;
+    } else if (status !== 'granted') {
+        return <PermissionDenied text={i18n.t('In order to use this feature you must allow access to location services')} retry={requestPermission} />;
+    }
+
+    // Return nearby list.
     return (
-        <View {...props}>
+        <View {...props} style={{flex: 1}}>
             <Text>Status: {status}</Text>
             <Text>Location: {location && location.coords.longitude}, {location && location.coords.latitude}</Text>
         </View>

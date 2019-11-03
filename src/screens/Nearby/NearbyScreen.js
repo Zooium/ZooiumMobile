@@ -13,7 +13,7 @@ export default function NearbyScreen({ navigation }) {
 
     return (
         <View style={{ flex: 1 }}>
-            {view === 'location' && <LocationNearby style={{flex: 1}} /> || <BarcodeNearby style={{flex: 1}} />}
+            {view === 'location' && <LocationNearby /> || <BarcodeNearby />}
         </View>
     );
 }

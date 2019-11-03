@@ -30,5 +30,11 @@
 
     "You have reached the end!": "You have reached the end!",
     "Enter criteria to search": "Enter criteria to search...",
-    "No resource matched the given criteria": "No %{resource} matched the given criteria."
+    "No resource matched the given criteria": "No %{resource} matched the given criteria.",
+
+    "Retry": "Retry",
+    "Open Settings": "Open Settings",
+
+    "In order to use this feature you must allow access to your camera": "In order to use this feature you must allow access to your camera!",
+    "In order to use this feature you must allow access to location services": "In order to use this feature you must allow access to location services!"
 }
