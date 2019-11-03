@@ -1,51 +1,37 @@
-import React, { useState } from 'react';
-import * as Location from 'expo-location';
-import { Text, View } from 'react-native';
-import * as Permissions from 'expo-permissions';
-import { NavigationEvents } from 'react-navigation';
+import { View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import BarcodeNearby from './components/BarcodeNearby.js';
+import LocationNearby from './components/LocationNearby.js';
+import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
-export default function NearbyScreen() {
-    const [status, setStatus] = useState('undetermined');
-    const [watcher, setWatcher] = useState(undefined);
-    const [location, setLocation] = useState(undefined);
+export default function NearbyScreen({ navigation }) {
+    const [view, setView] = useState('location');
 
-    requestPermission = async () => {
-        // Request the user permission to location services.
-        let { status } = await Permissions.askAsync(Permissions.LOCATION);
-        setStatus(status);
-
-        // Returns whether or not request was granted.
-        return status === 'granted';
-    }
-
-    boot = async() => {
-        // Request permission from user.
-        if (await requestPermission()) {
-            // Start location watcher service.
-            let service = await Location.watchPositionAsync({
-                accuracy: Location.Accuracy.BestForNavigation,
-                timeInterval: 500,
-                distanceInterval: 0,
-            }, (location) => setLocation(location));
-
-            // Save the watcher service.
-            setWatcher(service);
-        }
-    }
-
-    cleanup = () => {
-        // Remove location watcher if set.
-        if (watcher) {
-            watcher.remove();
-        }
-    }
+    useEffect(() => {
+        navigation.setParams({ view, setView });
+    }, [view]);
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <NavigationEvents onWillFocus={boot} onDidBlur={cleanup} />
-
-            <Text>Status: {status}</Text>
-            <Text>Location: {location && location.coords.longitude}, {location && location.coords.latitude}</Text>
+        <View style={{ flex: 1 }}>
+            {view === 'location' && <LocationNearby style={{flex: 1}} /> || <BarcodeNearby style={{flex: 1}} />}
         </View>
     );
 }
+
+NearbyScreen.navigationOptions = ({ navigation }) => {
+    const view = navigation.getParam('view') || 'location';
+    const isBarcode = view && view === 'barcode';
+
+    return {
+        headerRight: (
+            <HeaderButtons>
+                <Item
+                    title={isBarcode ? 'scan' : 'location'}
+                    iconName={isBarcode ? 'location-arrow' : 'qrcode'}
+                    style={{ marginRight: 10 }}
+                    onPress={() => navigation.getParam('setView')(isBarcode ? 'location' : 'barcode')}
+                />
+            </HeaderButtons>
+        ),
+    }
+};
