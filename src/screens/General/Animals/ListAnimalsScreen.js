@@ -46,6 +46,8 @@ export default function ListAnimalsScreen() {
                 <ResourceList
                     preview={preview}
                     fetch={LIST_ANIMALS}
+                    name={i18n.t('Animal', { count: 2 })}
+                    
                     routes={{
                         view: 'ViewAnimal',
                         edit: 'EditAnimal',

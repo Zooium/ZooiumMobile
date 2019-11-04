@@ -15,7 +15,7 @@ import FullWidthSearch from '@components/FullWidthSearch.js';
 import SearchableHeader from '@components/SearchableHeader.js';
 import React, { useState, useEffect, useCallback, createRef } from 'react';
 
-function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview, navigation }) {
+function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, preview, navigation }) {
     const searchInput = createRef();
     const [query, setQuery] = useState('');
     const [showSearch, setShowSearch] = useState(false);
@@ -25,7 +25,7 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview, 
     deleteItem = (item) => { /* @wip */ };
 
     itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={viewItem} preview={preview} />, []);
-    emptyCallback = useCallback(() => <ResourceListEmpty resource={i18n.t('Animal', { count: 2 }).toLowerCase()} />, []); // @wip
+    emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []); // @wip
     actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, []);
 
     useEffect(() => {
