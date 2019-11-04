@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { withNavigation } from 'react-navigation';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
-function ResourceView({ title, fetch, variables = {}, page: Page, navigation }) {
+function ResourceView({ title, fetch, variables = {}, routes: { edit }, page: Page, navigation }) {
     const item = navigation.getParam('item');
     const { loading, data } = useQuery(fetch, {
         variables: {
@@ -20,6 +20,9 @@ function ResourceView({ title, fetch, variables = {}, page: Page, navigation }) 
         if (response) {
             navigation.setParams({
                 title: title(response),
+                editItem: () => {
+                    navigation.navigate(edit, { item: response });
+                },
             });
         }
     }, [response])
@@ -34,9 +37,9 @@ ResourceView.navigationOptions = ({ navigation }) => ({
         textAlign: 'center',
     },
 
-    headerRight: ( // @wip - button onPress
+    headerRight: (
         <HeaderButtons>
-            <Item title="edit" iconName="pen" style={{ marginRight: 10 }} />
+            <Item title="edit" iconName="edit" style={{ marginRight: 10 }} onPress={() => navigation.getParam('editItem')()} />
         </HeaderButtons>
     ),
 });

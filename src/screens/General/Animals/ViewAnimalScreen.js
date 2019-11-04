@@ -20,6 +20,10 @@ export default function ViewAnimalScreen() {
                 page={page}
                 title={title}
                 fetch={VIEW_ANIMAL}
+                    
+                routes={{
+                    edit: 'EditAnimal',
+                }}
             />
         </Layout>
     )

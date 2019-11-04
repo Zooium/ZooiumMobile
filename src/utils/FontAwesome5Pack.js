@@ -13,6 +13,7 @@ function FontAwesome5(props) {
             color={tintColor}
             style={iconStyle}
             {...otherProps}
+            solid
         />
     )
 }
