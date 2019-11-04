@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import { Text } from 'react-native-ui-kitten';
 
 export default ({ resource }) => {
     return (

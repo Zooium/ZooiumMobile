@@ -57,7 +57,10 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview, 
 
     const init = ! response || ! response.data;
     const page = ! init ? Math.ceil(response.data.length / response.per_page) : 1;
+
+    const listData = response && response.data || [];
     const hasMore = !init && response.total > (response.per_page * page);
+    const isEmpty = listData.length === 0;
 
     loadMore = () => {
         // Skip if loading or has no more items to show.
@@ -89,11 +92,11 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview, 
 
             <SwipeListView
                 keyExtractor={item => item.id}
-                data={response && response.data || []}
+                data={listData}
                 renderItem={itemCallback}
                 renderHiddenItem={actionsCallback} 
                 ListEmptyComponent={emptyCallback}
-                ListFooterComponent={() => <ResourceListFooter hasMore={hasMore} />}
+                ListFooterComponent={() => ! isEmpty && <ResourceListFooter hasMore={hasMore}  />}
                 onRefresh={() => refetch()}
                 refreshing={loading}
                 onEndReached={loadMore}
