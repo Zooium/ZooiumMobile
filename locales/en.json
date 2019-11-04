@@ -1,49 +1,46 @@
 {
-    "Animal": {
-        "one": "Animal",
-        "other": "Animals"
-    },
-    "Specie": {
-        "one": "Specie",
-        "other": "Species"
-    },
-    "Location": {
-        "one": "Location",
-        "other": "Locations"
-    },
-    "Enclosure": {
-        "one": "Enclosure",
-        "other": "Enclosures"
-    },
+    "translation": {
+        "Animal": "Animal",
+        "Animal_plural": "Animals",
+        
+        "Specie": "Specie",
+        "Specie_plural": "Species",
 
-    "General": "General",
-    "Account": "Account",
+        "Location": "Location",
+        "Location_plural": "Locations",
 
-    "Logout": "Logout",
-    
-    "Menu": "Menu",
-    "Nearby": "Nearby",
+        "Enclosure": "Enclosure",
+        "Enclosure_plural": "Enclosures",
 
-    "Login": "Login",
-    "Username": "Username",
-    "Password": "Password",
+        "General": "General",
+        "Account": "Account",
 
-    "name not set": "name not set",
-    "not provided": "not provided",
+        "Logout": "Logout",
+        
+        "Menu": "Menu",
+        "Nearby": "Nearby",
 
-    "Under maintenance": "Under maintenance",
+        "Login": "Login",
+        "Username": "Username",
+        "Password": "Password",
 
-    "You have reached the end!": "You have reached the end!",
-    "Enter criteria to search": "Enter criteria to search...",
-    "No resource matched the given criteria": "No %{resource} matched the given criteria.",
+        "name not set": "name not set",
+        "not provided": "not provided",
 
-    "Retry": "Retry",
-    "Open Settings": "Open Settings",
+        "Under maintenance": "Under maintenance",
 
-    "Scan code": "Scan code",
-    "Invalid code": "Invalid code",
-    "Use location": "Use location",
+        "You have reached the end!": "You have reached the end!",
+        "Enter criteria to search...": "Enter criteria to search...",
+        "No {{resource}} matched the given criteria.": "No {{resource}} matched the given criteria.",
 
-    "In order to use this feature you must allow access to your camera": "In order to use this feature you must allow access to your camera!",
-    "In order to use this feature you must allow access to location services": "In order to use this feature you must allow access to location services!"
+        "Retry": "Retry",
+        "Open Settings": "Open Settings",
+
+        "Scan code": "Scan code",
+        "Invalid code": "Invalid code",
+        "Use location": "Use location",
+
+        "In order to use this feature you must allow access to your camera!": "In order to use this feature you must allow access to your camera!",
+        "In order to use this feature you must allow access to location services!": "In order to use this feature you must allow access to location services!"
+    }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import i18n from '@src/i18n.js';
 import { View, Text } from 'react-native';
 
 export default ({ resource }) => {
@@ -8,7 +9,7 @@ export default ({ resource }) => {
             paddingVertical: 12,
         }}>
             <Text>
-                {i18n.t('No resource matched the given criteria', { resource })}
+                {i18n.t('No {{resource}} matched the given criteria.', { resource })}
             </Text>
         </View>
     );

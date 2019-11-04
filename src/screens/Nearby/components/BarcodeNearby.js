@@ -58,7 +58,7 @@ export default function BarcodeNearby(props) {
     if (status === 'undetermined') {
         return <Loader />;
     } else if (status !== 'granted') {
-        return <PermissionDenied text={i18n.t('In order to use this feature you must allow access to your camera')} retry={requestPermission} />;
+        return <PermissionDenied text={i18n.t('In order to use this feature you must allow access to your camera!')} retry={requestPermission} />;
     }
 
     // Return bar code scanner view.

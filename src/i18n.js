@@ -1,15 +1,31 @@
-import i18n from 'i18n-js';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import * as Localization from 'expo-localization';
 
+// Import application locales.
 import en from '@locales/en.json';
 
-i18n.fallbacks = true;
-i18n.translations = { en };
-i18n.defaultLocale = 'en';
-i18n.locale = Localization.locale;
+// Create new i18n instance.
+i18n.use(initReactI18next).init({
+    lng: Localization.locale,
+    fallbackLng: 'en',
 
-// Add local name getter prototype.
-i18n.localeName = function() {
+    resources: {
+        en,
+    },
+
+    keySeparator: false,
+    interpolation: {
+        escapeValue: false,
+    },
+});
+
+// Export locale column name helper.
+export function localeName() {
+    // Get locale and cut out region.
+    const locale = i18n.language.split('-')[0];
+
+    // Return appropriate column name for locale.
     return ({
         'en': 'english_name',
         'cn': 'chinese_name',
@@ -24,7 +40,8 @@ i18n.localeName = function() {
         'ru': 'russian_name',
         'es': 'spanish_name',
         'se': 'swedish_name',
-    })[this.locale] || 'english_name'
+    })[locale] || 'english_name'
 }
 
-export default i18n
+// Export i18n-next helper.
+export default i18n;

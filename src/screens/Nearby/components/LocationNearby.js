@@ -53,7 +53,7 @@ export default function LocationNearby(props) {
     if (status === 'undetermined') {
         return <Loader />;
     } else if (status !== 'granted') {
-        return <PermissionDenied text={i18n.t('In order to use this feature you must allow access to location services')} retry={requestPermission} />;
+        return <PermissionDenied text={i18n.t('In order to use this feature you must allow access to location services!')} retry={requestPermission} />;
     }
 
     // Return nearby list.

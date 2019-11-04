@@ -1,6 +1,6 @@
 import React from 'react';
-import i18n from '@src/i18n.js';
 import { View } from 'react-native';
+import i18n, { localeName } from '@src/i18n.js';
 import SexPreview from './components/SexPreview.js';
 import { Text, Layout } from 'react-native-ui-kitten';
 import ResourceList from '@components/resource/ResourceList.js';
@@ -10,7 +10,7 @@ import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 export default function ListAnimalsScreen() {
     preview = ({ item }) => {
         const specieText = item.specie
-            ? item.specie[i18n.localeName()] || item.specie.english_name || item.specie.scientific
+            ? item.specie[localeName()] || item.specie.english_name || item.specie.scientific
             : '(' + i18n.t('not provided') + ')';
 
         return (

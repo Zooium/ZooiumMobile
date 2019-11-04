@@ -25,7 +25,7 @@ function ResourceList({ fetch, variables = {}, routes: { view, edit }, preview, 
     deleteItem = (item) => { /* @wip */ };
 
     itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={viewItem} preview={preview} />, []);
-    emptyCallback = useCallback(() => <ResourceListEmpty resource={i18n.t('Animal', { count: 2 }).toLowerCase()} />, []);
+    emptyCallback = useCallback(() => <ResourceListEmpty resource={i18n.t('Animal', { count: 2 }).toLowerCase()} />, []); // @wip
     actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, []);
 
     useEffect(() => {

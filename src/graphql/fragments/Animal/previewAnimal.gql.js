@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import i18n from '@src/i18n.js'
+import { localeName } from '@src/i18n.js'
 
 export default PREVIEW_ANIMAL = gql`
     fragment previewAnimal on Animal {
@@ -18,7 +18,7 @@ export default PREVIEW_ANIMAL = gql`
             id
             scientific
             english_name
-            ${i18n.localeName()}
+            ${localeName()}
 
             cites {
                 id
