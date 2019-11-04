@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
 import theme from '@src/theme.js';
 import client from '@src/apollo.js';
+import React, { Fragment } from 'react';
 import { mapping } from '@eva-design/eva';
 import AppContainer from '@routes/AppContainer.js';
 import { ApolloProvider } from '@apollo/react-hooks';
