@@ -1,3 +1,4 @@
+import '@src/sentry.js';
 import theme from '@src/theme.js';
 import client from '@src/apollo.js';
 import React, { Fragment } from 'react';
