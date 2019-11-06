@@ -7,7 +7,9 @@ import LocationNearby from './components/LocationNearby.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
 export default function NearbyScreen({ navigation }) {
-    const [view, setView] = useState('location');
+    const [view, setView] = useState(
+        navigation.getParam('view', 'location')
+    );
 
     useEffect(() => {
         navigation.setParams({ view, setView });

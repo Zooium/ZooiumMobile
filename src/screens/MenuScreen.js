@@ -4,6 +4,7 @@ import theme from '@src/theme.js';
 import AppStyles from '@utils/AppStyles.js';
 import AuthManager from '@utils/AuthManager.js';
 import { Text, Icon } from 'react-native-ui-kitten';
+import { NavigationActions } from 'react-navigation';
 import { View, SectionList, TouchableHighlight } from 'react-native';
 
 const menu = [
@@ -26,6 +27,39 @@ const menu = [
                 icon: 'globe-europe',
                 title: i18n.t('Location', { count: 2 }),
                 onPress: (navigation) => navigation.navigate('ListLocations'),
+            },
+        ],
+    },
+
+    {
+        title: i18n.t('Location'),
+        data: [
+            {
+                icon: 'location-arrow',
+                title: i18n.t('Nearby'),
+                onPress: (navigation) => navigation.navigate({
+                    routeName: 'Nearby',
+                    action: NavigationActions.navigate({
+                        routeName: 'ViewNearby',
+                        params: {
+                            view: 'location',
+                        },
+                    }),
+                }),
+            },
+        
+            {
+                icon: 'qrcode',
+                title: i18n.t('Scanner'),
+                onPress: (navigation) => navigation.navigate({
+                    routeName: 'Nearby',
+                    action: NavigationActions.navigate({
+                        routeName: 'ViewNearby',
+                        params: {
+                            view: 'barcode',
+                        },
+                    }),
+                }),
             },
         ],
     },

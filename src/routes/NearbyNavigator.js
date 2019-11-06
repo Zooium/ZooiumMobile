@@ -6,7 +6,7 @@ import Popovers from './Popovers.js';
 import Nearby from '@screens/Nearby/NearbyScreen.js';
 
 export default createStackNavigator({
-    Nearby: {
+    ViewNearby: {
         screen: Nearby,
         navigationOptions: {
             title: i18n.t('Nearby'),
