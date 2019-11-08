@@ -17,7 +17,7 @@ import React, { useState, useEffect, useCallback, createRef } from 'react';
 
 function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, preview, navigation }) {
     const searchInput = createRef();
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState('');     // @wip - change on navigate with prop, some event.
     const [showSearch, setShowSearch] = useState(false);
 
     viewItem = (item) => navigation.navigate(view, { item });
@@ -25,7 +25,7 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
     deleteItem = (item) => { /* @wip */ };
 
     itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={viewItem} preview={preview} />, []);
-    emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []); // @wip
+    emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []);
     actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, []);
 
     useEffect(() => {
