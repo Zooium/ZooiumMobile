@@ -88,13 +88,19 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
 
     useEffect(() => {
         // Create new navigation focus listener.
-        const listener = navigation.addListener('didFocus', navigation => {
+        const listener = navigation.addListener('didFocus', ({ state: { params } }) => {
             // Set query and enable search if has param.
-            let paramQuery = navigation.state.params.search;
+            let paramQuery = params.search;
             if (paramQuery && ! showSearch) {
+                // Set values and refetch.
                 setQuery(paramQuery);
                 setShowSearch(true);
                 refetch();
+
+                // Remove params from navigation.
+                navigation.setParams({
+                    search: undefined,
+                });
             }
         });
 
