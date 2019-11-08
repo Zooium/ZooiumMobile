@@ -8,7 +8,10 @@ export default forwardRef((props, ref) => {
         <DebouncedInput
             ref={ref}
             placeholder={i18n.t('Enter criteria to search...')}
-            onIconPress={() => props.setShowSearch(false)}
+            onIconPress={() => {
+                props.set('');
+                props.setShowSearch(false)
+            }}
             icon={() => (
                 <Icon name="times" size={22} color="#000" style={{ opacity: .4 }} />
             )}

@@ -17,8 +17,8 @@ import React, { useState, useEffect, useCallback, createRef } from 'react';
 
 function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, preview, navigation }) {
     const searchInput = createRef();
-    const [query, setQuery] = useState('');     // @wip - change on navigate with prop, some event.
-    const [showSearch, setShowSearch] = useState(false);
+    const [query, setQuery] = useState(navigation.getParam('search') || '');
+    const [showSearch, setShowSearch] = useState(query !== '');
 
     viewItem = (item) => navigation.navigate(view, { item });
     editItem = (item = undefined) => navigation.navigate(edit, { item });
@@ -85,6 +85,22 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
             },
         });
     }
+
+    useEffect(() => {
+        // Create new navigation focus listener.
+        const listener = navigation.addListener('didFocus', navigation => {
+            // Set query and enable search if has param.
+            let paramQuery = navigation.state.params.search;
+            if (paramQuery && ! showSearch) {
+                setQuery(paramQuery);
+                setShowSearch(true);
+                refetch();
+            }
+        });
+
+        // Remove focus listener on cleanup.
+        return () => listener.remove();
+    }, []);
 
     return (loading && init && ! query ? <Loader /> : (
         <View style={{flex:1}}>
