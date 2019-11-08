@@ -1,19 +1,13 @@
+import React from 'react';
 import i18n from '@src/i18n.js';
 import { View, Text } from 'react-native';
 import { Icon } from 'react-native-ui-kitten';
-import React, { useState, useEffect } from 'react';
 import BarcodeNearby from './components/BarcodeNearby.js';
 import LocationNearby from './components/LocationNearby.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
 export default function NearbyScreen({ navigation }) {
-    const [view, setView] = useState(
-        navigation.getParam('view', 'location')
-    );
-
-    useEffect(() => {
-        navigation.setParams({ view, setView });
-    }, [view]);
+    const view = navigation.getParam('view') || 'location';
 
     return (
         <View style={{ flex: 1 }}>
@@ -41,7 +35,11 @@ NearbyScreen.navigationOptions = ({ navigation }) => {
                 <Item
                     title="toggle"
                     style={{ marginRight: 10 }}
-                    onPress={() => navigation.getParam('setView')(isBarcode ? 'location' : 'barcode')}
+                    onPress={() => {
+                        navigation.setParams({
+                            view: (isBarcode ? 'location' : 'barcode'),
+                        })
+                    }}
                     ButtonElement={
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={{
