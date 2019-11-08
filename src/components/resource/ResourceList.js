@@ -17,8 +17,8 @@ import React, { useState, useEffect, useCallback, createRef } from 'react';
 
 function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, preview, navigation }) {
     const searchInput = createRef();
-    const [query, setQuery] = useState(navigation.getParam('search') || '');
-    const [showSearch, setShowSearch] = useState(query !== '');
+    const query = navigation.getParam('search');
+    const showSearch = query !== undefined;
 
     viewItem = (item) => navigation.navigate(view, { item });
     editItem = (item = undefined) => navigation.navigate(edit, { item });
@@ -29,18 +29,17 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
     actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, []);
 
     useEffect(() => {
-        navigation.setParams({
-            editItem: editItem,
-            toggleSearch: () => setShowSearch(state => ! state),
-        })
-    }, []);
-
-    useEffect(() => {
         // Focus search input if shown and not focused.
         if (showSearch && searchInput.current && ! searchInput.current.isFocused()) {
             searchInput.current.focus();
         }
-    }, [showSearch]);
+    }, [searchInput]);
+
+    useEffect(() => {
+        navigation.setParams({
+            editItem: editItem,
+        })
+    }, []);
 
     const team = AuthState.currentTeam();
     const { loading, data, refetch, fetchMore } = useQuery(fetch, {
@@ -59,7 +58,7 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
     const page = ! init ? Math.ceil(response.data.length / response.per_page) : 1;
 
     const listData = response && response.data || [];
-    const hasMore = !init && response.total > (response.per_page * page);
+    const hasMore = ! init && response.total > (response.per_page * page);
     const isEmpty = listData.length === 0;
 
     loadMore = () => {
@@ -86,31 +85,11 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
         });
     }
 
-    useEffect(() => {
-        // Create new navigation focus listener.
-        const listener = navigation.addListener('didFocus', ({ state: { params } }) => {
-            // Set query and enable search if has param.
-            let paramQuery = params.search;
-            if (paramQuery && ! showSearch) {
-                // Set values and refetch.
-                setQuery(paramQuery);
-                setShowSearch(true);
-                refetch();
-
-                // Remove params from navigation.
-                navigation.setParams({
-                    search: undefined,
-                });
-            }
-        });
-
-        // Remove focus listener on cleanup.
-        return () => listener.remove();
-    }, []);
-
     return (loading && init && ! query ? <Loader /> : (
         <View style={{flex:1}}>
-            {showSearch && <FullWidthSearch get={query} set={setQuery} ref={searchInput} setShowSearch={setShowSearch} />}
+            {showSearch && <FullWidthSearch get={query} set={(query) => {
+                navigation.setParams({ search: query })
+            }} ref={searchInput} />}
 
             <SwipeListView
                 keyExtractor={item => item.id}
@@ -134,7 +113,12 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
 
 ResourceList.navigationOptions = ({ navigation }) => ({
     headerLeft: <AddingHeader style={{ marginLeft: 10 }} onPress={() => navigation.getParam('editItem')()} />,
-    headerRight: <SearchableHeader style={{ marginRight: 10 }} onPress={() => navigation.getParam('toggleSearch')()} />,
+    headerRight: <SearchableHeader style={{ marginRight: 10 }} onPress={() => {
+        navigation.setParams({
+            search: navigation.getParam('search') === undefined ? '' : undefined,
+        })
+    }} />,
+
     headerTitleStyle: {
         flex: 1,
         textAlign: 'center',

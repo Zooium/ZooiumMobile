@@ -4,14 +4,13 @@ import { Icon } from 'react-native-ui-kitten';
 import DebouncedInput from '@components/DebouncedInput.js';
 
 export default forwardRef((props, ref) => {
+    const { set } = props;
+
     return (
         <DebouncedInput
             ref={ref}
             placeholder={i18n.t('Enter criteria to search...')}
-            onIconPress={() => {
-                props.set('');
-                props.setShowSearch(false)
-            }}
+            onIconPress={() => set(undefined)}
             icon={() => (
                 <Icon name="times" size={22} color="#000" style={{ opacity: .4 }} />
             )}
