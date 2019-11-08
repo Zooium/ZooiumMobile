@@ -5,6 +5,15 @@ import { withNavigation } from 'react-navigation';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
 function ResourceView({ title, fetch, variables = {}, routes: { edit }, page: Page, navigation }) {
+    useEffect(() => {
+        navigation.setParams({
+            getTitle: title,
+            editItem: (item) => {
+                navigation.navigate(edit, { item });
+            },
+        });
+    }, []);
+    
     const item = navigation.getParam('item');
     const { loading, data } = useQuery(fetch, {
         variables: {
@@ -17,31 +26,37 @@ function ResourceView({ title, fetch, variables = {}, routes: { edit }, page: Pa
     const response = key && data && data[key];
 
     useEffect(() => {
-        if (response) {
-            navigation.setParams({
-                title: title(response),
-                editItem: () => {
-                    navigation.navigate(edit, { item: response });
-                },
-            });
-        }
-    }, [response])
+        // Skip if missing response.
+        if (! response) return;
 
-    return (loading ? <Loader /> : <Page item={response} />)
+        // Set response item in navigation.
+        navigation.setParams({
+            item: response,
+        });
+    }, [response]);
+
+    return (loading ? <Loader /> : <Page item={response} />);
 }
 
-ResourceView.navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam('title'),
-    headerTitleStyle: {
-        flex: 1,
-        textAlign: 'center',
-    },
+ResourceView.navigationOptions = ({ navigation }) => {
+    const item = navigation.getParam('item');
+    const getTitle = navigation.getParam('getTitle');
 
-    headerRight: (
-        <HeaderButtons>
-            <Item title="edit" iconName="edit" style={{ marginRight: 10 }} onPress={() => navigation.getParam('editItem')()} />
-        </HeaderButtons>
-    ),
-});
+    return {
+        title: getTitle ? getTitle(item) : undefined,
+        headerTitleStyle: {
+            flex: 1,
+            textAlign: 'center',
+        },
+
+        headerRight: (
+            <HeaderButtons>
+                <Item title="edit" iconName="edit" style={{ marginRight: 10 }} onPress={() => {
+                    navigation.getParam('editItem')(item);
+                }} />
+            </HeaderButtons>
+        ),
+    };
+};
 
 export default withNavigation(ResourceView);

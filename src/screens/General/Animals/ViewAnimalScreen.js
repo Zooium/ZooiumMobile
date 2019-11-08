@@ -6,7 +6,9 @@ import ResourceView from '@components/resource/ResourceView.js';
 import VIEW_ANIMAL from '@graphql/queries/Animal/viewAnimal.gql.js';
 
 export default function ViewAnimalScreen() {
-    title = item => (item.name || item.identifier || '(' + i18n.t('name not set') + ')')
+    title = item => {
+        return (item.name || item.identifier || '(' + i18n.t('name not set') + ')');
+    }
 
     page = ({ item }) => {
         return (
