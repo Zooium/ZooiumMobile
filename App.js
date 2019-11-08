@@ -3,6 +3,7 @@ import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import client from '@src/apollo.js';
 import React, { Fragment } from 'react';
+import { StatusBar } from 'react-native';
 import { mapping } from '@eva-design/eva';
 import { I18nextProvider } from 'react-i18next';
 import AppContainer from '@routes/AppContainer.js';
@@ -14,6 +15,7 @@ import { ApplicationProvider, IconRegistry } from 'react-native-ui-kitten';
 export default function App() {
     return (
         <Fragment>
+            <StatusBar barStyle="dark-content" />
             <IconRegistry icons={[FontAwesome5Pack]} />
             <ApplicationProvider mapping={mapping} theme={theme}>
                 <ApolloProvider client={client}>
