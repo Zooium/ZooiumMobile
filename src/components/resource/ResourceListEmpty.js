@@ -6,7 +6,7 @@ import { Text, Icon } from 'react-native-ui-kitten';
 
 export default ({ resource }) => {
     return (
-        <View style={{ alignItems: 'center', paddingVertical: 12 }}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 12 }}>
             <Icon name="binoculars" size={75} color={theme['color-basic-500']} />
 
             <Text style={{ marginTop: 20 }}>

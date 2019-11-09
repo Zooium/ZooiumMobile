@@ -13,7 +13,6 @@ function LocationNearby({ isFocused }) {
     const [status, setStatus] = useState('undetermined');
     const [watcher, setWatcher] = useState(undefined);
     const [location, setLocation] = useState(undefined);
-    console.log('rerender: ', location && location.timestamp);
 
     // Start the location watcher instance.
     startWatcher = async () => {

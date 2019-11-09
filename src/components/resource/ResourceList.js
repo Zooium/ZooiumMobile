@@ -106,6 +106,9 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
                 stopLeftSwipe={85}
                 rightOpenValue={-75}
                 stopRightSwipe={-85}
+                contentContainerStyle={{
+                    flexGrow: 1,
+                }}
             />
         </View>
     ));
