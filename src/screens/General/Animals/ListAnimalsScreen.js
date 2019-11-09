@@ -1,13 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
 import i18n, { localeName } from '@src/i18n.js';
+import { withNavigation } from 'react-navigation';
 import SexPreview from './components/SexPreview.js';
 import { Text, Layout } from 'react-native-ui-kitten';
 import ResourceList from '@components/resource/ResourceList.js';
 import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 
-export default function ListAnimalsScreen() {
+function ListAnimalsScreen() {
     preview = ({ item }) => {
         const specieText = item.specie
             ? item.specie[localeName()] || item.specie.english_name || item.specie.scientific
@@ -59,3 +60,5 @@ export default function ListAnimalsScreen() {
 }
 
 ListAnimalsScreen.navigationOptions = ResourceList.navigationOptions;
+
+export default withNavigation(ListAnimalsScreen);

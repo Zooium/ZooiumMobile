@@ -3,8 +3,8 @@ import BASE_ENCLOSURE from '@graphql/fragments/Enclosure/baseEnclosure.gql.js'
 
 export default LIST_ENCLOSURES = gql`
     ${BASE_ENCLOSURE}
-    query($team_id: ID!, $limit: Int, $page: Int, $search: String, $sorting: SortingInput) {
-        enclosures(team_id: $team_id, limit: $limit, page: $page, search: $search, sorting: $sorting) {
+    query($team_id: ID!, $limit: Int, $page: Int, $search: String, $sorting: SortingInput, $coordinate: CoordinateInput) {
+        enclosures(team_id: $team_id, limit: $limit, page: $page, search: $search, sorting: $sorting, coordinate: $coordinate) {
             total
             per_page
 

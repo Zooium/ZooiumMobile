@@ -21,6 +21,10 @@
         "Menu": "Menu",
         "Nearby": "Nearby",
         "Scanner": "Scanner",
+        "Distance": "Distance",
+
+        "{{distance}} km": "{{distance}} km",
+        "{{distance}} meter": "{{distance}} meter",
 
         "Login": "Login",
         "Username": "Username",

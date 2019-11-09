@@ -15,7 +15,7 @@ import FullWidthSearch from '@components/FullWidthSearch.js';
 import SearchableHeader from '@components/SearchableHeader.js';
 import React, { useState, useEffect, useCallback, createRef } from 'react';
 
-function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, preview, navigation }) {
+function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, preview, showRefresh = true, navigation }) {
     const searchInput = createRef();
     const query = navigation.getParam('search');
     const showSearch = query !== undefined;
@@ -99,7 +99,7 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
                 ListEmptyComponent={emptyCallback}
                 ListFooterComponent={() => ! isEmpty && <ResourceListFooter hasMore={hasMore}  />}
                 onRefresh={() => refetch()}
-                refreshing={loading}
+                refreshing={showRefresh && loading}
                 onEndReached={loadMore}
                 onEndReachedThreshold={0.2}
                 leftOpenValue={75}

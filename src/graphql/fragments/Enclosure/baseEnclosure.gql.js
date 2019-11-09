@@ -5,6 +5,7 @@ export default BASE_ENCLOSURE = gql`
         id
         name
         slug
+        distance
         animals_count
 
         location {
