@@ -27,9 +27,9 @@ export default forwardRef(function AppContainer(props, ref) {
 
         // Hide splash screen after interacitons if requested.
         if (params && params.hideSplash) {
-            InteractionManager.runAfterInteractions(() => {
+            setTimeout(() => {
                 SplashScreen.hide();
-            });
+            }, 2);
         }
     }} />;
 })
