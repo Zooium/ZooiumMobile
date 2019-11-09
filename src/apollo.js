@@ -6,9 +6,9 @@ import { ApolloClient } from 'apollo-client';
 import AuthManager from '@utils/AuthManager.js';
 import router from '@utils/NavigationService.js';
 import { setContext } from 'apollo-link-context';
-import { NavigationActions } from 'react-navigation';
-import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createUploadLink } from 'apollo-upload-client';
+import introspectionQueryResultData from '@graphql/FragmentTypes.json';
+import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 
 // Define request authorization context setter.
 const RequestAuthorizer = setContext((_, { headers }) => {
@@ -49,7 +49,12 @@ const ErrorHandler = onError(({ networkError: network, graphQLErrors: errors, fo
 
 // Export the appollo client instance.
 export default new ApolloClient({
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+        fragmentMatcher: new IntrospectionFragmentMatcher({
+            introspectionQueryResultData,
+        }),
+    }),
+
     link: ApolloLink.from([
         ErrorHandler,
         RequestAuthorizer,
