@@ -12,7 +12,7 @@ export default function ViewAnimalScreen() {
 
     page = ({ item }) => {
         return (
-            <Text>@wip - {item.id}</Text>
+            <Text>@wip - Animal - {item.id}</Text>
         )
     }
 

@@ -4,14 +4,18 @@ import { View } from 'react-native';
 import Loader from '@components/Loader.js';
 import * as Permissions from 'expo-permissions';
 import React, { useState, useEffect } from 'react';
+import { useLazyQuery } from '@apollo/react-hooks';
 import { Icon, Text } from 'react-native-ui-kitten';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import PermissionDenied from '@components/PermissionDenied.js';
+import { withNavigation, withNavigationFocus } from 'react-navigation';
+import VIEW_SHORTLINK from '@graphql/queries/Shortlink/viewShortlink.gql.js';
 
-export default function BarcodeNearby(props) {
+function BarcodeNearby(props) {
     const [status, setStatus] = useState('undetermined');
     const [invalid, setInvalid] = useState(false);
     const [timer, setTimer] = useState(undefined);
+    const [hash, setHash] =  useState(undefined);
 
     // Request camera usage permissions.
     requestPermission = async () => {
@@ -25,6 +29,24 @@ export default function BarcodeNearby(props) {
         requestPermission();
     }, []);
 
+    const [loadShortlink, { loading, error, data }] = useLazyQuery(VIEW_SHORTLINK, {
+        variables: {
+            id: hash,
+        },
+    });
+
+    // Show invalid indicator.
+    markInvalid = () => {
+        // Mark as invalid and start unset timer.
+        setInvalid(true);
+        const timer = setTimeout(() => {
+            setInvalid(false);
+        }, 1000);
+
+        // Save timer and return out.
+        setTimer(timer);
+    }
+
     // Clear the invalid timer on change.
     useEffect(() => {
         return () => {
@@ -32,26 +54,40 @@ export default function BarcodeNearby(props) {
         }
     }, [timer]);
 
+    // Listen for fetching changes.
+    useEffect(() => {
+        // Handle error and missing data.
+        if (error) markInvalid();
+        if (! data) return;
+
+        // Extract item and type from request.
+        const item = data.shortlink.resource;
+        const { __typename: type } = item;
+
+        // Navigate to the type and pass item.
+        props.navigation.navigate({
+            routeName: 'View'+type,
+            params: { item },
+        })
+    }, [data, error]);
+
     // Callback on barcode scan result.
     scan = ({ data }) => {
+        // Skip if already loading or not focused.
+        if (loading || ! props.isFocused) return;
+
         // Attempt to extract key from QR-code.
-        let key = data.match('https:\/\/scan\.zooium\.com\/(.*)');
+        let key = data.match('https:\/\/link\.zooium\.com\/(.*)');
 
         // Check if invalid QR-code.
-        if (! key) {
-            // Mark as invalid and start unset timer.
-            setInvalid(true);
-            const timer = setTimeout(() => {
-                setInvalid(false);
-            }, 1000);
-
-            // Save timer and return out.
-            setTimer(timer);
+        if (! key || ! key[1]) {
+            markInvalid();
             return;
         }
 
-        // @wip
-        alert(data);
+        // Set hash and fetch.
+        setHash(key[1]);
+        loadShortlink();
     }
 
     // Return permission status based views.
@@ -69,20 +105,26 @@ export default function BarcodeNearby(props) {
                 onBarCodeScanned={scan}
                 style={{ flex: 1 }}
             >
-                {invalid &&
-                    <View style={{
-                        flex: 1,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        opacity: 0.8,
-                    }}>
-                        <Icon name="times" size={150} color={theme['color-danger-500']} />
-                        <Text status="danger" category="h6">
-                            {i18n.t('Invalid code').toUpperCase()}
-                        </Text>
-                    </View>
-                }
+                <View style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    opacity: 0.8,
+                }}>
+                    {invalid && (
+                        <View>
+                            <Icon name="times" size={150} color={theme['color-danger-500']} />
+                            <Text status="danger" category="h6">
+                                {i18n.t('Invalid code').toUpperCase()}
+                            </Text>
+                        </View>
+                    ) || loading && (
+                        <Loader />
+                    )}
+                </View>
             </BarCodeScanner>
         </View>
     );
 }
+
+export default withNavigationFocus(withNavigation(BarcodeNearby));
