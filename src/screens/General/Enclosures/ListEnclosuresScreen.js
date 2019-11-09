@@ -27,7 +27,7 @@ export default function ListEnclosuresScreen({ navigation }) {
                     <Text>{locationText}</Text>
                 </View>
 
-                {item.animals_count &&
+                {item.animals_count !== 0 &&
                     <TouchableOpacity style={{ flexShrink: 0, alignItems: 'flex-end' }} onPress={() => navigation.navigate({
                         routeName: 'Animals',
                         action: NavigationActions.navigate({
