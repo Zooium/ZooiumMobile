@@ -5,17 +5,17 @@ import PropTypes from 'prop-types';
 import { Text } from 'react-native-ui-kitten';
 import { Alert, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function CitesListing({ listing }) {
+export default function CitesListing({ listing, style = {} }) {
     return (
-        <TouchableOpacity onPress={() => {
+        <TouchableOpacity style={[s.listing, s['listing' + listing], style]} onPress={() => {
             Alert.alert('CITES', listing === 'NC'
                 ? i18n.t('Not or only partly covered by listing. Check {{site}} for more info!', {
                     site: 'Species+',
                 })
                 : 'Appendix '+listing
             )
-        }} style={[s.listing, s['listing' + listing]]}>
-            <Text style={{ color: 'white' }}>
+        }}>
+            <Text category="p2" style={{ color: 'white' }}>
                 {listing}
             </Text>
         </TouchableOpacity>

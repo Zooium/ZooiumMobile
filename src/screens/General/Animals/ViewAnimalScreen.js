@@ -84,7 +84,7 @@ export default function ViewAnimalScreen({ navigation }) {
                         return (
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 {cites && cites.listing.split('/').map((value) => {
-                                    return <CitesListing key={value} listing={value} />;
+                                    return <CitesListing key={value} listing={value} style={{ marginRight: 4 }} />;
                                 })}
 
                                 {resource.specie &&
@@ -92,7 +92,7 @@ export default function ViewAnimalScreen({ navigation }) {
                                         flexDirection: 'row',
                                         alignItems: 'center',
 
-                                        marginLeft: cites ? 8 : 0,
+                                        marginLeft: cites ? 4 : 0,
                                     }} onPress={() => {
                                         Linking.openURL(readMoreAddress);
                                     }}>
