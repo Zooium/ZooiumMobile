@@ -23,7 +23,6 @@ export default function ViewEnclosureScreen({ navigation }) {
                             [
                                 location.address,
                                 location.city,
-                                location.postcode,
                             ].filter(Boolean).join(', ')
                         || '(' + i18n.t('not provided') + ')';
 

@@ -9,13 +9,8 @@ import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 
 function ListEnclosuresScreen({ header: Header, showRefresh = true, variables = {}, navigation }) {
     preview = ({ item }) => {
-        const locationText = item && item.location &&
-            [
-                item.location.address,
-                item.location.city,
-                item.location.postcode,
-            ].filter(Boolean).join(', ')
-        || '(' + i18n.t('not provided') + ')';
+        const locationText = item && item.location && item.location.name
+            || '(' + i18n.t('not provided') + ')';
 
         return (
             <View style={{ width: '100%', flexDirection: 'column' }}>

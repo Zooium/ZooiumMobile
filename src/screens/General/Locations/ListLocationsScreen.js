@@ -13,7 +13,6 @@ function ListLocationsScreen({ showRefresh = true, variables = {}, navigation })
             [
                 item.address,
                 item.city,
-                item.postcode,
             ].filter(Boolean).join(', ')
         || '(' + i18n.t('not provided') + ')';
 
