@@ -15,7 +15,7 @@ import { ApplicationProvider, IconRegistry } from 'react-native-ui-kitten';
 export default function App() {
     return (
         <Fragment>
-            <StatusBar barStyle="dark-content" />
+            <StatusBar barStyle="light-content" />
             <IconRegistry icons={[FontAwesome5Pack]} />
             <ApplicationProvider mapping={mapping} theme={theme}>
                 <ApolloProvider client={client}>
