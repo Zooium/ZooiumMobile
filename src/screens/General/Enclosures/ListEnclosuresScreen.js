@@ -32,6 +32,7 @@ function ListEnclosuresScreen({ header: Header, showRefresh = true, variables = 
                                 routeName: 'ListAnimals',
                                 params: {
                                     search: 'enclosure:'+item.id,
+                                    focusInput: false,
                                 },
                             }),
                         })}>

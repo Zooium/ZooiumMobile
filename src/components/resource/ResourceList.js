@@ -17,7 +17,9 @@ import React, { useState, useEffect, useCallback, createRef } from 'react';
 
 function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, preview, showRefresh = true, navigation }) {
     const searchInput = createRef();
+
     const query = navigation.getParam('search');
+    const focusSearch = navigation.getParam('focusInput', false);
     const showSearch = query !== undefined;
 
     viewItem = (item) => navigation.navigate(view, { item });
@@ -29,8 +31,8 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
     actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, []);
 
     useEffect(() => {
-        // Focus search input if shown and not focused.
-        if (showSearch && searchInput.current && ! searchInput.current.isFocused()) {
+        // Focus search input if shown, not focused, and should.
+        if (showSearch && focusSearch && searchInput.current && ! searchInput.current.isFocused()) {
             searchInput.current.focus();
         }
     }, [searchInput]);
@@ -118,6 +120,7 @@ ResourceList.navigationOptions = ({ navigation }) => ({
     headerLeft: <AddingHeader style={{ marginLeft: 10 }} onPress={() => navigation.getParam('editItem')()} />,
     headerRight: <SearchableHeader style={{ marginRight: 10 }} onPress={() => {
         navigation.setParams({
+            focusInput: true,
             search: navigation.getParam('search') === undefined ? '' : undefined,
         })
     }} />,

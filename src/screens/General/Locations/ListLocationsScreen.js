@@ -33,6 +33,7 @@ function ListLocationsScreen({ showRefresh = true, variables = {}, navigation })
                             routeName: 'ListEnclosures',
                             params: {
                                 search: 'location:'+item.id,
+                                focusInput: false,
                             },
                         }),
                     })}>
