@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export default ME = gql`
+export default gql`
     query {
         me {
             id

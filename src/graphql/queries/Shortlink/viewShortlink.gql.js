@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export default VIEW_SHORTLINK = gql`
+export default gql`
     query($id: ID!) {
         shortlink(id: $id) {
             id

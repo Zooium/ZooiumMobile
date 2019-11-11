@@ -78,7 +78,7 @@ const menu = [
 ];
 
 export default function MenuScreen({ navigation }) {
-    renderItem = ({ item }) => {
+    const renderItem = ({ item }) => {
         return (
             <TouchableHighlight underlayColor="#AAA" onPress={() => item.onPress(navigation)}>
                 <View style={[AppStyles.listItem, {
@@ -105,7 +105,7 @@ export default function MenuScreen({ navigation }) {
         )
     }
 
-    renderSectionHeader = ({ section }) => {
+    const renderSectionHeader = ({ section }) => {
         return (
             <Text category="label" style={AppStyles.listSection}>
                 {section.title.toUpperCase()}

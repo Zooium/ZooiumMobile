@@ -7,7 +7,7 @@ import { View, Linking, Platform } from 'react-native';
 import { Text, Icon, Button } from 'react-native-ui-kitten';
 
 export default function PermissionDenied({ text, retry }) {
-    openSettings = () => {
+    const openSettings = () => {
         if (Platform.OS === 'ios') {
             Linking.openURL('app-settings://');
         } else if (Platform.OS === 'android') {
@@ -39,5 +39,5 @@ export default function PermissionDenied({ text, retry }) {
             </Button>
         </View>
     );
-};
+}
 

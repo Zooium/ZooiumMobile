@@ -32,7 +32,7 @@ function createIconsMap() {
     })
 }
 
-export default FontAwesome5Pack = {
+export default {
     name: 'fa5',
     icons: createIconsMap(),
 }

@@ -9,7 +9,7 @@ import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 
 function ListAnimalsScreen() {
-    preview = ({ item }) => {
+    const preview = ({ item }) => {
         const specieText = item.specie
             ? item.specie[localeName()] || item.specie.english_name || item.specie.scientific
             : '(' + i18n.t('not provided') + ')';

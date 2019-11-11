@@ -38,7 +38,10 @@ export default class AuthChallenge {
             .replace(/=/g, '');
 
         // Save PKCE details in state.
+
+        /* eslint-disable require-atomic-updates */
         AuthChallenge.state.verifier = verifier;
         AuthChallenge.state.challenge = challenge;
+        /* eslint-enable require-atomic-updates */
     }
 }

@@ -59,7 +59,7 @@ export default function ViewEnclosureScreen({ navigation }) {
         },
     ];
 
-    title = item => {
+    const title = item => {
         return (item.name || '(' + i18n.t('name not set') + ')');
     }
 

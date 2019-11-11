@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 import FULL_LOCATION from '@graphql/fragments/Location/fullLocation.gql.js'
 
-export default LIST_LOCATIONS = gql`
+export default gql`
     ${FULL_LOCATION}
     query($team_id: ID!, $limit: Int, $page: Int, $search: String, $sorting: SortingInput) {
         locations(team_id: $team_id, limit: $limit, page: $page, search: $search, sorting: $sorting) {

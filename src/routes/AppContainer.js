@@ -1,6 +1,5 @@
 import { SplashScreen } from 'expo';
 import React, { forwardRef } from 'react';
-import { InteractionManager } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 // Import navigator instances.
@@ -21,7 +20,7 @@ export default forwardRef(function AppContainer(props, ref) {
     SplashScreen.preventAutoHide();
 
     // Return container and listen for state changes.
-    return <AppNavigationContainer ref={ref} onNavigationStateChange={(prev, current, action) => {
+    return <AppNavigationContainer ref={ref} onNavigationStateChange={(prev, current) => {
         // Get params for the current route.
         const params = current.routes[current.index].params;
 

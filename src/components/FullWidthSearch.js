@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import { Icon } from 'react-native-ui-kitten';
 import DebouncedInput from '@components/DebouncedInput.js';
 
-export default forwardRef((props, ref) => {
+export default forwardRef(function FullWidthSearch(props, ref) {
     const { set } = props;
 
     return (

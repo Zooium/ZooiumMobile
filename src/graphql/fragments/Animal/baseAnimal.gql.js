@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 import { localeName } from '@src/i18n.js'
 
-export default BASE_ANIMAL = gql`
+export default gql`
     fragment baseAnimal on Animal {
         id
         identifier

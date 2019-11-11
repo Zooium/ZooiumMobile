@@ -4,7 +4,7 @@ import theme from '@src/theme.js';
 import { View } from 'react-native';
 import { Text, Icon } from 'react-native-ui-kitten';
 
-export default ({ resource }) => {
+export default function ResourceListEmpty({ resource }) {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 12 }}>
             <Icon name="binoculars" size={75} color={theme['color-basic-500']} />
@@ -14,4 +14,4 @@ export default ({ resource }) => {
             </Text>
         </View>
     );
-};
+}

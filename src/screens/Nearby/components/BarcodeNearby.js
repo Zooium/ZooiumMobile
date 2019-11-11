@@ -11,6 +11,7 @@ import PermissionDenied from '@components/PermissionDenied.js';
 import { withNavigation, withNavigationFocus } from 'react-navigation';
 import VIEW_SHORTLINK from '@graphql/queries/Shortlink/viewShortlink.gql.js';
 
+// @wip - Unauthed QR codes logouts user.
 function BarcodeNearby(props) {
     const [status, setStatus] = useState('undetermined');
     const [invalid, setInvalid] = useState(false);
@@ -18,7 +19,7 @@ function BarcodeNearby(props) {
     const [hash, setHash] =  useState(undefined);
 
     // Request camera usage permissions.
-    requestPermission = async () => {
+    const requestPermission = async () => {
         // Request the user permission to camera services.
         let { status } = await Permissions.askAsync(Permissions.CAMERA);
         setStatus(status);
@@ -36,7 +37,7 @@ function BarcodeNearby(props) {
     });
 
     // Show invalid indicator.
-    markInvalid = () => {
+    const markInvalid = () => {
         // Mark as invalid and start unset timer.
         setInvalid(true);
         const timer = setTimeout(() => {
@@ -72,12 +73,12 @@ function BarcodeNearby(props) {
     }, [data, error]);
 
     // Callback on barcode scan result.
-    scan = ({ data }) => {
+    const scan = ({ data }) => {
         // Skip if already loading or not focused.
         if (loading || ! props.isFocused) return;
 
         // Attempt to extract key from QR-code.
-        let key = data.match('https:\/\/link\.zooium\.com\/(.*)');
+        let key = data.match('https://link.zooium.com/(.*)');
 
         // Check if invalid QR-code.
         if (! key || ! key[1]) {

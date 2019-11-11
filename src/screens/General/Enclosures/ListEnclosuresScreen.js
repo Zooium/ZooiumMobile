@@ -8,7 +8,7 @@ import LIST_ENCLOSURES from '@graphql/queries/Enclosure/listEnclosures.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 
 function ListEnclosuresScreen({ header: Header, showRefresh = true, variables = {}, navigation }) {
-    preview = ({ item }) => {
+    const preview = ({ item }) => {
         const locationText = item && item.location && item.location.name
             || '(' + i18n.t('not provided') + ')';
 

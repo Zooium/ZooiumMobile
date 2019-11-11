@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 import { localeName } from '@src/i18n.js'
 import PREVIEW_ANIMAL from './previewAnimal.gql.js';
 
-export default FULL_ANIMAL = gql`
+export default gql`
     ${PREVIEW_ANIMAL}
     fragment fullAnimal on Animal {
         id

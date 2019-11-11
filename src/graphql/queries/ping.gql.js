@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export default PING = gql`
+export default gql`
     query {
         ping
     }

@@ -1,7 +1,7 @@
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import { SplashScreen } from 'expo';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import SafeView from '@components/SafeView.js';
 import AuthManager from '@utils/AuthManager.js';
 import { Text, Layout } from 'react-native-ui-kitten';
@@ -26,7 +26,7 @@ export default function LoginScreen({ navigation }) {
         SplashScreen.hide();
     });
 
-    authenticate = async () => {
+    const authenticate = async () => {
         // Enable loading state.
         setLoading(true);
 

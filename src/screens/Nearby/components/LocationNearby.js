@@ -15,7 +15,7 @@ function LocationNearby({ isFocused }) {
     const [location, setLocation] = useState(undefined);
 
     // Start the location watcher instance.
-    startWatcher = async () => {
+    const startWatcher = async () => {
         // Remove watcher if exists.
         if (watcher) watcher.remove();
 
@@ -31,7 +31,7 @@ function LocationNearby({ isFocused }) {
     }
 
     // Request location permissions and start watcher if granted.
-    requestPermission = async () => {
+    const requestPermission = async () => {
         // Request the user permission to location services.
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
         setStatus(status);

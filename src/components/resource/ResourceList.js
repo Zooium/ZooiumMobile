@@ -1,5 +1,4 @@
 import { merge } from 'lodash';
-import i18n from '@src/i18n.js';
 import { View } from 'react-native';
 import Loader from '@components/Loader.js';
 import AuthState from '@utils/AuthState.js';
@@ -13,7 +12,7 @@ import ResourceListActions from './ResourceListActions.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import FullWidthSearch from '@components/FullWidthSearch.js';
 import SearchableHeader from '@components/SearchableHeader.js';
-import React, { useState, useEffect, useCallback, createRef } from 'react';
+import React, { useEffect, useCallback, createRef } from 'react';
 
 function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, preview, showRefresh = true, navigation }) {
     const searchInput = createRef();
@@ -22,13 +21,13 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
     const focusSearch = navigation.getParam('focusInput', false);
     const showSearch = query !== undefined;
 
-    viewItem = (item) => navigation.navigate(view, { item });
-    editItem = (item = undefined) => navigation.navigate(edit, { item });
-    deleteItem = (item) => { /* @wip */ };
+    const viewItem = (item) => navigation.navigate(view, { item });
+    const editItem = (item = undefined) => navigation.navigate(edit, { item });
+    const deleteItem = () => { /* @wip */ };
 
-    itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={viewItem} preview={preview} />, []);
-    emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []);
-    actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, []);
+    const itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={viewItem} preview={preview} />, []);
+    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []);
+    const actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, []);
 
     useEffect(() => {
         // Focus search input if shown, not focused, and should.
@@ -63,7 +62,7 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
     const hasMore = ! init && response.total > (response.per_page * page);
     const isEmpty = listData.length === 0;
 
-    loadMore = () => {
+    const loadMore = () => {
         // Skip if loading or has no more items to show.
         if (loading || ! hasMore) return;
 

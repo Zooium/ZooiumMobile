@@ -1,6 +1,6 @@
 import { light } from '@eva-design/eva';
 
-export default theme = {
+export default {
     ...light,
 
     "color-primary-100": "#DCE4FD",

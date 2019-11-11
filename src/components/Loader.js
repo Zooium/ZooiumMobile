@@ -8,5 +8,5 @@ export default function Loader({ size = 'giant', status = 'primary' }) {
             <Spinner size={size} status={status} />
         </View>
     );
-};
+}
 

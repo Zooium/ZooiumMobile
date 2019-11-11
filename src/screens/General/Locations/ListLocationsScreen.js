@@ -8,7 +8,7 @@ import LIST_LOCATIONS from '@graphql/queries/Location/listLocations.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 
 function ListLocationsScreen({ showRefresh = true, variables = {}, navigation }) {
-    preview = ({ item }) => {
+    const preview = ({ item }) => {
         const locationText = item &&
             [
                 item.address,

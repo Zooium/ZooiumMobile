@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { Icon } from 'react-native-ui-kitten';
 import { View, TouchableOpacity } from 'react-native';
 
-export default memo(({ item, editItem, deleteItem }) => {
+export default memo(function ResourceListAction({ item, editItem, deleteItem }) {
     return (
         <View style={{
             flex: 1,

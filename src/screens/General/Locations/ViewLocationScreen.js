@@ -4,7 +4,7 @@ import { Layout } from 'react-native-ui-kitten';
 import ResourceView from '@components/resource/ResourceView.js';
 import VIEW_LOCATION from '@graphql/queries/Location/viewLocation.gql.js';
 
-export default function ViewLocationScreen({ navigation }) {
+export default function ViewLocationScreen() {
     const items = [
         {
             title: i18n.t('General'),
@@ -54,7 +54,7 @@ export default function ViewLocationScreen({ navigation }) {
         },
     ];
 
-    title = item => {
+    const title = item => {
         return (item.name || '(' + i18n.t('name not set') + ')');
     }
 

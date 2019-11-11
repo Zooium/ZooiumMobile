@@ -158,7 +158,7 @@ export default function ViewAnimalScreen({ navigation }) {
         },
     ];
 
-    title = item => {
+    const title = item => {
         return (item.name || item.identifier || '(' + i18n.t('name not set') + ')');
     }
 

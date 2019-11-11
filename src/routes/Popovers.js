@@ -5,7 +5,7 @@ import EditEnclosure from '@screens/General/Enclosures/EditEnclosureScreen.js';
 import ViewLocation from '@screens/General/Locations/ViewLocationScreen.js';
 import EditLocation from '@screens/General/Locations/EditLocationScreen.js';
 
-export default Popovers = {
+export default {
     ViewAnimal, EditAnimal,
     ViewEnclosure, EditEnclosure,
     ViewLocation, EditLocation,

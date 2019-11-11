@@ -1,4 +1,5 @@
 import i18n from '@src/i18n.js';
+import theme from '@src/theme.js';
 import React, { useEffect } from 'react';
 import Loader from '@components/Loader.js';
 import AppStyles from '@utils/AppStyles.js';
@@ -40,7 +41,7 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit }, n
         });
     }, [response]);
 
-    renderItem = ({ item }) => {
+    const renderItem = ({ item }) => {
         const isMultiline = item.multiline && item.multiline(response);
 
         if (item.onPress) {
@@ -93,7 +94,7 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit }, n
         )
     }
 
-    renderSectionHeader = ({ section }) => {
+    const renderSectionHeader = ({ section }) => {
         return (
             <Text category="label" style={AppStyles.listSection}>
                 {section.title.toUpperCase()}

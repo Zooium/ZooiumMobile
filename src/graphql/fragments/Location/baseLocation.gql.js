@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export default BASE_LOCATION = gql`
+export default gql`
     fragment baseLocation on Location {
         id
         name
