@@ -12,10 +12,26 @@
         "Enclosure": "Enclosure",
         "Enclosure_plural": "Enclosures",
 
+        "Data": "Data",
         "General": "General",
         "Account": "Account",
 
         "Logout": "Logout",
+
+        "ID": "ID",
+        "Name": "Name",
+        "Sex": "Sex",
+        "Born": "Born",
+        "Notes": "Notes",
+
+        "Cubs": "Cubs",
+        "Family": "Family",
+        "Media": "Media",
+        "Events": "Events",
+
+        "Male": "Male",
+        "Female": "Female",
+        "Unknown": "Unknown",
         
         "View": "View",
         "Menu": "Menu",
@@ -30,6 +46,7 @@
         "Username": "Username",
         "Password": "Password",
 
+        "Unavailable": "Unavailable",
         "name not set": "name not set",
         "not provided": "not provided",
 
@@ -47,6 +64,11 @@
         "Use location": "Use location",
 
         "In order to use this feature you must allow access to your camera!": "In order to use this feature you must allow access to your camera!",
-        "In order to use this feature you must allow access to location services!": "In order to use this feature you must allow access to location services!"
+        "In order to use this feature you must allow access to location services!": "In order to use this feature you must allow access to location services!",
+
+        "Read more": "Read more",
+        "Disclaimer": "Disclaimer",
+        "Not or only partly covered by listing. Check {{site}} for more info!": "Not or only partly covered by listing. Check {{site}} for more info!",
+        "cites.disclaimer": "This is not legal advice! Because of taxonomic differences, CITES may not be fully compatible with the listed species and should therefore always be checked up separately. Some countries may have special regulations that are not included."
     }
 }

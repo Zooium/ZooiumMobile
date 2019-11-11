@@ -1,10 +1,15 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import i18n from '@src/i18n.js';
+import React, { useEffect } from 'react';
 import Loader from '@components/Loader.js';
+import AppStyles from '@utils/AppStyles.js';
 import { useQuery } from '@apollo/react-hooks';
+import { View, SectionList } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { Text, Icon } from 'react-native-ui-kitten';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function ResourceView({ title, fetch, variables = {}, routes: { edit }, page: Page, navigation }) {
+function ResourceView({ title, items, fetch, variables = {}, routes: { edit }, navigation }) {
     useEffect(() => {
         navigation.setParams({
             getTitle: title,
@@ -35,7 +40,75 @@ function ResourceView({ title, fetch, variables = {}, routes: { edit }, page: Pa
         });
     }, [response]);
 
-    return (loading ? <Loader /> : <Page item={response} />);
+    renderItem = ({ item }) => {
+        const isMultiline = item.multiline && item.multiline(response);
+
+        if (item.onPress) {
+            return (
+                <TouchableOpacity style={[AppStyles.listItem, {
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                }]} onPress={item.onPress}>
+                    <Text status="primary" category="s1">
+                        {item.title}
+                    </Text>
+
+                    <Icon size={24} name="angle-right" color={theme['color-basic-500']} />
+                </TouchableOpacity>
+            );
+        }
+
+        return (
+            <View style={[AppStyles.listItem, {
+                flexDirection: isMultiline
+                    ? 'column'
+                    : 'row',
+
+                alignItems: isMultiline
+                    ? 'flex-start'
+                    : 'center',
+                    
+                justifyContent: 'flex-start',
+            }]}>
+                <View style={{ width: 100 }}>
+                    {typeof item.title === 'function'
+                        ? item.title(response)
+                        : (
+                            <Text category="s2" appearance="hint">
+                                {item.title}
+                            </Text>
+                        )
+                    }
+                </View>
+                
+                {item.render 
+                    ? (! item.provided || item.provided(response)
+                        ? item.render(response)
+                        : '(' + i18n.t('not provided') + ')'
+                    )
+                    : <Text>{item.text(response) || '(' + i18n.t('not provided') + ')'}</Text>
+                }
+            </View>
+        )
+    }
+
+    renderSectionHeader = ({ section }) => {
+        return (
+            <Text category="label" style={AppStyles.listSection}>
+                {section.title.toUpperCase()}
+            </Text>
+        );
+    }
+
+    return loading ? <Loader /> : (
+        <SectionList
+            sections={items}
+            renderItem={renderItem}
+            renderSectionHeader={renderSectionHeader}
+            keyExtractor={(item, index) => item + index}
+        />
+    );
 }
 
 ResourceView.navigationOptions = ({ navigation }) => {
