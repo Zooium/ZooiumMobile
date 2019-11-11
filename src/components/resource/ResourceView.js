@@ -1,5 +1,6 @@
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
+import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import Loader from '@components/Loader.js';
 import AppStyles from '@utils/AppStyles.js';
@@ -110,6 +111,35 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit }, n
             keyExtractor={(item, index) => item + index}
         />
     );
+}
+
+ResourceView.propTypes = {
+    title: PropTypes.func.isRequired,
+
+    fetch: PropTypes.object.isRequired,
+    variables: PropTypes.object,
+
+    routes: PropTypes.shape({
+        edit: PropTypes.string.isRequired,
+    }),
+
+    items: PropTypes.arrayOf(PropTypes.object),
+    item: PropTypes.shape({
+        title: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.func,
+        ]).isRequired,
+
+        text: PropTypes.string,
+        render: PropTypes.func,
+        provided: PropTypes.func,
+        onPress: PropTypes.func,
+        multiline: PropTypes.func,
+    }),
+
+    section: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+    }),
 }
 
 ResourceView.navigationOptions = ({ navigation }) => {

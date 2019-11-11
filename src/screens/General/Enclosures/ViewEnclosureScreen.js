@@ -17,7 +17,7 @@ export default function ViewEnclosureScreen({ navigation }) {
                 {
                     title: i18n.t('Location', { count: 1 }),
                     provided: resource => resource.location,
-                    render: resource => {  
+                    render: function LocationRender(resource) {  
                         const location = resource && resource.location;       
                         const locationText = location &&
                             [

@@ -6,6 +6,8 @@
 		"ios": "expo start --ios",
 		"web": "expo start --web",
 		"eject": "expo eject",
+
+		"lint": "eslint .",
 		"build-schema": "node src/graphql/SchemaQuery.js"
 	},
 	"dependencies": {
@@ -31,6 +33,7 @@
 		"graphql-tag": "^2.10.1",
 		"i18next": "^19.0.0",
 		"lodash": "^4.17.15",
+		"prop-types": "^15.7.2",
 		"react": "16.11.0",
 		"react-dom": "^16.8.6",
 		"react-i18next": "^11.0.1",

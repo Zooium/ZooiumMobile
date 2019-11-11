@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
+import PropTypes from 'prop-types';
 import AppStyles from '@utils/AppStyles.js';
 import AuthManager from '@utils/AuthManager.js';
 import { Text, Icon } from 'react-native-ui-kitten';
@@ -123,4 +124,17 @@ export default function MenuScreen({ navigation }) {
             />
         </View>
     );
+}
+
+MenuScreen.propTypes = {
+    item: PropTypes.shape({
+        color: PropTypes.string,
+        icon: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        onPress: PropTypes.func.isRequired,
+    }),
+    
+    section: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+    }),
 }

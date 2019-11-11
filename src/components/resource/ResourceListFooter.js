@@ -1,9 +1,10 @@
 import React, { memo } from 'react';
 import i18n from '@src/i18n.js';
+import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { Text, Spinner } from 'react-native-ui-kitten';
 
-export default memo(function ResourceListFooter({ hasMore }) {
+function ResourceListFooter({ hasMore }) {
     return (
         <View style={{                    
             alignItems: 'center',
@@ -12,4 +13,10 @@ export default memo(function ResourceListFooter({ hasMore }) {
             {hasMore && <Spinner /> || <Text>{i18n.t('You have reached the end!')}</Text>}
         </View>
     );
-});
+}
+
+ResourceListFooter.propTypes = {
+    hasMore: PropTypes.bool.isRequired,
+}
+
+export default memo(ResourceListFooter);

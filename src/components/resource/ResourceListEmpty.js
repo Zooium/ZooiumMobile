@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
+import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { Text, Icon } from 'react-native-ui-kitten';
 
@@ -14,4 +15,8 @@ export default function ResourceListEmpty({ resource }) {
             </Text>
         </View>
     );
+}
+
+ResourceListEmpty.propTypes = {
+    resource: PropTypes.string.isRequired,
 }

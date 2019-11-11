@@ -1,4 +1,5 @@
 import { merge } from 'lodash';
+import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import Loader from '@components/Loader.js';
 import AuthState from '@utils/AuthState.js';
@@ -129,5 +130,17 @@ ResourceList.navigationOptions = ({ navigation }) => ({
         textAlign: 'center',
     },
 });
+
+ResourceList.propTypes = {
+    name: PropTypes.string.isRequired,
+    fetch: PropTypes.object.isRequired,
+    preview: PropTypes.func.isRequired,
+    variables: PropTypes.object,
+    showRefresh: PropTypes.bool,
+    routes: PropTypes.shape({
+        view: PropTypes.string.isRequired,
+        edit: PropTypes.string.isRequired,
+    }),
+}
 
 export default withNavigation(ResourceList);

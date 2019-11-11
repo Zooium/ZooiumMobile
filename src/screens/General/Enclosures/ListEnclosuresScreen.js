@@ -1,5 +1,6 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
+import PropTypes from 'prop-types';
 import { View, TouchableOpacity  } from 'react-native';
 import { Text, Icon, Layout } from 'react-native-ui-kitten';
 import ResourceList from '@components/resource/ResourceList.js';
@@ -75,5 +76,12 @@ function ListEnclosuresScreen({ header: Header, showRefresh = true, variables = 
 }
 
 ListEnclosuresScreen.navigationOptions = ResourceList.navigationOptions;
+ListEnclosuresScreen.propTypes = {
+    header: PropTypes.func,
+    showRefresh: PropTypes.bool,
+    variables: PropTypes.object,
+
+    item: PropTypes.object, // @wip - Model instance.
+}
 
 export default withNavigation(ListEnclosuresScreen);

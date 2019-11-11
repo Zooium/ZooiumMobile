@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-native-ui-kitten';
 import { ActivityIndicator } from 'react-native';
 
@@ -20,4 +21,10 @@ export default function LoadingButton(props) {
             {props.loading ? undefined : props.children }
         </Button>
     );
+}
+
+LoadingButton.propTypes = {
+    size: PropTypes.string,
+    children: PropTypes.func,
+    loading: PropTypes.bool.isRequired,
 }

@@ -1,9 +1,10 @@
 import theme from '@src/theme.js';
+import PropTypes from 'prop-types';
 import React, { memo } from 'react';
 import { Icon } from 'react-native-ui-kitten';
 import { View, TouchableOpacity } from 'react-native';
 
-export default memo(function ResourceListAction({ item, editItem, deleteItem }) {
+function ResourceListAction({ item, editItem, deleteItem }) {
     return (
         <View style={{
             flex: 1,
@@ -34,4 +35,12 @@ export default memo(function ResourceListAction({ item, editItem, deleteItem }) 
             </TouchableOpacity>
         </View>
     );
-});
+}
+
+ResourceListAction.propTypes = {
+    item: PropTypes.object.isRequired,
+    editItem: PropTypes.func.isRequired,
+    deleteItem: PropTypes.func.isRequired,
+}
+
+export default memo(ResourceListAction);

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import i18n, { localeName } from '@src/i18n.js';
 import { withNavigation } from 'react-navigation';
@@ -60,5 +61,8 @@ function ListAnimalsScreen() {
 }
 
 ListAnimalsScreen.navigationOptions = ResourceList.navigationOptions;
+ListAnimalsScreen.propTypes = {
+    item: PropTypes.object, // @wip - Model instance.
+}
 
 export default withNavigation(ListAnimalsScreen);

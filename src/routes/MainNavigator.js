@@ -9,12 +9,13 @@ import NearbyNavigator from './NearbyNavigator.js';
 import AnimalsNavigator from './AnimalsNavigator.js';
 import EnclosuresNavigator from './EnclosuresNavigator.js';
 
+/* eslint-disable react/prop-types */
 export default createBottomTabNavigator({
     Animals: {
         screen: AnimalsNavigator,
         navigationOptions: {
             title: i18n.t('Animal', { count: 2 }),
-            tabBarIcon: ({ tintColor }) => {
+            tabBarIcon: function AnimalIcon({ tintColor }) {
                 return <Icon name="dove" size={22} color={tintColor} />;
             },
         },
@@ -24,7 +25,7 @@ export default createBottomTabNavigator({
         screen: EnclosuresNavigator,
         navigationOptions: {
             title: i18n.t('Enclosure', { count: 2 }),
-            tabBarIcon: ({ tintColor }) => {
+            tabBarIcon: function EnclosureIcon({ tintColor }) {
                 return <Icon name="map-marked-alt" size={22} color={tintColor} />;
             },
         },
@@ -34,7 +35,7 @@ export default createBottomTabNavigator({
         screen: NearbyNavigator,
         navigationOptions: {
             title: i18n.t('Nearby'),
-            tabBarIcon: ({ tintColor }) => {
+            tabBarIcon: function NearbyIcon({ tintColor }) {
                 return <Icon name="street-view" size={22} color={tintColor} />;
             },
         },
@@ -44,7 +45,7 @@ export default createBottomTabNavigator({
         screen: MenuNavigator,
         navigationOptions: {
             title: i18n.t('Menu'),
-            tabBarIcon: ({ tintColor }) => {
+            tabBarIcon: function MenuIcon({ tintColor }) {
                 return <Icon name="ellipsis-h" size={22} color={tintColor} />;
             },
         },

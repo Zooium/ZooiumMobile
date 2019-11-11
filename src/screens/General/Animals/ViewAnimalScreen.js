@@ -25,50 +25,56 @@ export default function ViewAnimalScreen({ navigation }) {
                 {
                     title: i18n.t('Enclosure', { count: 1 }),
                     provided: resource => resource.enclosure,
-                    render: resource => (
-                        <TouchableOpacity onPress={() => {
-                            navigation.navigate({
-                                routeName: 'ViewEnclosure',
-                                params: {
-                                    item: resource.enclosure,
-                                },
-                            })
-                        }}>
-                            <Text status="primary">{resource.enclosure.name}</Text>
-                        </TouchableOpacity>
-                    ),
+                    render: function EnclosureRender(resource) {
+                        return (
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate({
+                                    routeName: 'ViewEnclosure',
+                                    params: {
+                                        item: resource.enclosure,
+                                    },
+                                })
+                            }}>
+                                <Text status="primary">{resource.enclosure.name}</Text>
+                            </TouchableOpacity>
+                        )
+                    },
                 },
                 {
                     title: i18n.t('Specie', { count: 1 }),
                     provided: resource => resource.specie,
-                    render: resource => (
-                        <View>
-                            <Text>
-                                {resource.specie[localeName()] || resource.specie.english_name || resource.specie.scientific}
-                            </Text>
+                    render: function SpecieRender(resource) {
+                        return (
+                            <View>
+                                <Text>
+                                    {resource.specie[localeName()] || resource.specie.english_name || resource.specie.scientific}
+                                </Text>
 
-                            <Text category="c1" appearance="hint">
-                                {resource.specie.scientific}
-                            </Text>
-                        </View>
-                    ),
+                                <Text category="c1" appearance="hint">
+                                    {resource.specie.scientific}
+                                </Text>
+                            </View>
+                        )
+                    },
                 },
                 {
-                    title: () => (
-                        <TouchableOpacity style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                        }} onPress={() => {
-                            Alert.alert(i18n.t('Disclaimer'), i18n.t('cites.disclaimer'));
-                        }}>
-                            <Text category="s2" appearance="hint" style={{ marginRight: 4 }}>
-                                CITES
-                            </Text>
+                    title: function CitesTitle() {
+                        return (
+                            <TouchableOpacity style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                            }} onPress={() => {
+                                Alert.alert(i18n.t('Disclaimer'), i18n.t('cites.disclaimer'));
+                            }}>
+                                <Text category="s2" appearance="hint" style={{ marginRight: 4 }}>
+                                    CITES
+                                </Text>
 
-                            <Icon size={12} name="question-circle" color={theme['color-primary-500']} />
-                        </TouchableOpacity>
-                    ),
-                    render: resource => {
+                                <Icon size={12} name="question-circle" color={theme['color-primary-500']} />
+                            </TouchableOpacity>
+                        )
+                    },
+                    render: function citesRender(resource) {
                         const cites = resource.cites || resource.specie && resource.specie.cites;
                         
                         const readMoreAddress = cites
@@ -101,18 +107,20 @@ export default function ViewAnimalScreen({ navigation }) {
                 },
                 {
                     title: i18n.t('Sex'),
-                    render: resource => (
-                        <View style={{ flexDirection: 'row' }}>
-                            <SexPreview sex={resource.sex} size={20} style={{marginRight: 10}} />
-                            <Text>
-                                {{
-                                    'male': i18n.t('Male'),
-                                    'female': i18n.t('Female'),
-                                    'unknown': i18n.t('Unknown'),
-                                }[resource.sex]}
-                            </Text>
-                        </View>
-                    ),
+                    render: function sexRender(resource) {
+                        return (
+                            <View style={{ flexDirection: 'row' }}>
+                                <SexPreview sex={resource.sex} size={20} style={{marginRight: 10}} />
+                                <Text>
+                                    {{
+                                        'male': i18n.t('Male'),
+                                        'female': i18n.t('Female'),
+                                        'unknown': i18n.t('Unknown'),
+                                    }[resource.sex]}
+                                </Text>
+                            </View>
+                        )
+                    },
                 },
                 {
                     title: i18n.t('Born'),

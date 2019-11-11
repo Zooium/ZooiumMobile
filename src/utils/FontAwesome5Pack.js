@@ -1,9 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet } from 'react-native';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 
-function FontAwesome5(props) {
-    const { name, style, ...otherProps } = props;
+function FontAwesome5({ name, style, ...otherProps }) {
     const { height, tintColor, ...iconStyle } = StyleSheet.flatten(style) || {};
 
     return (
@@ -16,6 +16,11 @@ function FontAwesome5(props) {
             solid
         />
     )
+}
+
+FontAwesome5.propTypes = {
+    name: PropTypes.string.isRequired,
+    style: Icon.propTypes.style,
 }
 
 function IconProvider(name) {

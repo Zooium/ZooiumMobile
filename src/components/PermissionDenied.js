@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
+import PropTypes from 'prop-types';
 import Constants from 'expo-constants';
 import * as IntentLauncher from 'expo-intent-launcher';
 import { View, Linking, Platform } from 'react-native';
@@ -41,3 +42,7 @@ export default function PermissionDenied({ text, retry }) {
     );
 }
 
+PermissionDenied.propTypes = {
+    text: PropTypes.string.isRequired,
+    retry: PropTypes.func.isRequired,
+}

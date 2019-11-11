@@ -1,8 +1,9 @@
 import { debounce } from 'lodash';
-import React, { useState, useEffect, forwardRef } from 'react';
+import PropTypes from 'prop-types';
 import { Input } from 'react-native-ui-kitten';
+import React, { useState, useEffect, forwardRef } from 'react';
 
-export default forwardRef(function DebouncedInput(props, ref) {
+function DebouncedInput(props, ref) {
     const [text, setText] = useState(props.get);
     const [update, setUpdate] = useState(false);
     const [debouncer] = useState(() => debounce(() => setUpdate(true), props.delay || 200));
@@ -28,4 +29,12 @@ export default forwardRef(function DebouncedInput(props, ref) {
             debouncer();
         }} {...props} />
     );
-})
+}
+
+DebouncedInput.propTypes = {
+    get: PropTypes.func.isRequired,
+    set: PropTypes.func.isRequired,
+    delay: PropTypes.number,
+}
+
+export default forwardRef(DebouncedInput);

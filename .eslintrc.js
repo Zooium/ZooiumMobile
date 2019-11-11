@@ -29,7 +29,11 @@ module.exports = {
         "react"
     ],
     "rules": {
-        "react/prop-types": "off",  // @wip
-        "react/display-name": "off" // @wip
+        "react/prop-types": ["error", {
+            "ignore": [
+                // Module: React Navigation
+                "isFocused", "navigation"
+            ]
+        }],
     }
 };

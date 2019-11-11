@@ -1,5 +1,6 @@
 import React from 'react';
 import theme from '@src/theme.js';
+import PropTypes from 'prop-types';
 import { Icon } from 'react-native-ui-kitten';
 
 export default function SexPreview(props) {
@@ -23,4 +24,8 @@ export default function SexPreview(props) {
     return (
         <Icon name={sex.icon} color={sex.color} {...props} />
     );
+}
+
+SexPreview.propTypes = {
+    sex: PropTypes.string,
 }

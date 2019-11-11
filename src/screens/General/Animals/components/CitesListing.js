@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
+import PropTypes from 'prop-types';
 import { Text } from 'react-native-ui-kitten';
 import { Alert, StyleSheet, TouchableOpacity } from 'react-native';
 
@@ -19,6 +20,10 @@ export default function CitesListing({ listing }) {
             </Text>
         </TouchableOpacity>
     );
+}
+
+CitesListing.propTypes = {
+    listing: PropTypes.string.isRequired,
 }
 
 let s = StyleSheet.create({
