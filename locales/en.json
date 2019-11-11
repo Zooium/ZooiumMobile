@@ -39,6 +39,12 @@
         "Scanner": "Scanner",
         "Distance": "Distance",
 
+        "Address": "Address",
+        "City": "City",
+        "Postcode": "Postcode",
+        "State": "State",
+        "Country": "Country",
+
         "{{distance}} km": "{{distance}} km",
         "{{distance}} meter": "{{distance}} meter",
 

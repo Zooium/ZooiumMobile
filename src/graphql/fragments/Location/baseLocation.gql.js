@@ -8,6 +8,8 @@ export default BASE_LOCATION = gql`
         address
         city
         postcode
+        state
+        country
         enclosures_count
     }
 `
