@@ -127,11 +127,11 @@ ResourceView.propTypes = {
     item: PropTypes.shape({
         title: PropTypes.oneOfType([
             PropTypes.string,
-            PropTypes.func,
+            PropTypes.elementType,
         ]).isRequired,
 
         text: PropTypes.string,
-        render: PropTypes.func,
+        render: PropTypes.elementTypeType,
         provided: PropTypes.func,
         onPress: PropTypes.func,
         multiline: PropTypes.func,

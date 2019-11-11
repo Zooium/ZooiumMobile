@@ -19,5 +19,5 @@ export default function KeyboardAvoidingLayout(props) {
 
 KeyboardAvoidingLayout.propTypes = {
     offset: PropTypes.number,
-    children: PropTypes.func,
+    children: PropTypes.any,
 }

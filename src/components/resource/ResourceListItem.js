@@ -16,7 +16,7 @@ function ResourceListItem({ item, viewItem, preview: Preview }) {
 ResourceListItem.propTypes = {
     item: PropTypes.object.isRequired,
     viewItem: PropTypes.func.isRequired,
-    preview: PropTypes.func.isRequired,
+    preview: PropTypes.elementType.isRequired,
 }
 
 export default memo(ResourceListItem);

@@ -4,7 +4,7 @@ import React, { forwardRef } from 'react';
 import { Icon } from 'react-native-ui-kitten';
 import DebouncedInput from '@components/DebouncedInput.js';
 
-function FullWidthSearch(props, ref) {
+const FullWidthSearch = forwardRef(function FullWidthSearch(props, ref) {
     const { set } = props;
 
     return (
@@ -29,10 +29,10 @@ function FullWidthSearch(props, ref) {
             {...props}
         />
     );
-}
+});
 
 FullWidthSearch.propTypes = {
     set: PropTypes.func.isRequired,
 }
 
-export default forwardRef(FullWidthSearch);
+export default FullWidthSearch;

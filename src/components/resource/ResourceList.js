@@ -134,7 +134,7 @@ ResourceList.navigationOptions = ({ navigation }) => ({
 ResourceList.propTypes = {
     name: PropTypes.string.isRequired,
     fetch: PropTypes.object.isRequired,
-    preview: PropTypes.func.isRequired,
+    preview: PropTypes.elementType.isRequired,
     variables: PropTypes.object,
     showRefresh: PropTypes.bool,
     routes: PropTypes.shape({

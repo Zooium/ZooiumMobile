@@ -77,7 +77,7 @@ function ListEnclosuresScreen({ header: Header, showRefresh = true, variables = 
 
 ListEnclosuresScreen.navigationOptions = ResourceList.navigationOptions;
 ListEnclosuresScreen.propTypes = {
-    header: PropTypes.func,
+    header: PropTypes.elementType,
     showRefresh: PropTypes.bool,
     variables: PropTypes.object,
 

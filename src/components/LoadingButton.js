@@ -25,6 +25,6 @@ export default function LoadingButton(props) {
 
 LoadingButton.propTypes = {
     size: PropTypes.string,
-    children: PropTypes.func,
+    children: PropTypes.any,
     loading: PropTypes.bool.isRequired,
 }
