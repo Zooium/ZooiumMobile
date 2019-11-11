@@ -87,7 +87,7 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit }, n
                 {item.render 
                     ? (! item.provided || item.provided(response)
                         ? item.render(response)
-                        : '(' + i18n.t('not provided') + ')'
+                        : <Text>({i18n.t('not provided')})</Text>
                     )
                     : <Text>{item.text(response) || '(' + i18n.t('not provided') + ')'}</Text>
                 }
