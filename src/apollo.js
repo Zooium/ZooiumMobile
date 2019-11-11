@@ -25,10 +25,11 @@ const RequestAuthorizer = setContext((_, { headers }) => {
 // Define failed request error handler.
 const ErrorHandler = onError(({ networkError: network, graphQLErrors: errors, forward, operation }) => {
     // Get the current route name.
-    let route = router.currentRoute().routeName;
-    
+    let route = router.currentRoute();
+
     // Check if unauthorized error. @wip - differentiate between unauthed and unauthorized.
-    if (errors && errors[0] && errors[0].message == 'Unauthorized' && route !== 'Login') {
+    const allowsUnauthorized = route.params.allowUnauthorized === true;
+    if (errors && errors[0] && errors[0].message == 'Unauthorized' && ! allowsUnauthorized) {
         // Attempt to refresh auth and retry.
         AuthManager.refresh().then(result => {
             // Retry the operation if refeshed.
@@ -41,7 +42,7 @@ const ErrorHandler = onError(({ networkError: network, graphQLErrors: errors, fo
     }
 
     // Check if back-end is in maintenance mode.
-    if (network && network.statusCode && network.statusCode === 503 && route !== 'Maintenance') {
+    if (network && network.statusCode && network.statusCode === 503 && route.routeName !== 'Maintenance') {
         // Redirect to maintenance page.
         router.push('Auth', 'Maintenance');
     }

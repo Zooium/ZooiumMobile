@@ -1,7 +1,7 @@
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import { SplashScreen } from 'expo';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SafeView from '@components/SafeView.js';
 import AuthManager from '@utils/AuthManager.js';
 import { Text, Layout } from 'react-native-ui-kitten';
@@ -10,6 +10,13 @@ import { View, Image, StyleSheet, StatusBar } from 'react-native';
 
 export default function LoginScreen({ navigation }) {
     const [loading, setLoading] = useState(false);
+
+    // Allow unauthorized network attempts.
+    useEffect(() => {
+        navigation.setParams({
+            allowUnauthorized: true,
+        });
+    }, []);
 
     // Load auth state from storage.
     AuthManager.init().then(loggedIn => {

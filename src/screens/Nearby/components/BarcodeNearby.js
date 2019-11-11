@@ -11,7 +11,6 @@ import PermissionDenied from '@components/PermissionDenied.js';
 import { withNavigation, withNavigationFocus } from 'react-navigation';
 import VIEW_SHORTLINK from '@graphql/queries/Shortlink/viewShortlink.gql.js';
 
-// @wip - Unauthed QR codes logouts user.
 function BarcodeNearby(props) {
     const [status, setStatus] = useState('undetermined');
     const [invalid, setInvalid] = useState(false);
@@ -25,9 +24,15 @@ function BarcodeNearby(props) {
         setStatus(status);
     }
 
-    // Request permissions on boot.
+    // Start view on boot
     useEffect(() => {
+        // Request user for permissions.
         requestPermission();
+
+        // Allow unauthorized network attempts.
+        props.navigation.setParams({
+            allowUnauthorized: true,
+        });
     }, []);
 
     const [loadShortlink, { loading, error, data }] = useLazyQuery(VIEW_SHORTLINK, {
