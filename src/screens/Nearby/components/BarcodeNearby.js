@@ -64,7 +64,7 @@ function BarcodeNearby(props) {
     useEffect(() => {
         // Handle error and missing data.
         if (error) markInvalid();
-        if (! data) return;
+        if (! data || ! data.shortlink) return;
 
         // Extract item and type from request.
         const item = data.shortlink.resource;
