@@ -8,7 +8,6 @@ import { withNavigation } from 'react-navigation';
 import ResourceListItem from './ResourceListItem.js';
 import ResourceListEmpty from './ResourceListEmpty.js';
 import AddingHeader from '@components/AddingHeader.js';
-import ResourceListFooter from './ResourceListFooter.js';
 import ResourceListActions from './ResourceListActions.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import FullWidthSearch from '@components/FullWidthSearch.js';
@@ -61,7 +60,6 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
 
     const listData = response && response.data || [];
     const hasMore = ! init && response.total > (response.per_page * page);
-    const isEmpty = listData.length === 0;
 
     const loadMore = () => {
         // Skip if loading or has no more items to show.
@@ -99,7 +97,6 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
                 renderItem={itemCallback}
                 renderHiddenItem={actionsCallback} 
                 ListEmptyComponent={emptyCallback}
-                ListFooterComponent={() => ! isEmpty && <ResourceListFooter hasMore={hasMore}  />}
                 onRefresh={() => refetch()}
                 refreshing={showRefresh && loading}
                 onEndReached={loadMore}
