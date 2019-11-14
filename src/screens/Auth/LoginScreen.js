@@ -1,37 +1,31 @@
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import { SplashScreen } from 'expo';
-import React, { useState, useEffect } from 'react';
 import SafeView from '@components/SafeView.js';
 import AuthManager from '@utils/AuthManager.js';
+import React, { useState, useEffect } from 'react';
 import { Text, Layout } from 'react-native-ui-kitten';
+import { View, Image, StyleSheet } from 'react-native';
 import LoadingButton from '@components/LoadingButton.js';
-import { View, Image, StyleSheet, StatusBar } from 'react-native';
 
 export default function LoginScreen({ navigation }) {
     const [loading, setLoading] = useState(false);
 
-    // Allow unauthorized network attempts.
     useEffect(() => {
+        // Allow unauthorized network attempts.
         navigation.setParams({
             allowUnauthorized: true,
         });
-    }, []);
 
-    // Load auth state from storage.
-    AuthManager.init().then(loggedIn => {
-        // Navigate to main if authenticated or hide splash screen.
-        if (loggedIn) {
-            navigation.navigate('Main', {
-                hideSplash: true,
-            })
-        } else {
+        // Load auth state from storage.
+        AuthManager.init().then(loggedIn => {
+            // Navigate to main if authenticated.
+            if (loggedIn) navigation.navigate('Main');
+        }).finally(() => {
+            // Hide the splash screen.
             SplashScreen.hide();
-        }
-    }).catch(() => {
-        // Hide the splash screen.
-        SplashScreen.hide();
-    });
+        });
+    }, []);
 
     const authenticate = async () => {
         // Enable loading state.
@@ -46,15 +40,12 @@ export default function LoginScreen({ navigation }) {
 
         // Redirect to app if authed.
         if (authed) {
-            navigation.navigate('Main', {
-                hideSplash: true,
-            });
+            navigation.navigate('Main');
         }
     };
 
     return (
         <Layout style={s.background}>
-            <StatusBar barStyle="light-content" />
             <SafeView>
                 <View style={s.brand}>
                     <Image style={s.logo} source={require('@assets/icon.png')} />

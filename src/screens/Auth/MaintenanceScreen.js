@@ -6,7 +6,7 @@ import { SplashScreen } from 'expo';
 import SafeView from '@components/SafeView.js';
 import PING from '@graphql/queries/ping.gql.js';
 import { Text, Layout } from 'react-native-ui-kitten';
-import { View, Image, StyleSheet, StatusBar } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 
 export default function MaintenanceScreen({ navigation }) {
     // Hide the app splash screen.
@@ -27,7 +27,6 @@ export default function MaintenanceScreen({ navigation }) {
 
     return (
         <Layout style={s.background}>
-            <StatusBar barStyle="light-content" />
             <SafeView>
                 <View style={s.brand}>
                     <Image style={s.logo} source={require('@assets/icon.png')} />

@@ -19,16 +19,6 @@ export default forwardRef(function AppContainer(props, ref) {
     // Keep splash screen shown.
     SplashScreen.preventAutoHide();
 
-    // Return container and listen for state changes.
-    return <AppNavigationContainer ref={ref} onNavigationStateChange={(prev, current) => {
-        // Get params for the current route.
-        const params = current.routes[current.index].params;
-
-        // Hide splash screen after interacitons if requested.
-        if (params && params.hideSplash) {
-            setTimeout(() => {
-                SplashScreen.hide();
-            }, 2);
-        }
-    }} />;
+    // Return app navigation container.
+    return <AppNavigationContainer ref={ref} />;
 })

@@ -37,9 +37,7 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
     }, [searchInput]);
 
     useEffect(() => {
-        navigation.setParams({
-            editItem: editItem,
-        })
+        navigation.setParams({ editItem });
     }, []);
 
     const team = AuthState.currentTeam();
@@ -114,7 +112,10 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
 }
 
 ResourceList.navigationOptions = ({ navigation }) => ({
-    headerLeft: <AddingHeader style={{ marginLeft: 10 }} onPress={() => navigation.getParam('editItem')()} />,
+    headerLeft: <AddingHeader style={{ marginLeft: 10 }} onPress={() => {
+        navigation.getParam('editItem')()
+    }} />,
+
     headerRight: <SearchableHeader style={{ marginRight: 10 }} onPress={() => {
         navigation.setParams({
             focusInput: true,
