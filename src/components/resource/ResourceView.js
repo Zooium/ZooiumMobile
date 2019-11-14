@@ -11,7 +11,7 @@ import { Text, Icon } from 'react-native-ui-kitten';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function ResourceView({ title, items, fetch, variables = {}, routes: { edit }, navigation }) {
+function ResourceView({ title, items, fetch, variables = {}, routes: { edit }, form, navigation }) {
     useEffect(() => {
         navigation.setParams({
             getTitle: title,
@@ -22,9 +22,12 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit }, n
     }, []);
     
     const item = navigation.getParam('item');
+    const creating = ! item;
+
     const { loading, data } = useQuery(fetch, {
+        skip: creating,
         variables: {
-            id: item.id,
+            id: item && item.id,
             ...variables,
         },
     });
@@ -68,7 +71,7 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit }, n
             </Text>
         );
         
-        const contents = item.render && item.render(response) || item.text && item.text(response);
+        const contents = item.render && item.render(form || response) || item.text && item.text(response);
         const contentsRender = typeof contents !== 'string' ? contents : (
             <Text>
                 {contents}
@@ -81,15 +84,25 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit }, n
                 flexDirection: isMultiline ? 'column' : 'row',
                 alignItems: isMultiline ? 'flex-start' : 'center',
             }]}>
-                <View style={{ width: 100 }}>
+                <View style={{
+                    width: 100,
+                    marginRight: 10,
+                    marginBottom: isMultiline ? 12 : 0,
+                }}>
                     {titleRender}
+                    {item.description && item.description()}
                 </View>
                 
-                {contentsRender || (
-                    <Text appearance="hint" style={{ fontSize: 12 }}>
-                        ({i18n.t('not provided')})
-                    </Text>
-                )}
+                <View style={{
+                    flex: 1,
+                    width: isMultiline ? '100%' : undefined,
+                }}>
+                    {contentsRender || (
+                        <Text appearance="hint" style={{ fontSize: 12 }}>
+                            ({i18n.t('not provided')})
+                        </Text>
+                    )}
+                </View>
             </View>
         )
     }
@@ -129,7 +142,9 @@ ResourceView.propTypes = {
             PropTypes.elementType,
         ]).isRequired,
 
+        
         text: PropTypes.string,
+        description: PropTypes.string,
         render: PropTypes.elementTypeType,
         onPress: PropTypes.func,
         multiline: PropTypes.func,
