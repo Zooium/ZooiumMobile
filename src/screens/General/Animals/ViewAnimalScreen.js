@@ -24,9 +24,8 @@ export default function ViewAnimalScreen({ navigation }) {
                 },
                 {
                     title: i18n.t('Enclosure', { count: 1 }),
-                    provided: resource => resource.enclosure,
                     render: function EnclosureRender(resource) {
-                        return (
+                        return resource.enclosure && (
                             <TouchableOpacity onPress={() => {
                                 navigation.navigate({
                                     routeName: 'ViewEnclosure',
@@ -42,9 +41,8 @@ export default function ViewAnimalScreen({ navigation }) {
                 },
                 {
                     title: i18n.t('Specie', { count: 1 }),
-                    provided: resource => resource.specie,
                     render: function SpecieRender(resource) {
-                        return (
+                        return resource.specie && (
                             <View>
                                 <Text>
                                     {resource.specie[localeName()] || resource.specie.english_name || resource.specie.scientific}

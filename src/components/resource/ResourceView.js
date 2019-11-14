@@ -60,37 +60,36 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit }, n
                 </TouchableOpacity>
             );
         }
+        
+        const title = typeof item.title === 'function' && item.title(response) || item.title;
+        const titleRender = typeof title !== 'string' ? title : (
+            <Text category="s2" appearance="hint">
+                {title}
+            </Text>
+        );
+        
+        const contents = item.render && item.render(response) || item.text && item.text(response);
+        const contentsRender = typeof contents !== 'string' ? contents : (
+            <Text>
+                {contents}
+            </Text>
+        );
 
         return (
             <View style={[AppStyles.listItem, {
-                flexDirection: isMultiline
-                    ? 'column'
-                    : 'row',
-
-                alignItems: isMultiline
-                    ? 'flex-start'
-                    : 'center',
-                    
                 justifyContent: 'flex-start',
+                flexDirection: isMultiline ? 'column' : 'row',
+                alignItems: isMultiline ? 'flex-start' : 'center',
             }]}>
                 <View style={{ width: 100 }}>
-                    {typeof item.title === 'function'
-                        ? item.title(response)
-                        : (
-                            <Text category="s2" appearance="hint">
-                                {item.title}
-                            </Text>
-                        )
-                    }
+                    {titleRender}
                 </View>
                 
-                {item.render 
-                    ? (! item.provided || item.provided(response)
-                        ? item.render(response)
-                        : <Text>({i18n.t('not provided')})</Text>
-                    )
-                    : <Text>{item.text(response) || '(' + i18n.t('not provided') + ')'}</Text>
-                }
+                {contentsRender || (
+                    <Text appearance="hint" style={{ fontSize: 12 }}>
+                        ({i18n.t('not provided')})
+                    </Text>
+                )}
             </View>
         )
     }
@@ -132,7 +131,6 @@ ResourceView.propTypes = {
 
         text: PropTypes.string,
         render: PropTypes.elementTypeType,
-        provided: PropTypes.func,
         onPress: PropTypes.func,
         multiline: PropTypes.func,
     }),
