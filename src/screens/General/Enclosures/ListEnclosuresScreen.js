@@ -8,63 +8,67 @@ import { withNavigation, NavigationActions } from 'react-navigation';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import LIST_ENCLOSURES from '@graphql/queries/Enclosure/listEnclosures.gql.js';
 
-function ListEnclosuresScreen({ header: Header, showRefresh = true, variables = {}, navigation }) {
-    const preview = ({ item }) => {
-        const locationText = item && item.location && item.location.name
-            || '(' + i18n.t('not provided') + ')';
+export const enclosurePreview = ({ item, header: Header, layout: { showCount = true } = {} }) => {
+    const locationText = item && item.location && item.location.name
+        || '(' + i18n.t('not provided') + ')';
 
-        return (
-            <View style={{ width: '100%', flexDirection: 'column' }}>
-                {Header && <Header item={item} />}
-                
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{ flex: 1 }}>
-                        <Text category="h6">
-                            { item.name || '(' + i18n.t('name not set') + ')' }
+    return (
+        <View style={{ width: '100%', flexDirection: 'column' }}>
+            {Header && <Header item={item} />}
+            
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flex: 1 }}>
+                    <Text category="h6">
+                        { item.name || '(' + i18n.t('name not set') + ')' }
+                    </Text>
+
+                    <Text>{locationText}</Text>
+                </View>
+
+                {showCount && item.animals_count !== 0 &&
+                    <TouchableOpacity style={{ flexShrink: 0, alignItems: 'flex-end' }} onPress={() => navigation.navigate({
+                        routeName: 'Animals',
+                        action: NavigationActions.navigate({
+                            routeName: 'ListAnimals',
+                            params: {
+                                search: 'enclosure:'+item.id,
+                                focusInput: false,
+                            },
+                        }),
+                    })}>
+                        <Text style={{ fontWeight: 'bold' }}>
+                            {item.animals_count} {i18n.t('Animal', { count: 2 })}
                         </Text>
 
-                        <Text>{locationText}</Text>
-                    </View>
-
-                    {item.animals_count !== 0 &&
-                        <TouchableOpacity style={{ flexShrink: 0, alignItems: 'flex-end' }} onPress={() => navigation.navigate({
-                            routeName: 'Animals',
-                            action: NavigationActions.navigate({
-                                routeName: 'ListAnimals',
-                                params: {
-                                    search: 'enclosure:'+item.id,
-                                    focusInput: false,
-                                },
-                            }),
-                        })}>
-                            <Text style={{ fontWeight: 'bold' }}>
-                                {item.animals_count} {i18n.t('Animal', { count: 2 })}
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Text style={{marginRight: 6}}>
+                                {i18n.t('View')}
                             </Text>
 
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={{marginRight: 6}}>
-                                    {i18n.t('View')}
-                                </Text>
-
-                                <Icon name="angle-right" size={14} style={{ opacity: 0.6 }} />
-                            </View>
-                        </TouchableOpacity>
-                    }
-                </View>
+                            <Icon name="angle-right" size={14} style={{ opacity: 0.6 }} />
+                        </View>
+                    </TouchableOpacity>
+                }
             </View>
-        );
-    }
+        </View>
+    );
+}
 
+function ListEnclosuresScreen({ header, layout, showRefresh = true, variables = {}, navigation }) {
     return (
         <KeyboardAvoidingLayout>
             <Layout style={{ flex: 1 }}>
                 <ResourceList
-                    preview={preview}
+                    preview={enclosurePreview}
                     fetch={LIST_ENCLOSURES}
                     variables={variables}
                     showRefresh={showRefresh}
                     name={i18n.t('Enclosure', { count: 2 })}
                     
+                    extraData={{
+                        header, layout
+                    }}
+
                     routes={{
                         view: 'ViewEnclosure',
                         edit: 'EditEnclosure',
@@ -80,6 +84,9 @@ ListEnclosuresScreen.propTypes = {
     header: PropTypes.elementType,
     showRefresh: PropTypes.bool,
     variables: PropTypes.object,
+    layout: PropTypes.shape({
+        showCount: PropTypes.bool,
+    }),
 
     item: PropTypes.object, // @wip - Model instance.
 }

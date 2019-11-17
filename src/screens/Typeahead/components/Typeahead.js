@@ -14,7 +14,7 @@ import ResourceListItem from '@components/resource/ResourceListItem.js';
 import ResourceListEmpty from '@components/resource/ResourceListEmpty.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 
-function Typeahead({ name, fetch, preview, variables = {}, navigation }) {
+function Typeahead({ name, fetch, preview, itemProps, variables = {}, navigation }) {
     const searchInput = createRef();
     const query = navigation.getParam('search') || '';
     const appendQuery = navigation.getParam('appendSearch') || '';
@@ -29,7 +29,7 @@ function Typeahead({ name, fetch, preview, variables = {}, navigation }) {
         navigation.goBack();
     };
 
-    const itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={selectItem} preview={preview} />, []);
+    const itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={selectItem} preview={preview} {...itemProps} />, []);
     const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []);
 
     const team = AuthState.currentTeam();
@@ -121,6 +121,7 @@ Typeahead.propTypes = {
     name: PropTypes.string.isRequired,
     fetch: PropTypes.object.isRequired,
     preview: PropTypes.elementType.isRequired,
+    itemProps: PropTypes.object,
 }
 
 export default withNavigation(Typeahead);

@@ -3,9 +3,10 @@ import i18n from '@src/i18n.js';
 import TypeaheadInput from '@components/TypeaheadInput.js';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
 import VIEW_ANIMAL from '@graphql/queries/Animal/viewAnimal.gql.js';
-import { AnimalTypeaheadInput } from '@screens/Typeahead/AnimalTypeaheadScreen.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import { Text, Radio, RadioGroup, Layout, Input } from 'react-native-ui-kitten';
+import { AnimalTypeaheadInput } from '@screens/Typeahead/AnimalTypeaheadScreen.js';
+import { EnclosureTypeaheadInput } from '@screens/Typeahead/EnclosureTypeaheadScreen.js';
 
 const items = [
     {
@@ -76,7 +77,19 @@ const items = [
             {
                 title: i18n.t('Enclosure', { count: 1 }),
                 render: function EnclosureRender([state, mergeState]) {
-                    return undefined; // @wip
+                    return (
+                        <TypeaheadInput
+                            view="EnclosureTypeahead"
+                            resource={i18n.t('Enclosure')}
+                            preview={EnclosureTypeaheadInput}
+
+                            value={state.enclosure}
+                            onChange={(value) => mergeState({
+                                enclosure: value,
+                                enclosure_id: value && value.id || undefined,
+                            })}
+                        />
+                    );
                 },
             },
             {

@@ -14,7 +14,7 @@ import FullWidthSearch from '@components/FullWidthSearch.js';
 import SearchableHeader from '@components/SearchableHeader.js';
 import React, { useEffect, useCallback, createRef } from 'react';
 
-function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, preview, showRefresh = true, navigation }) {
+function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, preview, extraData, showRefresh = true, navigation }) {
     const searchInput = createRef();
 
     const query = navigation.getParam('search');
@@ -104,6 +104,7 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
                 stopLeftSwipe={85}
                 rightOpenValue={-75}
                 stopRightSwipe={-85}
+                extraData={extraData}
                 contentContainerStyle={{
                     flexGrow: 1,
                 }}
@@ -136,6 +137,8 @@ ResourceList.propTypes = {
     preview: PropTypes.elementType.isRequired,
     variables: PropTypes.object,
     showRefresh: PropTypes.bool,
+    extraData: PropTypes.object,
+    
     routes: PropTypes.shape({
         view: PropTypes.string.isRequired,
         edit: PropTypes.string.isRequired,

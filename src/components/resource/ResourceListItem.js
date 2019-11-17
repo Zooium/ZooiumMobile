@@ -3,11 +3,11 @@ import React, { memo } from 'react';
 import AppStyles from '@utils/AppStyles.js';
 import { View, TouchableHighlight } from 'react-native';
 
-function ResourceListItem({ item, viewItem, preview: Preview }) {
+function ResourceListItem({ item, viewItem, preview: Preview, ...props }) {
     return (
         <TouchableHighlight underlayColor="#AAA" onPress={() => viewItem(item)}>
             <View style={AppStyles.listItem}>
-                <Preview item={item} />
+                <Preview item={item} {...props} />
             </View>
         </TouchableHighlight>
     );
