@@ -1,10 +1,11 @@
-import gql from 'graphql-tag'
-import BASE_ANIMAL from '@graphql/fragments/Animal/baseAnimal.gql.js'
+import gql from 'graphql-tag';
+import { shortLocale } from '@src/i18n.js';
+import BASE_ANIMAL from '@graphql/fragments/Animal/baseAnimal.gql.js';
 
 export default gql`
     ${BASE_ANIMAL}
-    query($team_id: ID!, $limit: Int, $page: Int, $language: String, $search: String, $sorting: SortingInput) {
-        animals(team_id: $team_id, limit: $limit, page: $page, language: $language, search: $search, sorting: $sorting) {
+    query($team_id: ID!, $limit: Int, $page: Int, $search: String, $sorting: SortingInput) {
+        animals(team_id: $team_id, limit: $limit, page: $page, language: "${shortLocale()}", search: $search, sorting: $sorting) {
             total
             per_page
 

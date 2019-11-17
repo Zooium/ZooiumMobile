@@ -20,12 +20,13 @@ i18n.use(initReactI18next).init({
     },
 });
 
+// Export short locale name helper.
+export function shortLocale() {
+    return i18n.language.split('-')[0];
+}
+
 // Export locale column name helper.
 export function localeName() {
-    // Get locale and cut out region.
-    const locale = i18n.language.split('-')[0];
-
-    // Return appropriate column name for locale.
     return ({
         'en': 'english_name',
         'cn': 'chinese_name',
@@ -40,7 +41,7 @@ export function localeName() {
         'ru': 'russian_name',
         'es': 'spanish_name',
         'se': 'swedish_name',
-    })[locale] || 'english_name'
+    })[shortLocale()] || 'english_name'
 }
 
 // Export i18n-next helper.
