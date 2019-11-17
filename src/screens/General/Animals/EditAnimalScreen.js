@@ -1,12 +1,9 @@
 import React from 'react';
-import { Linking } from 'expo';
-import theme from '@src/theme.js';
-import i18n, { localeName } from '@src/i18n.js';
-import SexPreview from './components/SexPreview.js';
-import CitesListing from './components/CitesListing.js';
-import { View, Alert, TouchableOpacity } from 'react-native';
+import i18n from '@src/i18n.js';
+import TypeaheadInput from '@components/TypeaheadInput.js';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
 import VIEW_ANIMAL from '@graphql/queries/Animal/viewAnimal.gql.js';
+import { AnimalTypeaheadInput } from '@screens/Typeahead/AnimalTypeaheadScreen.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import { Text, Radio, RadioGroup, Layout, Input } from 'react-native-ui-kitten';
 
@@ -37,13 +34,43 @@ const items = [
             {
                 title: i18n.t('Father'),
                 render: function FatherRender([state, mergeState]) {
-                    return undefined; // @wip
+                    return (
+                        <TypeaheadInput
+                            view="AnimalTypeahead"
+                            resource={i18n.t('Father')}
+                            preview={AnimalTypeaheadInput}
+                            appendQuery={
+                                (state.id ? '' : 'exclude:'+state.id)+' exclude:sex:female'
+                            }
+
+                            value={state.father}
+                            onChange={(value) => mergeState({
+                                father: value,
+                                father_id: value && value.id || undefined,
+                            })}
+                        />
+                    );
                 },
             },
             {
                 title: i18n.t('Mother'),
                 render: function MotherRender([state, mergeState]) {
-                    return undefined; // @wip
+                    return (
+                        <TypeaheadInput
+                            view="AnimalTypeahead"
+                            resource={i18n.t('Mother')}
+                            preview={AnimalTypeaheadInput}
+                            appendQuery={
+                                (state.id ? '' : 'exclude:'+state.id)+' exclude:sex:male'
+                            }
+
+                            value={state.mother}
+                            onChange={(value) => mergeState({
+                                mother: value,
+                                mother_id: value && value.id || undefined,
+                            })}
+                        />
+                    );
                 },
             },
             {
@@ -124,7 +151,7 @@ const title = item => {
 
 const formInit = () => ({
     identifier: '',
-    name: '',
+    name: '1234', // @wip
     father_id: undefined,
     mother_id: undefined,
     enclosure_id: undefined,

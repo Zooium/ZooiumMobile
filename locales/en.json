@@ -48,6 +48,9 @@
         "State": "State",
         "Country": "Country",
 
+        "Select {{resource}}": "Select {{resource}}",
+        "Press to select {{resource}}...": "Press to select {{resource}}...",
+        
         "Creating {{resource}}": "Creating {{resource}}",
 
         "{{distance}} km": "{{distance}} km",

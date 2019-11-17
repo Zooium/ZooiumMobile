@@ -4,17 +4,15 @@ import React, { forwardRef } from 'react';
 import { Icon } from 'react-native-ui-kitten';
 import DebouncedInput from '@components/DebouncedInput.js';
 
-const FullWidthSearch = forwardRef(function FullWidthSearch(props, ref) {
-    const { set } = props;
-
+const FullWidthSearch = forwardRef(function FullWidthSearch({ closeable = true, ...props }, ref) {
     return (
         <DebouncedInput
             ref={ref}
             placeholder={i18n.t('Enter criteria to search...')}
-            onIconPress={() => set(undefined)}
-            icon={() => (
+            onIconPress={() => props.set(undefined)}
+            icon={closeable && (() => (
                 <Icon name="times" size={22} color="#000" style={{ opacity: .4 }} />
-            )}
+            ))}
             style={{
                 zIndex: 1,
                 borderRadius: 0,
@@ -32,7 +30,8 @@ const FullWidthSearch = forwardRef(function FullWidthSearch(props, ref) {
 });
 
 FullWidthSearch.propTypes = {
-    set: PropTypes.func.isRequired,
+    ...DebouncedInput.propTypes,
+    closeable: PropTypes.bool,
 }
 
 export default FullWidthSearch;

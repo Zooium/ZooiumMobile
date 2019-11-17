@@ -5,8 +5,8 @@ import { View, TouchableOpacity  } from 'react-native';
 import { Text, Icon, Layout } from 'react-native-ui-kitten';
 import ResourceList from '@components/resource/ResourceList.js';
 import { withNavigation, NavigationActions } from 'react-navigation';
-import LIST_ENCLOSURES from '@graphql/queries/Enclosure/listEnclosures.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
+import LIST_ENCLOSURES from '@graphql/queries/Enclosure/listEnclosures.gql.js';
 
 function ListEnclosuresScreen({ header: Header, showRefresh = true, variables = {}, navigation }) {
     const preview = ({ item }) => {
