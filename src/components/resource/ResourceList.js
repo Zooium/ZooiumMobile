@@ -90,6 +90,7 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
             }} ref={searchInput} />}
 
             <SwipeListView
+                keyboardShouldPersistTaps="always"
                 keyExtractor={item => item.id}
                 data={listData}
                 renderItem={itemCallback}
