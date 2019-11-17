@@ -6,6 +6,7 @@ import VIEW_ANIMAL from '@graphql/queries/Animal/viewAnimal.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import { Text, Radio, RadioGroup, Layout, Input } from 'react-native-ui-kitten';
 import { AnimalTypeaheadInput } from '@screens/Typeahead/AnimalTypeaheadScreen.js';
+import { SpecieTypeaheadInput } from '@screens/Typeahead/SpecieTypeaheadScreen.js';
 import { EnclosureTypeaheadInput } from '@screens/Typeahead/EnclosureTypeaheadScreen.js';
 
 const items = [
@@ -103,7 +104,19 @@ const items = [
                 },
 
                 render: function SpecieRender([state, mergeState]) {
-                    return undefined; // @wip
+                    return (
+                        <TypeaheadInput
+                            view="SpecieTypeahead"
+                            resource={i18n.t('Specie', { count: 1 })}
+                            preview={SpecieTypeaheadInput}
+
+                            value={state.specie}
+                            onChange={(value) => mergeState({
+                                specie: value,
+                                specie_id: value && value.id || undefined,
+                            })}
+                        />
+                    );
                 },
             },
             {
