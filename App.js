@@ -10,6 +10,7 @@ import AppContainer from '@routes/AppContainer.js';
 import { ApolloProvider } from '@apollo/react-hooks';
 import FontAwesome5Pack from '@utils/FontAwesome5Pack.js';
 import NavigationService from '@utils/NavigationService.js';
+import { AppearanceProvider } from 'react-native-appearance';
 import { ApplicationProvider, IconRegistry } from 'react-native-ui-kitten';
 
 export default function App() {
@@ -17,13 +18,15 @@ export default function App() {
         <Fragment>
             <StatusBar barStyle="light-content" />
             <IconRegistry icons={[FontAwesome5Pack]} />
-            <ApplicationProvider mapping={mapping} theme={theme}>
-                <ApolloProvider client={client}>
-                    <I18nextProvider i18n={i18n}>
-                        <AppContainer ref={i => NavigationService.setInstance(i)} />
-                    </I18nextProvider>
-                </ApolloProvider>
-            </ApplicationProvider>
+            <AppearanceProvider>
+                <ApplicationProvider mapping={mapping} theme={theme}>
+                    <ApolloProvider client={client}>
+                        <I18nextProvider i18n={i18n}>
+                            <AppContainer ref={i => NavigationService.setInstance(i)} />
+                        </I18nextProvider>
+                    </ApolloProvider>
+                </ApplicationProvider>
+            </AppearanceProvider>
         </Fragment>
     );
 }

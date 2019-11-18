@@ -2,7 +2,8 @@ import i18n from '@src/i18n.js';
 import PropTypes from 'prop-types';
 import React, { Fragment, useState } from 'react';
 import InputButton from '@components/InputButton.js';
-import Picker from "react-native-modal-datetime-picker";
+import Picker from 'react-native-modal-datetime-picker';
+import { useColorScheme } from 'react-native-appearance';
 
 export default function DateTimePicker({ value, onChange }) {
     const date = value && new Date(value);
@@ -28,6 +29,7 @@ export default function DateTimePicker({ value, onChange }) {
                 onCancel={() => {
                     setShow(false);
                 }}
+                isDarkModeEnabled={useColorScheme() === 'dark'}
             />
         </Fragment>
     );
