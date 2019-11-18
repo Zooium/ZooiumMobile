@@ -85,7 +85,7 @@ export default function ViewAnimalScreen({ navigation }) {
                                     return <CitesListing key={value} listing={value} style={{ marginRight: 4 }} />;
                                 })}
 
-                                {resource.specie &&
+                                {resource.specie && (
                                     <TouchableOpacity style={{
                                         flexDirection: 'row',
                                         alignItems: 'center',
@@ -98,7 +98,11 @@ export default function ViewAnimalScreen({ navigation }) {
                                             {i18n.t('Read more')}
                                         </Text>
                                     </TouchableOpacity>
-                                || <Text>{i18n.t('Unavailable')}</Text>}
+                                ) || (
+                                    <Text appearance="hint" style={{ fontSize: 12 }}>
+                                        ({i18n.t('not provided')})
+                                    </Text>
+                                )}
                             </View>
                         )
                     },
