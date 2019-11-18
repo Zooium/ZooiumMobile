@@ -56,18 +56,20 @@ export const enclosurePreview = ({ item, header: Header, layout: { showCount = t
 }
 
 function ListEnclosuresScreen({ header, layout, showRefresh = true, variables = {}, navigation }) {
+    const preview = ({ item }) => enclosurePreview({ item, header, layout });
+
     return (
         <KeyboardAvoidingLayout>
             <Layout style={{ flex: 1 }}>
                 <ResourceList
-                    preview={enclosurePreview}
+                    preview={preview}
                     fetch={LIST_ENCLOSURES}
                     variables={variables}
                     showRefresh={showRefresh}
                     name={i18n.t('Enclosure', { count: 2 })}
                     
                     extraData={{
-                        header, layout
+                        header, layout,
                     }}
 
                     routes={{
