@@ -74,6 +74,7 @@ export default function ViewAnimalScreen({ navigation }) {
                     },
                     render: function citesRender(resource) {
                         const cites = resource.cites || resource.specie && resource.specie.cites;
+                        const listings = cites && cites.listing.split('/')
                         
                         const readMoreAddress = cites
                             ? `https://speciesplus.net/species#/taxon_concepts/${cites.source_id}/legal`
@@ -81,9 +82,15 @@ export default function ViewAnimalScreen({ navigation }) {
 
                         return (
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                {cites && cites.listing.split('/').map((value) => {
+                                {cites && listings.map((value) => {
                                     return <CitesListing key={value} listing={value} style={{ marginRight: 4 }} />;
                                 })}
+
+                                {(resource.specie && (! cites || ! listings.length)) && (
+                                    <Text appearance="hint" style={{ marginRight: 10 }}>
+                                        {i18n.t('None')}
+                                    </Text>
+                                )}
 
                                 {resource.specie && (
                                     <TouchableOpacity style={{
