@@ -48,6 +48,8 @@
         "State": "State",
         "Country": "Country",
 
+        "Date": "Date",
+
         "Select {{resource}}": "Select {{resource}}",
         "Press to select {{resource}}...": "Press to select {{resource}}...",
         

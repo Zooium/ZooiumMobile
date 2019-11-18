@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import TypeaheadInput from '@components/TypeaheadInput.js';
+import DataTimePicker from '@components/DateTimePicker.js';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
 import VIEW_ANIMAL from '@graphql/queries/Animal/viewAnimal.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
@@ -149,7 +150,11 @@ const items = [
             {
                 title: i18n.t('Born'),
                 render: function BornRender([state, mergeState]) {
-                    return undefined; // @wip
+                    return (
+                        <DataTimePicker value={state.born_at} onChange={(value) => mergeState({
+                            born_at: value,
+                        })} />
+                    );
                 },
             },
             {
