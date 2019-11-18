@@ -6,7 +6,7 @@ import Picker from 'react-native-modal-datetime-picker';
 import { useColorScheme } from 'react-native-appearance';
 
 export default function DateTimePicker({ value, onChange }) {
-    const date = value && new Date(value);
+    const date = value && new Date(value) || new Date();
     const [show, setShow] = useState(false);
 
     return (
