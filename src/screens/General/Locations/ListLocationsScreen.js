@@ -5,8 +5,9 @@ import { View, TouchableOpacity  } from 'react-native';
 import { Text, Icon, Layout } from 'react-native-ui-kitten';
 import ResourceList from '@components/resource/ResourceList.js';
 import { withNavigation, NavigationActions } from 'react-navigation';
-import LIST_LOCATIONS from '@graphql/queries/Location/listLocations.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
+import LIST_LOCATIONS from '@graphql/queries/Location/listLocations.gql.js';
+import DELETE_LOCATIONS from '@graphql/mutations/Location/deleteLocations.gql.js';
 
 function ListLocationsScreen({ showRefresh = true, variables = {}, navigation }) {
     const preview = ({ item }) => {
@@ -68,6 +69,10 @@ function ListLocationsScreen({ showRefresh = true, variables = {}, navigation })
                     routes={{
                         view: 'ViewLocation',
                         edit: 'EditLocation',
+                    }}
+
+                    mutations={{
+                        remove: DELETE_LOCATIONS,
                     }}
                 />
             </Layout>

@@ -3,31 +3,23 @@ import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import Loader from '@components/Loader.js';
 import AuthState from '@utils/AuthState.js';
-import { useQuery } from '@apollo/react-hooks';
 import { withNavigation } from 'react-navigation';
 import ResourceListItem from './ResourceListItem.js';
 import ResourceListEmpty from './ResourceListEmpty.js';
 import AddingHeader from '@components/AddingHeader.js';
 import ResourceListActions from './ResourceListActions.js';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import FullWidthSearch from '@components/FullWidthSearch.js';
 import SearchableHeader from '@components/SearchableHeader.js';
 import React, { useEffect, useCallback, createRef } from 'react';
 
-function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, preview, extraData, showRefresh = true, navigation }) {
+function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, mutations: { remove }, preview, extraData, showRefresh = true, navigation }) {
     const searchInput = createRef();
 
     const query = navigation.getParam('search');
     const focusSearch = navigation.getParam('focusInput', false);
     const showSearch = query !== undefined;
-
-    const viewItem = (item) => navigation.navigate(view, { item });
-    const editItem = (item = undefined) => navigation.navigate(edit, { item });
-    const deleteItem = () => { /* @wip */ };
-
-    const itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={viewItem} preview={preview} />, []);
-    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []);
-    const actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, []);
 
     useEffect(() => {
         // Focus search input if shown, not focused, and should.
@@ -47,6 +39,12 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
             search: showSearch && query || undefined,
             team_id: team && team.id,
             ...variables,
+        },
+    });
+
+    const [removeItems] = useMutation(remove, {
+        update() {
+            refetch(); // @wip - Invalidate or write to cache instead?
         },
     });
 
@@ -82,6 +80,18 @@ function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, pre
             },
         });
     }
+
+    const viewItem = (item) => navigation.navigate(view, { item });
+    const editItem = (item = undefined) => navigation.navigate(edit, { item });
+    const deleteItem = (item) => removeItems({
+        variables: {
+            ids: [item.id],
+        },
+    });
+
+    const itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={viewItem} preview={preview} />, []);
+    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []);
+    const actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, []);
 
     return (loading && init && ! query ? <Loader /> : (
         <View style={{flex:1}}>
@@ -142,6 +152,10 @@ ResourceList.propTypes = {
     routes: PropTypes.shape({
         view: PropTypes.string.isRequired,
         edit: PropTypes.string.isRequired,
+    }),
+    
+    mutations: PropTypes.shape({
+        remove: PropTypes.object.isRequired,
     }),
 }
 

@@ -7,6 +7,7 @@ import ResourceList from '@components/resource/ResourceList.js';
 import { withNavigation, NavigationActions } from 'react-navigation';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import LIST_ENCLOSURES from '@graphql/queries/Enclosure/listEnclosures.gql.js';
+import DELETE_ENCLOSURES from '@graphql/mutations/Enclosure/deleteEnclosures.gql.js';
 
 export const enclosurePreview = ({ item, header: Header, layout: { showCount = true } = {} }) => {
     const locationText = item && item.location && item.location.name
@@ -72,6 +73,10 @@ function ListEnclosuresScreen({ header, layout, showRefresh = true, variables = 
                     routes={{
                         view: 'ViewEnclosure',
                         edit: 'EditEnclosure',
+                    }}
+
+                    mutations={{
+                        remove: DELETE_ENCLOSURES,
                     }}
                 />
             </Layout>

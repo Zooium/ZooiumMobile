@@ -8,6 +8,7 @@ import { Text, Layout } from 'react-native-ui-kitten';
 import ResourceList from '@components/resource/ResourceList.js';
 import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
+import DELETE_ANIMALS from '@graphql/mutations/Animal/deleteAnimals.gql.js';
 
 export const animalPreview = ({ item }) => {
     const specieText = item.specie
@@ -53,6 +54,10 @@ function ListAnimalsScreen() {
                     routes={{
                         view: 'ViewAnimal',
                         edit: 'EditAnimal',
+                    }}
+
+                    mutations={{
+                        remove: DELETE_ANIMALS,
                     }}
                 />
             </Layout>
