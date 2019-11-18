@@ -11,13 +11,13 @@ import { Text, Icon } from 'react-native-ui-kitten';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function ResourceView({ title, items, fetch, variables = {}, routes: { edit }, form, navigation }) {
+function ResourceView({ title, items, fetch, variables = {}, routes: { edit } = {}, form, navigation }) {
     useEffect(() => {
         navigation.setParams({
             getTitle: title,
-            editItem: (item) => {
+            editItem: edit && ((item) => {
                 navigation.navigate(edit, { item });
-            },
+            }),
         });
     }, []);
     
@@ -132,7 +132,7 @@ ResourceView.propTypes = {
     variables: PropTypes.object,
 
     routes: PropTypes.shape({
-        edit: PropTypes.string.isRequired,
+        edit: PropTypes.string,
     }),
 
     items: PropTypes.arrayOf(PropTypes.object),
@@ -157,6 +157,7 @@ ResourceView.propTypes = {
 
 ResourceView.navigationOptions = ({ navigation }) => {
     const item = navigation.getParam('item');
+    const editItem = navigation.getParam('editItem');
     const getTitle = navigation.getParam('getTitle');
 
     return {
@@ -166,10 +167,10 @@ ResourceView.navigationOptions = ({ navigation }) => {
             textAlign: 'center',
         },
 
-        headerRight: (
+        headerRight: editItem && (
             <HeaderButtons>
                 <Item title="edit" iconName="edit" style={{ marginRight: 10 }} onPress={() => {
-                    navigation.getParam('editItem')(item);
+                    editItem(item);
                 }} />
             </HeaderButtons>
         ),

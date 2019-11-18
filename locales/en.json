@@ -53,6 +53,7 @@
         "Select {{resource}}": "Select {{resource}}",
         "Press to select {{resource}}...": "Press to select {{resource}}...",
         
+        "Saving...": "Saving...",
         "Creating {{resource}}": "Creating {{resource}}",
 
         "{{distance}} km": "{{distance}} km",

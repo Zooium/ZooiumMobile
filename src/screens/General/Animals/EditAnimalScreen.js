@@ -4,6 +4,8 @@ import TypeaheadInput from '@components/TypeaheadInput.js';
 import DataTimePicker from '@components/DateTimePicker.js';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
 import VIEW_ANIMAL from '@graphql/queries/Animal/viewAnimal.gql.js';
+import UPDATE_ANIMAL from '@graphql/mutations/Animal/updateAnimal.gql.js';
+import CREATE_ANIMAL from '@graphql/mutations/Animal/createAnimal.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import { Text, Radio, RadioGroup, Layout, Input } from 'react-native-ui-kitten';
 import { AnimalTypeaheadInput } from '@screens/Typeahead/AnimalTypeaheadScreen.js';
@@ -183,7 +185,7 @@ const title = item => {
 
 const formInit = () => ({
     identifier: '',
-    name: '1234', // @wip
+    name: '',
     father_id: undefined,
     mother_id: undefined,
     enclosure_id: undefined,
@@ -204,21 +206,26 @@ const formParser = (resource) => {
     }
 }
 
-export default function EditAnimalScreen({ navigation }) {
+export default function EditAnimalScreen() {
     return (
         <KeyboardAvoidingLayout>
             <Layout style={{ flex: 1 }}>
                 <ResourceEdit
                     items={items}
                     title={title}
+
                     fetch={VIEW_ANIMAL}
+                    mutations={{
+                        save: UPDATE_ANIMAL,
+                        create: CREATE_ANIMAL,
+                    }}
+
+                    routes={{
+                        view: 'ViewAnimal',
+                    }}
 
                     formInit={formInit}
                     formParser={formParser}
-                        
-                    routes={{
-                        edit: 'EditAnimal',
-                    }}
                 />
             </Layout>
         </KeyboardAvoidingLayout>
