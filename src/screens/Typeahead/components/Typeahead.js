@@ -1,9 +1,9 @@
 import { merge } from 'lodash';
 import i18n from '@src/i18n.js';
 import PropTypes from 'prop-types';
-import { FlatList } from 'react-native';
 import Loader from '@components/Loader.js';
 import AuthState from '@utils/AuthState.js';
+import { View, FlatList } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import { Layout } from 'react-native-ui-kitten';
 import { withNavigation } from 'react-navigation';
@@ -101,20 +101,26 @@ function Typeahead({ name, fetch, preview, itemProps, variables = {}, navigation
     ));
 }
 
-Typeahead.navigationOptions = ({ navigation }) => ({
-    title: i18n.t('Select {{resource}}', {
-        resource: navigation.getParam('resource'),
-    }),
+Typeahead.navigationOptions = ({ navigation }) => {
+    const add = navigation.getParam('add', false);
 
-    headerTitleStyle: {
-        flex: 1,
-        textAlign: 'center',
-    },
+    return {
+        title: i18n.t('Select {{resource}}', {
+            resource: navigation.getParam('resource'),
+        }),
 
-    headerRight: <AddingHeader style={{ marginRight: 10 }} onPress={() => {
-        alert('@wip');
-    }} />,
-})
+        headerTitleStyle: {
+            flex: 1,
+            textAlign: 'center',
+        },
+
+        headerRight: add && (
+            <AddingHeader style={{ marginRight: 10 }} onPress={() => {
+                navigation.navigate(add, { item: undefined })
+            }} />
+        ) || <View />,
+    }
+}
 
 Typeahead.propTypes = {
     variables: PropTypes.object,

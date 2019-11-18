@@ -81,6 +81,7 @@ const items = [
                 render: function EnclosureRender([state, mergeState]) {
                     return (
                         <TypeaheadInput
+                            add="EditEnclosure"
                             view="EnclosureTypeahead"
                             resource={i18n.t('Enclosure')}
                             preview={EnclosureTypeaheadInput}
