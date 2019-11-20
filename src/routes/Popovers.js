@@ -7,6 +7,7 @@ import EditLocation from '@screens/General/Locations/EditLocationScreen.js';
 
 import AnimalTypeahead from '@screens/Typeahead/AnimalTypeaheadScreen.js';
 import SpecieTypeahead from '@screens/Typeahead/SpecieTypeaheadScreen.js';
+import LocationTypeahead from '@screens/Typeahead/LocationTypeaheadScreen.js';
 import EnclosureTypeahead from '@screens/Typeahead/EnclosureTypeaheadScreen.js';
 
 export default {
@@ -15,5 +16,5 @@ export default {
     ViewLocation, EditLocation,
 
     AnimalTypeahead, SpecieTypeahead,
-    EnclosureTypeahead,
+    LocationTypeahead, EnclosureTypeahead,
 };

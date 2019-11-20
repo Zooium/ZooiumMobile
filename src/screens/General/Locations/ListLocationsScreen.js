@@ -9,52 +9,54 @@ import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import LIST_LOCATIONS from '@graphql/queries/Location/listLocations.gql.js';
 import DELETE_LOCATIONS from '@graphql/mutations/Location/deleteLocations.gql.js';
 
-function ListLocationsScreen({ showRefresh = true, variables = {}, navigation }) {
-    const preview = ({ item }) => {
-        const locationText = item &&
-            [
-                item.address,
-                item.city,
-            ].filter(Boolean).join(', ')
-        || '(' + i18n.t('not provided') + ')';
+export const locationPreview = ({ item, navigation, layout: { showCount = true } = {} }) => {
+    const locationText = item &&
+        [
+            item.address,
+            item.city,
+        ].filter(Boolean).join(', ')
+    || '(' + i18n.t('not provided') + ')';
 
-        return (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{ flex: 1 }}>
-                    <Text category="h6">
-                        { item.name || '(' + i18n.t('name not set') + ')' }
+    return (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flex: 1 }}>
+                <Text category="h6">
+                    { item.name || '(' + i18n.t('name not set') + ')' }
+                </Text>
+
+                <Text>{locationText}</Text>
+            </View>
+
+            {showCount && item.enclosures_count !== 0 &&
+                <TouchableOpacity style={{ flexShrink: 0, alignItems: 'flex-end' }} onPress={() => navigation.navigate({
+                    routeName: 'Enclosures',
+                    action: NavigationActions.navigate({
+                        routeName: 'ListEnclosures',
+                        params: {
+                            search: 'location:'+item.id,
+                            focusInput: false,
+                        },
+                    }),
+                })}>
+                    <Text style={{ fontWeight: 'bold' }}>
+                        {item.enclosures_count} {i18n.t('Enclosure', { count: 2 })}
                     </Text>
 
-                    <Text>{locationText}</Text>
-                </View>
-
-                {item.enclosures_count !== 0 &&
-                    <TouchableOpacity style={{ flexShrink: 0, alignItems: 'flex-end' }} onPress={() => navigation.navigate({
-                        routeName: 'Enclosures',
-                        action: NavigationActions.navigate({
-                            routeName: 'ListEnclosures',
-                            params: {
-                                search: 'location:'+item.id,
-                                focusInput: false,
-                            },
-                        }),
-                    })}>
-                        <Text style={{ fontWeight: 'bold' }}>
-                            {item.enclosures_count} {i18n.t('Enclosure', { count: 2 })}
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{marginRight: 6}}>
+                            {i18n.t('View')}
                         </Text>
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{marginRight: 6}}>
-                                {i18n.t('View')}
-                            </Text>
+                        <Icon name="angle-right" size={14} style={{ opacity: 0.6 }} />
+                    </View>
+                </TouchableOpacity>
+            }
+        </View>
+    );
+}
 
-                            <Icon name="angle-right" size={14} style={{ opacity: 0.6 }} />
-                        </View>
-                    </TouchableOpacity>
-                }
-            </View>
-        );
-    }
+function ListLocationsScreen({ layout, showRefresh = true, variables = {}, navigation }) {
+    const preview = ({ item }) => enclosurePreview({ item, navigation, layout });
 
     return (
         <KeyboardAvoidingLayout>
@@ -84,6 +86,9 @@ ListLocationsScreen.navigationOptions = ResourceList.navigationOptions;
 ListLocationsScreen.propTypes = {
     showRefresh: PropTypes.bool,
     variables: PropTypes.object,
+    layout: PropTypes.shape({
+        showCount: PropTypes.bool,
+    }),
 
     item: PropTypes.object, // @wip - Model instance.
 }

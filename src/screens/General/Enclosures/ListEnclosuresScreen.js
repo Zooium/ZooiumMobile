@@ -9,7 +9,7 @@ import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import LIST_ENCLOSURES from '@graphql/queries/Enclosure/listEnclosures.gql.js';
 import DELETE_ENCLOSURES from '@graphql/mutations/Enclosure/deleteEnclosures.gql.js';
 
-export const enclosurePreview = ({ item, header: Header, layout: { showCount = true } = {} }) => {
+export const enclosurePreview = ({ item, header: Header, navigation, layout: { showCount = true } = {} }) => {
     const locationText = item && item.location && item.location.name
         || '(' + i18n.t('not provided') + ')';
 
@@ -56,7 +56,7 @@ export const enclosurePreview = ({ item, header: Header, layout: { showCount = t
 }
 
 function ListEnclosuresScreen({ header, layout, showRefresh = true, variables = {}, navigation }) {
-    const preview = ({ item }) => enclosurePreview({ item, header, layout });
+    const preview = ({ item }) => enclosurePreview({ item, header, navigation, layout });
 
     return (
         <KeyboardAvoidingLayout>
