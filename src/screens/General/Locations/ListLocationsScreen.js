@@ -56,7 +56,7 @@ export const locationPreview = ({ item, navigation, layout: { showCount = true }
 }
 
 function ListLocationsScreen({ layout, showRefresh = true, variables = {}, navigation }) {
-    const preview = ({ item }) => enclosurePreview({ item, navigation, layout });
+    const preview = ({ item }) => locationPreview({ item, navigation, layout });
 
     return (
         <KeyboardAvoidingLayout>

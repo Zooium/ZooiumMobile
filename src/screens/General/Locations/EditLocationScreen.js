@@ -1,12 +1,99 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import i18n from '@src/i18n.js';
+import { Layout, Input } from 'react-native-ui-kitten';
+import ResourceEdit from '@components/resource/ResourceEdit.js';
+import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
+import VIEW_LOCATION from '@graphql/queries/Location/viewLocation.gql.js';
+import UPDATE_LOCATION from '@graphql/mutations/Location/updateLocation.gql.js';
+import CREATE_LOCATION from '@graphql/mutations/Location/createLocation.gql.js';
 
-export default class EditLocationScreen extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>EditLocationScreen</Text>
-            </View>
-        );
-    }
+const items = [
+    {
+        title: i18n.t('General'),
+        data: [
+            {
+                title: i18n.t('Name'),
+                render: function NameRender([state, mergeState]) {
+                    return <Input value={state.name} onChangeText={(value) => mergeState({ name: value })} />;
+                },
+            },
+            {
+                title: i18n.t('Address'),
+                render: function AddressRender([state, mergeState]) {
+                    return <Input value={state.address} onChangeText={(value) => mergeState({ address: value })} />;
+                },
+            },
+            {
+                title: i18n.t('City'),
+                render: function CityRender([state, mergeState]) {
+                    return <Input value={state.city} onChangeText={(value) => mergeState({ city: value })} />;
+                },
+            },
+            {
+                title: i18n.t('Postcode'),
+                render: function PostcodeRender([state, mergeState]) {
+                    return <Input value={state.postcode} onChangeText={(value) => mergeState({ postcode: value })} />;
+                },
+            },
+            {
+                title: i18n.t('State'),
+                render: function StateRender([state, mergeState]) {
+                    return <Input value={state.state} onChangeText={(value) => mergeState({ state: value })} />;
+                },
+            },
+            {
+                title: i18n.t('Country'),
+                render: function CountryRender([state, mergeState]) {
+                    return <Input value={state.country} onChangeText={(value) => mergeState({ country: value })} />;
+                },
+            },
+        ],
+    },
+];
+
+const title = item => {
+    return item && (item.name|| '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
+        resource: i18n.t('Location', { count: 1 }),
+    });
 }
+
+const formInit = () => ({
+    name: '',
+    address: '',
+    city: '',
+    postcode: '',
+    state: '',
+    country: '',
+})
+
+const formParser = (resource) => {
+    return resource;
+}
+
+export default function EditLocationScreen() {
+    return (
+        <KeyboardAvoidingLayout>
+            <Layout style={{ flex: 1 }}>
+                <ResourceEdit
+                    items={items}
+                    title={title}
+
+                    fetch={VIEW_LOCATION}
+                    mutations={{
+                        save: UPDATE_LOCATION,
+                        create: CREATE_LOCATION,
+                    }}
+
+                    routes={{
+                        view: 'ViewLocation',
+                    }}
+
+                    formInit={formInit}
+                    formParser={formParser}
+                />
+            </Layout>
+        </KeyboardAvoidingLayout>
+    )
+}
+
+EditLocationScreen.navigationOptions = ResourceEdit.navigationOptions;

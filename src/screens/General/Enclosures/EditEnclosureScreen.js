@@ -43,8 +43,8 @@ const items = [
 ];
 
 const title = item => {
-    return item && (item.name || item.identifier || '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
-        resource: i18n.t('Animal', { count: 1 }),
+    return item && (item.name || '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
+        resource: i18n.t('Enclosure', { count: 1 }),
     });
 }
 
