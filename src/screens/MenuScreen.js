@@ -120,7 +120,7 @@ export default function MenuScreen({ navigation }) {
                 sections={menu}
                 renderItem={renderItem}
                 renderSectionHeader={renderSectionHeader}
-                keyExtractor={(item, index) => item + index}
+                keyExtractor={(item, index) => index.toString()}
             />
         </View>
     );

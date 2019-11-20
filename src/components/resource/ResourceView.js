@@ -120,7 +120,7 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit } = 
             sections={items}
             renderItem={renderItem}
             renderSectionHeader={renderSectionHeader}
-            keyExtractor={(item, index) => item + index}
+            keyExtractor={(item, index) => index.toString()}
         />
     );
 }
