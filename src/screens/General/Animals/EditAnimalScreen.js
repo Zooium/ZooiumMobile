@@ -17,6 +17,7 @@ const items = [
         title: i18n.t('General'),
         data: [
             {
+                key: 'id',
                 title: i18n.t('ID'),
                 description: function IdentifierDescriptionRender() {
                     return (
@@ -31,12 +32,14 @@ const items = [
                 },
             },
             {
+                key: 'name',
                 title: i18n.t('Name'),
                 render: function NameRender([state, mergeState]) {
                     return <Input value={state.name} onChangeText={(value) => mergeState({ name: value })} />;
                 },
             },
             {
+                key: 'father_id',
                 title: i18n.t('Father'),
                 render: function FatherRender([state, mergeState]) {
                     return (
@@ -58,6 +61,7 @@ const items = [
                 },
             },
             {
+                key: 'mother_id',
                 title: i18n.t('Mother'),
                 render: function MotherRender([state, mergeState]) {
                     return (
@@ -79,6 +83,7 @@ const items = [
                 },
             },
             {
+                key: 'enclosure_id',
                 title: i18n.t('Enclosure', { count: 1 }),
                 render: function EnclosureRender([state, mergeState]) {
                     return (
@@ -98,6 +103,7 @@ const items = [
                 },
             },
             {
+                key: 'specie_id',
                 title: i18n.t('Specie', { count: 1 }),
                 description: function IdentifierDescriptionRender() {
                     return (
@@ -124,6 +130,7 @@ const items = [
                 },
             },
             {
+                key: 'sex',
                 title: i18n.t('Sex'),
                 render: function SexRender([state, mergeState]) {
                     let sexes = {
@@ -151,6 +158,7 @@ const items = [
                 },
             },
             {
+                key: 'born_at',
                 title: i18n.t('Born'),
                 render: function BornRender([state, mergeState]) {
                     return (
@@ -161,6 +169,7 @@ const items = [
                 },
             },
             {
+                key: 'notes',
                 title: i18n.t('Notes'),
                 multiline: () => true,
                 render: function NotesRender([state, mergeState]) {

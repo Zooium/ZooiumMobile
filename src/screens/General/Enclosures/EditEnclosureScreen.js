@@ -14,12 +14,15 @@ const items = [
         title: i18n.t('General'),
         data: [
             {
+                key: 'name',
+                required: true,
                 title: i18n.t('Name'),
                 render: function NameRender([state, mergeState]) {
                     return <Input value={state.name} onChangeText={(value) => mergeState({ name: value })} />;
                 },
             },
             {
+                key: 'location_id',
                 title: i18n.t('Location', { count: 1 }),
                 render: function LocationRender([state, mergeState]) {
                     return (

@@ -68,6 +68,12 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit } = 
         const titleRender = typeof title !== 'string' ? title : (
             <Text category="s2" appearance="hint">
                 {title}
+
+                {item.required && (
+                    <Text status="danger" style={{ marginLeft: 6 }}>
+                        *
+                    </Text>
+                )}
             </Text>
         );
         
@@ -137,6 +143,7 @@ ResourceView.propTypes = {
 
     items: PropTypes.arrayOf(PropTypes.object),
     item: PropTypes.shape({
+        required: PropTypes.bool,
         title: PropTypes.oneOfType([
             PropTypes.string,
             PropTypes.elementType,

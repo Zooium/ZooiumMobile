@@ -67,6 +67,9 @@
         "name not set": "name not set",
         "not provided": "not provided",
 
+        "Incomplete Submission": "Incomplete Submission",
+        "The following fields are required: {{fields}}": "The following fields are required: {{fields}}",
+
         "Under maintenance": "Under maintenance",
 
         "You have reached the end!": "You have reached the end!",

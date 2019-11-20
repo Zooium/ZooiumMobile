@@ -1,7 +1,7 @@
 import i18n from '@src/i18n.js';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
 import Loader from '@components/Loader.js';
+import { View, Alert } from 'react-native';
 import AuthState from '@utils/AuthState.js';
 import ResourceView from './ResourceView.js';
 import { Text } from 'react-native-ui-kitten';
@@ -23,10 +23,10 @@ function ResourceEdit({ formInit, formParser, routes: { view }, mutations: { sav
         })
     };
 
-    // Share form state with navigation.
+    // Share form state and items with navigation.
     useEffect(() => {
-        navigation.setParams({ state });
-    }, [state]);
+        navigation.setParams({ state, items: props.items });
+    }, [state, props.items]);
 
     // @wip - cache?
     const [saveItem, { loading: saving }] = useMutation(save);
@@ -35,7 +35,29 @@ function ResourceEdit({ formInit, formParser, routes: { view }, mutations: { sav
     // Pass save function to navigation.
     useEffect(() => {
         navigation.setParams({
-            save: ({ item, state }) => {
+            save: ({ item, items, state }) => {
+                // Gather incomplete required items.
+                let incomplete = [];
+                items.forEach(category => {
+                    category.data.forEach(item => {
+                        // Push title to incomplete if required and not set.
+                        if (item.required && ! state[item.key]) {
+                            incomplete.push(item.title);
+                        }
+                    });
+                });
+
+                // Show error if has incomplete items.
+                if (incomplete.length) {
+                    // Return incomplete submission alert.
+                    return Alert.alert(
+                        i18n.t('Incomplete Submission'),
+                        i18n.t('The following fields are required: {{fields}}', {
+                            fields: incomplete.join(', '),
+                        })
+                    );
+                }
+
                 // Determine save function based on item existing.
                 const saveFunction = item ? saveItem : createItem;
 
@@ -113,6 +135,7 @@ ResourceEdit.navigationOptions = ({ navigation }) => {
                 <Item title={item ? 'save' : 'create'} iconName={item ? 'save' : 'plus'} style={{ marginRight: 10 }} onPress={() => {
                     navigation.getParam('save')({
                         item: navigation.getParam('item'),
+                        items: navigation.getParam('items'),
                         state: navigation.getParam('state'),
                     });
                 }} />

@@ -12,36 +12,43 @@ const items = [
         title: i18n.t('General'),
         data: [
             {
+                key: 'name',
+                required: true,
                 title: i18n.t('Name'),
                 render: function NameRender([state, mergeState]) {
                     return <Input value={state.name} onChangeText={(value) => mergeState({ name: value })} />;
                 },
             },
             {
+                key: 'address',
                 title: i18n.t('Address'),
                 render: function AddressRender([state, mergeState]) {
                     return <Input value={state.address} onChangeText={(value) => mergeState({ address: value })} />;
                 },
             },
             {
+                key: 'city',
                 title: i18n.t('City'),
                 render: function CityRender([state, mergeState]) {
                     return <Input value={state.city} onChangeText={(value) => mergeState({ city: value })} />;
                 },
             },
             {
+                key: 'postcode',
                 title: i18n.t('Postcode'),
                 render: function PostcodeRender([state, mergeState]) {
                     return <Input value={state.postcode} onChangeText={(value) => mergeState({ postcode: value })} />;
                 },
             },
             {
+                key: 'state',
                 title: i18n.t('State'),
                 render: function StateRender([state, mergeState]) {
                     return <Input value={state.state} onChangeText={(value) => mergeState({ state: value })} />;
                 },
             },
             {
+                key: 'country',
                 title: i18n.t('Country'),
                 render: function CountryRender([state, mergeState]) {
                     return <Input value={state.country} onChangeText={(value) => mergeState({ country: value })} />;
