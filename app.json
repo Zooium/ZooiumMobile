@@ -36,7 +36,11 @@
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "CAMERA"
-      ]
+      ],
+      "adaptiveIcon": {
+        "backgroundImage": "./assets/icon-background.png",
+        "foregroundImage": "./assets/icon-foreground.png"
+      }
     },
     "hooks": {
       "postPublish": [
