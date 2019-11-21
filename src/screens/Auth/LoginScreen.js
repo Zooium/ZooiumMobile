@@ -48,7 +48,7 @@ export default function LoginScreen({ navigation }) {
         <Layout style={s.background}>
             <SafeView>
                 <View style={s.brand}>
-                    <Image style={s.logo} source={require('@assets/icon.png')} />
+                    <Image style={s.logo} source={require('@assets/icon-foreground.png')} />
                     <Text category="h3" style={s.brandText}>Zooium</Text>
                 </View>
 
@@ -74,6 +74,8 @@ let s = StyleSheet.create({
     },
 
     logo: {
+        width: 192,
+        height: 192,
         marginBottom: 20,
     },
 

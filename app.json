@@ -1,9 +1,11 @@
 {
   "expo": {
     "name": "Zooium",
-    "slug": "Zooium",
+    "slug": "zooium",
+    "scheme": "zooium",
     "privacy": "public",
     "sdkVersion": "35.0.0",
+    "githubUrl": "https://github.com/Zooium/ZooiumMobile",
     "platforms": [
       "ios",
       "android",
@@ -12,9 +14,10 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "primaryColor": "#4D65DC",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#4D65DC"
     },
     "updates": {
@@ -24,8 +27,20 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "userInterfaceStyle": "automatic"
+      "supportsTablet": false,
+      "userInterfaceStyle": "automatic",
+      "bundleIdentifier": "com.zooium.mobile"
+    },
+    "android": {
+      "package": "com.zooium.mobile",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "CAMERA"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#4D65DC",
+        "foregroundImage": "./assets/icon-foreground.png"
+      }
     },
     "hooks": {
       "postPublish": [
