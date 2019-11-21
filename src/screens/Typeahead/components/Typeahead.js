@@ -17,7 +17,7 @@ import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 function Typeahead({ name, fetch, preview, itemProps, variables = {}, navigation }) {
     const searchInput = createRef();
     const query = navigation.getParam('search') || '';
-    const appendQuery = navigation.getParam('appendSearch') || '';
+    const appendQuery = navigation.getParam('appendQuery') || '';
 
     useEffect(() => {
         searchInput && searchInput.current && searchInput.current.focus();
