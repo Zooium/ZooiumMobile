@@ -36,11 +36,7 @@
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "CAMERA"
-      ],
-      "adaptiveIcon": {
-        "backgroundColor": "#4D65DC",
-        "foregroundImage": "./assets/icon-foreground.png"
-      }
+      ]
     },
     "hooks": {
       "postPublish": [
