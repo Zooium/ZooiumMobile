@@ -132,7 +132,7 @@ ResourceEdit.navigationOptions = ({ navigation }) => {
 
         headerRight: (
             <HeaderButtons>
-                <Item title={item ? 'save' : 'create'} iconName={item ? 'save' : 'plus'} style={{ marginRight: 10 }} onPress={() => {
+                <Item title={item ? 'save' : 'create'} iconName={item ? 'save' : 'plus'} onPress={() => {
                     navigation.getParam('save')({
                         item: navigation.getParam('item'),
                         items: navigation.getParam('items'),

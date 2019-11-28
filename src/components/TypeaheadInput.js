@@ -5,7 +5,7 @@ import { Icon } from 'react-native-ui-kitten';
 import { withNavigation } from 'react-navigation';
 import InputButton from '@components/InputButton.js';
 
-function TypeaheadInput({ view, preview, appendQuery, add, resource, value, onChange, navigation }) {
+function TypeaheadInput({ view, preview, appendSearch, add, resource, value, onChange, navigation }) {
     return (
         <InputButton
             icon={value && (() => (
@@ -15,7 +15,9 @@ function TypeaheadInput({ view, preview, appendQuery, add, resource, value, onCh
             ))}
             onPress={() => {
                 navigation.navigate(view, {
-                    resource, onChange, appendQuery, add,
+                    showSearch: true,
+                    focusSearch: true,
+                    resource, onChange, appendSearch, add,
                 })
             }}
         >
@@ -26,7 +28,7 @@ function TypeaheadInput({ view, preview, appendQuery, add, resource, value, onCh
 
 TypeaheadInput.propTypes = {
     add: PropTypes.string,
-    appendQuery: PropTypes.string,
+    appendSearch: PropTypes.string,
     view: PropTypes.string.isRequired,
     preview: PropTypes.func.isRequired,
     resource: PropTypes.string.isRequired,

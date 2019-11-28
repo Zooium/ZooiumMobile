@@ -50,7 +50,8 @@
 		"react-navigation-stack": "^1.8.0",
 		"react-navigation-tabs": "^2.5.3",
 		"redux": "^4.0.4",
-		"sentry-expo": "~2.0.0"
+		"sentry-expo": "~2.0.0",
+		"use-debounce": "^3.1.0"
 	},
 	"devDependencies": {
 		"babel-eslint": "^10.0.3",

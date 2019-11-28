@@ -33,7 +33,8 @@ export const enclosurePreview = ({ item, header: Header, navigation, layout: { s
                             routeName: 'ListAnimals',
                             params: {
                                 search: 'enclosure:'+item.id,
-                                focusInput: false,
+                                showSearch: true,
+                                focusSearch: false,
                             },
                         }),
                     })}>

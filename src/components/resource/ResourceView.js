@@ -176,7 +176,7 @@ ResourceView.navigationOptions = ({ navigation }) => {
 
         headerRight: editItem && (
             <HeaderButtons>
-                <Item title="edit" iconName="edit" style={{ marginRight: 10 }} onPress={() => {
+                <Item title="edit" iconName="edit" onPress={() => {
                     editItem(item);
                 }} />
             </HeaderButtons>

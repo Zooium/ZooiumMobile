@@ -34,7 +34,6 @@ NearbyScreen.navigationOptions = ({ navigation }) => {
             <HeaderButtons>
                 <Item
                     title="toggle"
-                    style={{ marginRight: 10 }}
                     onPress={() => {
                         navigation.setParams({
                             view: (isBarcode ? 'location' : 'barcode'),

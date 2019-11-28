@@ -34,7 +34,8 @@ export const locationPreview = ({ item, navigation, layout: { showCount = true }
                         routeName: 'ListEnclosures',
                         params: {
                             search: 'location:'+item.id,
-                            focusInput: false,
+                            showSearch: true,
+                            focusSearch: false,
                         },
                     }),
                 })}>

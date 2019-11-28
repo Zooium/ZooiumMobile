@@ -78,6 +78,10 @@ export default class AuthState {
         return AuthState.user() && AuthState.user().team;
     }
 
+    static currentTeamID() {
+        return AuthState.currentTeam() && AuthState.currentTeam().id;
+    }
+
     static accessToken() {
         return AuthState.state.token.access;
     }

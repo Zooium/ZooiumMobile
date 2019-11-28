@@ -1,145 +1,132 @@
-import { merge } from 'lodash';
+import i18n from '@src/i18n.js';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
 import Loader from '@components/Loader.js';
+import { useDebounce } from 'use-debounce';
 import AuthState from '@utils/AuthState.js';
+import { useQuery } from '@apollo/react-hooks';
+import { View, TextInput } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import ResourceListItem from './ResourceListItem.js';
-import ResourceListEmpty from './ResourceListEmpty.js';
-import AddingHeader from '@components/AddingHeader.js';
-import ResourceListActions from './ResourceListActions.js';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { SwipeListView } from 'react-native-swipe-list-view';
-import FullWidthSearch from '@components/FullWidthSearch.js';
-import SearchableHeader from '@components/SearchableHeader.js';
-import React, { useEffect, useCallback, createRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import parseQuery from '@utils/apollo/parseQuery.js';
+import ResourceSwipeList from './ResourceSwipeList.js';
+import parsePagination from '@utils/apollo/parsePagination.js';
+import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
-function ResourceList({ name, fetch, variables = {}, routes: { view, edit }, mutations: { remove }, preview, extraData, showRefresh = true, navigation }) {
-    const searchInput = createRef();
+function ResourceList({ fetch, variables = {}, List, navigation, ...props }) {
+    // Define search related variables.
+    const navSearch = navigation.getParam('search', null);
+    const appendSearch = navigation.getParam('appendSearch', null);
+    const [search, setSearch] = useState(navSearch);
+    const [debouncedSearch] = useDebounce(search, 500);
 
-    const query = navigation.getParam('search');
-    const focusSearch = navigation.getParam('focusInput', false);
-    const showSearch = query !== undefined;
+    // Determine final search query.
+    const finalSearch = (search || appendSearch)
+        ? [appendSearch, debouncedSearch].join(' ').trim()
+        : undefined;
 
+    // Share set search function.
     useEffect(() => {
-        // Focus search input if shown, not focused, and should.
-        if (showSearch && focusSearch && searchInput.current && ! searchInput.current.isFocused()) {
-            searchInput.current.focus();
-        }
-    }, [searchInput]);
+        navigation.setParams({ setSearch });
+    }, []),
 
+    // Set search on navbar search text change.
     useEffect(() => {
-        navigation.setParams({ editItem });
-    }, []);
+        if (navSearch) setSearch(navSearch);
+    }, [navSearch]);
 
-    const team = AuthState.currentTeam();
-    const { loading, data, refetch, fetchMore } = useQuery(fetch, {
+    // Prepare resource list query.
+    const query = useQuery(fetch, {
         notifyOnNetworkStatusChange: true,
         variables: {
-            search: showSearch && query || undefined,
-            team_id: team && team.id,
             ...variables,
+            search: finalSearch,
+            team_id: AuthState.currentTeamID(),
         },
     });
 
-    const [removeItems] = useMutation(remove, {
-        update() {
-            refetch(); // @wip - Invalidate or write to cache instead?
-        },
-    });
+    // Parse the query response.
+    const { loading, data } = query;
+    const { response } = parseQuery(data);
+    const { init, list } = parsePagination(response);
 
-    const key = data && Object.keys(data)[0] || undefined;
-    const response = key && data && data[key] || [];
-
-    const init = ! response || ! response.data;
-    const page = ! init ? Math.ceil(response.data.length / response.per_page) : 1;
-
-    const listData = response && response.data || [];
-    const hasMore = ! init && response.total > (response.per_page * page);
-
-    const loadMore = () => {
-        // Skip if loading or has no more items to show.
-        if (loading || ! hasMore) return;
-
-        // Fetch more results.
-        fetchMore({
-            variables: { page: page + 1 },
-            updateQuery: (previous, { fetchMoreResult: results }) => {
-                // Return previous if has no results.
-                if (! results || ! results[key] || ! results[key].data) return previous;
-
-                // Merge the two data sources.
-                let data = merge({}, results);
-                data[key].data = [
-                    ...previous[key].data,
-                    ...results[key].data,
-                ];
-
-                // Return new list.
-                return data;
-            },
-        });
-    }
-
-    const viewItem = (item) => navigation.navigate(view, { item });
-    const editItem = (item = undefined) => navigation.navigate(edit, { item });
-    const deleteItem = (item) => removeItems({
-        variables: {
-            ids: [item.id],
-        },
-    });
-
-    const itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={viewItem} preview={preview} />, []);
-    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []);
-    const actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, []);
-
-    return (loading && init && ! query ? <Loader /> : (
+    // Return the resource list view.
+    return (loading && init && ! search ? <Loader /> : (
         <View style={{flex:1}}>
-            {showSearch && <FullWidthSearch get={query} set={(query) => {
-                navigation.setParams({ search: query })
-            }} ref={searchInput} />}
-
-            <SwipeListView
-                keyboardShouldPersistTaps="always"
-                keyExtractor={item => item.id}
-                data={listData}
-                renderItem={itemCallback}
-                renderHiddenItem={actionsCallback} 
-                ListEmptyComponent={emptyCallback}
-                onRefresh={() => refetch()}
-                refreshing={showRefresh && loading}
-                onEndReached={loadMore}
-                onEndReachedThreshold={0.2}
-                leftOpenValue={75}
-                stopLeftSwipe={85}
-                rightOpenValue={-75}
-                stopRightSwipe={-85}
-                extraData={extraData}
-                contentContainerStyle={{
-                    flexGrow: 1,
-                }}
-            />
+            {List && <List list={list} query={query} {...props} /> || <ResourceSwipeList list={list} query={query} {...props} />}
         </View>
     ));
 }
 
-ResourceList.navigationOptions = ({ navigation }) => ({
-    headerLeft: <AddingHeader style={{ marginLeft: 10 }} onPress={() => {
-        navigation.getParam('editItem')()
-    }} />,
+ResourceList.navigationOptions = ({ navigation: { getParam, setParams }, onSearchCancel = undefined, hasRightSearchItem = false }) => {
+    // Return search based header options if requested.
+    if (getParam('showSearch', false)) {
+        return {
+            headerRight: null,
+            headerLeft: (
+                <HeaderButtons left={true}>
+                    <Item title="return" iconName="arrow-left" onPress={() => {
+                        if (onSearchCancel) return onSearchCancel();
 
-    headerRight: <SearchableHeader style={{ marginRight: 10 }} onPress={() => {
-        navigation.setParams({
-            focusInput: true,
-            search: navigation.getParam('search') === undefined ? '' : undefined,
-        })
-    }} />,
+                        getParam('setSearch')(null);
+                        setParams({
+                            search: null,
+                            showSearch: false
+                        });
+                    }} />
+                </HeaderButtons>
+            ),
+    
+            headerTitle: (
+                <TextInput
+                    clearButtonMode="always"
+                    selectionColor="white"
+                    placeholder={i18n.t('Enter criteria to search...')}
+                    autoFocus={getParam('focusSearch', true)}
+                    defaultValue={getParam('search')}
+                    onChangeText={getParam('setSearch')}
+                    style={{
+                        width: '100%',
+                        color: 'white',
+                        fontSize: 18,
+                    }}
+                />
+            ),
 
-    headerTitleStyle: {
-        flex: 1,
-        textAlign: 'center',
-    },
-});
+            headerTitleContainerStyle: {
+                right: hasRightSearchItem ? undefined : 14,
+            },
+        }
+    }
+
+    // Return default navigation options.
+    return {
+        headerLeft: getParam('createItem') ? (
+            <HeaderButtons left={true}>
+                <Item title="add" iconName="plus" onPress={() => {
+                    navigation.getParam('createItem')();
+                }} />
+            </HeaderButtons>
+        ) : undefined,
+
+        headerRight: ({ items = undefined } = {}) => (
+            <HeaderButtons>
+                <Item title="search" iconName="search" onPress={() => {
+                    setParams({
+                        showSearch: true,
+                        focusSearch: true,
+                    });
+                }} />
+
+                { items && items() }
+            </HeaderButtons>
+        ),
+
+        headerTitleStyle: {
+            flex: 1,
+            textAlign: 'center',
+        },
+    }
+}
 
 ResourceList.propTypes = {
     name: PropTypes.string.isRequired,
