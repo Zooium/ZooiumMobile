@@ -1,7 +1,7 @@
 import React from 'react';
 import theme from '@src/theme.js';
 import PropTypes from 'prop-types';
-import { Icon } from 'react-native-ui-kitten';
+import { Icon } from '@ui-kitten/components';
 
 export default function SexPreview(props) {
     const sex = {

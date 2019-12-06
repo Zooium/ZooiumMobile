@@ -1,7 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import PropTypes from 'prop-types';
-import { Icon } from 'react-native-ui-kitten';
+import { Icon } from '@ui-kitten/components';
 import { withNavigation } from 'react-navigation';
 import InputButton from '@components/InputButton.js';
 

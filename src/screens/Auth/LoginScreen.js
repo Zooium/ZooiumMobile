@@ -4,7 +4,7 @@ import { SplashScreen } from 'expo';
 import SafeView from '@components/SafeView.js';
 import AuthManager from '@utils/AuthManager.js';
 import React, { useState, useEffect } from 'react';
-import { Text, Layout } from 'react-native-ui-kitten';
+import { Text, Layout } from '@ui-kitten/components';
 import { View, Image, StyleSheet } from 'react-native';
 import LoadingButton from '@components/LoadingButton.js';
 

@@ -11,7 +11,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import FontAwesome5Pack from '@utils/FontAwesome5Pack.js';
 import NavigationService from '@utils/NavigationService.js';
 import { AppearanceProvider } from 'react-native-appearance';
-import { ApplicationProvider, IconRegistry } from 'react-native-ui-kitten';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 
 export default function App() {
     return (

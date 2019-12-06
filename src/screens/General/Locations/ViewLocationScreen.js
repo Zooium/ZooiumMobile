@@ -1,6 +1,6 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import { Layout } from 'react-native-ui-kitten';
+import { Layout } from '@ui-kitten/components';
 import ResourceView from '@components/resource/ResourceView.js';
 import VIEW_LOCATION from '@graphql/queries/Location/viewLocation.gql.js';
 

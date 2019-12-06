@@ -5,7 +5,7 @@ import Loader from '@components/Loader.js';
 import * as Permissions from 'expo-permissions';
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
-import { Icon, Text } from 'react-native-ui-kitten';
+import { Icon, Text } from '@ui-kitten/components';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import PermissionDenied from '@components/PermissionDenied.js';
 import { withNavigation, withNavigationFocus } from 'react-navigation';

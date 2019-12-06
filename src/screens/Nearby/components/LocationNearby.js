@@ -4,7 +4,7 @@ import * as Location from 'expo-location';
 import Loader from '@components/Loader.js';
 import * as Permissions from 'expo-permissions';
 import React, { useState, useEffect } from 'react';
-import { Text, Icon } from 'react-native-ui-kitten';
+import { Text, Icon } from '@ui-kitten/components';
 import { withNavigationFocus } from 'react-navigation';
 import PermissionDenied from '@components/PermissionDenied.js';
 import ListEnclosures from '@screens/General/Enclosures/ListEnclosuresScreen.js';

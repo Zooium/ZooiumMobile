@@ -7,7 +7,7 @@ import AppStyles from '@utils/AppStyles.js';
 import { useQuery } from '@apollo/react-hooks';
 import { View, SectionList } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import { Text, Icon } from 'react-native-ui-kitten';
+import { Text, Icon } from '@ui-kitten/components';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 

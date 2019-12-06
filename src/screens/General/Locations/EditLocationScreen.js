@@ -1,6 +1,6 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import { Layout, Input } from 'react-native-ui-kitten';
+import { Layout, Input } from '@ui-kitten/components';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import VIEW_LOCATION from '@graphql/queries/Location/viewLocation.gql.js';

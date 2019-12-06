@@ -1,6 +1,6 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import { Layout, Input } from 'react-native-ui-kitten';
+import { Layout, Input } from '@ui-kitten/components';
 import TypeaheadInput from '@components/TypeaheadInput.js';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
 import VIEW_ENCLOSURE from '@graphql/queries/Enclosure/viewEnclosure.gql.js';

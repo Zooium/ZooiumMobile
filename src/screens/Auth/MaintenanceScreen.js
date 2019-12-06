@@ -5,7 +5,7 @@ import apollo from '@src/apollo.js';
 import { SplashScreen } from 'expo';
 import SafeView from '@components/SafeView.js';
 import PING from '@graphql/queries/ping.gql.js';
-import { Text, Layout } from 'react-native-ui-kitten';
+import { Text, Layout } from '@ui-kitten/components';
 import { View, Image, StyleSheet } from 'react-native';
 
 export default function MaintenanceScreen({ navigation }) {

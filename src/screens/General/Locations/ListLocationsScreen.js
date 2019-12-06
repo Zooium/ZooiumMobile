@@ -2,7 +2,7 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import PropTypes from 'prop-types';
 import { View, TouchableOpacity  } from 'react-native';
-import { Text, Icon, Layout } from 'react-native-ui-kitten';
+import { Text, Icon, Layout } from '@ui-kitten/components';
 import ResourceList from '@components/resource/ResourceList.js';
 import { withNavigation, NavigationActions } from 'react-navigation';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';

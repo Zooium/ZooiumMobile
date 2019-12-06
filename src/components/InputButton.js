@@ -1,7 +1,7 @@
 import React from 'react';
 import theme from '@src/theme.js';
 import { StyleSheet } from 'react-native';
-import { Button } from 'react-native-ui-kitten';
+import { Button } from '@ui-kitten/components';
 
 export default function inputButton({ children, ...props }) {
     return (

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Constants from 'expo-constants';
 import * as IntentLauncher from 'expo-intent-launcher';
 import { View, Linking, Platform } from 'react-native';
-import { Text, Icon, Button } from 'react-native-ui-kitten';
+import { Text, Icon, Button } from '@ui-kitten/components';
 
 export default function PermissionDenied({ text, retry }) {
     const openSettings = () => {

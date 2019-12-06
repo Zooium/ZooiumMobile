@@ -1,7 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import { TouchableOpacity } from 'react-native';
-import { Text, Layout } from 'react-native-ui-kitten';
+import { Text, Layout } from '@ui-kitten/components';
 import ResourceView from '@components/resource/ResourceView.js';
 import VIEW_ENCLOSURE from '@graphql/queries/Enclosure/viewEnclosure.gql.js';
 

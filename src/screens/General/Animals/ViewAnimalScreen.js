@@ -5,7 +5,7 @@ import i18n, { localeName } from '@src/i18n.js';
 import SexPreview from './components/SexPreview.js';
 import CitesListing from './components/CitesListing.js';
 import { View, Alert, TouchableOpacity } from 'react-native';
-import { Text, Icon, Layout } from 'react-native-ui-kitten';
+import { Text, Icon, Layout } from '@ui-kitten/components';
 import ResourceView from '@components/resource/ResourceView.js';
 import VIEW_ANIMAL from '@graphql/queries/Animal/viewAnimal.gql.js';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'react-native-ui-kitten';
+import { Button } from '@ui-kitten/components';
 import { ActivityIndicator } from 'react-native';
 
 export default function LoadingButton(props) {

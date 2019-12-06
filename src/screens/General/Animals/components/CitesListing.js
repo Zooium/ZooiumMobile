@@ -2,7 +2,7 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import PropTypes from 'prop-types';
-import { Text } from 'react-native-ui-kitten';
+import { Text } from '@ui-kitten/components';
 import { Alert, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function CitesListing({ listing, style = {} }) {

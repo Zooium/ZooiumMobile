@@ -1,7 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import { View, Text } from 'react-native';
-import { Icon } from 'react-native-ui-kitten';
+import { Icon } from '@ui-kitten/components';
 import BarcodeNearby from './components/BarcodeNearby.js';
 import LocationNearby from './components/LocationNearby.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';

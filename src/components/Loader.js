@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
-import { Spinner } from 'react-native-ui-kitten';
+import { Spinner } from '@ui-kitten/components';
 
 export default function Loader({ size = 'giant', status = 'primary', children, ...props }) {
     return (

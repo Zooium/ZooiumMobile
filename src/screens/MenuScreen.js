@@ -4,7 +4,7 @@ import theme from '@src/theme.js';
 import PropTypes from 'prop-types';
 import AppStyles from '@utils/AppStyles.js';
 import AuthManager from '@utils/AuthManager.js';
-import { Text, Icon } from 'react-native-ui-kitten';
+import { Text, Icon } from '@ui-kitten/components';
 import { NavigationActions } from 'react-navigation';
 import { View, SectionList, TouchableHighlight } from 'react-native';
 
