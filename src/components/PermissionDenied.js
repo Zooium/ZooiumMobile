@@ -25,7 +25,7 @@ export default function PermissionDenied({ text, retry }) {
 
     return (
         <View style={{ padding: 20, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Icon name="exclamation-triangle" size={75} color={theme['color-warning-500']} />
+            <Icon name="exclamation-triangle" size={75} color={theme['color-warning-500']} solid />
 
             <Text category="s1" style={{ textAlign: 'center', marginVertical: 20 }}>
                 {text}

@@ -68,7 +68,7 @@ export default function ViewAnimalScreen({ navigation }) {
                                     CITES
                                 </Text>
 
-                                <Icon size={12} name="question-circle" color={theme['color-primary-500']} />
+                                <Icon size={12} name="question-circle" color={theme['color-primary-500']} solid />
                             </TouchableOpacity>
                         )
                     },

@@ -16,7 +16,7 @@ export default createBottomTabNavigator({
         navigationOptions: {
             title: i18n.t('Animal', { count: 2 }),
             tabBarIcon: function AnimalIcon({ tintColor }) {
-                return <Icon name="dove" size={22} color={tintColor} />;
+                return <Icon name="dove" size={22} color={tintColor} solid />;
             },
         },
     },
@@ -26,7 +26,7 @@ export default createBottomTabNavigator({
         navigationOptions: {
             title: i18n.t('Enclosure', { count: 2 }),
             tabBarIcon: function EnclosureIcon({ tintColor }) {
-                return <Icon name="map-marked-alt" size={22} color={tintColor} />;
+                return <Icon name="map-marked-alt" size={22} color={tintColor} solid />;
             },
         },
     },
@@ -36,7 +36,7 @@ export default createBottomTabNavigator({
         navigationOptions: {
             title: i18n.t('Nearby'),
             tabBarIcon: function NearbyIcon({ tintColor }) {
-                return <Icon name="street-view" size={22} color={tintColor} />;
+                return <Icon name="street-view" size={22} color={tintColor} solid />;
             },
         },
     },
@@ -46,7 +46,7 @@ export default createBottomTabNavigator({
         navigationOptions: {
             title: i18n.t('Menu'),
             tabBarIcon: function MenuIcon({ tintColor }) {
-                return <Icon name="ellipsis-h" size={22} color={tintColor} />;
+                return <Icon name="ellipsis-h" size={22} color={tintColor} solid />;
             },
         },
     },

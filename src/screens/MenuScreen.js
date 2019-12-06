@@ -91,6 +91,7 @@ export default function MenuScreen({ navigation }) {
                 }]}>
                     <View style={{ width: 40 }}>
                         <Icon
+                            solid
                             size={24}
                             name={item.icon}
                             color={item.color || theme['color-primary-500']}

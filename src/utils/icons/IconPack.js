@@ -1,19 +1,23 @@
+import './IconLibrary.js';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet } from 'react-native';
-import { FontAwesome5 as Icon } from '@expo/vector-icons';
+import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome';
 
 function FontAwesome5({ name, style, ...otherProps }) {
     const { height, tintColor, ...iconStyle } = StyleSheet.flatten(style) || {};
+    
+    let pack = 'far';
+    if (otherProps.light) pack = 'fal';
+    if (otherProps.solid) pack = 'fas';
 
     return (
         <Icon
-            name={name}
+            icon={[pack, name]}
             size={height}
             color={tintColor}
             style={iconStyle}
             {...otherProps}
-            solid
         />
     )
 }

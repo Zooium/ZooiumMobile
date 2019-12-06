@@ -8,7 +8,7 @@ import { mapping } from '@eva-design/eva';
 import { I18nextProvider } from 'react-i18next';
 import AppContainer from '@routes/AppContainer.js';
 import { ApolloProvider } from '@apollo/react-hooks';
-import FontAwesome5Pack from '@utils/FontAwesome5Pack.js';
+import FontAwesome5Pack from '@utils/icons/IconPack.js';
 import NavigationService from '@utils/NavigationService.js';
 import { AppearanceProvider } from 'react-native-appearance';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
