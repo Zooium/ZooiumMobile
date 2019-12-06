@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import { TouchableOpacity } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 import { Text, Layout } from '@ui-kitten/components';
 import ResourceView from '@components/resource/ResourceView.js';
 import VIEW_ENCLOSURE from '@graphql/queries/Enclosure/viewEnclosure.gql.js';
@@ -43,6 +44,30 @@ export default function ViewEnclosureScreen({ navigation }) {
                                 </Text>
                             </TouchableOpacity>
                         );
+                    },
+                },
+                {
+                    title: i18n.t('Coordinates'),
+                    render: function CoordinatesRender(resource) {
+                        return resource.latitude && resource.longitude && (
+                            <MapView
+                                initialRegion={{
+                                    latitude: resource.latitude,
+                                    longitude: resource.longitude,
+                                    latitudeDelta: 0.001,
+                                    longitudeDelta: 0.001,
+                                }}
+                                style={{
+                                    width: '100%',
+                                    aspectRatio: 1,
+                                }}
+                            >
+                                <Marker coordinate={{
+                                    latitude: resource.latitude,
+                                    longitude: resource.longitude,
+                                }} />
+                            </MapView>
+                        )
                     },
                 },
             ],

@@ -8,6 +8,8 @@ export default gql`
         name
         slug
         distance
+        latitude
+        longitude
         animals_count
 
         location {
