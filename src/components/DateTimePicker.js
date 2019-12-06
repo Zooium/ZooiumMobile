@@ -36,6 +36,6 @@ export default function DateTimePicker({ value, onChange }) {
 }
 
 DateTimePicker.propTypes = {
-    value: PropTypes.object,
+    value: PropTypes.string,
     onChange: PropTypes.func.isRequired,
 }
