@@ -1,12 +1,14 @@
 import React from 'react';
+import { Updates } from 'expo';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import PropTypes from 'prop-types';
+import Constants from 'expo-constants';
 import AppStyles from '@utils/AppStyles.js';
 import AuthManager from '@utils/AuthManager.js';
 import { Text, Icon } from '@ui-kitten/components';
 import { NavigationActions } from 'react-navigation';
-import { View, SectionList, TouchableHighlight } from 'react-native';
+import { View, Alert, SectionList, TouchableHighlight } from 'react-native';
 
 const menu = [
     {
@@ -122,6 +124,35 @@ export default function MenuScreen({ navigation }) {
                 renderSectionHeader={renderSectionHeader}
                 keyExtractor={(item, index) => index.toString()}
             />
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
+                <Text appearance="hint" category="c1" status="primary" onPress={() => {
+                    Updates.checkForUpdateAsync().then(({ isAvailable }) => {
+                        if (isAvailable) {
+                            // Update the application.
+                            Updates.reload();
+                        } else {
+                            // Already up to date alert.
+                            Alert.alert(
+                                i18n.t('Update Unavailable'),
+                                i18n.t('Application is already up to date!')
+                            );
+                        }
+                    }).catch(() => {
+                        // Failed to check for updates.
+                        Alert.alert(
+                            i18n.t('Update Unavailable'),
+                            i18n.t('Failed to fetch updates. Try again later!')
+                        );
+                    });
+                }}>
+                    {i18n.t('Check for updates...')}
+                </Text>
+
+                <Text appearance="hint" category="c1">
+                    {Constants.manifest.version}-{Constants.manifest.revisionId || 'debug'}
+                </Text>
+            </View>
         </View>
     );
 }

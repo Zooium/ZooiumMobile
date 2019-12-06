@@ -70,6 +70,11 @@
         "Incomplete Submission": "Incomplete Submission",
         "The following fields are required: {{fields}}": "The following fields are required: {{fields}}",
 
+        "Update Unavailable": "Update Unavailable",
+        "Check for updates...": "Check for updates...",
+        "Failed to fetch updates. Try again later!": "Failed to fetch updates. Try again later!",
+        "Application is already up to date!": "Application is already up to date!",
+
         "Under maintenance": "Under maintenance",
 
         "You have reached the end!": "You have reached the end!",
