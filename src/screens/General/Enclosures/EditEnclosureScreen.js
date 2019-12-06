@@ -1,12 +1,15 @@
-import React from 'react';
 import i18n from '@src/i18n.js';
-import { Layout, Input } from '@ui-kitten/components';
+import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 import TypeaheadInput from '@components/TypeaheadInput.js';
+import { Text, Layout, Input } from '@ui-kitten/components';
+import MapViewSelector from '@components/MapViewSelector.js';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
+import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import VIEW_ENCLOSURE from '@graphql/queries/Enclosure/viewEnclosure.gql.js';
 import UPDATE_ENCLOSURE from '@graphql/mutations/Enclosure/updateEnclosure.gql.js';
 import CREATE_ENCLOSURE from '@graphql/mutations/Enclosure/createEnclosure.gql.js';
-import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import { LocationTypeaheadInput } from '@screens/Typeahead/LocationTypeaheadScreen.js';
 
 const items = [
@@ -37,6 +40,28 @@ const items = [
                                 location: value,
                                 location_id: value && value.id || undefined,
                             })}
+                        />
+                    );
+                },
+            },
+            {
+                key: 'coordinates',
+                title: i18n.t('Coordinates'),
+                description: function CoordinatesDescriptionRender() {
+                    return (
+                        <Text appearance="hint" style={{ fontSize: 10, lineHeight: 12 }}>
+                            {i18n.t('Select by pressing a location on the map or long-pressing the marker and dragging it around.')}
+                        </Text>
+                    );
+                },
+                render: function CoordinatesRender([state, mergeState]) {
+                    return (
+                        <MapViewSelector
+                            latitude={state.coordinate && state.coordinate.latitude}
+                            longitude={state.coordinate && state.coordinate.longitude}
+                            setCoordinates={(latitude, longitude) => {
+                                mergeState({ coordinate: { latitude, longitude } });
+                            }}
                         />
                     );
                 },

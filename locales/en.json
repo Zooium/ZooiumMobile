@@ -47,6 +47,7 @@
         "Postcode": "Postcode",
         "State": "State",
         "Country": "Country",
+        "Coordinates": "Coordinates",
 
         "Date": "Date",
 
@@ -97,6 +98,7 @@
         "cites.disclaimer": "This is not legal advice! Because of taxonomic differences, CITES may not be fully compatible with the listed species and should therefore always be checked up separately. Some countries may have special regulations that are not included.",
 
         "A unique identifier for the animal such as a DNA test filing-number or ring number.": "A unique identifier for the animal such as a DNA test filing-number or ring number.",
-        "Hybrids are not listed and subspecies may be listed under their parent-specie name.": "Hybrids are not listed and subspecies may be listed under their parent-specie name."
+        "Hybrids are not listed and subspecies may be listed under their parent-specie name.": "Hybrids are not listed and subspecies may be listed under their parent-specie name.",
+        "Select by pressing a location on the map or long-pressing the marker and dragging it around.": "Select by pressing a location on the map or long-pressing the marker and dragging it around.",
     }
 }

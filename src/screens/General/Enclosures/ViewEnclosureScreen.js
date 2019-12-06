@@ -51,6 +51,7 @@ export default function ViewEnclosureScreen({ navigation }) {
                     render: function CoordinatesRender(resource) {
                         return resource.latitude && resource.longitude && (
                             <MapView
+                                mapType="hybrid"
                                 initialRegion={{
                                     latitude: resource.latitude,
                                     longitude: resource.longitude,
