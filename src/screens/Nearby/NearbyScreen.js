@@ -52,6 +52,9 @@ NearbyScreen.navigationOptions = ({ navigation }) => {
                             <Icon color="white" size={20} name={isBarcode ? 'location-arrow' : 'qrcode'} />
                         </View>
                     }
+                    style={{
+                        marginRight: 10,
+                    }}
                 />
             </HeaderButtons>
         ),
