@@ -103,7 +103,7 @@ ResourceList.navigationOptions = ({ navigation: { getParam, setParams }, onSearc
         headerLeft: getParam('createItem') ? (
             <HeaderButtons left={true}>
                 <Item title="add" iconName="plus" onPress={() => {
-                    navigation.getParam('createItem')();
+                    getParam('createItem')();
                 }} />
             </HeaderButtons>
         ) : undefined,
