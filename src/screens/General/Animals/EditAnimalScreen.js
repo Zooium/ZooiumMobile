@@ -48,7 +48,7 @@ const items = [
                             resource={i18n.t('Father')}
                             preview={AnimalTypeaheadInput}
                             appendSearch={
-                                (state.id ? '' : 'exclude:'+state.id)+' exclude:sex:female'
+                                (state.id ? 'exclude:'+state.id : '')+' exclude:sex:female'
                             }
 
                             value={state.father}
@@ -70,7 +70,7 @@ const items = [
                             resource={i18n.t('Mother')}
                             preview={AnimalTypeaheadInput}
                             appendSearch={
-                                (state.id ? '' : 'exclude:'+state.id)+' exclude:sex:male'
+                                (state.id ? 'exclude:'+state.id : '')+' exclude:sex:male'
                             }
 
                             value={state.mother}
