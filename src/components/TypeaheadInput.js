@@ -21,7 +21,7 @@ function TypeaheadInput({ view, preview, appendSearch, add, resource, value, onC
                     params: {
                         showSearch: true,
                         focusSearch: true,
-                        resource, onChange, appendSearch, add,
+                        onChange, appendSearch, add,
                     },
                 })
             }}

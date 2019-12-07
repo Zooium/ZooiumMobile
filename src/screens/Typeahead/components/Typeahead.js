@@ -1,5 +1,4 @@
 import React from 'react';
-import i18n from '@src/i18n.js';
 import { withNavigation } from 'react-navigation';
 import ResourceList from '@components/resource/ResourceList.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
@@ -21,10 +20,6 @@ Typeahead.navigationOptions = ({ navigation }) => {
         ...ResourceList.navigationOptions({ navigation, hasRightSearchItem: true, onSearchCancel: () => {
             navigation.goBack();
         } }),
-
-        title: i18n.t('Select {{resource}}', {
-            resource: navigation.getParam('resource'),
-        }),
 
         headerRight: add && (
             <HeaderButtons>

@@ -60,7 +60,8 @@ function ResourceList({ fetch, variables = {}, List, navigation, ...props }) {
 ResourceList.navigationOptions = ({ navigation: { state, goBack, getParam, setParams }, onSearchCancel = undefined, hasRightSearchItem = false }) => {
     // Return search based header options if requested.
     if (getParam('showSearch', false)) {
-        return {
+        // Define default search options.
+        let options = {
             headerRight: null,
             headerLeft: (
                 <HeaderButtons left={true}>
@@ -92,11 +93,17 @@ ResourceList.navigationOptions = ({ navigation: { state, goBack, getParam, setPa
                     }}
                 />
             ),
+        };
 
-            headerTitleContainerStyle: {
-                right: hasRightSearchItem ? undefined : 14,
-            },
+        // Remove right spacing if missing item.
+        if (! hasRightSearchItem) {
+            options.headerTitleContainerStyle = {
+                right: 14,
+            };
         }
+
+        // Return the options.
+        return options;
     }
 
     // Return default navigation options.
