@@ -34,6 +34,7 @@
       "bundleIdentifier": "com.zooium.mobile"
     },
     "android": {
+      "versionCode": 2,
       "package": "com.zooium.mobile",
       "permissions": [
         "ACCESS_FINE_LOCATION",
