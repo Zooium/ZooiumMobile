@@ -151,8 +151,19 @@ export default function ViewAnimalScreen({ navigation }) {
             data: [
                 {
                     title: i18n.t('Cubs'),
-                    onPress: () => {
-                        alert('@wip');
+                    onPress: ({ response, navigation }) => {
+                        const route = 'ListAnimals';
+                        const search = 'parent:'+response.id;
+    
+                        navigation.navigate({
+                            key: route + search,
+                            routeName: route,
+                            params: {
+                                search: search,
+                                showSearch: true,
+                                focusSearch: false,
+                            },
+                        });
                     },
                 },
                 {

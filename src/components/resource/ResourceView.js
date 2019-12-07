@@ -58,7 +58,7 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit } = 
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                }]} onPress={item.onPress}>
+                }]} onPress={() => item.onPress({ response, navigation })}>
                     <Text status="primary" category="s1">
                         {item.title}
                     </Text>

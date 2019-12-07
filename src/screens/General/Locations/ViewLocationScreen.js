@@ -40,14 +40,36 @@ export default function ViewLocationScreen() {
             data: [
                 {
                     title: i18n.t('Enclosure', { count: 2 }),
-                    onPress: () => {
-                        alert('@wip');
+                    onPress: ({ response, navigation }) => {
+                        const route = 'ListEnclosures';
+                        const search = 'location:'+response.id;
+    
+                        navigation.navigate({
+                            key: route + search,
+                            routeName: route,
+                            params: {
+                                search: search,
+                                showSearch: true,
+                                focusSearch: false,
+                            },
+                        });
                     },
                 },
                 {
                     title: i18n.t('Animal', { count: 2 }),
-                    onPress: () => {
-                        alert('@wip');
+                    onPress: ({ response, navigation }) => {
+                        const route = 'ListAnimals';
+                        const search = 'location:'+response.id;
+    
+                        navigation.navigate({
+                            key: route + search,
+                            routeName: route,
+                            params: {
+                                search: search,
+                                showSearch: true,
+                                focusSearch: false,
+                            },
+                        });
                     },
                 },
             ],

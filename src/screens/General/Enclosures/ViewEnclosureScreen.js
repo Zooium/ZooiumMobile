@@ -80,8 +80,19 @@ export default function ViewEnclosureScreen({ navigation }) {
             data: [
                 {
                     title: i18n.t('Animal', { count: 2 }),
-                    onPress: () => {
-                        alert('@wip');
+                    onPress: ({ response, navigation }) => {
+                        const route = 'ListAnimals';
+                        const search = 'enclosure:'+response.id;
+    
+                        navigation.navigate({
+                            key: route + search,
+                            routeName: route,
+                            params: {
+                                search: search,
+                                showSearch: true,
+                                focusSearch: false,
+                            },
+                        });
                     },
                 },
             ],
