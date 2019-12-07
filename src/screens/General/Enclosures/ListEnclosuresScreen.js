@@ -27,17 +27,20 @@ export const enclosurePreview = ({ item, header: Header, navigation, layout: { s
                 </View>
 
                 {showCount && item.animals_count !== 0 &&
-                    <TouchableOpacity style={{ flexShrink: 0, alignItems: 'flex-end' }} onPress={() => navigation.navigate({
-                        routeName: 'Animals',
-                        action: NavigationActions.navigate({
-                            routeName: 'ListAnimals',
+                    <TouchableOpacity style={{ flexShrink: 0, alignItems: 'flex-end' }} onPress={() => {
+                        const route = 'ListAnimals';
+                        const search = 'enclosure:'+item.id;
+    
+                        navigation.navigate({
+                            key: route + search,
+                            routeName: route,
                             params: {
-                                search: 'enclosure:'+item.id,
+                                search: search,
                                 showSearch: true,
                                 focusSearch: false,
                             },
-                        }),
-                    })}>
+                        });
+                    }}>
                         <Text style={{ fontWeight: 'bold' }}>
                             {item.animals_count} {i18n.t('Animal', { count: 2 })}
                         </Text>

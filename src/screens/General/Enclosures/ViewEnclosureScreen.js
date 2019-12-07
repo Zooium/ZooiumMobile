@@ -30,8 +30,10 @@ export default function ViewEnclosureScreen({ navigation }) {
 
                         return (
                             <TouchableOpacity onPress={() => {
+                                const route = 'ViewLocation';
                                 navigation.navigate({
-                                    routeName: 'ViewLocation',
+                                    key: route + location.id,
+                                    routeName: route,
                                     params: {
                                         item: location,
                                     },

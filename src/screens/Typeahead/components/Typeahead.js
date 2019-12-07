@@ -29,7 +29,12 @@ Typeahead.navigationOptions = ({ navigation }) => {
         headerRight: add && (
             <HeaderButtons>
                 <Item title="add" iconName="plus" onPress={() => {
-                    navigation.navigate(add, { item: undefined });
+                    const rand = Math.random().toString(36).slice(2);
+                    navigation.navigate({
+                        key: add + rand,
+                        routeName: add,
+                        params: { item: undefined },
+                    });
                 }} />
             </HeaderButtons>
         ) || undefined,

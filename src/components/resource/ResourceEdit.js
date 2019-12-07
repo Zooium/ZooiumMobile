@@ -69,9 +69,12 @@ function ResourceEdit({ formInit, formParser, routes: { view }, mutations: { sav
                     },
                 }).then(({ data }) => {
                     // Navigate to view route on success.
-                    navigation.navigate(view, {
-                        item: data[Object.keys(data)[0]],
-                    })
+                    const item = data[Object.keys(data)[0]];
+                    navigation.navigate({
+                        key: view + item.id,
+                        routeName: view,
+                        params: { item },
+                    });
                 }).catch(error => {
                     // @wip
                     console.log(error);

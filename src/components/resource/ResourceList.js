@@ -57,7 +57,7 @@ function ResourceList({ fetch, variables = {}, List, navigation, ...props }) {
     ));
 }
 
-ResourceList.navigationOptions = ({ navigation: { getParam, setParams }, onSearchCancel = undefined, hasRightSearchItem = false }) => {
+ResourceList.navigationOptions = ({ navigation: { state, goBack, getParam, setParams }, onSearchCancel = undefined, hasRightSearchItem = false }) => {
     // Return search based header options if requested.
     if (getParam('showSearch', false)) {
         return {
@@ -66,6 +66,7 @@ ResourceList.navigationOptions = ({ navigation: { getParam, setParams }, onSearc
                 <HeaderButtons left={true}>
                     <Item title="return" iconName="arrow-left" onPress={() => {
                         if (onSearchCancel) return onSearchCancel();
+                        if (state && state.key && goBack()) return;
 
                         getParam('setSearch')(null);
                         setParams({

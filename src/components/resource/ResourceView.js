@@ -16,7 +16,11 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit } = 
         navigation.setParams({
             getTitle: title,
             editItem: edit && ((item) => {
-                navigation.navigate(edit, { item });
+                navigation.navigate({
+                    key: edit + item.id,
+                    routeName: edit,
+                    params: { item },
+                });
             }),
         });
     }, []);

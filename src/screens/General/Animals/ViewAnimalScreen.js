@@ -27,8 +27,10 @@ export default function ViewAnimalScreen({ navigation }) {
                     render: function EnclosureRender(resource) {
                         return resource.enclosure && (
                             <TouchableOpacity onPress={() => {
+                                const route = 'ViewEnclosure';
                                 navigation.navigate({
-                                    routeName: 'ViewEnclosure',
+                                    key: route + resource.enclosure.id,
+                                    routeName: route,
                                     params: {
                                         item: resource.enclosure,
                                     },

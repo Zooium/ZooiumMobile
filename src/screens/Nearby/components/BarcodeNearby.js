@@ -71,8 +71,10 @@ function BarcodeNearby(props) {
         const { __typename: type } = item;
 
         // Navigate to the type and pass item.
+        const route = 'View'+type;
         props.navigation.navigate({
-            routeName: 'View'+type,
+            key: route + item.id,
+            routeName: route,
             params: { item },
         })
     }, [data, error]);

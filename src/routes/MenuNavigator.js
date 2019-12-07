@@ -14,12 +14,5 @@ export default createStackNavigator({
         },
     },
 
-    ListLocations: {
-        screen: ListLocations,
-        navigationOptions: {
-            title: i18n.t('Location', { count: 2 }),
-        },
-    },
-
     ...Popovers,
 }, StackStyle);

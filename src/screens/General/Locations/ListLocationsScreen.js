@@ -28,17 +28,20 @@ export const locationPreview = ({ item, navigation, layout: { showCount = true }
             </View>
 
             {showCount && item.enclosures_count !== 0 &&
-                <TouchableOpacity style={{ flexShrink: 0, alignItems: 'flex-end' }} onPress={() => navigation.navigate({
-                    routeName: 'Enclosures',
-                    action: NavigationActions.navigate({
-                        routeName: 'ListEnclosures',
+                <TouchableOpacity style={{ flexShrink: 0, alignItems: 'flex-end' }} onPress={() => {
+                    const route = 'ListEnclosures';
+                    const search = 'location:'+item.id;
+
+                    navigation.navigate({
+                        key: route + search,
+                        routeName: route,
                         params: {
-                            search: 'location:'+item.id,
+                            search: search,
                             showSearch: true,
                             focusSearch: false,
                         },
-                    }),
-                })}>
+                    });
+                }}>
                     <Text style={{ fontWeight: 'bold' }}>
                         {item.enclosures_count} {i18n.t('Enclosure', { count: 2 })}
                     </Text>

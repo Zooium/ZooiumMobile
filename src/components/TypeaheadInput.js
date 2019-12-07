@@ -14,10 +14,15 @@ function TypeaheadInput({ view, preview, appendSearch, add, resource, value, onC
                 }} />
             ))}
             onPress={() => {
-                navigation.navigate(view, {
-                    showSearch: true,
-                    focusSearch: true,
-                    resource, onChange, appendSearch, add,
+                const rand = Math.random().toString(36).slice(2);
+                navigation.navigate({
+                    key: view + rand,
+                    routeName: view,
+                    params: {
+                        showSearch: true,
+                        focusSearch: true,
+                        resource, onChange, appendSearch, add,
+                    },
                 })
             }}
         >

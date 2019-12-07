@@ -44,6 +44,7 @@ const items = [
                 render: function FatherRender([state, mergeState]) {
                     return (
                         <TypeaheadInput
+                            add="EditAnimal"
                             view="AnimalTypeahead"
                             resource={i18n.t('Father')}
                             preview={AnimalTypeaheadInput}
@@ -66,6 +67,7 @@ const items = [
                 render: function MotherRender([state, mergeState]) {
                     return (
                         <TypeaheadInput
+                            add="EditAnimal"
                             view="AnimalTypeahead"
                             resource={i18n.t('Mother')}
                             preview={AnimalTypeaheadInput}

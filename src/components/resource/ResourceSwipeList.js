@@ -20,8 +20,18 @@ function ResourceSwipeList({ name, list, query, routes, mutations: { remove }, p
     });
 
     // Define resource item CRUD functions.
-    const viewItem = (item) => navigation.navigate(view, { item });
-    const editItem = (item = undefined) => navigation.navigate(edit, { item });
+    const viewItem = (item) => navigation.navigate({
+        key: view + item.id,
+        routeName: view,
+        params: { item },
+    });
+
+    const editItem = (item = undefined) => navigation.navigate({
+        key: view + ((item && item.id) || Math.random().toString(36).slice(2)),
+        routeName: edit,
+        params: { item },
+    });
+
     const deleteItem = (item) => removeItems({
         variables: {
             ids: [item.id],
