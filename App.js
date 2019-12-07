@@ -1,8 +1,9 @@
-import '@src/sentry.js';
 import { Updates } from 'expo';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import client from '@src/apollo.js';
+import * as Sentry from 'sentry-expo';
+import Constants from 'expo-constants';
 import React, { Fragment } from 'react';
 import { StatusBar } from 'react-native';
 import { mapping } from '@eva-design/eva';
@@ -13,6 +14,9 @@ import FontAwesome5Pack from '@utils/icons/IconPack.js';
 import NavigationService from '@utils/NavigationService.js';
 import { AppearanceProvider } from 'react-native-appearance';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+
+Sentry.init({ dsn: 'https://5b87f47102bb45ee8126ca2fcd94e2aa@sentry.io/1806931' });
+Sentry.setRelease(Constants.manifest.revisionId);
 
 export default function App() {
     // Check for application updates.
