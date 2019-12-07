@@ -1,4 +1,5 @@
 import '@src/sentry.js';
+import { Updates } from 'expo';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import client from '@src/apollo.js';
@@ -14,6 +15,13 @@ import { AppearanceProvider } from 'react-native-appearance';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 
 export default function App() {
+    // Check for application updates.
+    Updates.checkForUpdateAsync().then(({ isAvailable }) => {
+        // Reload from source if available.
+        if (isAvailable) Updates.reload();
+    }).catch(() => { /* Left blank intentionally */ });
+
+    // Return application.
     return (
         <Fragment>
             <StatusBar barStyle="light-content" />
