@@ -60,6 +60,12 @@ function ListAnimalsScreen() {
                         remove: DELETE_ANIMALS,
                     }}
 
+                    filters={[
+                        { key: 'active', text: i18n.t('Active') },
+                        { key: 'sold', text: i18n.t('Sold') },
+                        { key: 'deceased', text: i18n.t('Deceased') },
+                    ]}
+
                     sorting={[
                         { key: 'id', text: i18n.t('Recent') },
                         { key: 'identifier', text: i18n.t('ID') },

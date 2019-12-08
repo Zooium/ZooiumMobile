@@ -69,6 +69,13 @@
         "name not set": "name not set",
         "not provided": "not provided",
 
+        "Sorting": "Sorting",
+        "Filters": "Filters",
+
+        "Sold": "Sold",
+        "Active": "Active",
+        "Deceased": "Deceased",
+
         "Incomplete Submission": "Incomplete Submission",
         "The following fields are required: {{fields}}": "The following fields are required: {{fields}}",
 
