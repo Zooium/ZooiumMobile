@@ -13,16 +13,17 @@ library.add([
     require('@fortawesome/pro-solid-svg-icons/faLocationArrow').definition,
     require('@fortawesome/pro-solid-svg-icons/faQuestionCircle').definition,
     require('@fortawesome/pro-solid-svg-icons/faExclamationTriangle').definition,
-    
+
     // Pack: Regular
     require('@fortawesome/pro-regular-svg-icons/faMars').definition,
-    require('@fortawesome/pro-regular-svg-icons/faPencil').definition,
     require('@fortawesome/pro-regular-svg-icons/faSave').definition,
     require('@fortawesome/pro-regular-svg-icons/faPlus').definition,
     require('@fortawesome/pro-regular-svg-icons/faVenus').definition,
     require('@fortawesome/pro-regular-svg-icons/faTimes').definition,
+    require('@fortawesome/pro-regular-svg-icons/faPencil').definition,
     require('@fortawesome/pro-regular-svg-icons/faQrcode').definition,
     require('@fortawesome/pro-regular-svg-icons/faSearch').definition,
+    require('@fortawesome/pro-regular-svg-icons/faFilter').definition,
     require('@fortawesome/pro-regular-svg-icons/faTrashAlt').definition,
     require('@fortawesome/pro-regular-svg-icons/faPencilAlt').definition,
     require('@fortawesome/pro-regular-svg-icons/faArrowLeft').definition,
@@ -30,4 +31,6 @@ library.add([
     require('@fortawesome/pro-regular-svg-icons/faGenderless').definition,
     require('@fortawesome/pro-regular-svg-icons/faExpandWide').definition,
     require('@fortawesome/pro-regular-svg-icons/faLocationArrow').definition,
+    require('@fortawesome/pro-regular-svg-icons/faSortAlphaDown').definition,
+    require('@fortawesome/pro-regular-svg-icons/faSortAlphaDownAlt').definition,
 ]);

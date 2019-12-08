@@ -3,16 +3,24 @@ import PropTypes from 'prop-types';
 import Loader from '@components/Loader.js';
 import { useDebounce } from 'use-debounce';
 import AuthState from '@utils/AuthState.js';
-import { useQuery } from '@apollo/react-hooks';
 import { View, TextInput } from 'react-native';
+import { useQuery } from '@apollo/react-hooks';
 import { withNavigation } from 'react-navigation';
 import React, { useState, useEffect } from 'react';
 import parseQuery from '@utils/apollo/parseQuery.js';
 import ResourceSwipeList from './ResourceSwipeList.js';
 import parsePagination from '@utils/apollo/parsePagination.js';
+import SortingController from '@components/SortingController.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
-function ResourceList({ fetch, variables = {}, List, navigation, ...props }) {
+function ResourceList({ fetch, variables = {}, List, navigation, sorting, ...props }) {
+    // Define sorting related variables.
+    const [showSort, setShowSort] = useState(false);
+    const [sort, setSort] = useState({
+        column: 'id',
+        direction: 'desc',
+    });
+
     // Define search related variables.
     const navSearch = navigation.getParam('search', null);
     const appendSearch = navigation.getParam('appendSearch', null);
@@ -24,10 +32,15 @@ function ResourceList({ fetch, variables = {}, List, navigation, ...props }) {
         ? [appendSearch, debouncedSearch].join(' ').trim()
         : undefined;
 
-    // Share set search function.
+    // Share set search and sorting function.
     useEffect(() => {
-        navigation.setParams({ setSearch });
+        navigation.setParams({ setSearch, setShowSort });
     }, []),
+
+    // Share sorting show state.
+    useEffect(() => {
+        navigation.setParams({ showSort })
+    }, [showSort]);
 
     // Set search on navbar search text change.
     useEffect(() => {
@@ -39,8 +52,10 @@ function ResourceList({ fetch, variables = {}, List, navigation, ...props }) {
         notifyOnNetworkStatusChange: true,
         variables: {
             ...variables,
-            search: finalSearch,
             team_id: AuthState.currentTeamID(),
+
+            search: finalSearch,
+            sorting: sort || undefined,
         },
     });
 
@@ -52,6 +67,7 @@ function ResourceList({ fetch, variables = {}, List, navigation, ...props }) {
     // Return the resource list view.
     return (loading && init && ! search ? <Loader /> : (
         <View style={{flex:1}}>
+            {showSort && <SortingController sort={sort} setSort={setSort} sorting={sorting} />}
             {List && <List list={list} query={query} {...props} /> || <ResourceSwipeList list={list} query={query} {...props} />}
         </View>
     ));
@@ -123,6 +139,10 @@ ResourceList.navigationOptions = ({ navigation: { state, goBack, getParam, setPa
                         showSearch: true,
                         focusSearch: true,
                     });
+                }} />
+
+                <Item title="filter" iconName="filter" onPress={() => {
+                    getParam('setShowSort')(! getParam('showSort', false));
                 }} />
 
                 { items && items() }

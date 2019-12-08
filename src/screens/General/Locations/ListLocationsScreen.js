@@ -80,6 +80,12 @@ function ListLocationsScreen({ layout, showRefresh = true, variables = {}, navig
                     mutations={{
                         remove: DELETE_LOCATIONS,
                     }}
+
+                    sorting={[
+                        { key: 'id', text: i18n.t('Recent') },
+                        { key: 'name', text: i18n.t('Name') },
+                        { key: 'address', text: i18n.t('Address') },
+                    ]}
                 />
             </Layout>
         </KeyboardAvoidingLayout>

@@ -84,6 +84,12 @@ function ListEnclosuresScreen({ header, layout, showRefresh = true, variables = 
                     mutations={{
                         remove: DELETE_ENCLOSURES,
                     }}
+
+                    sorting={[
+                        { key: 'id', text: i18n.t('Recent') },
+                        { key: 'name', text: i18n.t('Name') },
+                        { key: 'location', text: i18n.t('Location', { count: 1 }) },
+                    ]}
                 />
             </Layout>
         </KeyboardAvoidingLayout>

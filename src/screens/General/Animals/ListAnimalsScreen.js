@@ -59,6 +59,14 @@ function ListAnimalsScreen() {
                     mutations={{
                         remove: DELETE_ANIMALS,
                     }}
+
+                    sorting={[
+                        { key: 'id', text: i18n.t('Recent') },
+                        { key: 'identifier', text: i18n.t('ID') },
+                        { key: 'name', text: i18n.t('Name') },
+                        { key: 'specie', text: i18n.t('Specie', { count: 1 }) },
+                        { key: 'enclosure', text: i18n.t('Enclosure', { count: 1 }) },
+                    ]}
                 />
             </Layout>
         </KeyboardAvoidingLayout>
