@@ -96,6 +96,11 @@
         "Retry": "Retry",
         "Open Settings": "Open Settings",
 
+        "Cancel": "Cancel",
+        "Delete": "Delete",
+        "Deletion Confirmation": "Deletion Confirmation",
+        "Are you sure you want to delete \"{{name}}\"?": "Are you sure you want to delete \"{{name}}\"?",
+
         "Scan code": "Scan code",
         "Invalid code": "Invalid code",
         "Use location": "Use location",

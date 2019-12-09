@@ -1,3 +1,5 @@
+import i18n from '@src/i18n.js';
+import { Alert } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
 import { withNavigation } from 'react-navigation';
 import ResourceListItem from './ResourceListItem.js';
@@ -32,11 +34,22 @@ function ResourceSwipeList({ name, list, query, routes, mutations: { remove }, p
         params: { item },
     });
 
-    const deleteItem = (item) => removeItems({
-        variables: {
-            ids: [item.id],
-        },
-    });
+    const deleteItem = (item) => Alert.alert(
+        i18n.t('Deletion Confirmation'),
+        i18n.t('Are you sure you want to delete "{{name}}"?', {
+            name: item.name || item.identifier || '(' + i18n.t('name not set') + ')',
+        }),
+        [
+            { text: i18n.t('Cancel'), style: 'cancel' },
+            { text: i18n.t('Delete'), onPress: () => {
+                removeItems({
+                    variables: {
+                        ids: [item.id],
+                    },
+                });
+            } },
+        ],
+    );
 
     // Share create item with navigation.
     useEffect(() => {
