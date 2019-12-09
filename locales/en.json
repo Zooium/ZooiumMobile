@@ -30,8 +30,11 @@
         "Events": "Events",
 
         "Family": "Family",
+        "Current": "Current",
         "Father": "Father",
         "Mother": "Mother",
+        "Grandfather": "Grandfather",
+        "Grandmother": "Grandmother",
 
         "Male": "Male",
         "Female": "Female",

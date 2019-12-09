@@ -15,26 +15,10 @@ export default gql`
 
         father {
             ...previewAnimal
-
-            father {
-                ...previewAnimal
-            }
-
-            mother {
-                ...previewAnimal
-            }
         }
 
         mother {
             ...previewAnimal
-
-            father {
-                ...previewAnimal
-            }
-
-            mother {
-                ...previewAnimal
-            }
         }
 
         enclosure {

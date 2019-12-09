@@ -168,8 +168,16 @@ export default function ViewAnimalScreen({ navigation }) {
                 },
                 {
                     title: i18n.t('Family'),
-                    onPress: () => {
-                        alert('@wip');
+                    onPress: ({ response, navigation }) => {
+                        const route = 'AnimalFamily';
+    
+                        navigation.navigate({
+                            key: route + response.id,
+                            routeName: route,
+                            params: {
+                                item: response,
+                            },
+                        });
                     },
                 },
                 {

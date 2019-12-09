@@ -7,7 +7,7 @@ import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
 import ResourceListActions from './ResourceListActions.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
-function ResourceSwipeList({ name, list, query, routes, mutations: { remove }, preview, itemProps, extraData, showRefresh = true, navigation }) {
+function ResourceSwipeList({ name, list, query, routes, mutations: { remove }, preview, itemProps, extraData, showRefresh = true, navigation, ...props }) {
     // Seperate out variables.
     const { view, edit } = routes;
     const { loading, refetch } = query;
@@ -73,6 +73,7 @@ function ResourceSwipeList({ name, list, query, routes, mutations: { remove }, p
             contentContainerStyle={{
                 flexGrow: 1,
             }}
+            {...props}
         />
     );
 }

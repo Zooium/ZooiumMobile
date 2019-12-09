@@ -4,6 +4,7 @@ import { localeName } from '@src/i18n.js'
 export default gql`
     fragment previewAnimal on Animal {
         id
+        sex
         name
         identifier
 
