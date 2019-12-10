@@ -137,6 +137,8 @@ AnimalFamilyScreen.navigationOptions = ({ navigation }) => {
             flex: 1,
             textAlign: 'center',
         },
+        
+        headerRight: <View />,
     }
 }
 
