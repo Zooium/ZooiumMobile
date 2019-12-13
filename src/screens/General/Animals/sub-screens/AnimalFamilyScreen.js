@@ -5,6 +5,7 @@ import Loader from '@components/Loader.js';
 import { Text } from '@ui-kitten/components';
 import { useQuery } from '@apollo/react-hooks';
 import { withNavigation } from 'react-navigation';
+import parseQuery from '@utils/apollo/parseQuery.js';
 import SexPreview from '../components/SexPreview.js';
 import ResourceSwipeList from '@components/resource/ResourceSwipeList.js';
 import DELETE_ANIMALS from '@graphql/mutations/Animal/deleteAnimals.gql.js';
@@ -87,8 +88,7 @@ function AnimalFamilyScreen({ navigation }) {
 
     // Parse the query response.
     const { loading, data } = query;
-    const key = data && Object.keys(data)[0];
-    const response = key && data && data[key];
+    const { response } = parseQuery(data);
 
     // Parse response family and sort by level and side.
     const list = parseFamily(response).sort((a, b) => {
@@ -128,18 +128,14 @@ function AnimalFamilyScreen({ navigation }) {
     ));
 }
 
-AnimalFamilyScreen.navigationOptions = ({ navigation }) => {
-    const item = navigation.getParam('item');
-
-    return {
-        title: i18n.t('Family'),
-        headerTitleStyle: {
-            flex: 1,
-            textAlign: 'center',
-        },
-        
-        headerRight: <View />,
-    }
+AnimalFamilyScreen.navigationOptions = {
+    title: i18n.t('Family'),
+    headerTitleStyle: {
+        flex: 1,
+        textAlign: 'center',
+    },
+    
+    headerRight: <View />,
 }
 
 export default withNavigation(AnimalFamilyScreen);

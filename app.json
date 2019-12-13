@@ -30,6 +30,7 @@
     ],
     "ios": {
       "supportsTablet": false,
+      "usesIcloudStorage": true,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.zooium.mobile"
     },

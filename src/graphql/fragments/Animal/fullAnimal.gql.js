@@ -56,15 +56,5 @@ export default gql`
                 }
             }
         }
-
-        files {
-            id
-            view_url
-            download_url
-            thumbnail_url
-            extension
-            name
-            tag
-        }
     }
 `

@@ -28,16 +28,17 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit } = 
     const item = navigation.getParam('item');
     const creating = ! item;
 
-    const { loading, data } = useQuery(fetch, {
+    const { loading, data } = fetch && useQuery(fetch, {
         skip: creating,
         variables: {
             id: item && item.id,
             ...variables,
         },
-    });
+    }) || {};
 
     const key = data && Object.keys(data)[0];
-    const response = key && data && data[key];
+    let response = key && data && data[key];
+    if (! fetch) response = item;
 
     useEffect(() => {
         // Skip if missing response.
@@ -138,7 +139,7 @@ function ResourceView({ title, items, fetch, variables = {}, routes: { edit } = 
 ResourceView.propTypes = {
     title: PropTypes.func.isRequired,
 
-    fetch: PropTypes.object.isRequired,
+    fetch: PropTypes.object,
     variables: PropTypes.object,
 
     routes: PropTypes.shape({

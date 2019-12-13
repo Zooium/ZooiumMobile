@@ -51,7 +51,7 @@ export default class AuthState {
                 access: null,
                 refresh: null,
             },
-        };   
+        };
     }
 
     static async reset() {

@@ -81,7 +81,7 @@ function ListAnimalsScreen() {
 
 ListAnimalsScreen.navigationOptions = ResourceList.navigationOptions;
 ListAnimalsScreen.propTypes = {
-    item: PropTypes.object, // @wip - Model instance.
+    item: PropTypes.object,
 }
 
 export default withNavigation(ListAnimalsScreen);

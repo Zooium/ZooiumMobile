@@ -105,7 +105,7 @@ ListEnclosuresScreen.propTypes = {
         showCount: PropTypes.bool,
     }),
 
-    item: PropTypes.object, // @wip - Model instance.
+    item: PropTypes.object,
 }
 
 export default withNavigation(ListEnclosuresScreen);

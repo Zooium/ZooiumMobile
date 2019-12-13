@@ -182,8 +182,16 @@ export default function ViewAnimalScreen({ navigation }) {
                 },
                 {
                     title: i18n.t('Media'),
-                    onPress: () => {
-                        alert('@wip');
+                    onPress: ({ response, navigation }) => {
+                        const route = 'AnimalMedia';
+    
+                        navigation.navigate({
+                            key: route + response.id,
+                            routeName: route,
+                            params: {
+                                item: response,
+                            },
+                        });
                     },
                 },
                 {

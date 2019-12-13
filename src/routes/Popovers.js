@@ -3,6 +3,7 @@ import i18n from '@src/i18n.js';
 import ViewAnimal from '@screens/General/Animals/ViewAnimalScreen.js';
 import EditAnimal from '@screens/General/Animals/EditAnimalScreen.js';
 import ListAnimals from '@screens/General/Animals/ListAnimalsScreen.js';
+import AnimalMedia from '@screens/General/Animals/sub-screens/AnimalMediaScreen.js';
 import AnimalFamily from '@screens/General/Animals/sub-screens/AnimalFamilyScreen.js';
 
 import ViewEnclosure from '@screens/General/Enclosures/ViewEnclosureScreen.js';
@@ -18,15 +19,21 @@ import SpecieTypeahead from '@screens/Typeahead/SpecieTypeaheadScreen.js';
 import LocationTypeahead from '@screens/Typeahead/LocationTypeaheadScreen.js';
 import EnclosureTypeahead from '@screens/Typeahead/EnclosureTypeaheadScreen.js';
 
+import EditFile from '@screens/General/Files/EditFileScreen.js';
+
+import AuthorizedWebView from '@screens/Utils/AuthorizedWebViewScreen.js';
+
 export default {
+    // Animals
     ListAnimals: {
         screen: ListAnimals,
         navigationOptions: {
             title: i18n.t('Animal', { count: 2 }),
         },
     }, ViewAnimal, EditAnimal,
-    AnimalFamily,
+    AnimalMedia, AnimalFamily,
 
+    // Enclosures
     ListEnclosures: {
         screen: ListEnclosures,
         navigationOptions: {
@@ -34,6 +41,7 @@ export default {
         },
     }, ViewEnclosure, EditEnclosure,
 
+    // Locations
     ListLocations: {
         screen: ListLocations,
         navigationOptions: {
@@ -41,6 +49,13 @@ export default {
         },
     }, ViewLocation, EditLocation,
 
+    // Typeaheads
     AnimalTypeahead, SpecieTypeahead,
     LocationTypeahead, EnclosureTypeahead,
+
+    // Files
+    EditFile,
+
+    // Utils
+    AuthorizedWebView,
 };
