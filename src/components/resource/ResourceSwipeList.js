@@ -68,15 +68,6 @@ function ResourceSwipeList({ name, list, deps = [], fetch, query, routes, mutati
         ],
     );
 
-    // Share create item with navigation.
-    useEffect(() => {
-        navigation.setParams({
-            createItem: () => {
-                editItem();
-            },
-        });
-    }, []);
-
     // Create callbacks for resource item renderings.
     const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, deps);
     const actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, deps);

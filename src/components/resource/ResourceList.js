@@ -13,7 +13,7 @@ import ResourceSwipeList from './ResourceSwipeList.js';
 import parsePagination from '@utils/apollo/parsePagination.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
-function ResourceList({ fetch, variables = {}, List, navigation, sorting, filters, ...props }) {
+function ResourceList({ fetch, variables = {}, List, navigation, routes, sorting, filters, ...props }) {
     const [showSettings, setShowSettings] = useState(false);
 
     // Define sorting related variables.
@@ -34,9 +34,17 @@ function ResourceList({ fetch, variables = {}, List, navigation, sorting, filter
         ? [appendSearch, debouncedSearch].join(' ').trim()
         : undefined;
 
-    // Share set search and settings function.
+    // Share set search, show settings, and create item.
     useEffect(() => {
-        navigation.setParams({ setSearch, setShowSettings });
+        navigation.setParams({
+            setSearch,
+            setShowSettings,
+
+            createItem: () => navigation.navigate({
+                key: routes.view + Math.random().toString(36).slice(2),
+                routeName: routes.edit,
+            }),
+        });
     }, []),
 
     // Share settings show state.
@@ -81,7 +89,11 @@ function ResourceList({ fetch, variables = {}, List, navigation, sorting, filter
                 />
             )}
 
-            {List && <List list={list} query={query} {...props} /> || <ResourceSwipeList list={list} query={query} {...props} />}
+            {List && (
+                <List list={list} query={query} {...props} />
+            ) || (
+                <ResourceSwipeList routes={routes} list={list} query={query} {...props} />
+            )}
         </View>
     ));
 }
@@ -137,13 +149,13 @@ ResourceList.navigationOptions = ({ navigation: { state, goBack, getParam, setPa
 
     // Return default navigation options.
     return {
-        headerLeft: getParam('createItem') ? (
+        headerLeft: (
             <HeaderButtons left={true}>
                 <Item title="add" iconName="plus" onPress={() => {
-                    getParam('createItem')();
+                    getParam('createItem') && getParam('createItem')();
                 }} />
             </HeaderButtons>
-        ) : undefined,
+        ),
 
         headerRight: ({ items = undefined } = {}) => (
             <HeaderButtons>
