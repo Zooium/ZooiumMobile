@@ -107,12 +107,11 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
     );
 }
 
-ResourceEdit.navigationOptions = ({ navigation }) => {
+ResourceEdit.navigationOptions = ({ title, navigation }) => {
     const item = navigation.getParam('item');
-    const getTitle = navigation.getParam('getTitle');
 
     return {
-        title: getTitle ? getTitle(item) : undefined,
+        title: title && title(item),
         headerTitleStyle: {
             flex: 1,
             textAlign: 'center',

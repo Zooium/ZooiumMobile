@@ -188,12 +188,6 @@ const items = [
     },
 ];
 
-const title = item => {
-    return item && (item.name || item.identifier || '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
-        resource: i18n.t('Animal', { count: 1 }),
-    });
-}
-
 const formInit = () => ({
     identifier: '',
     name: '',
@@ -223,8 +217,6 @@ export default function EditAnimalScreen() {
             <Layout style={{ flex: 1 }}>
                 <ResourceEdit
                     items={items}
-                    title={title}
-
                     fetch={VIEW_ANIMAL}
                     mutations={{
                         save: UPDATE_ANIMAL,
@@ -243,4 +235,10 @@ export default function EditAnimalScreen() {
     )
 }
 
-EditAnimalScreen.navigationOptions = ResourceEdit.navigationOptions;
+EditAnimalScreen.navigationOptions = (props) => ResourceEdit.navigationOptions({
+    ...props, title: item => {
+        return item && (item.name || item.identifier || '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
+            resource: i18n.t('Animal', { count: 1 }),
+        });
+    },
+});

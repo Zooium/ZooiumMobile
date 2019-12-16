@@ -70,12 +70,6 @@ const items = [
     },
 ];
 
-const title = item => {
-    return item && (item.name || '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
-        resource: i18n.t('Enclosure', { count: 1 }),
-    });
-}
-
 const formInit = () => ({
     name: '',
     location_id: undefined,
@@ -95,8 +89,6 @@ export default function EditEnclosureScreen() {
             <Layout style={{ flex: 1 }}>
                 <ResourceEdit
                     items={items}
-                    title={title}
-
                     fetch={VIEW_ENCLOSURE}
                     mutations={{
                         save: UPDATE_ENCLOSURE,
@@ -115,4 +107,11 @@ export default function EditEnclosureScreen() {
     )
 }
 
-EditEnclosureScreen.navigationOptions = ResourceEdit.navigationOptions;
+EditEnclosureScreen.navigationOptions = (props) => ResourceEdit.navigationOptions({
+    ...props, title: item => {
+        return item && (item.name || '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
+            resource: i18n.t('Enclosure', { count: 1 }),
+        });
+    },
+});
+

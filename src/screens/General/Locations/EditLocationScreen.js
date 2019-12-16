@@ -58,12 +58,6 @@ const items = [
     },
 ];
 
-const title = item => {
-    return item && (item.name|| '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
-        resource: i18n.t('Location', { count: 1 }),
-    });
-}
-
 const formInit = () => ({
     name: '',
     address: '',
@@ -83,8 +77,6 @@ export default function EditLocationScreen() {
             <Layout style={{ flex: 1 }}>
                 <ResourceEdit
                     items={items}
-                    title={title}
-
                     fetch={VIEW_LOCATION}
                     mutations={{
                         save: UPDATE_LOCATION,
@@ -103,4 +95,10 @@ export default function EditLocationScreen() {
     )
 }
 
-EditLocationScreen.navigationOptions = ResourceEdit.navigationOptions;
+EditLocationScreen.navigationOptions = (props) => ResourceEdit.navigationOptions({
+    ...props, title: item => {
+        return item && (item.name|| '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
+            resource: i18n.t('Location', { count: 1 }),
+        });
+    },
+});

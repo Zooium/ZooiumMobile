@@ -22,12 +22,6 @@ const items = [
     },
 ];
 
-const title = item => {
-    return item && (item.name|| '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
-        resource: i18n.t('Media'),
-    });
-}
-
 const formInit = () => ({
     name: '',
 })
@@ -42,8 +36,6 @@ export default function EditFileScreen() {
             <Layout style={{ flex: 1 }}>
                 <ResourceEdit
                     items={items}
-                    title={title}
-
                     mutations={{
                         save: UPDATE_FILE,
                         create: UPLOAD_FILE,
@@ -57,4 +49,10 @@ export default function EditFileScreen() {
     )
 }
 
-EditFileScreen.navigationOptions = ResourceEdit.navigationOptions;
+EditFileScreen.navigationOptions = (props) => ResourceEdit.navigationOptions({
+    ...props, title: item => {
+        return item && (item.name|| '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
+            resource: i18n.t('Media'),
+        });
+    },
+});
