@@ -33,6 +33,8 @@ export const MediaPreview = ({ item, index, viewItem, isNew }) => {
         }}>
             <View style={{
                 ...AppStyles.listItem,
+
+                flex: 1,
                 alignItems: 'center',
             }}>
                 <View style={{
