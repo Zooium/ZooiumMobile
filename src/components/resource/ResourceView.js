@@ -164,7 +164,7 @@ ResourceView.propTypes = {
     }),
 }
 
-ResourceView.navigationOptions = ({ title, navigation }) => {
+ResourceView.navigationOptions = ({ title, showEdit = true, navigation }) => {
     const item = navigation.getParam('item');
     const editItem = navigation.getParam('editItem');
 
@@ -175,13 +175,13 @@ ResourceView.navigationOptions = ({ title, navigation }) => {
             textAlign: 'center',
         },
 
-        headerRight: editItem && (
+        headerRight: showEdit && (
             <HeaderButtons>
                 <Item title="edit" iconName="pencil" onPress={() => {
-                    editItem(item);
+                    editItem && editItem(item);
                 }} />
             </HeaderButtons>
-        ),
+        ) || <View />,
     };
 };
 
