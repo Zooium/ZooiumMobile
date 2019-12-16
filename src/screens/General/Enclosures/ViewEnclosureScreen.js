@@ -99,15 +99,10 @@ export default function ViewEnclosureScreen({ navigation }) {
         },
     ];
 
-    const title = item => {
-        return (item.name || '(' + i18n.t('name not set') + ')');
-    }
-
     return (
         <Layout style={{ flex: 1 }}>
             <ResourceView
                 items={items}
-                title={title}
                 fetch={VIEW_ENCLOSURE}
                     
                 routes={{
@@ -118,4 +113,8 @@ export default function ViewEnclosureScreen({ navigation }) {
     )
 }
 
-ViewEnclosureScreen.navigationOptions = ResourceView.navigationOptions;
+ViewEnclosureScreen.navigationOptions = (props) => ResourceView.navigationOptions({
+    ...props, title: item => {
+        return (item.name || '(' + i18n.t('name not set') + ')');
+    },
+});

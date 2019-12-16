@@ -204,15 +204,10 @@ export default function ViewAnimalScreen({ navigation }) {
         },
     ];
 
-    const title = item => {
-        return (item.name || item.identifier || '(' + i18n.t('name not set') + ')');
-    }
-
     return (
         <Layout style={{ flex: 1 }}>
             <ResourceView
                 items={items}
-                title={title}
                 fetch={VIEW_ANIMAL}
                     
                 routes={{
@@ -223,4 +218,8 @@ export default function ViewAnimalScreen({ navigation }) {
     )
 }
 
-ViewAnimalScreen.navigationOptions = ResourceView.navigationOptions;
+ViewAnimalScreen.navigationOptions = (props) => ResourceView.navigationOptions({
+    ...props, title: item => {
+        return (item.name || item.identifier || '(' + i18n.t('name not set') + ')');
+    },
+});

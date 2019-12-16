@@ -76,15 +76,10 @@ export default function ViewLocationScreen() {
         },
     ];
 
-    const title = item => {
-        return (item.name || '(' + i18n.t('name not set') + ')');
-    }
-
     return (
         <Layout style={{ flex: 1 }}>
             <ResourceView
                 items={items}
-                title={title}
                 fetch={VIEW_LOCATION}
                     
                 routes={{
@@ -95,4 +90,8 @@ export default function ViewLocationScreen() {
     )
 }
 
-ViewLocationScreen.navigationOptions = ResourceView.navigationOptions;
+ViewLocationScreen.navigationOptions = (props) => ResourceView.navigationOptions({
+    ...props, title: item => {
+        return (item.name || '(' + i18n.t('name not set') + ')');
+    },
+});
