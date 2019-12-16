@@ -38,7 +38,7 @@ const items = [
                             value={state.location}
                             onChange={(value) => mergeState({
                                 location: value,
-                                location_id: value && value.id || undefined,
+                                location_id: value && value.id || null,
                             })}
                         />
                     );

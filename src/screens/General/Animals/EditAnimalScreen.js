@@ -55,7 +55,7 @@ const items = [
                             value={state.father}
                             onChange={(value) => mergeState({
                                 father: value,
-                                father_id: value && value.id || undefined,
+                                father_id: value && value.id || null,
                             })}
                         />
                     );
@@ -78,7 +78,7 @@ const items = [
                             value={state.mother}
                             onChange={(value) => mergeState({
                                 mother: value,
-                                mother_id: value && value.id || undefined,
+                                mother_id: value && value.id || null,
                             })}
                         />
                     );
@@ -98,7 +98,7 @@ const items = [
                             value={state.enclosure}
                             onChange={(value) => mergeState({
                                 enclosure: value,
-                                enclosure_id: value && value.id || undefined,
+                                enclosure_id: value && value.id || null,
                             })}
                         />
                     );
@@ -125,7 +125,7 @@ const items = [
                             value={state.specie}
                             onChange={(value) => mergeState({
                                 specie: value,
-                                specie_id: value && value.id || undefined,
+                                specie_id: value && value.id || null,
                             })}
                         />
                     );

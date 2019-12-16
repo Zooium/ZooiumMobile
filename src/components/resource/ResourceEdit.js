@@ -29,7 +29,7 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
         navigation.setParams({ state, items: props.items });
     }, [state, props.items]);
 
-    // @wip - cache?
+    // Define update/create mutations.
     const [saveItem, { loading: saving }] = useMutation(save);
     const [createItem, { loading: creating }] = useMutation(create);
 

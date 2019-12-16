@@ -10,7 +10,7 @@ function TypeaheadInput({ view, preview, appendSearch, add, resource, value, onC
         <InputButton
             icon={value && (() => (
                 <Icon name="times" size={22} color="#000" style={{ opacity: .4 }} onPress={() => {
-                    onChange(undefined);
+                    onChange(null);
                 }} />
             ))}
             onPress={() => {
