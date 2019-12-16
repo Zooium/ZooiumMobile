@@ -9,15 +9,32 @@ import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
 import ResourceListActions from './ResourceListActions.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
-function ResourceSwipeList({ name, list, deps = [], query, routes, mutations: { remove }, preview, itemProps, extraData, showRefresh = true, navigation, ...props }) {
+function ResourceSwipeList({ name, list, deps = [], fetch, query, routes, mutations: { remove }, preview, itemProps, extraData, showRefresh = true, navigation, ...props }) {
     // Seperate out variables.
     const { view, edit } = routes;
     const { loading, refetch } = query;
 
     // Prepare item removal mutation.
     const [removeItems] = useMutation(remove, {
-        update() {
-            refetch(); // @wip - Invalidate or write to cache instead?
+        update(cache, { data }) {
+            // Get the deleted items.
+            let deleted = data[Object.keys(data)[0]];
+
+            // Attempt to updated fetch query.
+            query.updateQuery(results => {
+                // Get key for current query.
+                let key = Object.keys(results)[0];
+
+                // Exclude the deleted items.
+                return {
+                    [key]: {
+                        ...results[key],
+                        data: results[key].data.filter(item => {
+                            return ! deleted.find(subitem => subitem.id === item.id);
+                        }),
+                    },
+                }
+            });
         },
     });
 
