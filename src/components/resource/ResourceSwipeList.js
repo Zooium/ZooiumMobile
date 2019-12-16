@@ -9,7 +9,7 @@ import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
 import ResourceListActions from './ResourceListActions.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
-function ResourceSwipeList({ name, list, query, routes, mutations: { remove }, preview, itemProps, extraData, showRefresh = true, navigation, ...props }) {
+function ResourceSwipeList({ name, list, deps = [], query, routes, mutations: { remove }, preview, itemProps, extraData, showRefresh = true, navigation, ...props }) {
     // Seperate out variables.
     const { view, edit } = routes;
     const { loading, refetch } = query;
@@ -61,9 +61,9 @@ function ResourceSwipeList({ name, list, query, routes, mutations: { remove }, p
     }, []);
 
     // Create callbacks for resource item renderings.
-    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []);
-    const actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, []);
-    const itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={viewItem} preview={preview} {...itemProps} />, []);
+    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, deps);
+    const actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, deps);
+    const itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={viewItem} preview={preview} {...itemProps} />, deps);
 
     // Return the swipe list view.
     return (

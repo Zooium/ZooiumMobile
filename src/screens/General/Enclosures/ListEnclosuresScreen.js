@@ -71,6 +71,10 @@ function ListEnclosuresScreen({ header, layout, showRefresh = true, variables = 
                     variables={variables}
                     showRefresh={showRefresh}
                     name={i18n.t('Enclosure', { count: 2 })}
+
+                    deps={{
+                        header, layout,
+                    }}
                     
                     extraData={{
                         header, layout,

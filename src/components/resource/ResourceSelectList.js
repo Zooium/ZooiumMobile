@@ -5,7 +5,7 @@ import ResourceListItem from './ResourceListItem.js';
 import ResourceListEmpty from './ResourceListEmpty.js';
 import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
 
-function ResourceSelectList({ name, list, query, preview, itemProps, navigation }) {
+function ResourceSelectList({ name, list, deps = [], query, preview, itemProps, navigation }) {
     // Seperate out variables.
     const { loading, refetch } = query;
 
@@ -17,8 +17,8 @@ function ResourceSelectList({ name, list, query, preview, itemProps, navigation 
     };
 
     // Create callbacks for resource item renderings.
-    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []);
-    const itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={viewItem} preview={preview} {...itemProps} />, []);
+    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, deps);
+    const itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={viewItem} preview={preview} {...itemProps} />, deps);
 
     // Return the flat list view.
     return (
