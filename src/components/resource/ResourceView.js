@@ -128,9 +128,11 @@ function ResourceView({ items, fetch, variables = {}, routes: { edit } = {}, for
     return loading ? <Loader /> : (
         <SectionList
             sections={items}
+            initialNumToRender={25}
+            keyExtractor={(item, index) => index.toString()}
+
             renderItem={renderItem}
             renderSectionHeader={renderSectionHeader}
-            keyExtractor={(item, index) => index.toString()}
         />
     );
 }
