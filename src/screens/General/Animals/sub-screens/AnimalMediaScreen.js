@@ -8,7 +8,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { Text, Icon } from '@ui-kitten/components';
 import parseQuery from '@utils/apollo/parseQuery.js';
 import { ReactNativeFile } from 'apollo-upload-client';
-import updateCache from '@utils/apollo/updateCache.js';
 import LoadingModal from '@components/LoadingModal.js';
 import * as DocumentPicker from 'expo-document-picker';
 import AuthorizedImage from '@components/AuthorizedImage.js';
@@ -76,17 +75,18 @@ function AnimalMediaScreen({ navigation }) {
     const client = useApolloClient();
     const channel = usePrivateChannel('Team.' + AuthState.currentTeam().id);
     useEvent(channel, 'ThumbnailGenerated', event => {
-        // Update thumbnail url in cache.
-        updateCache(client, VIEW_ANIMAL_MEDIA, {
-            id: item && item.id,
-        }, data => {
-            let index = data.animal.files.findIndex(file => file.id === event.id);
-            data.animal.files[index].thumbnail_url = event.thumbnail_url;
-
+        // Update thumbnail url in query cache.
+        query.updateQuery(results => {
             return {
                 animal: {
-                    ...data.animal,
-                    files: [...data.animal.files],
+                    ...results.animal,
+                    files: results.animal.files.map(item => {
+                        if (item.id === event.id) {
+                            item.thumbnail_url = event.thumbnail_url;
+                        }
+
+                        return item;
+                    }),
                 },
             }
         });
@@ -102,16 +102,17 @@ function AnimalMediaScreen({ navigation }) {
     // Define file deletion mutation.
     const [deleteFile] = useMutation(DELETE_FILE, {
         update(cache, { data: { deleteFiles } }) {
-            updateCache(cache, VIEW_ANIMAL_MEDIA, {
-                id: item && item.id,
-            }, data => ({
-                animal: {
-                    ...data.animal,
-                    files: [...data.animal.files.filter(item => {
-                        return ! deleteFiles.find(subitem => subitem.id === item.id)
-                    })],
-                },
-            }));
+            // Remove file from query cache.
+            query.updateQuery(results => {
+                return {
+                    animal: {
+                        ...results.animal,
+                        files: results.animal.files.filter(item => {
+                            return ! deleteFiles.find(subitem => subitem.id === item.id);
+                        }),
+                    },
+                }
+            });
         },
     });
 
@@ -123,14 +124,14 @@ function AnimalMediaScreen({ navigation }) {
             setNewIds(state => [...state, uploadFile.id]);
 
             // Add new file to cache.
-            updateCache(cache, VIEW_ANIMAL_MEDIA, {
-                id: item && item.id,
-            }, data => ({
-                animal: {
-                    ...data.animal,
-                    files: [...data.animal.files, uploadFile],
-                },
-            }));
+            query.updateQuery(results => {
+                return {
+                    animal: {
+                        ...results.animal,
+                        files: [ ...results.animal.files, uploadFile ],
+                    },
+                }
+            });
         },
     });
 
