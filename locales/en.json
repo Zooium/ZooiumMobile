@@ -110,10 +110,14 @@
         "In order to use this feature you must allow access to your camera!": "In order to use this feature you must allow access to your camera!",
         "In order to use this feature you must allow access to location services!": "In order to use this feature you must allow access to location services!",
 
+        "Ok": "Ok",
         "Read more": "Read more",
         "Disclaimer": "Disclaimer",
-        "Not or only partly covered by listing. Check {{site}} for more info!": "Not or only partly covered by listing. Check {{site}} for more info!",
         "cites.disclaimer": "This is not legal advice! Because of taxonomic differences, CITES may not be fully compatible with the listed species and should therefore always be checked up separately. Some countries may have special regulations that are not included.",
+        "cites.description.NC": "Not or only partly covered by listing",
+        "cites.description.I": "Species threatened with extinction. Trade in specimens of these species is permitted only in exceptional circumstances.",
+        "cites.description.II": "Species not necessarily threatened with extinction, but in which trade must be controlled in order to avoid utilization incompatible with their survival.",
+        "cites.description.III": "Species that are protected in at least one country, which has asked other CITES Parties for assistance in controlling the trade.",
 
         "A unique identifier for the animal such as a DNA test filing-number or ring number.": "A unique identifier for the animal such as a DNA test filing-number or ring number.",
         "Hybrids are not listed and subspecies may be listed under their parent-specie name.": "Hybrids are not listed and subspecies may be listed under their parent-specie name.",

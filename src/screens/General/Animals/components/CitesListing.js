@@ -1,4 +1,5 @@
 import React from 'react';
+import { Linking } from 'expo';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import PropTypes from 'prop-types';
@@ -8,12 +9,24 @@ import { Alert, StyleSheet, TouchableOpacity } from 'react-native';
 export default function CitesListing({ listing, style = {} }) {
     return (
         <TouchableOpacity style={[s.listing, s['listing' + listing], style]} onPress={() => {
-            Alert.alert('CITES', listing === 'NC'
-                ? i18n.t('Not or only partly covered by listing. Check {{site}} for more info!', {
-                    site: 'Species+',
-                })
-                : 'Appendix '+listing
-            )
+            // Check if NC listing.
+            if (listing === 'NC') {
+                return Alert.alert('CITES', i18n.t('cites.description.NC'));
+            }
+
+            // Return standard listing.
+            Alert.alert('Appendix '+listing, i18n.t('cites.description.'+listing), [
+                {
+                    text: i18n.t('Read more'),
+                    onPress: () => {
+                        // Open CITES information.
+                        Linking.openURL('https://www.cites.org/eng/disc/how.php');
+                    },
+                },
+                {
+                    text: i18n.t('Ok'),
+                },
+            ])
         }}>
             <Text category="p2" style={{ color: 'white' }}>
                 {listing}
