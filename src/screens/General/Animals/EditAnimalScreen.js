@@ -151,9 +151,7 @@ const items = [
                             }}
                         >
                             {Object.values(sexes).map((value, key) => {
-                                return <Radio key={key} text={value} textStyle={{ fontWeight: 'normal' }} style={{
-                                    marginBottom: 6,
-                                }} />;
+                                return <Radio key={key} text={value} textStyle={{ fontWeight: 'normal' }} />;
                             })}
                         </RadioGroup>
                     );
