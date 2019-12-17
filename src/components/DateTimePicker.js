@@ -24,7 +24,7 @@ export default function DateTimePicker({ value, onChange }) {
                 locale={i18n.language}
                 onConfirm={date => {
                     setShow(false);
-                    onChange(date);
+                    onChange(date.toISOString());
                 }}
                 onCancel={() => {
                     setShow(false);
