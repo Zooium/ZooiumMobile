@@ -151,7 +151,7 @@ export default function MenuScreen({ navigation }) {
                 </Text>
 
                 <Text appearance="hint" category="c1">
-                    {Constants.manifest.version}-{Constants.manifest.revisionId || 'debug'}
+                    {Constants.manifest.revisionId || 'debug'}
                 </Text>
             </View>
         </View>
