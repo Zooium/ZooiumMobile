@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Layout } from '@ui-kitten/components';
 import { withNavigation } from 'react-navigation';
 import LocationRow from './components/LocationRow.js';
+import LocationSettings from '@settings/LocationSettings.js';
 import ResourceList from '@components/resource/ResourceList.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import LIST_LOCATIONS from '@graphql/queries/Location/listLocations.gql.js';
@@ -18,6 +19,7 @@ function ListLocationsScreen({ layout, showRefresh = true, variables = {}, navig
                 <ResourceList
                     preview={preview}
                     fetch={LIST_LOCATIONS}
+                    title={LocationSettings.title}
                     variables={variables}
                     showRefresh={showRefresh}
                     name={i18n.t('Location', { count: 2 })}

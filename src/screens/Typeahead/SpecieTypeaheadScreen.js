@@ -4,10 +4,11 @@ import { View } from 'react-native';
 import { localeName } from '@src/i18n.js';
 import { Text } from '@ui-kitten/components';
 import Typeahead from './components/Typeahead.js';
+import SpecieSettings from '@settings/SpecieSettings.js';
 import LIST_SPECIES from '@graphql/queries/Specie/listSpecies.gql.js';
 
 export function SpecieTypeaheadInput(resource) {
-    return resource[localeName()] || resource.english_name || resource.scientific;
+    return SpecieSettings.title(resource);
 }
 
 export function SpeciePreview({ item }) {

@@ -3,6 +3,7 @@ import i18n from '@src/i18n.js';
 import { TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Text, Layout } from '@ui-kitten/components';
+import EnclosureSettings from '@settings/EnclosureSettings.js';
 import ResourceView from '@components/resource/ResourceView.js';
 import VIEW_ENCLOSURE from '@graphql/queries/Enclosure/viewEnclosure.gql.js';
 
@@ -114,7 +115,5 @@ export default function ViewEnclosureScreen({ navigation }) {
 }
 
 ViewEnclosureScreen.navigationOptions = (props) => ResourceView.navigationOptions({
-    ...props, title: item => {
-        return (item.name || '(' + i18n.t('name not set') + ')');
-    },
+    ...props, title: EnclosureSettings.title,
 });

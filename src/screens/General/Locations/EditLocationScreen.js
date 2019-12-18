@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import { Layout, Input } from '@ui-kitten/components';
+import LocationSettings from '@settings/LocationSettings.js';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import VIEW_LOCATION from '@graphql/queries/Location/viewLocation.gql.js';
@@ -96,9 +97,5 @@ export default function EditLocationScreen() {
 }
 
 EditLocationScreen.navigationOptions = (props) => ResourceEdit.navigationOptions({
-    ...props, title: item => {
-        return item && (item.name|| '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
-            resource: i18n.t('Location', { count: 1 }),
-        });
-    },
+    ...props, title: LocationSettings.title,
 });

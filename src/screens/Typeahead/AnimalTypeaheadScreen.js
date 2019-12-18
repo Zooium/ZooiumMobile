@@ -1,11 +1,12 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import Typeahead from './components/Typeahead.js';
+import AnimalSettings from '@settings/AnimalSettings.js';
 import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js';
 import AnimalRow from '@screens/General/Animals/components/AnimalRow.js';
 
 export function AnimalTypeaheadInput(resource) {
-    return resource.name || resource.identifier || '(' + i18n.t('name not set') + ')';
+    return AnimalSettings.title(resource);
 }
 
 export default function AnimalTypeaheadScreen() {

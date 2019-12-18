@@ -1,5 +1,6 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
+import FileSettings from '@settings/FileSettings.js';
 import { Layout, Input } from '@ui-kitten/components';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
 import UPDATE_FILE from '@graphql/mutations/File/updateFile.gql.js';
@@ -50,9 +51,5 @@ export default function EditFileScreen() {
 }
 
 EditFileScreen.navigationOptions = (props) => ResourceEdit.navigationOptions({
-    ...props, title: item => {
-        return item && (item.name|| '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
-            resource: i18n.t('Media'),
-        });
-    },
+    ...props, title: FileSettings.title,
 });

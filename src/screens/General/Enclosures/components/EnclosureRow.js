@@ -2,6 +2,7 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import { Text, Icon } from '@ui-kitten/components';
 import { View, TouchableOpacity  } from 'react-native';
+import EnclosureSettings from '@settings/EnclosureSettings.js';
 
 export default function EnclosureRow({ item, header: Header, navigation, layout: { showCount = true } = {} }) {
     const locationText = item && item.location && item.location.name
@@ -14,7 +15,7 @@ export default function EnclosureRow({ item, header: Header, navigation, layout:
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 1 }}>
                     <Text category="h6">
-                        { item.name || '(' + i18n.t('name not set') + ')' }
+                        {EnclosureSettings.title(item)}
                     </Text>
 
                     <Text>{locationText}</Text>

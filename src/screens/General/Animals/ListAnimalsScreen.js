@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Layout } from '@ui-kitten/components';
 import AnimalRow from './components/AnimalRow.js';
 import { withNavigation } from 'react-navigation';
+import AnimalSettings from '@settings/AnimalSettings.js';
 import ResourceList from '@components/resource/ResourceList.js';
 import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
@@ -17,6 +18,7 @@ function ListAnimalsScreen() {
                     preview={AnimalRow}
                     fetch={LIST_ANIMALS}
                     name={i18n.t('Animal', { count: 2 })}
+                    title={AnimalSettings.title}
                     
                     routes={{
                         view: 'ViewAnimal',

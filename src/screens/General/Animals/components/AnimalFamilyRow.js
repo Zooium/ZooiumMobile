@@ -3,6 +3,7 @@ import i18n from '@src/i18n.js';
 import { View } from 'react-native';
 import SexPreview from './SexPreview.js';
 import { Text } from '@ui-kitten/components';
+import AnimalSettings from '@settings/AnimalSettings.js';
 
 const familyNames = [
     [i18n.t('Current'), i18n.t('Current')],
@@ -18,7 +19,7 @@ export default function AnimalFamilyRow({ item }) {
                     <SexPreview sex={item.sex} size={20} style={{marginRight: 10}} />
 
                     <Text category="h6">
-                        { item.name || item.identifier || '(' + i18n.t('name not set') + ')' }
+                        {AnimalSettings.title(item)}
                     </Text>
                 </View>
 

@@ -9,7 +9,7 @@ import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
 import ResourceListActions from './ResourceListActions.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
-function ResourceSwipeList({ name, list, deps = [], fetch, query, routes, mutations: { remove }, preview, itemProps, extraData, showRefresh = true, navigation, ...props }) {
+function ResourceSwipeList({ name, list, deps = [], title, fetch, query, routes, mutations: { remove }, preview, itemProps, extraData, showRefresh = true, navigation, ...props }) {
     // Seperate out variables.
     const { view, edit } = routes;
     const { loading, refetch } = query;
@@ -54,7 +54,7 @@ function ResourceSwipeList({ name, list, deps = [], fetch, query, routes, mutati
     const deleteItem = (item) => Alert.alert(
         i18n.t('Deletion Confirmation'),
         i18n.t('Are you sure you want to delete "{{name}}"?', {
-            name: item.name || item.identifier || '(' + i18n.t('name not set') + ')',
+            name: title(item),
         }),
         [
             { text: i18n.t('Cancel'), style: 'cancel' },

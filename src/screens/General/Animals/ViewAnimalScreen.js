@@ -4,8 +4,10 @@ import theme from '@src/theme.js';
 import i18n, { localeName } from '@src/i18n.js';
 import SexPreview from './components/SexPreview.js';
 import CitesListing from './components/CitesListing.js';
-import { View, Alert, TouchableOpacity } from 'react-native';
+import AnimalSettings from '@settings/AnimalSettings.js';
+import SpecieSettings from '@settings/SpecieSettings.js';
 import { Text, Icon, Layout } from '@ui-kitten/components';
+import { View, Alert, TouchableOpacity } from 'react-native';
 import ResourceView from '@components/resource/ResourceView.js';
 import VIEW_ANIMAL from '@graphql/queries/Animal/viewAnimal.gql.js';
 
@@ -47,7 +49,7 @@ export default function ViewAnimalScreen({ navigation }) {
                         return resource.specie && (
                             <View>
                                 <Text>
-                                    {resource.specie[localeName()] || resource.specie.english_name || resource.specie.scientific}
+                                    {SpecieSettings.title(resource.specie)}
                                 </Text>
 
                                 <Text category="c1" appearance="hint">
@@ -219,7 +221,5 @@ export default function ViewAnimalScreen({ navigation }) {
 }
 
 ViewAnimalScreen.navigationOptions = (props) => ResourceView.navigationOptions({
-    ...props, title: item => {
-        return (item.name || item.identifier || '(' + i18n.t('name not set') + ')');
-    },
+    ...props, title: AnimalSettings.title,
 });

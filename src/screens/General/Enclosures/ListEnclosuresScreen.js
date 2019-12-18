@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Layout } from '@ui-kitten/components';
 import { withNavigation } from 'react-navigation';
 import EnclosureRow from './components/EnclosureRow.js';
+import EnclosureSettings from '@settings/EnclosureSettings.js';
 import ResourceList from '@components/resource/ResourceList.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import LIST_ENCLOSURES from '@graphql/queries/Enclosure/listEnclosures.gql.js';
@@ -18,6 +19,7 @@ function ListEnclosuresScreen({ header, layout, showRefresh = true, variables = 
                 <ResourceList
                     preview={preview}
                     fetch={LIST_ENCLOSURES}
+                    title={EnclosureSettings.title}
                     variables={variables}
                     showRefresh={showRefresh}
                     name={i18n.t('Enclosure', { count: 2 })}

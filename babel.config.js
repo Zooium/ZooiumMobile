@@ -15,6 +15,7 @@ module.exports = function(api) {
                     '@styles': './src/styles',
                     '@screens': './src/screens',
                     '@graphql': './src/graphql',
+                    '@settings': './src/settings',
                     '@components': './src/components',
                 },
             }],

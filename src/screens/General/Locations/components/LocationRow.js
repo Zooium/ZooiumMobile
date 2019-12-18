@@ -2,6 +2,7 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import { Text, Icon } from '@ui-kitten/components';
 import { View, TouchableOpacity  } from 'react-native';
+import LocationSettings from '@settings/LocationSettings.js';
 
 export default function LocationRow({ item, navigation, layout: { showCount = true } = {} }) {
     const locationText = item &&
@@ -15,7 +16,7 @@ export default function LocationRow({ item, navigation, layout: { showCount = tr
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
                 <Text category="h6">
-                    { item.name || '(' + i18n.t('name not set') + ')' }
+                    {LocationSettings.title(item)}
                 </Text>
 
                 <Text>{locationText}</Text>

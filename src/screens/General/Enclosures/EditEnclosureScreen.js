@@ -5,6 +5,7 @@ import MapView, { Marker } from 'react-native-maps';
 import TypeaheadInput from '@components/TypeaheadInput.js';
 import { Text, Layout, Input } from '@ui-kitten/components';
 import MapViewSelector from '@components/MapViewSelector.js';
+import EnclosureSettings from '@settings/EnclosureSettings.js';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import VIEW_ENCLOSURE from '@graphql/queries/Enclosure/viewEnclosure.gql.js';
@@ -108,10 +109,6 @@ export default function EditEnclosureScreen() {
 }
 
 EditEnclosureScreen.navigationOptions = (props) => ResourceEdit.navigationOptions({
-    ...props, title: item => {
-        return item && (item.name || '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
-            resource: i18n.t('Enclosure', { count: 1 }),
-        });
-    },
+    ...props, title: EnclosureSettings.title,
 });
 

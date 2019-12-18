@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import { Layout } from '@ui-kitten/components';
+import LocationSettings from '@settings/LocationSettings.js';
 import ResourceView from '@components/resource/ResourceView.js';
 import VIEW_LOCATION from '@graphql/queries/Location/viewLocation.gql.js';
 
@@ -91,7 +92,5 @@ export default function ViewLocationScreen() {
 }
 
 ViewLocationScreen.navigationOptions = (props) => ResourceView.navigationOptions({
-    ...props, title: item => {
-        return (item.name || '(' + i18n.t('name not set') + ')');
-    },
+    ...props, title: LocationSettings.title,
 });

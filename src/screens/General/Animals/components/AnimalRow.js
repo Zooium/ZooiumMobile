@@ -1,14 +1,12 @@
 import React from 'react';
+import i18n from '@src/i18n.js';
 import { View } from 'react-native';
 import SexPreview from './SexPreview.js';
 import { Text } from '@ui-kitten/components';
-import i18n, { localeName } from '@src/i18n.js';
+import SpecieSettings from '@settings/SpecieSettings.js';
+import AnimalSettings from '@settings/AnimalSettings.js';
 
 export default function AnimalRow({ item }) {
-    const specieText = item.specie
-        ? item.specie[localeName()] || item.specie.english_name || item.specie.scientific
-        : '(' + i18n.t('not provided') + ')';
-
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
@@ -16,11 +14,11 @@ export default function AnimalRow({ item }) {
                     <SexPreview sex={item.sex} size={20} style={{marginRight: 10}} />
 
                     <Text category="h6">
-                        { item.name || item.identifier || '(' + i18n.t('name not set') + ')' }
+                        {AnimalSettings.title(item)}
                     </Text>
                 </View>
 
-                <Text>{ specieText }</Text>
+                <Text>{SpecieSettings.title(item.specie, '(' + i18n.t('not provided') + ')')}</Text>
             </View>
 
             {item.enclosure &&

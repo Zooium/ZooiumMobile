@@ -1,5 +1,6 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
+import AnimalSettings from '@settings/AnimalSettings.js';
 import TypeaheadInput from '@components/TypeaheadInput.js';
 import DataTimePicker from '@components/DateTimePicker.js';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
@@ -234,9 +235,5 @@ export default function EditAnimalScreen() {
 }
 
 EditAnimalScreen.navigationOptions = (props) => ResourceEdit.navigationOptions({
-    ...props, title: item => {
-        return item && (item.name || item.identifier || '(' + i18n.t('name not set') + ')') || i18n.t('Creating {{resource}}', {
-            resource: i18n.t('Animal', { count: 1 }),
-        });
-    },
+    ...props, title: AnimalSettings.title,
 });
