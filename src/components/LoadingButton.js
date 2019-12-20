@@ -1,30 +1,23 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
+import Loader from '@components/Loader.js';
 import { Button } from '@ui-kitten/components';
-import { ActivityIndicator } from 'react-native';
+import { mapping } from '@eva-design/eva';
 
-export default function LoadingButton(props) {
-    // Create list for extra props.
-    let extraProps = {};
+export default function LoadingButton({ size = 'medium', loading, children, ...props }) {
+    const sizes = mapping.components.Button.appearances.filled.variantGroups.size;
 
-    // Disable when loading.
-    extraProps.disabled = props.loading;
-
-    // Show icon when loading.
-    extraProps.icon = props.loading
-        ? () => <ActivityIndicator size={props.size === 'giant' ? 'large' : 'small'} />
-        : undefined;
-
-    // Return button with props.
     return (
-        <Button {...props} {...extraProps}>
-            {props.loading ? undefined : props.children }
+        <Button size={size} icon={loading && (() => (
+            <Loader size="small" style={{ width: '100%', height: sizes[size].textLineHeight }} />
+        ))} {...props}>
+            {! loading && children }
         </Button>
     );
 }
 
 LoadingButton.propTypes = {
     size: PropTypes.string,
-    children: PropTypes.any,
     loading: PropTypes.bool.isRequired,
+    children: PropTypes.any,
 }

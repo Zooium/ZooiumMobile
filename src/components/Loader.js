@@ -9,7 +9,7 @@ const sizes = {
     large: { width: 120, height: 30 },
 }
 
-export default function Loader({ size = 'large', fill = '#ced4da', children, ...props }) {
+export default function Loader({ size = 'large', fill = '#ced4da', style, children, ...props }) {
     // Create animated value state holder.
     const [state] = useState(new Animated.Value(0));
 
@@ -35,7 +35,7 @@ export default function Loader({ size = 'large', fill = '#ced4da', children, ...
 
     // Return the loader view.
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} {...props}>
+        <View style={[{ flex: 1, alignItems: 'center', justifyContent: 'center' }, style]} {...props}>
             <Svg class="loader" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg" style={{
                 width: sizes[size].width,
                 height: sizes[size].height,
