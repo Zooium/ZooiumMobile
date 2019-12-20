@@ -13,7 +13,7 @@ export default function LoadingModal({ text }) {
             justifyContent: 'center',
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
         }}>
-            <Loader style={{
+            <Loader size="small" style={{
                 borderRadius: 6,
                 paddingVertical: 14,
                 paddingHorizontal: 34,
