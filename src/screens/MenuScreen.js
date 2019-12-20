@@ -121,9 +121,11 @@ export default function MenuScreen({ navigation }) {
         <View style={{ flex: 1 }}>
             <SectionList
                 sections={menu}
+                initialNumToRender={25}
+                keyExtractor={(item, index) => index.toString()}
+                
                 renderItem={renderItem}
                 renderSectionHeader={renderSectionHeader}
-                keyExtractor={(item, index) => index.toString()}
             />
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
