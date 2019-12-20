@@ -2,16 +2,12 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import apollo from '@src/apollo.js';
-import { SplashScreen } from 'expo';
 import SafeView from '@components/SafeView.js';
 import PING from '@graphql/queries/ping.gql.js';
 import { Text, Layout } from '@ui-kitten/components';
 import { View, Image, StyleSheet } from 'react-native';
 
 export default function MaintenanceScreen({ navigation }) {
-    // Hide the app splash screen.
-    SplashScreen.hide();
-
     // Start 10 sec ping interval.
     let interval = setInterval(() => {
         apollo.query({

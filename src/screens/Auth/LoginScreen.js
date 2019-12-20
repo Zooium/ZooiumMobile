@@ -1,6 +1,5 @@
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
-import { SplashScreen } from 'expo';
 import SafeView from '@components/SafeView.js';
 import AuthManager from '@utils/AuthManager.js';
 import React, { useState, useEffect } from 'react';
@@ -9,7 +8,7 @@ import { View, Image, StyleSheet } from 'react-native';
 import LoadingButton from '@components/LoadingButton.js';
 
 export default function LoginScreen({ navigation }) {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // Allow unauthorized network attempts.
@@ -19,11 +18,12 @@ export default function LoginScreen({ navigation }) {
 
         // Load auth state from storage.
         AuthManager.init().then(loggedIn => {
-            // Navigate to main if authenticated.
-            if (loggedIn) navigation.navigate('Main');
-        }).finally(() => {
-            // Hide the splash screen.
-            SplashScreen.hide();
+            // Navigate to main if authenticated or disable loading.
+            if (loggedIn) {
+                navigation.navigate('Main');
+            } else {
+                setLoading(false);
+            }
         });
     }, []);
 
