@@ -27,10 +27,6 @@ const formInit = () => ({
     name: '',
 })
 
-const formParser = (resource) => {
-    return resource;
-}
-
 export default function EditFileScreen() {
     return (
         <KeyboardAvoidingLayout>
@@ -43,7 +39,6 @@ export default function EditFileScreen() {
                     }}
 
                     formInit={formInit}
-                    formParser={formParser}
                 />
             </Layout>
         </KeyboardAvoidingLayout>

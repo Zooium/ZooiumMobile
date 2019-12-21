@@ -93,14 +93,14 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
     const item = navigation.getParam('item');
     useEffect(() => {
         if (item) {
-            setState(formParser(item));
+            setState(formParser && formParser(item) || item);
         }
     }, [item]);
 
     // Return the resource view.
     return (
         <Fragment>
-            <ResourceView form={form} {...props} />
+            <ResourceView form={form} render="Edit" {...props} />
 
             {(saving || creating) && <LoadingModal text={i18n.t('Saving...')} />}
         </Fragment>
@@ -134,8 +134,8 @@ ResourceEdit.navigationOptions = ({ title, navigation }) => {
 ResourceEdit.propTypes = {
     ...ResourceView.propTypes,
 
+    formParser: PropTypes.func,
     formInit: PropTypes.func.isRequired,
-    formParser: PropTypes.func.isRequired,
     
     routes: PropTypes.shape({
         view: PropTypes.string,

@@ -1,17 +1,14 @@
-import i18n from '@src/i18n.js';
-import theme from '@src/theme.js';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import Loader from '@components/Loader.js';
-import AppStyles from '@utils/AppStyles.js';
 import { useQuery } from '@apollo/react-hooks';
 import { View, SectionList } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import { Text, Icon } from '@ui-kitten/components';
+import ResourceViewItem from './ResourceViewItem.js';
+import ResourceViewHeader from './ResourceViewHeader.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function ResourceView({ items, fetch, variables = {}, routes: { edit } = {}, form, navigation }) {
+function ResourceView({ items, fetch, variables = {}, routes: { edit } = {}, render = 'View', form, navigation }) {
     useEffect(() => {
         navigation.setParams({
             editItem: edit && ((item) => {
@@ -49,81 +46,8 @@ function ResourceView({ items, fetch, variables = {}, routes: { edit } = {}, for
         });
     }, [response]);
 
-    const renderItem = ({ item }) => {
-        const isMultiline = item.multiline && item.multiline(response);
-
-        if (item.onPress) {
-            return (
-                <TouchableOpacity style={[AppStyles.listItem, {
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                }]} onPress={() => item.onPress({ response, navigation })}>
-                    <Text status="primary" category="s1">
-                        {item.title}
-                    </Text>
-
-                    <Icon size={24} name="angle-right" color={theme['color-basic-500']} />
-                </TouchableOpacity>
-            );
-        }
-        
-        const title = typeof item.title === 'function' && item.title(response) || item.title;
-        const titleRender = typeof title !== 'string' ? title : (
-            <Text category="s2" appearance="hint">
-                {title}
-
-                {item.required && (
-                    <Text status="danger" style={{ marginLeft: 6 }}>
-                        *
-                    </Text>
-                )}
-            </Text>
-        );
-        
-        const contents = item.render && item.render(form || response) || item.text && item.text(response);
-        const contentsRender = typeof contents !== 'string' ? contents : (
-            <Text>
-                {contents}
-            </Text>
-        );
-
-        return (
-            <View style={[AppStyles.listItem, {
-                justifyContent: 'flex-start',
-                flexDirection: isMultiline ? 'column' : 'row',
-                alignItems: isMultiline ? 'flex-start' : 'center',
-            }]}>
-                <View style={{
-                    width: 100,
-                    marginRight: 10,
-                    marginBottom: isMultiline ? 12 : 0,
-                }}>
-                    {titleRender}
-                    {item.description && item.description()}
-                </View>
-                
-                <View style={{
-                    flex: 1,
-                    width: isMultiline ? '100%' : undefined,
-                }}>
-                    {contentsRender || (
-                        <Text appearance="hint" style={{ fontSize: 12 }}>
-                            ({i18n.t('not provided')})
-                        </Text>
-                    )}
-                </View>
-            </View>
-        )
-    }
-
-    const renderSectionHeader = ({ section }) => {
-        return (
-            <Text category="label" style={AppStyles.listSection}>
-                {section.title.toUpperCase()}
-            </Text>
-        );
-    }
+    const renderItem = ({ item, section }) => <ResourceViewItem item={item} section={section} form={form} response={response} render={render} />;
+    const renderSectionHeader = ({ section }) => <ResourceViewHeader section={section} render={render} />;
 
     return loading ? <Loader /> : (
         <SectionList

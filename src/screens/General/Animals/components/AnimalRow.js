@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import SexPreview from './SexPreview.js';
 import { Text } from '@ui-kitten/components';
 import SpecieSettings from '@settings/SpecieSettings.js';
-import AnimalSettings from '@settings/AnimalSettings.js';
 
 export default function AnimalRow({ item }) {
     return (
@@ -14,7 +13,7 @@ export default function AnimalRow({ item }) {
                     <SexPreview sex={item.sex} size={20} style={{marginRight: 10}} />
 
                     <Text category="h6">
-                        {AnimalSettings.title(item)}
+                        {item && (item.name || item.identifier || '(' + i18n.t('name not set') + ')')}
                     </Text>
                 </View>
 
