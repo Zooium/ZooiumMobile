@@ -57,5 +57,11 @@ export default {
     EditFile,
 
     // Utils
-    AuthorizedWebView,
+    AuthorizedWebView: {
+        screen: AuthorizedWebView,
+        params: {
+            isModal: true,
+            hideTabBar: true,
+        },
+    },
 };

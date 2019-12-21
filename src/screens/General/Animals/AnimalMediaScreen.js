@@ -156,7 +156,6 @@ function AnimalMediaScreen({ navigation }) {
                 return navigation.navigate('AuthorizedWebView', {
                     uri: item.view_url,
                     title: item.name,
-                    hideTabBar: true,
                 });
 
             case 1: // Rename
