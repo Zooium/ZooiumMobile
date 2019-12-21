@@ -1,17 +1,19 @@
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
-import { View } from 'react-native';
 import Loader from '@components/Loader.js';
 import * as Permissions from 'expo-permissions';
-import React, { useState, useEffect } from 'react';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { View, StyleSheet } from 'react-native';
+import ModalClose from '@components/ModalClose.js';
 import { Icon, Text } from '@ui-kitten/components';
+import { useLazyQuery } from '@apollo/react-hooks';
+import React, { useState, useEffect } from 'react';
+import { NavigationEvents } from 'react-navigation';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import PermissionDenied from '@components/PermissionDenied.js';
-import { withNavigation, withNavigationFocus } from 'react-navigation';
 import VIEW_SHORTLINK from '@graphql/queries/Shortlink/viewShortlink.gql.js';
 
-function BarcodeNearby(props) {
+export default function BarcodeNearbyScreen({ navigation, ...props }) {
+    const [render, setRender] = useState(true);
     const [status, setStatus] = useState('undetermined');
     const [invalid, setInvalid] = useState(false);
     const [timer, setTimer] = useState(undefined);
@@ -30,7 +32,7 @@ function BarcodeNearby(props) {
         requestPermission();
 
         // Allow unauthorized network attempts.
-        props.navigation.setParams({
+        navigation.setParams({
             allowUnauthorized: true,
         });
     }, []);
@@ -72,7 +74,7 @@ function BarcodeNearby(props) {
 
         // Navigate to the type and pass item.
         const route = 'View'+type;
-        props.navigation.navigate({
+        navigation.navigate({
             key: route + item.id,
             routeName: route,
             params: { item },
@@ -81,8 +83,8 @@ function BarcodeNearby(props) {
 
     // Callback on barcode scan result.
     const scan = ({ data }) => {
-        // Skip if already loading or not focused.
-        if (loading || ! props.isFocused) return;
+        // Skip if already loading.
+        if (loading) return;
 
         // Attempt to extract key from QR-code.
         let key = data.match('https://link.zooium.com/(.*)');
@@ -102,16 +104,25 @@ function BarcodeNearby(props) {
     if (status === 'undetermined') {
         return <Loader />;
     } else if (status !== 'granted') {
-        return <PermissionDenied text={i18n.t('In order to use this feature you must allow access to your camera!')} retry={requestPermission} />;
+        return (
+            <PermissionDenied text={i18n.t('In order to use this feature you must allow access to your camera!')} retry={requestPermission}>
+                <ModalClose />
+            </PermissionDenied>    
+        );
     }
 
     // Return bar code scanner view.
     return (
-        <View {...props} style={{flex: 1}}>
-            <BarCodeScanner
+        <View {...props} style={{flex: 1, backgroundColor: status === 'granted' && 'black'}}>
+            <NavigationEvents
+                onWillFocus={() => setRender(true)}
+                onDidBlur={() => setRender(false)}
+            />
+
+            {render && <BarCodeScanner
                 barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
                 onBarCodeScanned={scan}
-                style={{ flex: 1 }}
+                style={StyleSheet.absoluteFillObject}
             >
                 <View style={{
                     flex: 1,
@@ -119,6 +130,8 @@ function BarcodeNearby(props) {
                     justifyContent: 'center',
                     opacity: 0.8,
                 }}>
+                    <ModalClose />
+
                     {invalid && (
                         <View>
                             <Icon name="times" size={150} color={theme['color-danger-500']} />
@@ -130,9 +143,7 @@ function BarcodeNearby(props) {
                         <Loader />
                     )}
                 </View>
-            </BarCodeScanner>
+            </BarCodeScanner>}
         </View>
     );
 }
-
-export default withNavigationFocus(withNavigation(BarcodeNearby));

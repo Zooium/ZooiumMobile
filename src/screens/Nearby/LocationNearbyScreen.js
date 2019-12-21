@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, Icon } from '@ui-kitten/components';
 import { withNavigationFocus } from 'react-navigation';
 import PermissionDenied from '@components/PermissionDenied.js';
+import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import ListEnclosures from '@screens/General/Enclosures/ListEnclosuresScreen.js';
 
 function LocationNearby({ isFocused }) {
@@ -66,32 +67,74 @@ function LocationNearby({ isFocused }) {
 
     // Return nearby list.
     return (
-        <ListEnclosures showRefresh={false} variables={{
-            coordinate: {
-                latitude: location.coords && location.coords.latitude,
-                longitude: location.coords && location.coords.longitude,
-            },
-        }} header={({ item }) => item.distance ? (
-            <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 4,
-                opacity: 0.4,
-            }}>
-                <Icon name="location-arrow" size={10} style={{ marginRight: 6 }} />
-                <Text category="label">
-                    {item.distance < 1000
-                        ? i18n.t('{{distance}} meter', {
-                            distance: item.distance,
-                        })
-                        : i18n.t('{{distance}} km', {
-                            distance: +(item.distance/1000).toFixed(2),
-                        })
+        <View style={{ flex: 1 }}>
+            <ListEnclosures showRefresh={false} variables={{
+                coordinate: {
+                    latitude: location.coords && location.coords.latitude,
+                    longitude: location.coords && location.coords.longitude,
+                },
+            }} header={({ item }) => item.distance ? (
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 4,
+                    opacity: 0.4,
+                }}>
+                    <Icon name="location-arrow" size={10} style={{ marginRight: 6 }} />
+                    <Text category="label">
+                        {item.distance < 1000
+                            ? i18n.t('{{distance}} meter', {
+                                distance: item.distance,
+                            })
+                            : i18n.t('{{distance}} km', {
+                                distance: +(item.distance/1000).toFixed(2),
+                            })
+                        }
+                    </Text>
+                </View>
+            ) : null} />
+        </View>
+    )
+}
+
+LocationNearby.navigationOptions = ({ navigation }) => {
+    return {
+        headerTitleStyle: {
+            flex: 1,
+            textAlign: 'left',
+        },
+
+        headerTitleContainerStyle: {
+            left: 0,
+        },
+    
+        headerRight: (
+            <HeaderButtons>
+                <Item
+                    title="toggle"
+                    onPress={() => navigation.navigate({
+                        routeName: 'BarcodeNearby',
+                    })}
+                    ButtonElement={
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Text style={{
+                                color: 'white',
+                                fontSize: 16,
+                                marginRight: 14,
+                            }}>
+                                {i18n.t('Scan code')}
+                            </Text>
+
+                            <Icon color="white" size={20} name={'qrcode'} />
+                        </View>
                     }
-                </Text>
-            </View>
-        ) : null} />
-    );
+                    style={{
+                        marginRight: 10,
+                    }}
+                />
+            </HeaderButtons>
+        ),
+    }
 }
 
 export default withNavigationFocus(LocationNearby);

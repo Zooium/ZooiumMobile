@@ -43,10 +43,7 @@ const menu = [
                 onPress: (navigation) => navigation.navigate({
                     routeName: 'Nearby',
                     action: NavigationActions.navigate({
-                        routeName: 'ViewNearby',
-                        params: {
-                            view: 'location',
-                        },
+                        routeName: 'LocationNearby',
                     }),
                 }),
             },
@@ -55,13 +52,7 @@ const menu = [
                 icon: 'qrcode',
                 title: i18n.t('Scanner'),
                 onPress: (navigation) => navigation.navigate({
-                    routeName: 'Nearby',
-                    action: NavigationActions.navigate({
-                        routeName: 'ViewNearby',
-                        params: {
-                            view: 'barcode',
-                        },
-                    }),
+                    routeName: 'BarcodeNearby',
                 }),
             },
         ],
