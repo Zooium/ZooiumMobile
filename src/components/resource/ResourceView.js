@@ -8,7 +8,7 @@ import ResourceViewItem from './ResourceViewItem.js';
 import ResourceViewHeader from './ResourceViewHeader.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
-function ResourceView({ items, fetch, variables = {}, routes: { edit } = {}, render = 'View', form, navigation }) {
+function ResourceView({ items, fetch, variables = {}, routes: { edit } = {}, render = 'View', loading = false, form, navigation }) {
     useEffect(() => {
         navigation.setParams({
             editItem: edit && ((item) => {
@@ -24,7 +24,7 @@ function ResourceView({ items, fetch, variables = {}, routes: { edit } = {}, ren
     const item = navigation.getParam('item');
     const creating = ! item;
 
-    const { loading, data } = fetch && useQuery(fetch, {
+    const { loading: fetching, data } = fetch && useQuery(fetch, {
         skip: creating,
         variables: {
             id: item && item.id,
@@ -49,7 +49,7 @@ function ResourceView({ items, fetch, variables = {}, routes: { edit } = {}, ren
     const renderItem = ({ item, section }) => <ResourceViewItem item={item} section={section} form={form} response={response} render={render} />;
     const renderSectionHeader = ({ section }) => <ResourceViewHeader section={section} render={render} />;
 
-    return loading ? <Loader /> : (
+    return (loading || fetching) ? <Loader /> : (
         <SectionList
             sections={items}
             initialNumToRender={25}

@@ -89,18 +89,22 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
         });
     }, []);
 
-    // Get and parse item form on change.
+    // Get item and prepare parsing state.
     const item = navigation.getParam('item');
+    const [parsing, setParsing] = useState(item !== undefined);
+
+    // Parse form and disable parsing on item change.
     useEffect(() => {
         if (item) {
             setState(formParser && formParser(item) || item);
+            setParsing(false);
         }
     }, [item]);
 
     // Return the resource view.
     return (
         <Fragment>
-            <ResourceView form={form} render="Edit" {...props} />
+            <ResourceView form={form} render="Edit" loading={parsing} {...props} />
 
             {(saving || creating) && <LoadingModal text={i18n.t('Saving...')} />}
         </Fragment>
