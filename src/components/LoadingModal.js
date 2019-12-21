@@ -14,6 +14,7 @@ export default function LoadingModal({ text }) {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
         }}>
             <Loader size="small" style={{
+                flex: undefined,
                 borderRadius: 6,
                 paddingVertical: 14,
                 paddingHorizontal: 34,

@@ -34,7 +34,7 @@ export default function MediaRow({ item, index, viewItem, isNew }) {
                             height: '100%',
                             resizeMode: 'contain',
                         }} />
-                    ) || isNew && <Loader /> || (
+                    ) || isNew && <Loader size="small" /> || (
                         <Icon name="file-alt" size={70} color={theme['color-basic-500']} />
                     )}
                 </View>
