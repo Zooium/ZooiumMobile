@@ -19,11 +19,12 @@ export default function ListSettings({ sort, setSort, sorting, filter, setFilter
                     <Select
                         data={filters}
                         multiSelect={true}
+                        keyExtractor={item => item.key}
                         selectedOption={filters.filter(item => {
                             return filter.includes(item.key);
                         })}
                         onSelect={options => setFilter(
-                            Array.from(options, option => option.key)
+                            options.map(option => option.key)
                         )}
                         controlStyle={{ backgroundColor: 'white' }}
                     />
@@ -39,6 +40,7 @@ export default function ListSettings({ sort, setSort, sorting, filter, setFilter
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Select
                             data={sorting}
+                            keyExtractor={item => item.key}
                             selectedOption={sort && sort.column && sorting.find(item => {
                                 return item.key === sort.column;
                             })}
