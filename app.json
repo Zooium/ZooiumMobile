@@ -44,6 +44,11 @@
       "adaptiveIcon": {
         "backgroundImage": "./assets/icon-background.png",
         "foregroundImage": "./assets/icon-foreground.png"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyANrvYkPFRmb0Uzkyg3CXKWxP8HstBthbA"
+        }
       }
     },
     "hooks": {
