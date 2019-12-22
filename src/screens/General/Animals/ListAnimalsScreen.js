@@ -31,8 +31,8 @@ function ListAnimalsScreen() {
 
                     filters={[
                         { key: 'active', text: i18n.t('Active') },
-                        { key: 'sold', text: i18n.t('Sold') },
-                        { key: 'deceased', text: i18n.t('Deceased') },
+                        { key: 'inactive:sold', text: i18n.t('Sold') },
+                        { key: 'inactive:deceased', text: i18n.t('Deceased') },
                     ]}
 
                     sorting={[
