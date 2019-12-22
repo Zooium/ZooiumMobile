@@ -7,15 +7,6 @@ import VIEW_LOCATION from '@graphql/queries/Location/viewLocation.gql.js';
 import UPDATE_LOCATION from '@graphql/mutations/Location/updateLocation.gql.js';
 import CREATE_LOCATION from '@graphql/mutations/Location/createLocation.gql.js';
 
-const formInit = () => ({
-    name: '',
-    address: '',
-    city: '',
-    postcode: '',
-    state: '',
-    country: '',
-})
-
 export default function EditLocationScreen() {
     return (
         <KeyboardAvoidingLayout>

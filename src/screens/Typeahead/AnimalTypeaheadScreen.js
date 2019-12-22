@@ -5,7 +5,7 @@ import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js';
 import AnimalRow from '@screens/General/Animals/components/AnimalRow.js';
 
 export function AnimalTypeaheadInput(resource) {
-    return item && (item.name || item.identifier || '(' + i18n.t('name not set') + ')');
+    return resource && (resource.name || resource.identifier || '(' + i18n.t('name not set') + ')');
 }
 
 export default function AnimalTypeaheadScreen() {

@@ -3,13 +3,13 @@ import { Alert } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
 import { withNavigation } from 'react-navigation';
 import ResourceListItem from './ResourceListItem.js';
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import ResourceListEmpty from './ResourceListEmpty.js';
 import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
 import ResourceListActions from './ResourceListActions.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
-function ResourceSwipeList({ name, list, deps = [], title, fetch, query, routes, mutations: { remove }, preview, itemProps, extraData, showRefresh = true, navigation, ...props }) {
+function ResourceSwipeList({ name, list, deps = [], title, query, routes, mutations: { remove }, preview, itemProps, extraData, showRefresh = true, navigation, ...props }) {
     // Seperate out variables.
     const { view, edit } = routes;
     const { loading, refetch } = query;

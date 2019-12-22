@@ -1,7 +1,6 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import { View } from 'react-native';
-import { localeName } from '@src/i18n.js';
 import { Text } from '@ui-kitten/components';
 import Typeahead from './components/Typeahead.js';
 import SpecieSettings from '@settings/SpecieSettings.js';

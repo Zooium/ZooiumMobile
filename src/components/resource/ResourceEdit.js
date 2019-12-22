@@ -1,10 +1,8 @@
 import i18n from '@src/i18n.js';
 import PropTypes from 'prop-types';
-import Loader from '@components/Loader.js';
-import { View, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import AuthState from '@utils/AuthState.js';
 import ResourceView from './ResourceView.js';
-import { Text } from '@ui-kitten/components';
 import { withNavigation } from 'react-navigation';
 import { useMutation } from '@apollo/react-hooks';
 import LoadingModal from '@components/LoadingModal.js';

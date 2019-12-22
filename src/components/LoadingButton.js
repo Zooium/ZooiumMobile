@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Loader from '@components/Loader.js';
 import { Button } from '@ui-kitten/components';

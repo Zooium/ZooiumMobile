@@ -152,26 +152,29 @@ function AnimalMediaScreen({ navigation }) {
         destructiveButtonIndex: 2,
     }, (index) => {
         switch (index) {
-            case 0: // View
+            case 0: { // View
                 return navigation.navigate('AuthorizedWebView', {
                     uri: item.view_url,
                     title: item.name,
                 });
+            }
 
-            case 1: // Rename
+            case 1: { // Rename
                 const route = 'EditFile';
                 return navigation.navigate({
                     key: route + item.id,
                     routeName: route,
                     params: { item },
                 });
+            }
 
-            case 2: // Delete
+            case 2: { // Delete
                 return deleteFile({
                     variables: {
                         ids: [item.id],
                     },
                 });
+            }
         }
     });
 
