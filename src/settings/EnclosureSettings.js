@@ -132,8 +132,8 @@ export default class EnclosureSettings {
                     renderEdit: function CoordinatesEditRender([state, mergeState]) {
                         return (
                             <MapViewSelector
-                                latitude={state.coordinate && state.coordinate.latitude}
-                                longitude={state.coordinate && state.coordinate.longitude}
+                                latitude={state.coordinate && state.coordinate.latitude || state.latitude}
+                                longitude={state.coordinate && state.coordinate.longitude || state.longitude}
                                 setCoordinates={(latitude, longitude) => {
                                     mergeState({ coordinate: { latitude, longitude } });
                                 }}
