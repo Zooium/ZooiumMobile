@@ -374,9 +374,13 @@ export default class AnimalSettings {
                 },
                 {
                     title: i18n.t('Events'),
-                    onPress: () => {
-                        alert('@wip');
-                    },
+                    navigate: ({ response }) =>  ({
+                        routeName: (route = 'AnimalEvent'),
+                        key: route + response.id,
+                        params: {
+                            item: response,
+                        },
+                    }),
                 },
             ],
         },

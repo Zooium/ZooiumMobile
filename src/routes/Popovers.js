@@ -3,6 +3,7 @@ import i18n from '@src/i18n.js';
 import ViewAnimal from '@screens/General/Animals/ViewAnimalScreen.js';
 import EditAnimal from '@screens/General/Animals/EditAnimalScreen.js';
 import ListAnimals from '@screens/General/Animals/ListAnimalsScreen.js';
+import AnimalEvent from '@screens/General/Animals/AnimalEventScreen.js';
 import AnimalMedia from '@screens/General/Animals/AnimalMediaScreen.js';
 import AnimalFamily from '@screens/General/Animals/AnimalFamilyScreen.js';
 
@@ -31,7 +32,7 @@ export default {
             title: i18n.t('Animal', { count: 2 }),
         },
     }, ViewAnimal, EditAnimal,
-    AnimalMedia, AnimalFamily,
+    AnimalMedia, AnimalFamily, AnimalEvent,
 
     // Enclosures
     ListEnclosures: {

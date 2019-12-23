@@ -12,6 +12,8 @@
         "Enclosure": "Enclosure",
         "Enclosure_plural": "Enclosures",
 
+        "Transaction": "Transaction",
+
         "Data": "Data",
         "General": "General",
         "Account": "Account",
@@ -79,6 +81,8 @@
 
         "Sold": "Sold",
         "Active": "Active",
+        "Bought": "Bought",
+        "Inactive": "Inactive",
         "Deceased": "Deceased",
 
         "Incomplete Submission": "Incomplete Submission",
