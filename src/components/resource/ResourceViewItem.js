@@ -23,7 +23,7 @@ function ResourceViewItem({ item, index, section, form, response, render = 'View
 
                 marginVertical: 10,
                 paddingHorizontal: 6,
-                marginLeft: index !== 0 &&  4,
+                marginLeft: index !== 0 && 4 || undefined,
                 
                 borderRadius: 6,
                 alignItems: 'center',
