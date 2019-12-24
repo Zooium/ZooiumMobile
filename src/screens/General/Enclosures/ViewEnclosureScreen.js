@@ -9,6 +9,7 @@ export default function ViewEnclosureScreen() {
         <Layout style={{ flex: 1 }}>
             <ResourceView
                 items={EnclosureSettings.fields}
+                headers={EnclosureSettings.headers}
                 fetch={VIEW_ENCLOSURE}
                     
                 routes={{

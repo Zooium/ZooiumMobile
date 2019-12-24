@@ -1,5 +1,6 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
+import theme from '@src/theme.js';
 import { Input } from '@ui-kitten/components';
 
 export default class LocationSettings {
@@ -102,40 +103,43 @@ export default class LocationSettings {
                 },
             ],
         },
+    ]
 
-        /**
-         * Data Fields
-         */
+    /**
+     * The entity field headers.
+     *
+     * @var {array}
+     */
+    static headers = [
         {
-            title: i18n.t('Data'),
-            shouldRender: ['view'],
-
-            data: [
-                {
-                    title: i18n.t('Enclosure', { count: 2 }),
-                    navigate: ({ response }) =>  ({
-                        routeName: (route = 'ListEnclosures'),
-                        key: route + (search = 'location:'+response.id),
-                        params: {
-                            search: search,
-                            showSearch: true,
-                            focusSearch: false,
-                        },
-                    }),
+            key: 'enclosures',
+            icon: 'map-marked-alt',
+            title: i18n.t('Enclosure', { count: 2 }),
+            color: theme['color-primary-500'],
+            navigate: ({ response }) =>  ({
+                routeName: (route = 'ListEnclosures'),
+                key: route + (search = 'location:'+response.id),
+                params: {
+                    search: search,
+                    showSearch: true,
+                    focusSearch: false,
                 },
-                {
-                    title: i18n.t('Animal', { count: 2 }),
-                    navigate: ({ response }) =>  ({
-                        routeName: (route = 'ListAnimals'),
-                        key: route + (search = 'location:'+response.id),
-                        params: {
-                            search: search,
-                            showSearch: true,
-                            focusSearch: false,
-                        },
-                    }),
+            }),
+        },
+        {
+            key: 'animals',
+            icon: 'dove',
+            title: i18n.t('Animal', { count: 2 }),
+            color: theme['color-success-500'],
+            navigate: ({ response }) =>  ({
+                routeName: (route = 'ListAnimals'),
+                key: route + (search = 'location:'+response.id),
+                params: {
+                    search: search,
+                    showSearch: true,
+                    focusSearch: false,
                 },
-            ],
+            }),
         },
     ]
 }

@@ -9,6 +9,7 @@ export default function ViewContactScreen() {
         <Layout style={{ flex: 1 }}>
             <ResourceView
                 items={ContactSettings.fields}
+                headers={ContactSettings.headers}
                 fetch={VIEW_CONTACT}
                     
                 routes={{

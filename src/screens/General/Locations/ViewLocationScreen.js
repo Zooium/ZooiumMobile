@@ -9,6 +9,7 @@ export default function ViewLocationScreen() {
         <Layout style={{ flex: 1 }}>
             <ResourceView
                 items={LocationSettings.fields}
+                headers={LocationSettings.headers}
                 fetch={VIEW_LOCATION}
                     
                 routes={{

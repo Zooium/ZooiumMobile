@@ -331,58 +331,67 @@ export default class AnimalSettings {
                 },
             ],
         },
+    ]
 
-        /**
-         * Data Fields
-         */
+    /**
+     * The entity field headers.
+     *
+     * @var {array}
+     */
+    static headers = [
         {
-            title: i18n.t('Data'),
-            shouldRender: ['view'],
-
-            data: [
-                {
-                    title: i18n.t('Cubs'),
-                    navigate: ({ response }) =>  ({
-                        routeName: (route = 'ListAnimals'),
-                        key: route + (search = 'parent:'+response.id),
-                        params: {
-                            search: search,
-                            showSearch: true,
-                            focusSearch: false,
-                        },
-                    }),
+            key: 'cubs',
+            icon: 'baby',
+            title: i18n.t('Cubs'),
+            color: theme['color-primary-500'],
+            navigate: ({ response }) =>  ({
+                routeName: (route = 'ListAnimals'),
+                key: route + (search = 'parent:'+response.id),
+                params: {
+                    search: search,
+                    showSearch: true,
+                    focusSearch: false,
                 },
-                {
-                    title: i18n.t('Family'),
-                    navigate: ({ response }) =>  ({
-                        routeName: (route = 'AnimalFamily'),
-                        key: route + response.id,
-                        params: {
-                            item: response,
-                        },
-                    }),
+            }),
+        },
+        {
+            key: 'events',
+            icon: 'calendar-star',
+            title: i18n.t('Events'),
+            color: theme['color-success-500'],
+            navigate: ({ response }) =>  ({
+                routeName: (route = 'AnimalEvent'),
+                key: route + response.id,
+                params: {
+                    item: response,
                 },
-                {
-                    title: i18n.t('Media'),
-                    navigate: ({ response }) =>  ({
-                        routeName: (route = 'AnimalMedia'),
-                        key: route + response.id,
-                        params: {
-                            item: response,
-                        },
-                    }),
+            }),
+        },
+        {
+            key: 'family',
+            icon: 'dna',
+            title: i18n.t('Family'),
+            color: theme['color-warning-500'],
+            navigate: ({ response }) =>  ({
+                routeName: (route = 'AnimalFamily'),
+                key: route + response.id,
+                params: {
+                    item: response,
                 },
-                {
-                    title: i18n.t('Events'),
-                    navigate: ({ response }) =>  ({
-                        routeName: (route = 'AnimalEvent'),
-                        key: route + response.id,
-                        params: {
-                            item: response,
-                        },
-                    }),
+            }),
+        },
+        {
+            key: 'media',
+            icon: 'photo-video',
+            title: i18n.t('Media'),
+            color: theme['color-danger-500'],
+            navigate: ({ response }) =>  ({
+                routeName: (route = 'AnimalMedia'),
+                key: route + response.id,
+                params: {
+                    item: response,
                 },
-            ],
+            }),
         },
     ]
 }

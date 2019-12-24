@@ -1,5 +1,6 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
+import theme from '@src/theme.js';
 import { Input } from '@ui-kitten/components';
 
 export default class ContactSettings {
@@ -108,32 +109,32 @@ export default class ContactSettings {
                 },
             ],
         },
+    ]
 
-        /**
-         * Data Fields
-         */
+    /**
+     * The entity field headers.
+     *
+     * @var {array}
+     */
+    static headers = [
         {
-            title: i18n.t('Data'),
-            shouldRender: ['view'],
-
-            data: [
-                {
-                    title: i18n.t('Transaction', { count: 2 }),
-                    onPress: ({ response }) =>  {
-                        alert('@wip');
-                        
-                        /* ({
-                        routeName: (route = 'ListTransactions'),
-                        key: route + (search = 'contact:'+response.id),
-                        params: {
-                            search: search,
-                            showSearch: true,
-                            focusSearch: false,
-                        },
-                        }), */
-                    },
+            key: 'transactions',
+            icon: 'wallet',
+            title: i18n.t('Transaction', { count: 2 }),
+            color: theme['color-primary-500'],
+            onPress: ({ response }) =>  {
+                alert('@wip');
+                
+                /* ({
+                routeName: (route = 'ListTransactions'),
+                key: route + (search = 'contact:'+response.id),
+                params: {
+                    search: search,
+                    showSearch: true,
+                    focusSearch: false,
                 },
-            ],
+                }), */
+            },
         },
     ]
 }

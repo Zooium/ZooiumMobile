@@ -7,32 +7,54 @@ import { withNavigation } from 'react-navigation';
 import { Text, Icon } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function ResourceViewItem({ item, section, form, response, render = 'View', navigation }) {
+function ResourceViewItem({ item, index, section, form, response, render = 'View', navigation }) {
     // Skip if item or header has render condition and not included.
     if (
         item.shouldRender && ! item.shouldRender.includes(render.toLowerCase()) ||
-        section.shouldRender && ! section.shouldRender.includes(render.toLowerCase())
+        section && section.shouldRender && ! section.shouldRender.includes(render.toLowerCase())
     ) return null;
 
     // Check if item is navigation button.
     if (item.onPress || item.navigate) {
         return (
-            <TouchableOpacity style={[AppStyles.listItem, {
-                flexDirection: 'row',
+            <TouchableOpacity style={{
+                height: 70,
+                minWidth: 80,
+
+                marginVertical: 10,
+                paddingHorizontal: 6,
+                marginLeft: index !== 0 &&  4,
+                
+                borderRadius: 6,
                 alignItems: 'center',
-                justifyContent: 'space-between',
-            }]} onPress={() => {
+                justifyContent: 'center',
+
+                backgroundColor: item.color,
+
+                shadowColor: "#000",
+                shadowOffset: {
+                    width: 0,
+                    height: 1,
+                },
+                shadowOpacity: 0.18,
+                shadowRadius: 1.00,
+                
+                elevation: 1,
+            }} onPress={() => {
                 if (item.navigate) {
                     navigation.navigate(item.navigate({ response }));
                 } else {
                     item.onPress({ response, navigation });
                 }
             }}>
-                <Text status="primary" category="s1">
+                <Icon size={28} color="white" name={item.icon} style={{
+                    opacity: .9,
+                    marginBottom: 4,
+                }} />
+
+                <Text category="s1" style={{ color: 'white', lineHeight: 20 }}>
                     {item.title}
                 </Text>
-
-                <Icon size={24} name="angle-right" color={theme['color-basic-500']} />
             </TouchableOpacity>
         );
     }

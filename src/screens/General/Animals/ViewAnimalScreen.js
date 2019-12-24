@@ -9,6 +9,7 @@ export default function ViewAnimalScreen() {
         <Layout style={{ flex: 1 }}>
             <ResourceView
                 items={AnimalSettings.fields}
+                headers={AnimalSettings.headers}
                 fetch={VIEW_ANIMAL}
                     
                 routes={{

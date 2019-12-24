@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import Loader from '@components/Loader.js';
 import { useQuery } from '@apollo/react-hooks';
-import { View, SectionList } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import ResourceViewItem from './ResourceViewItem.js';
 import ResourceViewHeader from './ResourceViewHeader.js';
+import { View, FlatList, SectionList } from 'react-native';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
-function ResourceView({ items, fetch, variables = {}, routes: { edit } = {}, render = 'View', loading = false, form, navigation }) {
+function ResourceView({ items, headers, fetch, variables = {}, routes: { edit } = {}, render = 'View', loading = false, form, navigation }) {
     useEffect(() => {
         navigation.setParams({
             editItem: edit && ((item) => {
@@ -46,8 +46,22 @@ function ResourceView({ items, fetch, variables = {}, routes: { edit } = {}, ren
         });
     }, [response]);
 
-    const renderItem = ({ item, section }) => <ResourceViewItem item={item} section={section} form={form} response={response} render={render} />;
+    const renderItem = ({ item, index, section }) => <ResourceViewItem item={item} index={index} section={section} form={form} response={response} render={render} />;
     const renderSectionHeader = ({ section }) => <ResourceViewHeader section={section} render={render} />;
+
+    const renderHeaderActions = (
+        <FlatList
+            data={headers}
+            horizontal={true}
+            renderItem={renderItem}
+            keyExtractor={item => item.key}
+            contentContainerStyle={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'space-evenly',
+            }}
+        />
+    );
 
     return (loading || fetching) ? <Loader /> : (
         <SectionList
@@ -57,6 +71,7 @@ function ResourceView({ items, fetch, variables = {}, routes: { edit } = {}, ren
 
             renderItem={renderItem}
             renderSectionHeader={renderSectionHeader}
+            ListHeaderComponent={renderHeaderActions}
         />
     );
 }

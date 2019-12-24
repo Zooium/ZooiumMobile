@@ -17,7 +17,10 @@ library.add([
     require('@fortawesome/pro-solid-svg-icons/faExclamationTriangle').definition,
 
     // Pack: Regular
+    require('@fortawesome/pro-regular-svg-icons/faDna').definition,
+    require('@fortawesome/pro-regular-svg-icons/faDove').definition,
     require('@fortawesome/pro-regular-svg-icons/faMars').definition,
+    require('@fortawesome/pro-regular-svg-icons/faBaby').definition,
     require('@fortawesome/pro-regular-svg-icons/faSave').definition,
     require('@fortawesome/pro-regular-svg-icons/faPlus').definition,
     require('@fortawesome/pro-regular-svg-icons/faMinus').definition,
@@ -36,8 +39,11 @@ library.add([
     require('@fortawesome/pro-regular-svg-icons/faTombstone').definition,
     require('@fortawesome/pro-regular-svg-icons/faArrowLeft').definition,
     require('@fortawesome/pro-regular-svg-icons/faAngleRight').definition,
+    require('@fortawesome/pro-regular-svg-icons/faPhotoVideo').definition,
     require('@fortawesome/pro-regular-svg-icons/faGenderless').definition,
     require('@fortawesome/pro-regular-svg-icons/faExpandWide').definition,
+    require('@fortawesome/pro-regular-svg-icons/faCalendarStar').definition,
+    require('@fortawesome/pro-regular-svg-icons/faMapMarkedAlt').definition,
     require('@fortawesome/pro-regular-svg-icons/faLocationArrow').definition,
     require('@fortawesome/pro-regular-svg-icons/faSortAlphaDown').definition,
     require('@fortawesome/pro-regular-svg-icons/faSortAlphaDownAlt').definition,
