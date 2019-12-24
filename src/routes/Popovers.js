@@ -15,6 +15,10 @@ import ViewLocation from '@screens/General/Locations/ViewLocationScreen.js';
 import EditLocation from '@screens/General/Locations/EditLocationScreen.js';
 import ListLocations from '@screens/General/Locations/ListLocationsScreen.js';
 
+import ViewContact from '@screens/General/Contacts/ViewContactScreen.js';
+import EditContact from '@screens/General/Contacts/EditContactScreen.js';
+import ListContacts from '@screens/General/Contacts/ListContactsScreen.js';
+
 import AnimalTypeahead from '@screens/Typeahead/AnimalTypeaheadScreen.js';
 import SpecieTypeahead from '@screens/Typeahead/SpecieTypeaheadScreen.js';
 import LocationTypeahead from '@screens/Typeahead/LocationTypeaheadScreen.js';
@@ -49,6 +53,14 @@ export default {
             title: i18n.t('Location', { count: 2 }),
         },
     }, ViewLocation, EditLocation,
+
+    // Contacts
+    ListContacts: {
+        screen: ListContacts,
+        navigationOptions: {
+            title: i18n.t('Contact', { count: 2 }),
+        },
+    }, ViewContact, EditContact,
 
     // Typeaheads
     AnimalTypeahead, SpecieTypeahead,

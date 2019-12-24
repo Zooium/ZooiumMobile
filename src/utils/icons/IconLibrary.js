@@ -3,12 +3,14 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 library.add([
     // Pack: Solid
     require('@fortawesome/pro-solid-svg-icons/faDove').definition,
+    require('@fortawesome/pro-solid-svg-icons/faWallet').definition,
     require('@fortawesome/pro-solid-svg-icons/faQrcode').definition,
     require('@fortawesome/pro-solid-svg-icons/faEllipsisH').definition,
     require('@fortawesome/pro-solid-svg-icons/faBinoculars').definition,
     require('@fortawesome/pro-solid-svg-icons/faStreetView').definition,
     require('@fortawesome/pro-solid-svg-icons/faSignOutAlt').definition,
     require('@fortawesome/pro-solid-svg-icons/faGlobeEurope').definition,
+    require('@fortawesome/pro-solid-svg-icons/faAddressBook').definition,
     require('@fortawesome/pro-solid-svg-icons/faMapMarkedAlt').definition,
     require('@fortawesome/pro-solid-svg-icons/faLocationArrow').definition,
     require('@fortawesome/pro-solid-svg-icons/faQuestionCircle').definition,

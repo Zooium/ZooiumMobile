@@ -35,25 +35,35 @@ const menu = [
     },
 
     {
+        title: i18n.t('Sales'),
+        data: [
+            {
+                icon: 'address-book',
+                title: i18n.t('Contact', { count: 2 }),
+                onPress: (navigation) => navigation.navigate('ListContacts'),
+            },
+        
+            /* @wip - {
+                icon: 'wallet',
+                title: i18n.t('Transaction', { count: 2 }),
+                onPress: (navigation) => navigation.navigate('ListTransactions'),
+            },*/
+        ],
+    },
+
+    {
         title: i18n.t('Location'),
         data: [
             {
                 icon: 'location-arrow',
                 title: i18n.t('Nearby'),
-                onPress: (navigation) => navigation.navigate({
-                    routeName: 'Nearby',
-                    action: NavigationActions.navigate({
-                        routeName: 'LocationNearby',
-                    }),
-                }),
+                onPress: (navigation) => navigation.navigate('LocationNearby'),
             },
         
             {
                 icon: 'qrcode',
                 title: i18n.t('Scanner'),
-                onPress: (navigation) => navigation.navigate({
-                    routeName: 'BarcodeNearby',
-                }),
+                onPress: (navigation) => navigation.navigate('BarcodeNearby'),
             },
         ],
     },

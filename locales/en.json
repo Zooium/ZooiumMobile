@@ -12,9 +12,14 @@
         "Enclosure": "Enclosure",
         "Enclosure_plural": "Enclosures",
 
+        "Contact": "Contact",
+        "Contact_plural": "Contacts",
+
         "Transaction": "Transaction",
+        "Transaction_plural": "Transactions",
 
         "Data": "Data",
+        "Sales": "Sales",
         "General": "General",
         "Account": "Account",
 
@@ -49,6 +54,8 @@
         "Scanner": "Scanner",
         "Distance": "Distance",
 
+        "Email": "Email",
+        "Phone": "Phone",
         "Address": "Address",
         "City": "City",
         "Postcode": "Postcode",
