@@ -97,7 +97,7 @@ function AnimalMediaScreen({ navigation }) {
     const parseFile = (response) => {
         // Get values from file request response.
         let { uri, name, type, cancelled } = response;
-        if (cancelled) return;
+        if (cancelled || type && type === 'cancel') return;
 
         // Find file extension and name.
         const parts = uri.split('.');
