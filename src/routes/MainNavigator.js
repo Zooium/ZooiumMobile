@@ -1,13 +1,14 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import { Icon } from '@ui-kitten/components';
+import StackStyle from './styles/StackStyle.js';
 import BottomTabStyle from './styles/BottomTabStyle.js';
+import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
+import Popovers from './Popovers.js';
 import MenuNavigator from './MenuNavigator.js';
 import NearbyNavigator from './NearbyNavigator.js';
-import AnimalsNavigator from './AnimalsNavigator.js';
-import EnclosuresNavigator from './EnclosuresNavigator.js';
 
 const navigationOptionsWrapper = (defaults, { navigation }) => {
     // Get the current route from navigation.
@@ -24,7 +25,10 @@ const navigationOptionsWrapper = (defaults, { navigation }) => {
 /* eslint-disable react/prop-types */
 export default createBottomTabNavigator({
     Animals: {
-        screen: AnimalsNavigator,
+        screen: createStackNavigator(Popovers, {
+            ...StackStyle, initialRouteName: 'AnimalList',
+        }),
+
         navigationOptions: (props) => navigationOptionsWrapper({
             title: i18n.t('Animal', { count: 2 }),
             tabBarIcon: function AnimalIcon({ tintColor }) {
@@ -34,7 +38,10 @@ export default createBottomTabNavigator({
     },
 
     Enclosures: {
-        screen: EnclosuresNavigator,
+        screen: createStackNavigator(Popovers, {
+            ...StackStyle, initialRouteName: 'EnclosureList',
+        }),
+
         navigationOptions: (props) => navigationOptionsWrapper({
             title: i18n.t('Enclosure', { count: 2 }),
             tabBarIcon: function EnclosureIcon({ tintColor }) {
