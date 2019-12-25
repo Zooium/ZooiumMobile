@@ -36,6 +36,8 @@ function ContactListScreen({ layout, showRefresh = true, variables = {}, navigat
                     sorting={[
                         { key: 'id', text: i18n.t('Recent') },
                         { key: 'name', text: i18n.t('Name') },
+                        { key: 'email', text: i18n.t('Email') },
+                        { key: 'phone', text: i18n.t('Phone') },
                         { key: 'address', text: i18n.t('Address') },
                     ]}
                 />
