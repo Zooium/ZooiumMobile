@@ -10,12 +10,14 @@ import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import DELETE_ANIMALS from '@graphql/mutations/Animal/deleteAnimals.gql.js';
 
-function AnimalListScreen() {
+function AnimalListScreen({ navigation }) {
+    const preview = ({ item }) => AnimalRow({ item, navigation });
+
     return (
         <KeyboardAvoidingLayout>
             <Layout style={{ flex: 1 }}>
                 <ResourceList
-                    preview={AnimalRow}
+                    preview={preview}
                     fetch={LIST_ANIMALS}
                     name={i18n.t('Animal', { count: 2 })}
                     title={AnimalSettings.title}

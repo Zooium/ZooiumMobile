@@ -1,11 +1,11 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import { View } from 'react-native';
 import { Text } from '@ui-kitten/components';
 import SexPreview from '@components/SexPreview.js';
+import { View, TouchableOpacity } from 'react-native';
 import SpecieSettings from '@settings/SpecieSettings.js';
 
-export default function AnimalRow({ item }) {
+export default function AnimalRow({ item, navigation }) {
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
@@ -20,15 +20,26 @@ export default function AnimalRow({ item }) {
                 <Text>{SpecieSettings.title(item.specie, '(' + i18n.t('not provided') + ')')}</Text>
             </View>
 
-            {item.enclosure &&
-                <View style={{ flexShrink: 0, alignItems: 'flex-end' }}>
+            {item.enclosure && (
+                <TouchableOpacity style={{ flexShrink: 0, alignItems: 'flex-end' }} onPress={() => {
+                    const route = 'EnclosureView';
+                    navigation.navigate({
+                        key: route + item.enclosure.id,
+                        routeName: route,
+                        params: {
+                            item: item.enclosure,
+                        },
+                    })
+                }}>
                     <Text style={{ fontWeight: 'bold' }}>
-                        {i18n.t('Enclosure', { count: 1 })}
+                        {i18n.t('Enclosure')}
                     </Text>
 
-                    <Text>{ item.enclosure.name }</Text>
-                </View>
-            }
+                    <Text>
+                        {item.enclosure.name}
+                    </Text>
+                </TouchableOpacity>
+            )}
         </View>
     );
 }
