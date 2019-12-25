@@ -117,7 +117,7 @@ export default class LocationSettings {
             title: i18n.t('Enclosure', { count: 2 }),
             color: theme['color-primary-500'],
             navigate: ({ response }) =>  ({
-                routeName: (route = 'ListEnclosures'),
+                routeName: (route = 'EnclosureList'),
                 key: route + (search = 'location:'+response.id),
                 params: {
                     search: search,
@@ -132,7 +132,7 @@ export default class LocationSettings {
             title: i18n.t('Animal', { count: 2 }),
             color: theme['color-success-500'],
             navigate: ({ response }) =>  ({
-                routeName: (route = 'ListAnimals'),
+                routeName: (route = 'AnimalList'),
                 key: route + (search = 'location:'+response.id),
                 params: {
                     search: search,

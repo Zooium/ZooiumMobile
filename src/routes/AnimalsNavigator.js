@@ -4,5 +4,5 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 export default createStackNavigator(Popovers, {
     ...StackStyle,
-    initialRouteName: 'ListAnimals',
+    initialRouteName: 'AnimalList',
 });

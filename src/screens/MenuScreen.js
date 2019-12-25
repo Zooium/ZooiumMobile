@@ -7,7 +7,6 @@ import Constants from 'expo-constants';
 import AppStyles from '@utils/AppStyles.js';
 import AuthManager from '@utils/AuthManager.js';
 import { Text, Icon } from '@ui-kitten/components';
-import { NavigationActions } from 'react-navigation';
 import { View, Alert, SectionList, TouchableHighlight } from 'react-native';
 
 const menu = [
@@ -29,7 +28,7 @@ const menu = [
             {
                 icon: 'globe-europe',
                 title: i18n.t('Location', { count: 2 }),
-                onPress: (navigation) => navigation.navigate('ListLocations'),
+                onPress: (navigation) => navigation.navigate('LocationList'),
             },
         ],
     },
@@ -40,13 +39,13 @@ const menu = [
             {
                 icon: 'address-book',
                 title: i18n.t('Contact', { count: 2 }),
-                onPress: (navigation) => navigation.navigate('ListContacts'),
+                onPress: (navigation) => navigation.navigate('ContactList'),
             },
         
             /* @wip - {
                 icon: 'wallet',
                 title: i18n.t('Transaction', { count: 2 }),
-                onPress: (navigation) => navigation.navigate('ListTransactions'),
+                onPress: (navigation) => navigation.navigate('TransactionList'),
             },*/
         ],
     },

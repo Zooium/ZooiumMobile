@@ -7,7 +7,7 @@ import { Text, Input } from '@ui-kitten/components';
 import MapView, { Marker } from 'react-native-maps';
 import TypeaheadInput from '@components/TypeaheadInput.js';
 import MapViewSelector from '@components/MapViewSelector.js';
-import { LocationTypeaheadInput } from '@screens/Typeahead/LocationTypeaheadScreen.js';
+import { LocationTypeaheadInput } from '@screens/locations/LocationTypeaheadScreen.js';
 
 export default class EnclosureSettings {
     /**
@@ -70,7 +70,7 @@ export default class EnclosureSettings {
 
                         return (
                             <TouchableOpacity onPress={() => {
-                                const route = 'ViewLocation';
+                                const route = 'LocationView';
                                 navigation.navigate({
                                     key: route + location.id,
                                     routeName: route,
@@ -90,7 +90,7 @@ export default class EnclosureSettings {
                     renderEdit: function LocationEditRender([state, mergeState]) {
                         return (
                             <TypeaheadInput
-                                add="EditLocation"
+                                add="LocationEdit"
                                 view="LocationTypeahead"
                                 resource={i18n.t('Location')}
                                 preview={LocationTypeaheadInput}
@@ -158,7 +158,7 @@ export default class EnclosureSettings {
             title: i18n.t('Animal', { count: 2 }),
             color: theme['color-primary-500'],
             navigate: ({ response }) =>  ({
-                routeName: (route = 'ListAnimals'),
+                routeName: (route = 'AnimalList'),
                 key: route + (search = 'enclosure:'+response.id),
                 params: {
                     search: search,

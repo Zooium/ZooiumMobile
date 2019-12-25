@@ -3,8 +3,8 @@ import StackStyle from './styles/StackStyle.js';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import Popovers from './Popovers.js';
-import BarcodeNearby from '@screens/Nearby/BarcodeNearbyScreen.js';
-import LocationNearby from '@screens/Nearby/LocationNearbyScreen.js';
+import BarcodeNearby from '@screens/NearbyBarcodeScreen.js';
+import LocationNearby from '@screens/NearbyLocationScreen.js';
 
 export default createStackNavigator({
     LocationNearby: {

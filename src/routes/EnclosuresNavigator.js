@@ -5,5 +5,5 @@ import Popovers from './Popovers.js';
 
 export default createStackNavigator(Popovers, {
     ...StackStyle,
-    initialRouteName: 'ListEnclosures',
+    initialRouteName: 'EnclosureList',
 });

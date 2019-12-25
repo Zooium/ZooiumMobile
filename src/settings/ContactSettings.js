@@ -126,7 +126,7 @@ export default class ContactSettings {
                 alert('@wip');
                 
                 /* ({
-                routeName: (route = 'ListTransactions'),
+                routeName: (route = 'TransactionList'),
                 key: route + (search = 'contact:'+response.id),
                 params: {
                     search: search,

@@ -2,16 +2,16 @@ import React from 'react';
 import { Linking } from 'expo';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
+import SexPreview from '@components/SexPreview.js';
+import CitesListing from '@components/CitesListing.js';
 import SpecieSettings from '@settings/SpecieSettings.js';
 import TypeaheadInput from '@components/TypeaheadInput.js';
 import DataTimePicker from '@components/DateTimePicker.js';
 import { View, Alert, TouchableOpacity } from 'react-native';
-import SexPreview from '@screens/General/Animals/components/SexPreview.js';
+import { SpecieTypeaheadInput } from '@screens/SpecieTypeaheadScreen.js';
 import { Text, Icon, Radio, RadioGroup, Input } from '@ui-kitten/components';
-import CitesListing from '@screens/General/Animals/components/CitesListing.js';
-import { AnimalTypeaheadInput } from '@screens/Typeahead/AnimalTypeaheadScreen.js';
-import { SpecieTypeaheadInput } from '@screens/Typeahead/SpecieTypeaheadScreen.js';
-import { EnclosureTypeaheadInput } from '@screens/Typeahead/EnclosureTypeaheadScreen.js';
+import { AnimalTypeaheadInput } from '@screens/animals/AnimalTypeaheadScreen.js';
+import { EnclosureTypeaheadInput } from '@screens/enclosures/EnclosureTypeaheadScreen.js';
 
 export default class AnimalSettings {
     /**
@@ -73,7 +73,7 @@ export default class AnimalSettings {
                     renderEdit: function IdentifierEditRender([state, mergeState]) {
                         return <Input value={state.identifier} onChangeText={(value) => mergeState({ identifier: value })} />;
                     },
-                    descriptionEdit: () =>i18n.t('A unique identifier for the animal such as a DNA test filing-number or ring number.'),
+                    descriptionEdit: () => i18n.t('A unique identifier for the animal such as a DNA test filing-number or ring number.'),
                 },
                 {
                     key: 'name',
@@ -90,7 +90,7 @@ export default class AnimalSettings {
                     renderEdit: function FatherEditRender([state, mergeState]) {
                         return (
                             <TypeaheadInput
-                                add="EditAnimal"
+                                add="AnimalEdit"
                                 view="AnimalTypeahead"
                                 resource={i18n.t('Father')}
                                 preview={AnimalTypeaheadInput}
@@ -114,7 +114,7 @@ export default class AnimalSettings {
                     renderEdit: function MotherEditRender([state, mergeState]) {
                         return (
                             <TypeaheadInput
-                                add="EditAnimal"
+                                add="AnimalEdit"
                                 view="AnimalTypeahead"
                                 resource={i18n.t('Mother')}
                                 preview={AnimalTypeaheadInput}
@@ -137,7 +137,7 @@ export default class AnimalSettings {
                     renderView: function EnclosureViewRender(resource, { navigation }) {
                         return resource.enclosure && (
                             <TouchableOpacity onPress={() => {
-                                const route = 'ViewEnclosure';
+                                const route = 'EnclosureView';
                                 navigation.navigate({
                                     key: route + resource.enclosure.id,
                                     routeName: route,
@@ -153,7 +153,7 @@ export default class AnimalSettings {
                     renderEdit: function EnclosureEditRender([state, mergeState]) {
                         return (
                             <TypeaheadInput
-                                add="EditEnclosure"
+                                add="EnclosureEdit"
                                 view="EnclosureTypeahead"
                                 resource={i18n.t('Enclosure')}
                                 preview={EnclosureTypeaheadInput}
@@ -345,7 +345,7 @@ export default class AnimalSettings {
             title: i18n.t('Cubs'),
             color: theme['color-primary-500'],
             navigate: ({ response }) =>  ({
-                routeName: (route = 'ListAnimals'),
+                routeName: (route = 'AnimalList'),
                 key: route + (search = 'parent:'+response.id),
                 params: {
                     search: search,

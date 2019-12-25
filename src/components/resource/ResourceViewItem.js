@@ -1,6 +1,5 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import theme from '@src/theme.js';
 import { View } from 'react-native';
 import AppStyles from '@utils/AppStyles.js';
 import { withNavigation } from 'react-navigation';
