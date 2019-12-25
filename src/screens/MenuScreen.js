@@ -126,36 +126,43 @@ export default function MenuScreen({ navigation }) {
                 
                 renderItem={renderItem}
                 renderSectionHeader={renderSectionHeader}
+
+                ListFooterComponent={(
+                    <View style={{
+                        padding: 10,
+                        marginTop: 12,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}>
+                        <Text appearance="hint" category="c1" status="primary" onPress={() => {
+                            Updates.checkForUpdateAsync().then(({ isAvailable }) => {
+                                if (isAvailable) {
+                                    // Update the application.
+                                    Updates.reload();
+                                } else {
+                                    // Already up to date alert.
+                                    Alert.alert(
+                                        i18n.t('Update Unavailable'),
+                                        i18n.t('Application is already up to date!')
+                                    );
+                                }
+                            }).catch(() => {
+                                // Failed to check for updates.
+                                Alert.alert(
+                                    i18n.t('Update Unavailable'),
+                                    i18n.t('Failed to fetch updates. Try again later!')
+                                );
+                            });
+                        }}>
+                            {i18n.t('Check for updates...')}
+                        </Text>
+        
+                        <Text appearance="hint" category="c1">
+                            {Constants.manifest.revisionId || 'debug'}
+                        </Text>
+                    </View>
+                )}
             />
-
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-                <Text appearance="hint" category="c1" status="primary" onPress={() => {
-                    Updates.checkForUpdateAsync().then(({ isAvailable }) => {
-                        if (isAvailable) {
-                            // Update the application.
-                            Updates.reload();
-                        } else {
-                            // Already up to date alert.
-                            Alert.alert(
-                                i18n.t('Update Unavailable'),
-                                i18n.t('Application is already up to date!')
-                            );
-                        }
-                    }).catch(() => {
-                        // Failed to check for updates.
-                        Alert.alert(
-                            i18n.t('Update Unavailable'),
-                            i18n.t('Failed to fetch updates. Try again later!')
-                        );
-                    });
-                }}>
-                    {i18n.t('Check for updates...')}
-                </Text>
-
-                <Text appearance="hint" category="c1">
-                    {Constants.manifest.revisionId || 'debug'}
-                </Text>
-            </View>
         </View>
     );
 }
