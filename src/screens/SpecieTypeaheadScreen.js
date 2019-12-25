@@ -2,7 +2,7 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import { View } from 'react-native';
 import { Text } from '@ui-kitten/components';
-import Typeahead from '@screens/partials/Typeahead.js';
+import Typeahead from '@components/Typeahead.js';
 import SpecieSettings from '@settings/SpecieSettings.js';
 import LIST_SPECIES from '@graphql/queries/Specie/listSpecies.gql.js';
 

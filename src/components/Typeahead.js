@@ -1,11 +1,10 @@
 import React from 'react';
-import { withNavigation } from 'react-navigation';
 import ResourceList from '@components/resource/ResourceList.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import ResourceSelectList from '@components/resource/ResourceSelectList.js';
 
-function Typeahead(props) {
+export default function Typeahead(props) {
     return (
         <KeyboardAvoidingLayout>
             <ResourceList List={ResourceSelectList} {...props} />
@@ -35,5 +34,3 @@ Typeahead.navigationOptions = ({ navigation }) => {
         ) || undefined,
     };
 }
-
-export default withNavigation(Typeahead);

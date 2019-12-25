@@ -1,6 +1,6 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import Typeahead from '@screens/partials/Typeahead.js';
+import Typeahead from '@components/Typeahead.js';
 import EnclosureRow from '@components/rows/EnclosureRow.js';
 import EnclosureSettings from '@settings/EnclosureSettings.js';
 import LIST_ENCLOSURES from '@graphql/queries/Enclosure/listEnclosures.gql.js';
