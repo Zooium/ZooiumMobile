@@ -62,9 +62,10 @@
         "State": "State",
         "Country": "Country",
         "Coordinates": "Coordinates",
-
+        
         "Date": "Date",
-
+        "Items" :"Items",
+        
         "Select {{resource}}": "Select {{resource}}",
         "Press to select {{resource}}...": "Press to select {{resource}}...",
         
@@ -80,6 +81,7 @@
         "Password": "Password",
 
         "None": "None",
+        "date not set": "date not set",
         "name not set": "name not set",
         "not provided": "not provided",
 

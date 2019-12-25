@@ -42,11 +42,11 @@ const menu = [
                 onPress: (navigation) => navigation.navigate('ContactList'),
             },
         
-            /* @wip - {
+            {
                 icon: 'wallet',
                 title: i18n.t('Transaction', { count: 2 }),
                 onPress: (navigation) => navigation.navigate('TransactionList'),
-            },*/
+            },
         ],
     },
 

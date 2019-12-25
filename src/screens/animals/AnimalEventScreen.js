@@ -23,7 +23,7 @@ function AnimalEventScreen({ navigation }) {
     const { loading, data, refetch } = query;
     const { response } = parseQuery(data);
 
-    // Sort events by occured at date.
+    // Sort events by occurred at date.
     let list = response && response.events.sort((a, b) => {
         return new Date(b.occurred_at) - new Date(a.occurred_at);
     });

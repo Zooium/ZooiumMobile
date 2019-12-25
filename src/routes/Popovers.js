@@ -21,6 +21,11 @@ import LocationTypeahead from '@screens/locations/LocationTypeaheadScreen.js';
 import ContactList from '@screens/contacts/ContactListScreen.js';
 import ContactView from '@screens/contacts/ContactViewScreen.js';
 import ContactEdit from '@screens/contacts/ContactEditScreen.js';
+import ContactTypeahead from '@screens/contacts/ContactTypeaheadScreen.js';
+
+import TransactionList from '@screens/transactions/TransactionListScreen.js';
+import TransactionView from '@screens/transactions/TransactionViewScreen.js';
+import TransactionEdit from '@screens/transactions/TransactionEditScreen.js';
 
 import FileEdit from '@screens/FileEditScreen.js';
 import SpecieTypeahead from '@screens/SpecieTypeaheadScreen.js';
@@ -60,9 +65,18 @@ export default {
         },
     }, ContactView, ContactEdit,
 
+    // Transactions
+    TransactionList: {
+        screen: TransactionList,
+        navigationOptions: {
+            title: i18n.t('Transaction', { count: 2 }),
+        },
+    }, TransactionView, TransactionEdit,
+
     // Typeaheads
     AnimalTypeahead, SpecieTypeahead,
     LocationTypeahead, EnclosureTypeahead,
+    ContactTypeahead,
 
     // Files
     FileEdit,

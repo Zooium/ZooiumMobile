@@ -122,10 +122,7 @@ export default class ContactSettings {
             icon: 'wallet',
             title: i18n.t('Transaction', { count: 2 }),
             color: theme['color-primary-500'],
-            onPress: ({ response }) =>  {
-                alert('@wip');
-                
-                /* ({
+            navigate: ({ response }) =>  ({
                 routeName: (route = 'TransactionList'),
                 key: route + (search = 'contact:'+response.id),
                 params: {
@@ -133,8 +130,7 @@ export default class ContactSettings {
                     showSearch: true,
                     focusSearch: false,
                 },
-                }), */
-            },
+            }),
         },
     ]
 }
