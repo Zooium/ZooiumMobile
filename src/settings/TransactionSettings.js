@@ -1,7 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import { TouchableOpacity } from 'react-native';
-import TradeForm from '@components/TradeForm.js';
+import TradeItems from '@components/TradeItems.js';
 import { Text, Input } from '@ui-kitten/components';
 import TypeaheadInput from '@components/TypeaheadInput.js';
 import DataTimePicker from '@components/DateTimePicker.js';
@@ -122,10 +122,10 @@ export default class TransactionSettings {
                     key: 'items',
                     multiline: () => true,
                     renderView: function ItemsViewRender(resource) {
-                        return <TradeForm editing={false} transaction={resource} />;
+                        return <TradeItems editing={false} transaction={resource} />;
                     },
                     renderEdit: function ItemsEditRender([state, mergeState]) {
-                        return <TradeForm editing={true} transaction={state} mergeState={mergeState} />;
+                        return <TradeItems editing={true} transaction={state} mergeState={mergeState} />;
                     },
                 },
             ],

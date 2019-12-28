@@ -67,6 +67,8 @@
 
         "Items" :"Items",
         "Line {{number}}": "Line {{number}}",
+        "You - You deliver": "You - You deliver",
+        "Them - You receive": "Them - You receive",
         
         "Select {{resource}}": "Select {{resource}}",
         "Press to select {{resource}}...": "Press to select {{resource}}...",

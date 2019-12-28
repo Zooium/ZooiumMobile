@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
-import PREVEW_ANIMAL from '@graphql/fragments/Animal/previewAnimal.gql.js';
+import FULL_ANIMAL from '@graphql/fragments/Animal/fullAnimal.gql.js';
 
 export default gql`
-    ${PREVEW_ANIMAL}
+    ${FULL_ANIMAL}
     fragment fullTransaction on Transaction {
         id
         notes
@@ -24,7 +24,7 @@ export default gql`
 
             resource {
                 ...on Animal {
-                    ...previewAnimal
+                    ...fullAnimal
                 }
             }
         }

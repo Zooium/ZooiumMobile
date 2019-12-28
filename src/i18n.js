@@ -2,6 +2,10 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import * as Localization from 'expo-localization';
 
+// Import Internationalization API.
+import 'intl';
+import 'intl/locale-data/jsonp/en.js';
+
 // Import application locales.
 import en from '@locales/en.json';
 
