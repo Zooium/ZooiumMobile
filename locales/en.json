@@ -64,7 +64,9 @@
         "Coordinates": "Coordinates",
         
         "Date": "Date",
+
         "Items" :"Items",
+        "Line {{number}}": "Line {{number}}",
         
         "Select {{resource}}": "Select {{resource}}",
         "Press to select {{resource}}...": "Press to select {{resource}}...",

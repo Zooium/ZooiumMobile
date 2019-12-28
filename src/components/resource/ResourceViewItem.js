@@ -110,14 +110,16 @@ function ResourceViewItem({ item, index, section, form, response, render = 'View
             flexDirection: isMultiline ? 'column' : 'row',
             alignItems: isMultiline ? 'flex-start' : 'center',
         }]}>
-            <View style={{
-                width: 100,
-                marginRight: 10,
-                marginBottom: isMultiline ? 12 : 0,
-            }}>
-                {titleRender}
-                {descriptionRender}
-            </View>
+            {titleRender &&(
+                <View style={{
+                    width: 100,
+                    marginRight: 10,
+                    marginBottom: isMultiline ? 12 : 0,
+                }}>
+                    {titleRender}
+                    {descriptionRender}
+                </View>
+            )}
             
             <View style={{
                 flex: 1,
