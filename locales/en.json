@@ -17,6 +17,9 @@
 
         "Transaction": "Transaction",
         "Transaction_plural": "Transactions",
+        
+        "Item": "Item",
+        "Item_plural" :"Items",
 
         "Data": "Data",
         "Sales": "Sales",
@@ -65,8 +68,16 @@
         
         "Date": "Date",
 
-        "Items" :"Items",
+        "Add Line": "Add Line",
+        "Add Item": "Add Item",
         "Line {{number}}": "Line {{number}}",
+
+        "Other": "Other",
+        "Currency": "Currency",
+        "Direction": "Direction",
+
+        "You deliver": "You deliver",
+        "You receive": "You receive",
         "You - You deliver": "You - You deliver",
         "Them - You receive": "Them - You receive",
         
@@ -139,6 +150,6 @@
 
         "A unique identifier for the animal such as a DNA test filing-number or ring number.": "A unique identifier for the animal such as a DNA test filing-number or ring number.",
         "Hybrids are not listed and subspecies may be listed under their parent-specie name.": "Hybrids are not listed and subspecies may be listed under their parent-specie name.",
-        "Select by pressing a location on the map or long-pressing the marker and dragging it around.": "Select by pressing a location on the map or long-pressing the marker and dragging it around.",
+        "Select by pressing a location on the map or long-pressing the marker and dragging it around.": "Select by pressing a location on the map or long-pressing the marker and dragging it around."
     }
 }

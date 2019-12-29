@@ -27,6 +27,7 @@
 		"apollo-link-error": "^1.1.12",
 		"apollo-upload-client": "^11.0.0",
 		"buffer": "^5.4.3",
+		"currency-codes": "^1.5.1",
 		"expo": "^35.0.0",
 		"expo-barcode-scanner": "~7.0.0",
 		"expo-constants": "~7.0.0",

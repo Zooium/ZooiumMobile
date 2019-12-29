@@ -1,9 +1,9 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
-import { View } from 'react-native';
 import SexPreview from '@components/SexPreview.js';
 import { Icon, Text } from '@ui-kitten/components';
+import { View, TouchableOpacity } from 'react-native';
 import CitesListing from '@components/CitesListing.js';
 import AnimalSettings from '@settings/AnimalSettings.js';
 import SpecieSettings from '@settings/SpecieSettings.js';
@@ -54,7 +54,7 @@ export const tradeTypeSettings = {
                     {item.value.toLocaleString(undefined, {
                         style: 'currency',
                         currency: item.attribute,
-                    })} {item.attribute}
+                    })}
                 </Text>
             );
         },
@@ -68,14 +68,14 @@ export const tradeTypeSettings = {
     },
 }
 
-export default function TradeItem({ item, style, ...props }) {
+export default function TradeItem({ item, editing = false, style, onPress, ...props }) {
     const settings = tradeTypeSettings[item.type] || tradeTypeSettings['other'];
     const color = item.direction === 'to'
         ? theme['color-danger-200']
         : theme['color-success-200'];
 
     return (
-        <View style={[style, {
+        <TouchableOpacity disabled={onPress === false} onPress={() => onPress(item)} style={[style, {
             borderRadius: 4,
             backgroundColor: 'white',
 
@@ -90,6 +90,6 @@ export default function TradeItem({ item, style, ...props }) {
         }]} {...props}>
             <Icon name={settings.icon} color={settings.color} style={{ marginRight: 12 }} fixedWidth solid />
             {settings.render(item)}
-        </View>
+        </TouchableOpacity>
     );
 }

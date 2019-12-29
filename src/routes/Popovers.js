@@ -26,6 +26,7 @@ import ContactTypeahead from '@screens/contacts/ContactTypeaheadScreen.js';
 import TransactionList from '@screens/transactions/TransactionListScreen.js';
 import TransactionView from '@screens/transactions/TransactionViewScreen.js';
 import TransactionEdit from '@screens/transactions/TransactionEditScreen.js';
+import TransactionItemEdit from '@screens/transactions/items/TransactionItemEditScreen.js';
 
 import FileEdit from '@screens/FileEditScreen.js';
 import SpecieTypeahead from '@screens/SpecieTypeaheadScreen.js';
@@ -71,7 +72,7 @@ export default {
         navigationOptions: {
             title: i18n.t('Transaction', { count: 2 }),
         },
-    }, TransactionView, TransactionEdit,
+    }, TransactionView, TransactionEdit, TransactionItemEdit,
 
     // Typeaheads
     AnimalTypeahead, SpecieTypeahead,

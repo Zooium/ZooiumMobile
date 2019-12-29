@@ -4,8 +4,8 @@ import { Text } from '@ui-kitten/components';
 import { withNavigation } from 'react-navigation';
 
 function ResourceViewHeader({ section, render = 'View' }) {
-    // Skip if header has render condition and not included.
-    if (section.shouldRender && ! section.shouldRender.includes(render.toLowerCase())) {
+    // Skip if header has render condition and not valid.
+    if (section.shouldRender && ! section.shouldRender(render.toLowerCase())) {
         return null;
     }
 

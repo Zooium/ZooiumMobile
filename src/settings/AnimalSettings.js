@@ -86,7 +86,7 @@ export default class AnimalSettings {
                 {
                     key: 'father_id',
                     title: i18n.t('Father'),
-                    shouldRender: ['edit'],
+                    shouldRender: (view) => view === 'edit',
                     renderEdit: function FatherEditRender([state, mergeState]) {
                         return (
                             <TypeaheadInput
@@ -110,7 +110,7 @@ export default class AnimalSettings {
                 {
                     key: 'mother_id',
                     title: i18n.t('Mother'),
-                    shouldRender: ['edit'],
+                    shouldRender: (view) => view === 'edit',
                     renderEdit: function MotherEditRender([state, mergeState]) {
                         return (
                             <TypeaheadInput
@@ -202,7 +202,7 @@ export default class AnimalSettings {
                 },
                 {
                     key: 'cites',
-                    shouldRender: ['view'],
+                    shouldRender: (view) => view === 'view',
                     titleView: function CitesTitleViewRender() {
                         return (
                             <TouchableOpacity style={{

@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
-import FULL_ANIMAL from '@graphql/fragments/Animal/fullAnimal.gql.js';
+import FULL_TRANSACTION_ITEM from '@graphql/fragments/Transaction/Item/fullTransactionItem.gql.js';
 
 export default gql`
-    ${FULL_ANIMAL}
+    ${FULL_TRANSACTION_ITEM}
     fragment fullTransaction on Transaction {
         id
         notes
@@ -14,19 +14,7 @@ export default gql`
         }
 
         items {
-            id
-            direction
-            type
-            attribute
-            value
-
-            relation { id }
-
-            resource {
-                ...on Animal {
-                    ...fullAnimal
-                }
-            }
+            ...fullTransactionItem
         }
     }
 `

@@ -7,10 +7,10 @@ import { Text, Icon } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 function ResourceViewItem({ item, index, section, form, response, render = 'View', navigation }) {
-    // Skip if item or header has render condition and not included.
+    // Skip if item or header has render condition and not valid.
     if (
-        item.shouldRender && ! item.shouldRender.includes(render.toLowerCase()) ||
-        section && section.shouldRender && ! section.shouldRender.includes(render.toLowerCase())
+        item.shouldRender && ! item.shouldRender(render.toLowerCase(), form && form[0] || response) ||
+        section && section.shouldRender && ! section.shouldRender(render.toLowerCase(), form && form[0] || response)
     ) return null;
 
     // Check if item is navigation button.

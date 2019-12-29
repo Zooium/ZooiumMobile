@@ -11,7 +11,8 @@ import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
 function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: { save, create }, navigation, ...props }) {
     // Create form state from passed init function.
-    const form = useState(formInit());
+    const defaults = navigation.getParam('defaults') || {};
+    const form = useState({...formInit(), ...defaults});
     const [state, setState] = form;
 
     // Add merge state function as second param.
@@ -58,6 +59,7 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
                 }
 
                 // Determine save function based on item existing.
+                const isSaving = item !== undefined;
                 const saveFunction = item ? saveItem : createItem;
 
                 // Attempt to save the item.
@@ -67,13 +69,20 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
                         ...state,
                     },
                 }).then(({ data }) => {
+                    // Get item from response.
+                    const item = data[Object.keys(data)[0]];
+
                     // Go back if missing view route.
                     if (! view) {
+                        // Check if has on save action.
+                        const onSave = navigation.getParam('onSave');
+                        onSave && onSave(item, isSaving);
+
+                        // Return back to previous.
                         return navigation.goBack();
                     }
 
                     // Navigate to view route on success.
-                    const item = data[Object.keys(data)[0]];
                     navigation.navigate({
                         key: view + item.id,
                         routeName: view,
