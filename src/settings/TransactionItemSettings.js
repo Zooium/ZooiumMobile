@@ -14,7 +14,9 @@ export default class TransactionItemSettings {
      * @return {string}
      */
     static title(item, fallback = undefined) {
-        return item && ('@wip') || i18n.t('Creating {{resource}}', {
+        return item && i18n.t('Editing {{resource}}', {
+            resource: i18n.t('Item', { count: 1 }),
+        }) || i18n.t('Creating {{resource}}', {
             resource: i18n.t('Item', { count: 1 }),
         }) || fallback;
     }
@@ -29,8 +31,8 @@ export default class TransactionItemSettings {
         resource_type: 'Animal',
         direction: 'to',
         type: 'animal',
-        attribute: undefined,
-        value: undefined,
+        attribute: '',
+        value: '',
     })
 
     /**
@@ -124,6 +126,7 @@ export default class TransactionItemSettings {
                                 onChange={(value) => mergeState({
                                     resource: value,
                                     resource_id: value && value.id || null,
+                                    resource_type: 'Animal',
                                 })}
                             />
                         );

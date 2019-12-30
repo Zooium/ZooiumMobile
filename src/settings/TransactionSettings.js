@@ -28,6 +28,8 @@ export default class TransactionSettings {
         notes: '',
         contact_id: undefined,
         occurred_at: undefined,
+        items: [],
+        origItems: [],
     })
 
     /**
@@ -36,6 +38,8 @@ export default class TransactionSettings {
     static formParser = (resource) => ({
         ...resource,
         father_id: resource.contact && resource.contact.id,
+        items: resource.items && resource.items.map(item => item.id) || [],
+        origItems: resource.items || [],
     })
 
     /**
@@ -125,19 +129,23 @@ export default class TransactionSettings {
                         return <TradeItems editing={false} transaction={resource} />;
                     },
                     renderEdit: function ItemsEditRender([state, mergeState]) {
-                        return <TradeItems editing={true} transaction={state} mergeState={mergeState} />;
+                        return <TradeItems editing={true} transaction={state} onItemChange={(item, isNew) => {
+                            // Define new items array based on if item is new or existing.
+                            const newItems = isNew
+                                ? [...state.origItems, item]
+                                : [...state.origItems.map(orig => {
+                                    return (orig.id === item.id && item) || orig;
+                                })];
+
+                            // Merge full items and ids into state.
+                            mergeState({
+                                origItems: newItems,
+                                items: newItems.map(item => item.id),
+                            });
+                        }} />;
                     },
                 },
             ],
         },
-    ]
-
-    /**
-     * The entity field headers.
-     *
-     * @var {array}
-     */
-    static headers = [
-        // @wip
     ]
 }

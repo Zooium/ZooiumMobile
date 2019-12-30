@@ -6,29 +6,31 @@ import TradeLine from '@components/TradeLine.js';
 import { withNavigation } from 'react-navigation';
 import { Text, Button } from '@ui-kitten/components';
 
-function TradeItems({ editing = false, transaction, mergeState, navigation, ...props }) {
+function TradeItems({ editing = false, transaction, onItemChange, navigation, ...props }) {
     let lineNumber = 1;
 
     const route = 'TransactionItemEdit';
-    const createItem = (direction) => navigation.navigate({
-        key: route + Math.random().toString(36).slice(2),
+    const editItem = (item = undefined, defaults = {}) => navigation.navigate({
+        key: route + ((item && item.id) || Math.random().toString(36).slice(2)),
         routeName: route,
         params: {
+            item: item,
             defaults: {
-                direction: direction,
+                ...defaults,
                 transaction_id: transaction.id,
             },
 
-            onSave: (item) => {
-                // @wip
-                console.log('new item', item)
+            onSave: (item, isSaving) => {
+                onItemChange && onItemChange(item, isSaving === false);
             },
         },
     });
 
+    const list = transaction.origItems || transaction.items;
+
     return (
         <View {...props}>
-            {transaction.items && transaction.items.map(item => {
+            {list && list.map(item => {
                 // Skip if not top-level item.
                 if (item.relation) return;
 
@@ -38,6 +40,7 @@ function TradeItems({ editing = false, transaction, mergeState, navigation, ...p
                         item={item}
                         key={item.id}
                         editing={editing}
+                        editItem={editItem}
                         line={lineNumber++}
                         transaction={transaction}
                     />
@@ -58,13 +61,13 @@ function TradeItems({ editing = false, transaction, mergeState, navigation, ...p
 
                     <View style={{ flexDirection: 'row' }}>
                         <View style={{ flex: .5, paddingRight: 6 }}>
-                            <Button status="danger" onPress={() => createItem('to')}>
+                            <Button status="danger" onPress={() => editItem(undefined, { direction: 'to' })}>
                                 {i18n.t('You deliver')}
                             </Button>
                         </View>
 
                         <View style={{ flex: .5, paddingLeft: 6 }}>
-                            <Button status="success" onPress={() => createItem('from')}>
+                            <Button status="success" onPress={() => editItem(undefined, { direction: 'from' })}>
                                 {i18n.t('You receive')}
                             </Button>
                         </View>

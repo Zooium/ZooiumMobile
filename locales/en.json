@@ -86,6 +86,7 @@
         
         "Saving...": "Saving...",
         "Uploading...": "Uploading...",
+        "Editing {{resource}}": "Editing {{resource}}",
         "Creating {{resource}}": "Creating {{resource}}",
 
         "{{distance}} km": "{{distance}} km",

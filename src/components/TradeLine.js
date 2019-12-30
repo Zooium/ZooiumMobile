@@ -6,28 +6,15 @@ import TradeItem from '@components/TradeItem.js';
 import { withNavigation } from 'react-navigation';
 import { Text, Icon, Button, Tooltip } from '@ui-kitten/components';
 
-function TradeLine({ line, item: current, editing = false, transaction, navigation, ...props }) {
+function TradeLine({ line, item: current, editing = false, editItem, transaction, navigation, ...props }) {
     const [showTooltips, setShowTooltips] = useState(false);
 
-    const leftItems = transaction.items.filter(item => {
+    const leftItems = (transaction.origItems || transaction.items).filter(item => {
         return item.direction === 'to' && (item.id === current.id || (item.relation && item.relation.id === current.id));
     });
 
-    const rightItems = transaction.items.filter(item => {
+    const rightItems = (transaction.origItems || transaction.items).filter(item => {
         return item.direction === 'from' && (item.id === current.id || (item.relation && item.relation.id === current.id));
-    });
-
-    const route = 'TransactionItemEdit';
-    const editItem = (item = undefined, defaults = {}) => navigation.navigate({
-        key: route + ((item && item.id) || Math.random().toString(36).slice(2)),
-        routeName: route,
-        params: {
-            item, defaults,
-            onSave: (item, isSaving) => {
-                // @wip
-                console.log({ item, isSaving })
-            },
-        },
     });
 
     const AddItem = ({ status, direction, count }) => {
@@ -41,7 +28,6 @@ function TradeLine({ line, item: current, editing = false, transaction, navigati
                     editItem(undefined, {
                         direction: direction,
                         relation_id: current.id,
-                        transaction_id: transaction.id,
                     });
                 }}>
                     {i18n.t('Add Item')}

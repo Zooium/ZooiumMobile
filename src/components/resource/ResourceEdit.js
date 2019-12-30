@@ -20,8 +20,8 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
         setState({
             ...state,
             ...change,
-        })
-    };
+        });
+    }
 
     // Share form state and items with navigation.
     useEffect(() => {
@@ -74,12 +74,12 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
 
                     // Go back if missing view route.
                     if (! view) {
-                        // Check if has on save action.
-                        const onSave = navigation.getParam('onSave');
-                        onSave && onSave(item, isSaving);
+                        // Go back to the previous screen.
+                        navigation.goBack();
 
-                        // Return back to previous.
-                        return navigation.goBack();
+                        // Check if has on save action and halt execution.
+                        const onSave = navigation.getParam('onSave');
+                        return onSave && onSave(item, isSaving);
                     }
 
                     // Navigate to view route on success.
