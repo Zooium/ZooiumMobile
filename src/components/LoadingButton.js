@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loader from '@components/Loader.js';
-import { Button } from '@ui-kitten/components';
-import { mapping } from '@eva-design/eva';
+import { styled, Button } from '@ui-kitten/components';
 
-export default function LoadingButton({ size = 'medium', loading, children, ...props }) {
-    const sizes = mapping.components.Button.appearances.filled.variantGroups.size;
-
+function LoadingButton({ size = 'medium', loading, children, themedStyle, ...props }) {
     return (
         <Button size={size} icon={loading && (() => (
-            <Loader size="small" style={{ width: '100%', height: sizes[size].textLineHeight }} />
+            <Loader style={{ width: '100%', height: themedStyle.textLineHeight }} />
         ))} {...props}>
             {! loading && children }
         </Button>
@@ -21,3 +18,6 @@ LoadingButton.propTypes = {
     loading: PropTypes.bool.isRequired,
     children: PropTypes.any,
 }
+
+LoadingButton.styledComponentName = 'Button';
+export default styled(LoadingButton);
