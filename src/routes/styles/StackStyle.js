@@ -1,11 +1,26 @@
+import React from 'react';
 import theme from '@src/theme.js';
+import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
 export default {
-    defaultNavigationOptions: {
-        headerTintColor: 'white',
-        headerStyle: {
-            backgroundColor: theme['color-primary-500'],
-        },
+    defaultNavigationOptions: ({ navigation }) => {
+        const canGoBack = navigation.isFocused()
+            && navigation.dangerouslyGetParent().state.index > 0;
+
+        return {
+            // Change header to primary color.
+            headerTintColor: 'white',
+            headerStyle: {
+                backgroundColor: theme['color-primary-500'],
+            },
+
+            // Customize the back button if available.
+            headerLeft: () => canGoBack && (
+                <HeaderButtons left={true}>
+                    <Item title="return" iconName="arrow-left" onPress={() => navigation.goBack()} />
+                </HeaderButtons>
+            ),
+        }
     },
 
     /*
