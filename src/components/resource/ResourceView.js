@@ -24,7 +24,7 @@ function ResourceView({ items, headers, fetch, variables = {}, routes: { edit } 
     const item = navigation.getParam('item');
     const creating = ! item;
 
-    const { loading: fetching, data } = fetch && useQuery(fetch, {
+    const { loading: fetching, data, refetch } = fetch && useQuery(fetch, {
         skip: creating,
         variables: {
             id: item && item.id,
@@ -72,6 +72,11 @@ function ResourceView({ items, headers, fetch, variables = {}, routes: { edit } 
             renderItem={renderItem}
             renderSectionHeader={renderSectionHeader}
             ListHeaderComponent={renderHeaderActions}
+
+            refreshing={loading || fetching}
+            onRefresh={render === 'View' && (() => {
+                return refetch && refetch();
+            })}
         />
     );
 }
