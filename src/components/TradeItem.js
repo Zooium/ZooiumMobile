@@ -22,12 +22,12 @@ export const tradeTypeSettings = {
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <SexPreview sex={item.resource.sex} size={16} style={{ marginRight: 4 }} />
 
-                            <Text style={{ fontWeight: 'bold' }}>
+                            <Text style={{ fontWeight: 'bold', flexShrink: 1 }}>
                                 {AnimalSettings.title(item.resource)}
                             </Text>
 
                             {item.resource.name && item.resource.identifier && (
-                                <Text appearance="hint" style={{ marginLeft: 6 }}>
+                                <Text appearance="hint" style={{ marginLeft: 6, flexShrink: 1 }}>
                                     ({item.resource.identifier})
                                 </Text>
                             )}
@@ -38,9 +38,13 @@ export const tradeTypeSettings = {
                         </Text>
                     </View>
 
-                    {cites && listings.map((value) => {
-                        return <CitesListing key={value} listing={value} style={{ marginLeft: 4 }} />;
-                    })}
+                    {cites && listings && (
+                        <View style={{ flexShrink: 0, alignItems: 'flex-end' }}>
+                            {listings.map((value) => (
+                                <CitesListing key={value} listing={value} style={{ marginLeft: 4 }} />
+                            ))}
+                        </View>
+                    )}
                 </View>
             );
         },
