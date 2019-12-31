@@ -7,6 +7,7 @@ import CitesListing from '@components/CitesListing.js';
 import SpecieSettings from '@settings/SpecieSettings.js';
 import TypeaheadInput from '@components/TypeaheadInput.js';
 import DataTimePicker from '@components/DateTimePicker.js';
+import MultilineInput from '@components/MultilineInput.js';
 import { View, Alert, TouchableOpacity } from 'react-native';
 import { SpecieTypeaheadInput } from '@screens/SpecieTypeaheadScreen.js';
 import { Text, Icon, Radio, RadioGroup, Input } from '@ui-kitten/components';
@@ -318,12 +319,10 @@ export default class AnimalSettings {
                     title: i18n.t('Notes'),
                     renderView: resource => resource.notes,
                     renderEdit: function NotesEditRender([state, mergeState]) {
-                        return <Input
-                            multiline={true}
+                        return <MultilineInput
                             numberOfLines={4}
                             value={state.notes}
                             onChangeText={(value) => mergeState({ notes: value })}
-                            // @wip - text in top of element not center.
                         />;
                     },
                     multilineView: resource => resource.notes,

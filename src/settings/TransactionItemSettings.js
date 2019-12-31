@@ -2,6 +2,7 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import CurrencyCodes from 'currency-codes/data';
 import TypeaheadInput from '@components/TypeaheadInput.js';
+import MultilineInput from '@components/MultilineInput.js';
 import { Input, Radio, Select, RadioGroup } from '@ui-kitten/components';
 import { AnimalTypeaheadInput } from '@screens/animals/AnimalTypeaheadScreen.js';
 
@@ -182,12 +183,10 @@ export default class TransactionItemSettings {
                     shouldRender: (view, form) => form.type === 'other',
                     multilineEdit: () => true,
                     renderEdit: function NotesEditRender([state, mergeState]) {
-                        return <Input
-                            multiline={true}
+                        return <MultilineInput
                             numberOfLines={4}
                             value={state.attribute}
                             onChangeText={(value) => mergeState({ attribute: value })}
-                            // @wip - text in top of element not center.
                         />;
                     },
                 },

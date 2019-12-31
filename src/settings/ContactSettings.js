@@ -2,6 +2,7 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import { Input } from '@ui-kitten/components';
+import MultilineInput from '@components/MultilineInput.js';
 
 export default class ContactSettings {
     /**
@@ -96,12 +97,10 @@ export default class ContactSettings {
                     title: i18n.t('Notes'),
                     renderView: resource => resource.notes,
                     renderEdit: function NotesEditRender([state, mergeState]) {
-                        return <Input
-                            multiline={true}
+                        return <MultilineInput
                             numberOfLines={4}
                             value={state.notes}
                             onChangeText={(value) => mergeState({ notes: value })}
-                            // @wip - text in top of element not center.
                         />;
                     },
                     multilineView: resource => resource.notes,

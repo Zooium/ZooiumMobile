@@ -3,6 +3,7 @@ import i18n from '@src/i18n.js';
 import { TouchableOpacity } from 'react-native';
 import TradeItems from '@components/TradeItems.js';
 import { Text, Input } from '@ui-kitten/components';
+import MultilineInput from '@components/MultilineInput.js';
 import TypeaheadInput from '@components/TypeaheadInput.js';
 import DataTimePicker from '@components/DateTimePicker.js';
 import { ContactTypeaheadInput } from '@screens/contacts/ContactTypeaheadScreen.js';
@@ -105,12 +106,10 @@ export default class TransactionSettings {
                     title: i18n.t('Notes'),
                     renderView: resource => resource.notes,
                     renderEdit: function NotesEditRender([state, mergeState]) {
-                        return <Input
-                            multiline={true}
+                        return <MultilineInput
                             numberOfLines={4}
                             value={state.notes}
                             onChangeText={(value) => mergeState({ notes: value })}
-                            // @wip - text in top of element not center.
                         />;
                     },
                     multilineView: resource => resource.notes,
