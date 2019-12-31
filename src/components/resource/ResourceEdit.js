@@ -1,8 +1,8 @@
 import i18n from '@src/i18n.js';
 import PropTypes from 'prop-types';
-import { Alert } from 'react-native';
 import AuthState from '@utils/AuthState.js';
 import ResourceView from './ResourceView.js';
+import { Alert, Keyboard } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { useMutation } from '@apollo/react-hooks';
 import LoadingModal from '@components/LoadingModal.js';
@@ -36,6 +36,9 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
     useEffect(() => {
         navigation.setParams({
             save: ({ item, items, state }) => {
+                // Dismiss the keyboard.
+                Keyboard.dismiss();
+
                 // Gather incomplete required items.
                 let incomplete = [];
                 items.forEach(category => {
