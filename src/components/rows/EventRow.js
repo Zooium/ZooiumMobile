@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
+import { withNavigation } from 'react-navigation';
 import { Text, Icon } from '@ui-kitten/components';
 import { View, TouchableOpacity } from 'react-native';
 
@@ -43,8 +44,13 @@ const eventStateSettings = {
 const eventConnetionSettings = {
     TransactionItem: {
         text: i18n.t('Transaction'),
-        onPress: () => {
-            alert('@wip');
+        onPress: ({ item: { connection: { transaction } }, navigation }) => {
+            const view = 'TransactionView';
+            navigation.navigate({
+                key: view + transaction.id,
+                routeName: view,
+                params: { item: transaction },
+            });
         },
     },
 }
@@ -55,7 +61,7 @@ export const getEventStateSettings = ({ state, value }) => {
         || eventStateSettings[state]['default'];
 }
 
-export default function EventRow({ item }) {
+function EventRow({ item, navigation }) {
     const settings = getEventStateSettings(item);
     const connection = item.connection && eventConnetionSettings[item.connection.__typename];
 
@@ -87,10 +93,10 @@ export default function EventRow({ item }) {
                 </Text>
             </View>
 
-            {connection &&
+            {connection && (
                 <TouchableOpacity
                     style={{ flexShrink: 0, alignItems: 'flex-end' }}
-                    onPress={connection.onPress}
+                    onPress={() => connection.onPress({ item, navigation })}
                 >
                     <Text style={{ fontWeight: 'bold' }}>
                         {connection.text}
@@ -104,7 +110,9 @@ export default function EventRow({ item }) {
                         <Icon name="angle-right" size={14} style={{ opacity: 0.6 }} />
                     </View>
                 </TouchableOpacity>
-            }
+            )}
         </View>
     );
 }
+
+export default withNavigation(EventRow);
