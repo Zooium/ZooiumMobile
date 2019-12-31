@@ -1,9 +1,10 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import CurrencyCodes from 'currency-codes/data';
+import RadioGroup from '@components/RadioGroup.js';
+import { Input, Select } from '@ui-kitten/components';
 import TypeaheadInput from '@components/TypeaheadInput.js';
 import MultilineInput from '@components/MultilineInput.js';
-import { Input, Radio, Select, RadioGroup } from '@ui-kitten/components';
 import { AnimalTypeaheadInput } from '@screens/animals/AnimalTypeaheadScreen.js';
 
 export default class TransactionItemSettings {
@@ -60,24 +61,17 @@ export default class TransactionItemSettings {
                     key: 'direction',
                     title: i18n.t('Direction'),
                     renderEdit: function DirectionEditRender([state, mergeState]) {
-                        let directions = {
-                            to: i18n.t('You - You deliver'),
-                            from: i18n.t('Them - You receive'),
-                        };
-    
                         return (
                             <RadioGroup
-                                selectedIndex={Object.keys(directions).indexOf(state.direction)}
-                                onChange={(index) => {
-                                    mergeState({
-                                        direction: Object.keys(directions)[index],
-                                    });
+                                options={{
+                                    'to': i18n.t('You - You deliver'),
+                                    'from': i18n.t('Them - You receive'),
                                 }}
-                            >
-                                {Object.values(directions).map((value, key) => {
-                                    return <Radio key={key} text={value} textStyle={{ fontWeight: 'normal' }} />;
+                                selected={state.direction}
+                                onChange={(key) => mergeState({
+                                    direction: key,
                                 })}
-                            </RadioGroup>
+                            />
                         );
                     },
                 },
@@ -85,25 +79,18 @@ export default class TransactionItemSettings {
                     key: 'type',
                     title: i18n.t('Type'),
                     renderEdit: function TypeEditRender([state, mergeState]) {
-                        let types = {
-                            animal: i18n.t('Animal'),
-                            currency: i18n.t('Currency'),
-                            other: i18n.t('Other'),
-                        };
-    
                         return (
                             <RadioGroup
-                                selectedIndex={Object.keys(types).indexOf(state.type)}
-                                onChange={(index) => {
-                                    mergeState({
-                                        type: Object.keys(types)[index],
-                                    });
+                                options={{
+                                    'animal': i18n.t('Animal'),
+                                    'currency': i18n.t('Currency'),
+                                    'other': i18n.t('Other'),
                                 }}
-                            >
-                                {Object.values(types).map((value, key) => {
-                                    return <Radio key={key} text={value} textStyle={{ fontWeight: 'normal' }} />;
+                                selected={state.type}
+                                onChange={(key) => mergeState({
+                                    type: key,
                                 })}
-                            </RadioGroup>
+                            />
                         );
                     },
                 },

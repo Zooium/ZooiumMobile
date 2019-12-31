@@ -2,15 +2,16 @@ import React from 'react';
 import { Linking } from 'expo';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
+import RadioGroup from '@components/RadioGroup.js';
 import SexPreview from '@components/SexPreview.js';
 import CitesListing from '@components/CitesListing.js';
 import SpecieSettings from '@settings/SpecieSettings.js';
+import { Text, Icon, Input } from '@ui-kitten/components';
 import TypeaheadInput from '@components/TypeaheadInput.js';
 import DataTimePicker from '@components/DateTimePicker.js';
 import MultilineInput from '@components/MultilineInput.js';
 import { View, Alert, TouchableOpacity } from 'react-native';
 import { SpecieTypeaheadInput } from '@screens/SpecieTypeaheadScreen.js';
-import { Text, Icon, Radio, RadioGroup, Input } from '@ui-kitten/components';
 import { AnimalTypeaheadInput } from '@screens/animals/AnimalTypeaheadScreen.js';
 import { EnclosureTypeaheadInput } from '@screens/enclosures/EnclosureTypeaheadScreen.js';
 
@@ -280,25 +281,18 @@ export default class AnimalSettings {
                         )
                     },
                     renderEdit: function SexEditRender([state, mergeState]) {
-                        let sexes = {
-                            'male': i18n.t('Male'),
-                            'female': i18n.t('Female'),
-                            'unknown': i18n.t('Unknown'),
-                        };
-    
                         return (
                             <RadioGroup
-                                selectedIndex={Object.keys(sexes).indexOf(state.sex)}
-                                onChange={(index) => {
-                                    mergeState({
-                                        sex: Object.keys(sexes)[index],
-                                    });
+                                options={{
+                                    'male': i18n.t('Male'),
+                                    'female': i18n.t('Female'),
+                                    'unknown': i18n.t('Unknown'),
                                 }}
-                            >
-                                {Object.values(sexes).map((value, key) => {
-                                    return <Radio key={key} text={value} textStyle={{ fontWeight: 'normal' }} />;
+                                selected={state.sex}
+                                onChange={(key) => mergeState({
+                                    sex: key,
                                 })}
-                            </RadioGroup>
+                            />
                         );
                     },
                 },
