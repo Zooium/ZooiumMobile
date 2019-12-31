@@ -98,9 +98,9 @@ function ResourceList({ fetch, variables = {}, List, navigation, routes, sorting
     ));
 }
 
-ResourceList.navigationOptions = ({ navigation: { state, goBack, getParam, setParams }, onSearchCancel = undefined, hasRightSearchItem = false }) => {
+ResourceList.navigationOptions = ({ navigation, onSearchCancel = undefined, hasRightSearchItem = false }) => {
     // Return search based header options if requested.
-    if (getParam('showSearch', false)) {
+    if (navigation.getParam('showSearch', false)) {
         // Define default search options.
         let options = {
             headerRight: null,
@@ -108,10 +108,10 @@ ResourceList.navigationOptions = ({ navigation: { state, goBack, getParam, setPa
                 <HeaderButtons left={true}>
                     <Item title="return" iconName="arrow-left" onPress={() => {
                         if (onSearchCancel) return onSearchCancel();
-                        if (state && state.key && goBack()) return;
+                        if (navigation.state && navigation.state.key && navigation.goBack()) return;
 
-                        getParam('setSearch')(null);
-                        setParams({
+                        navigation.getParam('setSearch')(null);
+                        navigation.setParams({
                             search: null,
                             showSearch: false
                         });
@@ -124,9 +124,9 @@ ResourceList.navigationOptions = ({ navigation: { state, goBack, getParam, setPa
                     clearButtonMode="always"
                     selectionColor="white"
                     placeholder={i18n.t('Enter criteria to search...')}
-                    autoFocus={getParam('focusSearch', true)}
-                    defaultValue={getParam('search')}
-                    onChangeText={getParam('setSearch')}
+                    autoFocus={navigation.getParam('focusSearch', true)}
+                    defaultValue={navigation.getParam('search')}
+                    onChangeText={navigation.getParam('setSearch')}
                     style={{
                         width: '100%',
                         color: 'white',
@@ -147,12 +147,19 @@ ResourceList.navigationOptions = ({ navigation: { state, goBack, getParam, setPa
         return options;
     }
 
+    // Determine if can go back.
+    let canGoBack = navigation.isFocused() && navigation.dangerouslyGetParent().state.index > 0;
+
     // Return default navigation options.
     return {
         headerLeft: (
             <HeaderButtons left={true}>
+                {canGoBack && (
+                    <Item title="return" iconName="arrow-left" onPress={() => navigation.goBack()} />
+                )}
+
                 <Item title="add" iconName="plus" onPress={() => {
-                    getParam('createItem') && getParam('createItem')();
+                    navigation.getParam('createItem') && navigation.getParam('createItem')();
                 }} />
             </HeaderButtons>
         ),
@@ -160,14 +167,14 @@ ResourceList.navigationOptions = ({ navigation: { state, goBack, getParam, setPa
         headerRight: ({ items = undefined } = {}) => (
             <HeaderButtons>
                 <Item title="search" iconName="search" onPress={() => {
-                    setParams({
+                    navigation.setParams({
                         showSearch: true,
                         focusSearch: true,
                     });
                 }} />
 
                 <Item title="filter" iconName="filter" onPress={() => {
-                    getParam('setShowSettings')(! getParam('showSettings', false));
+                    navigation.getParam('setShowSettings')(! navigation.getParam('showSettings', false));
                 }} />
 
                 { items && items() }
