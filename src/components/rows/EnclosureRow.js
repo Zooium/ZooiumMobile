@@ -37,7 +37,9 @@ export default function EnclosureRow({ item, header: Header, navigation, layout:
                         });
                     }}>
                         <Text style={{ fontWeight: 'bold' }}>
-                            {item.animals_count} {i18n.t('Animal', { count: 2 })}
+                            {item.animals_count} {i18n.t('Animal', {
+                                count: item.animals_count,
+                            })}
                         </Text>
 
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>

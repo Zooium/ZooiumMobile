@@ -8,5 +8,6 @@ export default gql`
         phone
         address
         notes
+        transactions_count
     }
 `

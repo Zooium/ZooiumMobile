@@ -17,7 +17,7 @@ export default function ContactRow({ item, navigation, layout: { showCount = tru
                 </Text>
             </View>
 
-            {/* @wip - showCount && item.transactions_count !== 0 &&
+            {showCount && item.transactions_count !== 0 && (
                 <TouchableOpacity style={{ flexShrink: 0, alignItems: 'flex-end' }} onPress={() => {
                     const route = 'TransactionList';
                     const search = 'contact:'+item.id;
@@ -33,7 +33,9 @@ export default function ContactRow({ item, navigation, layout: { showCount = tru
                     });
                 }}>
                     <Text style={{ fontWeight: 'bold' }}>
-                        {item.transactions_count} {i18n.t('Transaction', { count: 2 })}
+                        {item.transactions_count} {i18n.t('Transaction', {
+                            count: item.transactions_count,
+                        })}
                     </Text>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -44,7 +46,7 @@ export default function ContactRow({ item, navigation, layout: { showCount = tru
                         <Icon name="angle-right" size={14} style={{ opacity: 0.6 }} />
                     </View>
                 </TouchableOpacity>
-            }*/}
+            )}
         </View>
     );
 }

@@ -38,7 +38,9 @@ export default function LocationRow({ item, navigation, layout: { showCount = tr
                     });
                 }}>
                     <Text style={{ fontWeight: 'bold' }}>
-                        {item.enclosures_count} {i18n.t('Enclosure', { count: 2 })}
+                        {item.enclosures_count} {i18n.t('Enclosure', {
+                            count: item.enclosures_count,
+                        })}
                     </Text>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
