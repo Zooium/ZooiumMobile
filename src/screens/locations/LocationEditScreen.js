@@ -6,6 +6,7 @@ import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import VIEW_LOCATION from '@graphql/queries/Location/viewLocation.gql.js';
 import UPDATE_LOCATION from '@graphql/mutations/Location/updateLocation.gql.js';
 import CREATE_LOCATION from '@graphql/mutations/Location/createLocation.gql.js';
+import DELETE_LOCATIONS from '@graphql/mutations/Location/deleteLocations.gql.js';
 
 export default function LocationEditScreen() {
     return (
@@ -19,6 +20,7 @@ export default function LocationEditScreen() {
                     mutations={{
                         save: UPDATE_LOCATION,
                         create: CREATE_LOCATION,
+                        remove: DELETE_LOCATIONS,
                     }}
 
                     routes={{

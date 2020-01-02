@@ -1,13 +1,12 @@
-import i18n from '@src/i18n.js';
-import { Alert } from 'react-native';
+import React, { useCallback } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { withNavigation } from 'react-navigation';
 import ResourceListItem from './ResourceListItem.js';
-import React, { useCallback } from 'react';
 import ResourceListEmpty from './ResourceListEmpty.js';
 import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
 import ResourceListActions from './ResourceListActions.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 
 function ResourceSwipeList({ name, list, deps = [], title, query, routes, mutations: { remove }, preview, itemProps, extraData, showRefresh = true, navigation, ...props }) {
     // Seperate out variables.
@@ -17,24 +16,9 @@ function ResourceSwipeList({ name, list, deps = [], title, query, routes, mutati
     // Prepare item removal mutation.
     const [removeItems] = useMutation(remove, {
         update(cache, { data }) {
-            // Get the deleted items.
+            // Deep delete the items from cache.
             let deleted = data[Object.keys(data)[0]];
-
-            // Attempt to updated fetch query.
-            query.updateQuery(results => {
-                // Get key for current query.
-                let key = Object.keys(results)[0];
-
-                // Exclude the deleted items.
-                return {
-                    [key]: {
-                        ...results[key],
-                        data: results[key].data.filter(item => {
-                            return ! deleted.find(subitem => subitem.id === item.id);
-                        }),
-                    },
-                }
-            });
+            deleted.forEach(item => cache.deepDelete(item));
         },
     });
 
@@ -51,22 +35,13 @@ function ResourceSwipeList({ name, list, deps = [], title, query, routes, mutati
         params: { item },
     });
 
-    const deleteItem = (item) => Alert.alert(
-        i18n.t('Deletion Confirmation'),
-        i18n.t('Are you sure you want to delete "{{name}}"?', {
-            name: title(item),
-        }),
-        [
-            { text: i18n.t('Cancel'), style: 'cancel' },
-            { text: i18n.t('Delete'), onPress: () => {
-                removeItems({
-                    variables: {
-                        ids: [item.id],
-                    },
-                });
-            } },
-        ],
-    );
+    const deleteItem = (item) => DeletionConfirmation(title(item), () => {
+        removeItems({
+            variables: {
+                ids: [item.id],
+            },
+        });
+    });
 
     // Create callbacks for resource item renderings.
     const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, deps);

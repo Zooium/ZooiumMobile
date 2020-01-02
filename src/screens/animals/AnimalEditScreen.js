@@ -6,6 +6,7 @@ import VIEW_ANIMAL from '@graphql/queries/Animal/viewAnimal.gql.js';
 import UPDATE_ANIMAL from '@graphql/mutations/Animal/updateAnimal.gql.js';
 import CREATE_ANIMAL from '@graphql/mutations/Animal/createAnimal.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
+import DELETE_ANIMALS from '@graphql/mutations/Animal/deleteAnimals.gql.js';
 
 export default function AnimalEditScreen() {
     return (
@@ -20,6 +21,7 @@ export default function AnimalEditScreen() {
                     mutations={{
                         save: UPDATE_ANIMAL,
                         create: CREATE_ANIMAL,
+                        remove: DELETE_ANIMALS,
                     }}
 
                     routes={{

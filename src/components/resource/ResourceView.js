@@ -1,14 +1,45 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import Loader from '@components/Loader.js';
-import { useQuery } from '@apollo/react-hooks';
 import { withNavigation } from 'react-navigation';
 import ResourceViewItem from './ResourceViewItem.js';
 import ResourceViewHeader from './ResourceViewHeader.js';
 import { View, FlatList, SectionList } from 'react-native';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
-function ResourceView({ items, headers, fetch, variables = {}, routes: { edit } = {}, render = 'View', loading = false, form, navigation }) {
+function ResourceView({ items, headers, fetch, variables = {}, routes: { edit } = {}, mutations: { remove } = {}, render = 'View', loading = false, form, navigation }) {    
+    // Get item from navigation params.
+    const item = navigation.getParam('item');
+    const creating = ! item;
+
+    // Prepare removal mutation.
+    const [removeItems] = useMutation(remove, {
+        update(cache, { data }) {
+            // Deep delete the items from cache.
+            let deleted = data[Object.keys(data)[0]];
+            deleted.forEach(item => cache.deepDelete(item));
+        },
+    });
+
+    // Prepare fetch query if passed.
+    const { loading: fetching, data, refetch } = fetch && useQuery(fetch, {
+        skip: creating,
+        variables: {
+            id: item && item.id,
+            ...variables,
+        },
+    }) || {};
+
+    // Parse the response or fallback to item.
+    const key = data && Object.keys(data)[0];
+    let response = key && data && data[key];
+    if (! fetch) response = item;
+
+    // @wip - deleting via: List > View > Edit, navigates back while showing deleted item.
+
+    // Share edit and delete actions with header.
     useEffect(() => {
         navigation.setParams({
             editItem: edit && ((item) => {
@@ -18,24 +49,22 @@ function ResourceView({ items, headers, fetch, variables = {}, routes: { edit } 
                     params: { item },
                 });
             }),
+
+            deleteItem: ! creating && ((item) => {
+                // Remove item form back-end.
+                removeItems({
+                    variables: {
+                        ids: [item.id],
+                    },
+                });
+
+                // Return back to previous view.
+                navigation.goBack();
+            }),
         });
     }, []);
-    
-    const item = navigation.getParam('item');
-    const creating = ! item;
 
-    const { loading: fetching, data, refetch } = fetch && useQuery(fetch, {
-        skip: creating,
-        variables: {
-            id: item && item.id,
-            ...variables,
-        },
-    }) || {};
-
-    const key = data && Object.keys(data)[0];
-    let response = key && data && data[key];
-    if (! fetch) response = item;
-
+    // Share response on change.
     useEffect(() => {
         // Skip if missing response.
         if (! response) return;
@@ -46,9 +75,9 @@ function ResourceView({ items, headers, fetch, variables = {}, routes: { edit } 
         });
     }, [response]);
 
+    // Prepare render functions.
     const renderItem = ({ item, index, section }) => <ResourceViewItem item={item} index={index} section={section} form={form} response={response} render={render} />;
     const renderSectionHeader = ({ section }) => <ResourceViewHeader section={section} render={render} />;
-
     const renderHeaderActions = (
         <FlatList
             data={headers}
@@ -63,6 +92,7 @@ function ResourceView({ items, headers, fetch, variables = {}, routes: { edit } 
         />
     );
 
+    // Return resource view.
     return (loading || fetching) ? <Loader /> : (
         <SectionList
             sections={items}
@@ -113,6 +143,7 @@ ResourceView.propTypes = {
 ResourceView.navigationOptions = ({ title, showEdit = true, navigation }) => {
     const item = navigation.getParam('item');
     const editItem = navigation.getParam('editItem');
+    const deleteItem = navigation.getParam('deleteItem');
 
     return {
         title: title && title(item),
@@ -123,6 +154,12 @@ ResourceView.navigationOptions = ({ title, showEdit = true, navigation }) => {
 
         headerRight: showEdit && (
             <HeaderButtons>
+                <Item title="delete" iconName="trash-alt" onPress={() => {
+                    deleteItem && DeletionConfirmation(title(item), () => {
+                        deleteItem(item);
+                    });
+                }} />
+
                 <Item title="edit" iconName="pencil" onPress={() => {
                     editItem && editItem(item);
                 }} />

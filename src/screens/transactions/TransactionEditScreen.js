@@ -6,6 +6,7 @@ import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import VIEW_TRANSACTION from '@graphql/queries/Transaction/viewTransaction.gql.js';
 import UPDATE_TRANSACTION from '@graphql/mutations/Transaction/updateTransaction.gql.js';
 import CREATE_TRANSACTION from '@graphql/mutations/Transaction/createTransaction.gql.js';
+import DELETE_TRANSACTIONS from '@graphql/mutations/Transaction/deleteTransactions.gql.js';
 
 export default function TransactionEditScreen() {
     return (
@@ -20,6 +21,7 @@ export default function TransactionEditScreen() {
                     mutations={{
                         save: UPDATE_TRANSACTION,
                         create: CREATE_TRANSACTION,
+                        remove: DELETE_TRANSACTIONS,
                     }}
 
                     routes={{

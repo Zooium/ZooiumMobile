@@ -1,5 +1,6 @@
 import { ApolloLink } from 'apollo-link';
 import Settings from '@utils/Settings.js';
+import '@utils/apollo/deepDeleteEntity.js';
 import AuthState from '@utils/AuthState.js';
 import { onError } from 'apollo-link-error';
 import { ApolloClient } from 'apollo-client';

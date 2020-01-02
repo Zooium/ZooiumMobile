@@ -5,6 +5,7 @@ import { Layout, Input } from '@ui-kitten/components';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
 import UPDATE_FILE from '@graphql/mutations/File/updateFile.gql.js';
 import UPLOAD_FILE from '@graphql/mutations/File/uploadFile.gql.js';
+import DELETE_FILES from '@graphql/mutations/File/deleteFiles.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 
 const items = [
@@ -36,6 +37,7 @@ export default function FileEditScreen() {
                     mutations={{
                         save: UPDATE_FILE,
                         create: UPLOAD_FILE,
+                        remove: DELETE_FILES,
                     }}
 
                     formInit={formInit}

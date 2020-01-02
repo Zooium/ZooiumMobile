@@ -7,9 +7,10 @@ import { withNavigation } from 'react-navigation';
 import { useMutation } from '@apollo/react-hooks';
 import LoadingModal from '@components/LoadingModal.js';
 import React, { useState, useEffect, Fragment } from 'react';
+import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
-function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: { save, create }, navigation, ...props }) {
+function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: { save, create, remove }, navigation, ...props }) {
     // Create form state from passed init function.
     const defaults = navigation.getParam('defaults') || {};
     const form = useState({...formInit(), ...defaults});
@@ -114,7 +115,13 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
     // Return the resource view.
     return (
         <Fragment>
-            <ResourceView form={form} render="Edit" loading={parsing} {...props} />
+            <ResourceView
+                form={form}
+                render="Edit"
+                loading={parsing}
+                mutations={{ remove }}
+                {...props}
+            />
 
             {(saving || creating) && <LoadingModal text={i18n.t('Saving...')} />}
         </Fragment>
@@ -123,6 +130,7 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
 
 ResourceEdit.navigationOptions = ({ title, navigation }) => {
     const item = navigation.getParam('item');
+    const deleteItem = navigation.getParam('deleteItem');
 
     return {
         title: title && title(item),
@@ -133,6 +141,14 @@ ResourceEdit.navigationOptions = ({ title, navigation }) => {
 
         headerRight: (
             <HeaderButtons>
+                {item && (
+                    <Item title="delete" iconName="trash-alt" onPress={() => {
+                        deleteItem && DeletionConfirmation(title(item), () => {
+                            deleteItem(item);
+                        });
+                    }} />
+                )}
+
                 <Item title={item ? 'save' : 'create'} iconName={item ? 'save' : 'plus'} onPress={() => {
                     navigation.getParam('save')({
                         item: navigation.getParam('item'),

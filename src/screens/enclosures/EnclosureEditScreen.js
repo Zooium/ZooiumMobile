@@ -6,6 +6,7 @@ import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import VIEW_ENCLOSURE from '@graphql/queries/Enclosure/viewEnclosure.gql.js';
 import UPDATE_ENCLOSURE from '@graphql/mutations/Enclosure/updateEnclosure.gql.js';
 import CREATE_ENCLOSURE from '@graphql/mutations/Enclosure/createEnclosure.gql.js';
+import DELETE_ENCLOSURES from '@graphql/mutations/Enclosure/deleteEnclosures.gql.js';
 
 export default function EnclosureEditScreen() {
     return (
@@ -20,6 +21,7 @@ export default function EnclosureEditScreen() {
                     mutations={{
                         save: UPDATE_ENCLOSURE,
                         create: CREATE_ENCLOSURE,
+                        remove: DELETE_ENCLOSURES,
                     }}
 
                     routes={{

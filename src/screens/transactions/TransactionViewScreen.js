@@ -3,6 +3,7 @@ import { Layout } from '@ui-kitten/components';
 import ResourceView from '@components/resource/ResourceView.js';
 import TransactionSettings from '@settings/TransactionSettings.js';
 import VIEW_TRANSACTION from '@graphql/queries/Transaction/viewTransaction.gql.js';
+import DELETE_TRANSACTIONS from '@graphql/mutations/Transaction/deleteTransactions.gql.js';
 
 export default function TransactionViewScreen() {
     return (
@@ -11,6 +12,10 @@ export default function TransactionViewScreen() {
                 items={TransactionSettings.fields}
                 headers={TransactionSettings.headers}
                 fetch={VIEW_TRANSACTION}
+
+                mutations={{
+                    remove: DELETE_TRANSACTIONS,
+                }}
                     
                 routes={{
                     edit: 'TransactionEdit',

@@ -60,17 +60,8 @@ function AnimalMediaScreen({ navigation }) {
     // Define file deletion mutation.
     const [deleteFile] = useMutation(DELETE_FILE, {
         update(cache, { data: { deleteFiles } }) {
-            // Remove file from query cache.
-            query.updateQuery(results => {
-                return {
-                    animal: {
-                        ...results.animal,
-                        files: results.animal.files.filter(item => {
-                            return ! deleteFiles.find(subitem => subitem.id === item.id);
-                        }),
-                    },
-                }
-            });
+            // Deep delete the files from cache.
+            deleteFiles.forEach(item => cache.deepDelete(item));
         },
     });
 

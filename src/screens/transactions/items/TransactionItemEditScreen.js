@@ -5,6 +5,7 @@ import TransactionItemSettings from '@settings/TransactionItemSettings.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import UPDATE_TRANSACTION_ITEM from '@graphql/mutations/Transaction/Item/updateTransactionItem.gql.js';
 import CREATE_TRANSACTION_ITEM from '@graphql/mutations/Transaction/Item/createTransactionItem.gql.js';
+import DELETE_TRANSACTION_ITEMS from '@graphql/mutations/Transaction/Item/deleteTransactionItems.gql.js';
 
 export default function TransactionItemEditScreen() {
     return (
@@ -18,6 +19,7 @@ export default function TransactionItemEditScreen() {
                     mutations={{
                         save: UPDATE_TRANSACTION_ITEM,
                         create: CREATE_TRANSACTION_ITEM,
+                        remove: DELETE_TRANSACTION_ITEMS,
                     }}
                 />
             </Layout>
