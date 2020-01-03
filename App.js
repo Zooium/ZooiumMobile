@@ -52,7 +52,7 @@ export default function App() {
 
         // Remove app state listener.
         return () => {
-            AppState.removeEventListener(listener);
+            listener && AppState.removeEventListener(listener);
         }
     }, []);
 
