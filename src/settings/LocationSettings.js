@@ -112,12 +112,12 @@ export default class LocationSettings {
      */
     static headers = [
         {
-            key: 'enclosures',
-            icon: 'map-marked-alt',
-            title: i18n.t('Enclosure', { count: 2 }),
+            key: 'animals',
+            icon: 'dove',
+            title: i18n.t('Animal', { count: 2 }),
             color: theme['color-primary-500'],
             navigate: ({ response }) =>  ({
-                routeName: (route = 'EnclosureList'),
+                routeName: (route = 'AnimalList'),
                 key: route + (search = 'location:'+response.id),
                 params: {
                     search: search,
@@ -127,12 +127,12 @@ export default class LocationSettings {
             }),
         },
         {
-            key: 'animals',
-            icon: 'dove',
-            title: i18n.t('Animal', { count: 2 }),
+            key: 'enclosures',
+            icon: 'map-marked-alt',
+            title: i18n.t('Enclosure', { count: 2 }),
             color: theme['color-success-500'],
             navigate: ({ response }) =>  ({
-                routeName: (route = 'AnimalList'),
+                routeName: (route = 'EnclosureList'),
                 key: route + (search = 'location:'+response.id),
                 params: {
                     search: search,
