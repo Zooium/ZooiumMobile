@@ -15,11 +15,11 @@ export default {
             },
 
             // Customize the back button if available.
-            headerLeft: () => canGoBack && (
+            headerLeft: canGoBack && (() => (
                 <HeaderButtons left={true}>
                     <Item title="return" iconName="arrow-left" onPress={() => navigation.goBack()} />
                 </HeaderButtons>
-            ),
+            )),
         }
     },
 
