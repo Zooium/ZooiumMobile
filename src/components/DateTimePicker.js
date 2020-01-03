@@ -12,9 +12,7 @@ export default function DateTimePicker({ value, onChange }) {
     return (
         <Fragment>
             <InputButton onPress={() => setShow(true)}>
-                {value && date.toLocaleString() || i18n.t('Press to select {{resource}}...', {
-                    resource: i18n.t('Date').toLowerCase(),
-                })}
+                {value && date.toLocaleString()}
             </InputButton>
 
             <Picker

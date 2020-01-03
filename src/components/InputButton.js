@@ -1,32 +1,42 @@
 import React from 'react';
-import theme from '@src/theme.js';
-import { StyleSheet } from 'react-native';
-import { Button } from '@ui-kitten/components';
+import { styled, Button } from '@ui-kitten/components';
 
-export default function inputButton({ children, ...props }) {
+function InputButton({ themedStyle, ...props }) {
+    // Parse the passed props.
+    const parsedProps = props;
+    parsedProps['appearance'] = 'filled';
+
+    // Extract text styles from theme.
+    const textStyles = {};
+    Object.keys(themedStyle).forEach(key => {
+        // Skip if not text style.
+        if (! key.match(/^text/)) return;
+
+        // Remove text prefix and lowercase first char.
+        const newKey = key.replace(/^text(.)/, (_match, firstChar) => {
+            return firstChar.toLowerCase();
+        });
+
+        // Add style to text styles.
+        textStyles[newKey] = themedStyle[key];
+    });
+
+    // Line height is not applied by UI library and TextInput seem to have some arbitrary line height.
+    // @see https://github.com/akveo/react-native-ui-kitten/blob/fd63d7bb23b2087272ecbf0e608293ba1601418b/src/components/ui/input/input.component.tsx#L227
+    textStyles.lineHeight = 27.6;
+
+    // Return button styled as input.
     return (
-        <Button status="basic" appearance="outline" style={s.inputButton} textStyle={s.inputButtonText} {...props}>
-            {children}
+        <Button status="basic" appearance="outline" style={[themedStyle, {
+            flexDirection: 'row-reverse',
+            justifyContent: 'flex-start',
+        }]} textStyle={[textStyles, {
+            flex: 1,
+        }]} {...parsedProps}>
+            {props.children || ' '}
         </Button>
     );
 }
 
-let s = StyleSheet.create({
-    inputButton: {
-        minHeight: 48,
-        paddingVertical: 7,
-        paddingHorizontal: 8,
-
-        justifyContent: 'flex-start',
-        flexDirection: 'row-reverse',
-        borderColor: theme['color-basic-300'],
-        backgroundColor: theme['color-basic-200'],
-    },
-
-    inputButtonText: {
-        flex: 1,
-        fontSize: 15,
-        fontWeight: 'normal',
-        marginHorizontal: 8,
-    },
-})
+InputButton.styledComponentName = 'Input';
+export default styled(InputButton);

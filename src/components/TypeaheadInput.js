@@ -26,7 +26,7 @@ function TypeaheadInput({ view, preview, appendSearch, add, resource, value, onC
                 })
             }}
         >
-            {value && preview(value) || i18n.t('Press to select {{resource}}...', { resource: resource.toLowerCase() })}
+            {value && preview(value)}
         </InputButton>
     );
 }
