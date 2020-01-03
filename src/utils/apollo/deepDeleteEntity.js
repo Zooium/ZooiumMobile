@@ -28,7 +28,7 @@ function deepDeleteAll(value, predicate) {
     } else if (isPlainObject(value)) {
         Object.keys(value).forEach(key => {
             if (predicate(value[key])) {
-                delete value[key];
+                value[key] = null;
                 count++;
             } else {
                 count += deepDeleteAll(value[key], predicate);

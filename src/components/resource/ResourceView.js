@@ -37,8 +37,6 @@ function ResourceView({ items, headers, fetch, variables = {}, routes: { edit } 
     let response = key && data && data[key];
     if (! fetch) response = item;
 
-    // @wip - deleting via: List > View > Edit, navigates back while showing deleted item.
-
     // Share edit and delete actions with header.
     useEffect(() => {
         navigation.setParams({
@@ -66,17 +64,28 @@ function ResourceView({ items, headers, fetch, variables = {}, routes: { edit } 
 
     // Share response on change.
     useEffect(() => {
-        // Skip if missing response.
-        if (! response) return;
+        // Navigate back if viewing missing item.
+        if (! response && ! fetching && ! creating) {
+            navigation.goBack();
+        }
 
-        // Set response item in navigation.
-        navigation.setParams({
-            item: response,
-        });
+        // Set response item in navigation if set.
+        if (response) {
+            navigation.setParams({
+                item: response,
+            });
+        }
     }, [response]);
 
+    // Set fallback response while viewing deleted item.
+    let fallback = undefined;
+    if (! response && ! fetching && ! creating) {
+        fallback = navigation.getParam('item');
+        if (! fallback) return null;
+    }
+
     // Prepare render functions.
-    const renderItem = ({ item, index, section }) => <ResourceViewItem item={item} index={index} section={section} form={form} response={response} render={render} />;
+    const renderItem = ({ item, index, section }) => <ResourceViewItem item={item} index={index} section={section} form={form} response={response || fallback} render={render} />;
     const renderSectionHeader = ({ section }) => <ResourceViewHeader section={section} render={render} />;
     const renderHeaderActions = (
         <FlatList
