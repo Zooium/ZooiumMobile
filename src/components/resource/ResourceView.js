@@ -58,6 +58,10 @@ function ResourceView({ items, headers, fetch, variables = {}, routes: { edit } 
 
                 // Return back to previous view.
                 navigation.goBack();
+
+                // Check if has on delete action.
+                const onDelete = navigation.getParam('onDelete');
+                onDelete && onDelete(item);
             }),
         });
     }, []);

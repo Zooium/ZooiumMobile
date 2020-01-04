@@ -21,7 +21,11 @@ function TradeItems({ editing = false, transaction, onItemChange, navigation, ..
             },
 
             onSave: (item, isSaving) => {
-                onItemChange && onItemChange(item, isSaving === false);
+                onItemChange && onItemChange(item, isSaving ? 'save' : 'create');
+            },
+
+            onDelete: (item) => {
+                onItemChange && onItemChange(item, 'remove');
             },
         },
     });

@@ -128,13 +128,22 @@ export default class TransactionSettings {
                         return <TradeItems editing={false} transaction={resource} />;
                     },
                     renderEdit: function ItemsEditRender([state, mergeState]) {
-                        return <TradeItems editing={true} transaction={state} onItemChange={(item, isNew) => {
-                            // Define new items array based on if item is new or existing.
-                            const newItems = isNew
-                                ? [...state.origItems, item]
-                                : [...state.origItems.map(orig => {
-                                    return (orig.id === item.id && item) || orig;
-                                })];
+                        return <TradeItems editing={true} transaction={state} onItemChange={(item, action) => {
+                            // Define new items array based on if item is creating, saving, or removing.
+                            let newItems = undefined;
+                            switch (action) {
+                                case 'create':
+                                    newItems = [...state.origItems, item];
+                                    break;
+                                
+                                case 'save':
+                                    newItems = [...state.origItems.map(orig => (orig.id === item.id && item) || orig)];
+                                    break;
+                                
+                                case 'remove':
+                                    newItems = [...state.origItems.filter(orig => orig.id !== item.id)];
+                                    break;
+                            }
 
                             // Merge full items and ids into state.
                             mergeState({
