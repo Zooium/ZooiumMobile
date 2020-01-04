@@ -33,7 +33,9 @@
         "Sex": "Sex",
         "Born": "Born",
         "Notes": "Notes",
+        "Status": "Status",
         "Recent": "Recent",
+        "Registered": "Registered",
 
         "Cubs": "Cubs",
         "Media": "Media",

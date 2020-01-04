@@ -7,36 +7,56 @@ import { View, TouchableOpacity } from 'react-native';
 
 const eventStateSettings = {
     active: {
-        bought: {
-            icon: 'wallet',
-            text: i18n.t('Bought'),
-            color: theme['color-success-500'],
-        },
+        title: i18n.t('Active'),
 
-        default: {
-            icon: 'plus',
-            text: i18n.t('Active'),
-            color: theme['color-success-500'],
-        }
+        values: {
+            born: {
+                icon: 'baby',
+                text: i18n.t('Born'),
+                color: theme['color-success-500'],
+            },
+
+            registered: {
+                icon: 'plus',
+                text: i18n.t('Registered'),
+                color: theme['color-success-500'],
+            },
+
+            bought: {
+                icon: 'wallet',
+                text: i18n.t('Bought'),
+                color: theme['color-success-500'],
+            },
+
+            default: {
+                icon: 'plus',
+                text: i18n.t('Active'),
+                color: theme['color-success-500'],
+            },
+        },
     },
 
     inactive: {
-        sold: {
-            icon: 'wallet',
-            text: i18n.t('Sold'),
-            color: theme['color-danger-500'],
-        },
+        title: i18n.t('Inactive'),
 
-        deceased: {
-            icon: 'tombstone',
-            text: i18n.t('Deceased'),
-            color: theme['color-danger-500'],
-        },
+        values: {
+            sold: {
+                icon: 'wallet',
+                text: i18n.t('Sold'),
+                color: theme['color-danger-500'],
+            },
 
-        default: {
-            icon: 'minus',
-            text: i18n.t('Inactive'),
-            color: theme['color-danger-500'],
+            deceased: {
+                icon: 'tombstone',
+                text: i18n.t('Deceased'),
+                color: theme['color-danger-500'],
+            },
+
+            default: {
+                icon: 'minus',
+                text: i18n.t('Inactive'),
+                color: theme['color-danger-500'],
+            },
         },
     },
 }
@@ -55,10 +75,14 @@ const eventConnetionSettings = {
     },
 }
 
-export const getEventStateSettings = ({ state, value }) => {
-    return eventStateSettings[state]
-        && eventStateSettings[state][value]
-        || eventStateSettings[state]['default'];
+export const getEventStateSettings = ({ state, value } = {}) => {
+    const stateSettings = eventStateSettings[state] || eventStateSettings['active'];
+    const valueSettings = stateSettings.values[value] || stateSettings.values['default'];
+
+    return {
+        ...valueSettings,
+        parent: stateSettings.title,
+    };
 }
 
 function EventRow({ item, navigation }) {
@@ -89,7 +113,7 @@ function EventRow({ item, navigation }) {
                 )}
 
                 <Text category="label" appearance="hint">
-                    {new Date(item.occurred_at).toLocaleString()}
+                    {item.occurred_at && new Date(item.occurred_at).toLocaleString() || '(' + i18n.t('date not set') + ')'}
                 </Text>
             </View>
 

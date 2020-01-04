@@ -12,6 +12,14 @@ export default gql`
         sex
         notes
         born_at
+        created_at
+
+        state {
+            id
+            state
+            value
+            occurred_at
+        }
 
         father {
             ...previewAnimal

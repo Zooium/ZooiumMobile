@@ -11,6 +11,7 @@ import TypeaheadInput from '@components/TypeaheadInput.js';
 import DataTimePicker from '@components/DateTimePicker.js';
 import MultilineInput from '@components/MultilineInput.js';
 import { View, Alert, TouchableOpacity } from 'react-native';
+import { getEventStateSettings } from '@components/rows/EventRow.js';
 import { SpecieTypeaheadInput } from '@screens/SpecieTypeaheadScreen.js';
 import { AnimalTypeaheadInput } from '@screens/animals/AnimalTypeaheadScreen.js';
 import { EnclosureTypeaheadInput } from '@screens/enclosures/EnclosureTypeaheadScreen.js';
@@ -68,6 +69,47 @@ export default class AnimalSettings {
             title: i18n.t('General'),
 
             data: [
+                {
+                    key: 'state',
+                    title: i18n.t('State'),
+                    shouldRender: (view) => view === 'view',
+                    renderView: function StateViewRender(resource) {
+                        // Get resource state or fallback to born at or created at.
+                        const state = resource.state || (resource.born_at && {
+                            state: 'active',
+                            value: 'born',
+                            occurred_at: resource.born_at,
+                        }) || (resource.created_at && {
+                            state: 'active',
+                            value: 'registered',
+                            occurred_at: resource.created_at,
+                        });
+
+                        // Get settings for resource state.
+                        const settings = getEventStateSettings(state);
+
+                        // Return state view render.
+                        return settings && (
+                            <TouchableOpacity activeOpacity={state.id ? undefined : 1} onPress={() => {
+                                // Skip if not real event.
+                                if (! state.id) return;
+
+                                // Navigate to event view.
+                                alert('@wip');
+                            }}>
+                                <Text style={{ color: settings.color }}>
+                                    {settings.parent} ({settings.text})
+                                </Text>
+
+                                {state.occurred_at && (
+                                    <Text category="c1" appearance="hint">
+                                        {new Date(state.occurred_at).toLocaleString()}
+                                    </Text>
+                                )}
+                            </TouchableOpacity>
+                        )
+                    },
+                },
                 {
                     key: 'id',
                     title: i18n.t('ID'),
