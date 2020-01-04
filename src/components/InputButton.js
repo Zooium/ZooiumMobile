@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { styled, Button } from '@ui-kitten/components';
 
 function InputButton({ themedStyle, ...props }) {
@@ -23,7 +24,9 @@ function InputButton({ themedStyle, ...props }) {
 
     // Line height is not applied by UI library and TextInput seem to have some arbitrary line height.
     // @see https://github.com/akveo/react-native-ui-kitten/blob/fd63d7bb23b2087272ecbf0e608293ba1601418b/src/components/ui/input/input.component.tsx#L227
-    textStyles.lineHeight = 27.6;
+    if (Platform.OS === 'android') {
+        textStyles.lineHeight = 27.6;
+    }
 
     // Return button styled as input.
     return (
