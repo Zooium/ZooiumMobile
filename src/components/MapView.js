@@ -1,6 +1,6 @@
-import React, { useRef, Fragment } from 'react';
 import { withNavigation } from 'react-navigation';
 import { default as Map, Marker } from 'react-native-maps';
+import React, { Fragment, useRef, useEffect } from 'react';
 import MapViewExpander from '@components/MapViewExpander.js';
 
 function MapView({ latitude, longitude, setCoordinates, editable = false, isFullscreen = false, style, navigation }) {
@@ -9,17 +9,16 @@ function MapView({ latitude, longitude, setCoordinates, editable = false, isFull
     const handleEvent = ({ nativeEvent: { coordinate } }) => {
         // Set coordinates on parent.
         setCoordinates(coordinate.latitude, coordinate.longitude);
+    };
 
+    useEffect(() => {
         // Animate camera to new coordinates.
         if (mapRef && mapRef.current) {
             mapRef.current.animateCamera({
-                center: {
-                    latitude: coordinate.latitude,
-                    longitude: coordinate.longitude,
-                },
+                center: { latitude, longitude },
             }, 1);
         }
-    };
+    }, [latitude, longitude]);
 
     return (
         <Fragment>
