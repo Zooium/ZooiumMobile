@@ -27,4 +27,15 @@ export default StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: theme['color-basic-200'],
     },
+
+    shadow1: {
+        elevation: 1,
+        shadowColor: "#000",
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+    },
 });

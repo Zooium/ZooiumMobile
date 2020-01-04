@@ -16,7 +16,7 @@ function ResourceViewItem({ item, index, section, form, response, render = 'View
     // Check if item is navigation button.
     if (item.onPress || item.navigate) {
         return (
-            <TouchableOpacity style={{
+            <TouchableOpacity style={[AppStyles.shadow1, {
                 height: 70,
                 minWidth: 80,
 
@@ -29,17 +29,7 @@ function ResourceViewItem({ item, index, section, form, response, render = 'View
                 justifyContent: 'center',
 
                 backgroundColor: item.color,
-
-                shadowColor: "#000",
-                shadowOffset: {
-                    width: 0,
-                    height: 1,
-                },
-                shadowOpacity: 0.18,
-                shadowRadius: 1.00,
-                
-                elevation: 1,
-            }} onPress={() => {
+            }]} onPress={() => {
                 if (item.navigate) {
                     navigation.navigate(item.navigate({ response }));
                 } else {

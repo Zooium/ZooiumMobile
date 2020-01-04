@@ -28,6 +28,7 @@ import TransactionView from '@screens/transactions/TransactionViewScreen.js';
 import TransactionEdit from '@screens/transactions/TransactionEditScreen.js';
 import TransactionItemEdit from '@screens/transactions/items/TransactionItemEditScreen.js';
 
+import MapView from '@screens/MapViewScreen.js';
 import FileEdit from '@screens/FileEditScreen.js';
 import SpecieTypeahead from '@screens/SpecieTypeaheadScreen.js';
 import AuthorizedWebView from '@screens/AuthorizedWebViewScreen.js';
@@ -81,6 +82,18 @@ export default {
 
     // Files
     FileEdit,
+
+    // Map
+    MapView: {
+        screen: MapView,
+        params: {
+            isModal: true,
+            hideTabBar: true,
+        },
+        navigationOptions: {
+            header: null,
+        },
+    },
 
     // Utils
     AuthorizedWebView: {

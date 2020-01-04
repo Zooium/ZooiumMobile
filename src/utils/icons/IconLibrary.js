@@ -18,6 +18,7 @@ library.add([
     require('@fortawesome/pro-solid-svg-icons/faMoneyBillWave').definition,
     require('@fortawesome/pro-solid-svg-icons/faLocationArrow').definition,
     require('@fortawesome/pro-solid-svg-icons/faQuestionCircle').definition,
+    require('@fortawesome/pro-solid-svg-icons/faExternalLinkAlt').definition,
     require('@fortawesome/pro-solid-svg-icons/faExclamationTriangle').definition,
 
     // Pack: Regular

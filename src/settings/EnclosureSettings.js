@@ -1,12 +1,11 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
+import MapView from '@components/MapView.js';
 import { TouchableOpacity } from 'react-native';
 import LocationSettings from './LocationSettings';
 import { Text, Input } from '@ui-kitten/components';
-import MapView, { Marker } from 'react-native-maps';
 import TypeaheadInput from '@components/TypeaheadInput.js';
-import MapViewSelector from '@components/MapViewSelector.js';
 import { LocationTypeaheadInput } from '@screens/locations/LocationTypeaheadScreen.js';
 
 export default class EnclosureSettings {
@@ -111,28 +110,16 @@ export default class EnclosureSettings {
                     renderView: function CoordinatesViewRender(resource) {
                         return resource.latitude && resource.longitude && (
                             <MapView
-                                mapType="hybrid"
-                                initialRegion={{
-                                    latitude: resource.latitude,
-                                    longitude: resource.longitude,
-                                    latitudeDelta: 0.001,
-                                    longitudeDelta: 0.001,
-                                }}
-                                style={{
-                                    width: '100%',
-                                    aspectRatio: 1,
-                                }}
-                            >
-                                <Marker coordinate={{
-                                    latitude: resource.latitude,
-                                    longitude: resource.longitude,
-                                }} />
-                            </MapView>
-                        )
+                                editable={false}
+                                latitude={resource.latitude}
+                                longitude={resource.longitude}
+                            />
+                        );
                     },
                     renderEdit: function CoordinatesEditRender([state, mergeState]) {
                         return (
-                            <MapViewSelector
+                            <MapView
+                                editable={true}
                                 latitude={state.coordinate && state.coordinate.latitude || state.latitude}
                                 longitude={state.coordinate && state.coordinate.longitude || state.longitude}
                                 setCoordinates={(latitude, longitude) => {
