@@ -1,8 +1,10 @@
 import gql from 'graphql-tag'
 import { localeName } from '@src/i18n.js'
 import PREVIEW_ANIMAL from './previewAnimal.gql.js';
+import BASE_EVENT from '@graphql/fragments/Event/baseEvent.gql.js';
 
 export default gql`
+    ${BASE_EVENT}
     ${PREVIEW_ANIMAL}
     fragment fullAnimal on Animal {
         id
@@ -15,10 +17,7 @@ export default gql`
         created_at
 
         state {
-            id
-            state
-            value
-            occurred_at
+            ...baseEvent
         }
 
         father {

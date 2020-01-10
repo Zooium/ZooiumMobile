@@ -13,13 +13,13 @@ import ResourceSwipeList from './ResourceSwipeList.js';
 import parsePagination from '@utils/apollo/parsePagination.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
-function ResourceList({ fetch, variables = {}, List, navigation, routes, sorting, filters, ...props }) {
+function ResourceList({ fetch, variables = {}, List, navigation, routes, sorting, defaultSort = 'id', filters, ...props }) {
     const [showSettings, setShowSettings] = useState(false);
 
     // Define sorting related variables.
     const [filter, setFilter] = useState(['active']);
     const [sort, setSort] = useState({
-        column: 'id',
+        column: defaultSort,
         direction: 'desc',
     });
 

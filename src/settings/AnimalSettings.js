@@ -4,6 +4,7 @@ import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import RadioGroup from '@components/RadioGroup.js';
 import SexPreview from '@components/SexPreview.js';
+import EventSettings from '@settings/EventSettings.js';
 import CitesListing from '@components/CitesListing.js';
 import SpecieSettings from '@settings/SpecieSettings.js';
 import { Text, Icon, Input } from '@ui-kitten/components';
@@ -11,7 +12,6 @@ import TypeaheadInput from '@components/TypeaheadInput.js';
 import DataTimePicker from '@components/DateTimePicker.js';
 import MultilineInput from '@components/MultilineInput.js';
 import { View, Alert, TouchableOpacity } from 'react-native';
-import { getEventStateSettings } from '@components/rows/EventRow.js';
 import { SpecieTypeaheadInput } from '@screens/SpecieTypeaheadScreen.js';
 import { AnimalTypeaheadInput } from '@screens/animals/AnimalTypeaheadScreen.js';
 import { EnclosureTypeaheadInput } from '@screens/enclosures/EnclosureTypeaheadScreen.js';
@@ -73,7 +73,7 @@ export default class AnimalSettings {
                     key: 'state',
                     title: i18n.t('State'),
                     shouldRender: (view) => view === 'view',
-                    renderView: function StateViewRender(resource) {
+                    renderView: function StateViewRender(resource, { navigation }) {
                         // Get resource state or fallback to born at or created at.
                         const state = resource.state || (resource.born_at && {
                             state: 'active',
@@ -86,19 +86,26 @@ export default class AnimalSettings {
                         });
 
                         // Get settings for resource state.
-                        const settings = getEventStateSettings(state);
+                        const { value, state: valueState } = EventSettings.getEventStateSettings(state);
 
                         // Return state view render.
-                        return settings && (
+                        return value && (
                             <TouchableOpacity activeOpacity={state.id ? undefined : 1} onPress={() => {
                                 // Skip if not real event.
                                 if (! state.id) return;
 
                                 // Navigate to event view.
-                                alert('@wip');
+                                const route = 'EventView';
+                                navigation.navigate({
+                                    key: route + resource.state.id,
+                                    routeName: route,
+                                    params: {
+                                        item: resource.state,
+                                    },
+                                });
                             }}>
-                                <Text style={{ color: settings.color }}>
-                                    {settings.parent} ({settings.text})
+                                <Text style={{ color: value.color }}>
+                                    {valueState.text} ({value.text})
                                 </Text>
 
                                 {state.occurred_at && (
@@ -395,10 +402,10 @@ export default class AnimalSettings {
             title: i18n.t('Events'),
             color: theme['color-success-500'],
             navigate: ({ response }) =>  ({
-                routeName: (route = 'AnimalEvent'),
-                key: route + response.id,
+                routeName: (route = 'EventList'),
+                key: route + (search = 'source:animal:'+response.id),
                 params: {
-                    item: response,
+                    appendSearch: search,
                 },
             }),
         },

@@ -3,7 +3,6 @@ import i18n from '@src/i18n.js';
 import AnimalList from '@screens/animals/AnimalListScreen.js';
 import AnimalView from '@screens/animals/AnimalViewScreen.js';
 import AnimalEdit from '@screens/animals/AnimalEditScreen.js';
-import AnimalEvent from '@screens/animals/AnimalEventScreen.js';
 import AnimalMedia from '@screens/animals/AnimalMediaScreen.js';
 import AnimalFamily from '@screens/animals/AnimalFamilyScreen.js';
 import AnimalTypeahead from '@screens/animals/AnimalTypeaheadScreen.js';
@@ -28,6 +27,10 @@ import TransactionView from '@screens/transactions/TransactionViewScreen.js';
 import TransactionEdit from '@screens/transactions/TransactionEditScreen.js';
 import TransactionItemEdit from '@screens/transactions/items/TransactionItemEditScreen.js';
 
+import EventList from '@screens/events/EventListScreen.js';
+import EventView from '@screens/events/EventViewScreen.js';
+import EventEdit from '@screens/events/EventEditScreen.js';
+
 import MapView from '@screens/MapViewScreen.js';
 import FileEdit from '@screens/FileEditScreen.js';
 import SpecieTypeahead from '@screens/SpecieTypeaheadScreen.js';
@@ -41,7 +44,7 @@ export default {
             title: i18n.t('Animal', { count: 2 }),
         },
     }, AnimalView, AnimalEdit,
-    AnimalMedia, AnimalFamily, AnimalEvent,
+    AnimalMedia, AnimalFamily,
 
     // Enclosures
     EnclosureList: {
@@ -74,6 +77,14 @@ export default {
             title: i18n.t('Transaction', { count: 2 }),
         },
     }, TransactionView, TransactionEdit, TransactionItemEdit,
+
+    // Events
+    EventList: {
+        screen: EventList,
+        navigationOptions: {
+            title: i18n.t('Event', { count: 2 }),
+        },
+    }, EventView, EventEdit,
 
     // Typeaheads
     AnimalTypeahead, SpecieTypeahead,
