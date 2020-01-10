@@ -7,5 +7,16 @@ export default gql`
         value
         notes
         occurred_at
+
+        connection {
+            ...on TransactionItem {
+                id
+
+                transaction {
+                    id
+                    occurred_at
+                }
+            }
+        }
     }
 `

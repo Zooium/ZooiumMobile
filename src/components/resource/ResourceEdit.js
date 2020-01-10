@@ -129,7 +129,7 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
     );
 }
 
-ResourceEdit.navigationOptions = ({ title, navigation }) => {
+ResourceEdit.navigationOptions = ({ title, canModify, navigation }) => {
     const item = navigation.getParam('item');
     const deleteItem = navigation.getParam('deleteItem');
 
@@ -144,6 +144,11 @@ ResourceEdit.navigationOptions = ({ title, navigation }) => {
             <HeaderButtons>
                 {item && (
                     <Item title="delete" iconName="trash-alt" onPress={() => {
+                        // Skip if not allowed to modify item. 
+                        const msg = item && canModify && canModify(item);
+                        if (typeof msg === 'string') return Alert.alert(msg);
+
+                        // Show deletion confirmation.
                         deleteItem && DeletionConfirmation(title(item), () => {
                             deleteItem(item);
                         });
@@ -151,6 +156,11 @@ ResourceEdit.navigationOptions = ({ title, navigation }) => {
                 )}
 
                 <Item title={item ? 'save' : 'create'} iconName={item ? 'save' : 'plus'} onPress={() => {
+                    // Skip if not allowed to modify item. 
+                    const msg = item && canModify && canModify(item);
+                    if (typeof msg === 'string') return Alert.alert(msg);
+
+                    // Save or create item.
                     navigation.getParam('save')({
                         item: navigation.getParam('item'),
                         items: navigation.getParam('items'),

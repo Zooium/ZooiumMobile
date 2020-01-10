@@ -46,6 +46,17 @@ export default class EventSettings {
     }
 
     /**
+     * Determine if can modify item.
+     */
+    static canModify = (resource) => {
+        if (resource.connection) {
+            return i18n.t('You can not update or delete system generated events!');
+        }
+
+        return true;
+    }
+
+    /**
      * Initialize form object.
      */
     static formInit = () => ({

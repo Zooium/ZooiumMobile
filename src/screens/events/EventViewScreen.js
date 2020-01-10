@@ -27,5 +27,7 @@ export default function EventViewScreen() {
 }
 
 EventViewScreen.navigationOptions = (props) => ResourceView.navigationOptions({
-    ...props, title: EventSettings.title,
+    ...props,
+    title: EventSettings.title,
+    canModify: EventSettings.canModify,
 });

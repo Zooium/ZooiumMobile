@@ -4,9 +4,9 @@ import Loader from '@components/Loader.js';
 import { withNavigation } from 'react-navigation';
 import ResourceViewItem from './ResourceViewItem.js';
 import ResourceViewHeader from './ResourceViewHeader.js';
-import { View, FlatList, SectionList } from 'react-native';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import DeletionConfirmation from '@utils/DeletionConfirmation.js';
+import { View, Alert, FlatList, SectionList } from 'react-native';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
 function ResourceView({ items, headers, fetch, parser, variables = {}, routes: { edit } = {}, mutations: { remove } = {}, render = 'View', loading = false, form, navigation }) {    
@@ -156,7 +156,7 @@ ResourceView.propTypes = {
     }),
 }
 
-ResourceView.navigationOptions = ({ title, showEdit = true, navigation }) => {
+ResourceView.navigationOptions = ({ title, canModify, showEdit = true, navigation }) => {
     const item = navigation.getParam('item');
     const editItem = navigation.getParam('editItem');
     const deleteItem = navigation.getParam('deleteItem');
@@ -171,12 +171,22 @@ ResourceView.navigationOptions = ({ title, showEdit = true, navigation }) => {
         headerRight: showEdit && (
             <HeaderButtons>
                 <Item title="delete" iconName="trash-alt" onPress={() => {
+                    // Skip if not allowed to modify item. 
+                    const msg = item && canModify && canModify(item);
+                    if (typeof msg === 'string') return Alert.alert(msg);
+
+                    // Show deletion confirmation.
                     deleteItem && DeletionConfirmation(title(item), () => {
                         deleteItem(item);
                     });
                 }} />
 
                 <Item title="edit" iconName="pencil" onPress={() => {
+                    // Skip if not allowed to modify item. 
+                    const msg = item && canModify && canModify(item);
+                    if (typeof msg === 'string') return Alert.alert(msg);
+
+                    // Navigate to edit view.
                     editItem && editItem(item);
                 }} />
             </HeaderButtons>

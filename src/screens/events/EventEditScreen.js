@@ -16,6 +16,7 @@ export default function EventEditScreen() {
                     items={EventSettings.fields}
                     parser={EventSettings.parser}
                     formInit={EventSettings.formInit}
+                    canModify={EventSettings.canModify}
                     
                     fetch={VIEW_EVENT}
                     mutations={{
@@ -34,5 +35,7 @@ export default function EventEditScreen() {
 }
 
 EventEditScreen.navigationOptions = (props) => ResourceEdit.navigationOptions({
-    ...props, title: EventSettings.title,
+    ...props,
+    title: EventSettings.title,
+    canModify: EventSettings.canModify,
 });

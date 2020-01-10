@@ -20,6 +20,7 @@ function EventListScreen({ navigation }) {
                     preview={preview}
                     fetch={LIST_EVENTS}
                     title={EventSettings.title}
+                    canModify={EventSettings.canModify}
                     name={i18n.t('Event', { count: 2 })}
                     
                     routes={{
