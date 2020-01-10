@@ -19,7 +19,7 @@ import ResourceListEmpty from '@components/resource/ResourceListEmpty.js';
 import VIEW_ANIMAL_MEDIA from '@graphql/queries/Animal/viewAnimalMedia.gql.js';
 import { useActionSheet, connectActionSheet } from '@expo/react-native-action-sheet';
 
-// @wip - refactor
+// TODO - refactor
 function AnimalMediaScreen({ navigation }) {
     // Get passed item and define media query.
     const [item] = useState(navigation.getParam('item'));

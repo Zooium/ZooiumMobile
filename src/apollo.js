@@ -28,7 +28,7 @@ const ErrorHandler = onError(({ networkError: network, graphQLErrors: errors, fo
     // Get the current route name.
     let route = router.currentRoute();
 
-    // Check if unauthorized error. @wip - differentiate between unauthed and unauthorized.
+    // Check if unauthorized error. TODO - differentiate between unauthed and unauthorized.
     const allowsUnauthorized = route.params.allowUnauthorized === true;
     if (errors && errors[0] && errors[0].message == 'Unauthorized' && ! allowsUnauthorized) {
         // Attempt to refresh auth and retry.

@@ -333,7 +333,7 @@ export default class EventSettings {
                     },
                 },
                 {
-                    key: 'state', // @wip - value, key (array?)
+                    key: 'state', // TODO - value, key (array?)
                     title: i18n.t('State'),
                     renderView: function StateViewRender(resource) {
                         const { value, state } = EventSettings.getEventStateSettings(resource);

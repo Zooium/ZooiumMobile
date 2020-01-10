@@ -24,7 +24,7 @@ export default {
     },
 
     /*
-    @wip - Runs both slide and modal animation.
+    TODO - Runs both slide and modal animation.
 
     transitionConfig: (props, prevProps)  => {
         const route = props.scene.route;
