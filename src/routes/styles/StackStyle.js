@@ -4,8 +4,7 @@ import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
 export default {
     defaultNavigationOptions: ({ navigation }) => {
-        const canGoBack = navigation.isFocused()
-            && navigation.dangerouslyGetParent().state.index > 0;
+        const canGoBack = navigation.dangerouslyGetParent().state.index > 0;
 
         return {
             // Change header to primary color.
@@ -19,7 +18,7 @@ export default {
                 <HeaderButtons left={true}>
                     <Item title="return" iconName="arrow-left" onPress={() => navigation.goBack()} />
                 </HeaderButtons>
-            )),
+            )) || null,
         }
     },
 
