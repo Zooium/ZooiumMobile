@@ -107,6 +107,7 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
     // Parse form and disable parsing on item change.
     useEffect(() => {
         if (item) {
+            // @wip - Switch out with standard parser.
             setState(formParser && formParser(item) || item);
             setParsing(false);
         }

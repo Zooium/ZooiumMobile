@@ -9,7 +9,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
-function ResourceView({ items, headers, fetch, variables = {}, routes: { edit } = {}, mutations: { remove } = {}, render = 'View', loading = false, form, navigation }) {    
+function ResourceView({ items, headers, fetch, parser, variables = {}, routes: { edit } = {}, mutations: { remove } = {}, render = 'View', loading = false, form, navigation }) {    
     // Get item from navigation params.
     const item = navigation.getParam('item');
     const creating = ! item;
@@ -36,6 +36,9 @@ function ResourceView({ items, headers, fetch, variables = {}, routes: { edit } 
     const key = data && Object.keys(data)[0];
     let response = key && data && data[key];
     if (! fetch) response = item;
+
+    // Parse the response object if available.
+    if (response && parser) parser(response);
 
     // Share edit and delete actions with header.
     useEffect(() => {
