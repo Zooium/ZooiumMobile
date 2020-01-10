@@ -26,7 +26,7 @@ fetch('https://app.zooium.com/graphql', {
             .filter(type => type.possibleTypes !== null);
 
         // Write fragment types to JSON file.
-        fs.writeFileSync('./src/graphql/FragmentTypes.json', JSON.stringify(result.data), error => {
+        fs.writeFileSync('./src/graphql/FragmentTypes.json', JSON.stringify(result.data, null, 4)+'\n', error => {
             if (error) {
                 console.error('Couldn\'t save fragment types: ', error);
             } else {
