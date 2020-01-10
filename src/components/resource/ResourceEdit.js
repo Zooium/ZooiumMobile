@@ -45,7 +45,7 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
                 items.forEach(category => {
                     category.data.forEach(item => {
                         // Push title to incomplete if required and not set.
-                        if (item.required && ! state[item.key]) {
+                        if (item.required && item.required(state) && ! state[item.key]) {
                             incomplete.push(item.title);
                         }
                     });

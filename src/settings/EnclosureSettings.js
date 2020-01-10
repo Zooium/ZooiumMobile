@@ -54,7 +54,7 @@ export default class EnclosureSettings {
                 {
                     key: 'name',
                     title: i18n.t('Name'),
-                    required: true,
+                    required: () => true,
                     renderView: resource => resource.name,
                     renderEdit: function NameEditRender([state, mergeState]) {
                         return <Input value={state.name} onChangeText={(value) => mergeState({ name: value })} />;

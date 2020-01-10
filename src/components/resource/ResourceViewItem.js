@@ -67,7 +67,7 @@ function ResourceViewItem({ item, index, section, form, response, render = 'View
         <Text category="s2" appearance="hint">
             {title}
 
-            {render === 'Edit' && item.required && (
+            {render === 'Edit' && item.required && item.required(form[0]) && (
                 <Text status="danger" style={{ marginLeft: 6 }}>
                     *
                 </Text>

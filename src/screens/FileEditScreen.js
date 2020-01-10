@@ -14,7 +14,7 @@ const items = [
         data: [
             {
                 key: 'name',
-                required: true,
+                required: () => true,
                 title: i18n.t('Name'),
                 render: function NameRender([state, mergeState]) {
                     return <Input value={state.name} onChangeText={(value) => mergeState({ name: value })} />;
