@@ -1,6 +1,8 @@
+import theme from '@src/theme.js';
 import React, { useCallback } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { withNavigation } from 'react-navigation';
+import { TouchableHighlight } from 'react-native';
 import ResourceListItem from './ResourceListItem.js';
 import ResourceListEmpty from './ResourceListEmpty.js';
 import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
@@ -46,7 +48,11 @@ function ResourceSwipeList({ name, list, deps = [], title, query, routes, mutati
     // Create callbacks for resource item renderings.
     const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, deps);
     const actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, deps);
-    const itemCallback = useCallback(({ item }) => <ResourceListItem item={item} viewItem={viewItem} preview={preview} {...itemProps} />, deps);
+    const itemCallback = useCallback(({ item }) => (
+        <TouchableHighlight underlayColor={theme['color-basic-200']} style={{ backgroundColor: 'white' }} onPress={() => viewItem(item)}>
+            <ResourceListItem item={item} preview={preview} {...itemProps} />
+        </TouchableHighlight>
+    ), deps);
 
     // Return the swipe list view.
     return (

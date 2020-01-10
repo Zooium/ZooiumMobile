@@ -18,7 +18,6 @@ export default StyleSheet.create({
     listItem: {
         paddingVertical: 15,
         paddingHorizontal: 20,
-        backgroundColor: 'white',
 
         flexDirection: 'column',
         alignItems: 'flex-start',
