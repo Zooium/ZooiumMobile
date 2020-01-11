@@ -407,7 +407,7 @@ export default class AnimalSettings {
         {
             key: 'events',
             icon: 'calendar-star',
-            title: i18n.t('Events'),
+            title: i18n.t('Event', { count: 2 }),
             color: theme['color-success-500'],
             navigate: ({ response }) =>  ({
                 routeName: (route = 'EventList'),

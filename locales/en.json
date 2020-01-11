@@ -15,6 +15,9 @@
         "Contact": "Contact",
         "Contact_plural": "Contacts",
 
+        "Event": "Event",
+        "Event_plural": "Events",
+
         "Transaction": "Transaction",
         "Transaction_plural": "Transactions",
         
@@ -41,7 +44,6 @@
 
         "Cubs": "Cubs",
         "Media": "Media",
-        "Events": "Events",
 
         "Family": "Family",
         "Current": "Current",
