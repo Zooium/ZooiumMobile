@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import Loader from '@components/Loader.js';
+import { Layout } from '@ui-kitten/components';
 import { withNavigation } from 'react-navigation';
 import ResourceViewItem from './ResourceViewItem.js';
 import ResourceViewHeader from './ResourceViewHeader.js';
@@ -8,6 +9,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 import { View, Alert, FlatList, SectionList } from 'react-native';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
+import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 
 function ResourceView({ items, headers, fetch, parser, variables = {}, routes: { edit } = {}, mutations: { remove } = {}, render = 'View', loading = false, form, navigation }) {    
     // Get item from navigation params.
@@ -109,21 +111,29 @@ function ResourceView({ items, headers, fetch, parser, variables = {}, routes: {
     );
 
     // Return resource view.
-    return (loading || fetching) ? <Loader /> : (
-        <SectionList
-            sections={items}
-            initialNumToRender={25}
-            keyExtractor={(item, index) => index.toString()}
+    return (loading || fetching) ? (
+        <Layout style={{ flex: 1 }}>
+            <Loader />
+        </Layout>
+    ) : (
+        <KeyboardAvoidingLayout>
+            <Layout style={{ flex: 1 }}>
+                <SectionList
+                    sections={items}
+                    initialNumToRender={25}
+                    keyExtractor={(item, index) => index.toString()}
 
-            renderItem={renderItem}
-            renderSectionHeader={renderSectionHeader}
-            ListHeaderComponent={renderHeaderActions}
+                    renderItem={renderItem}
+                    renderSectionHeader={renderSectionHeader}
+                    ListHeaderComponent={renderHeaderActions}
 
-            refreshing={loading || fetching}
-            onRefresh={render === 'View' && (() => {
-                return refetch && refetch();
-            })}
-        />
+                    refreshing={loading || fetching}
+                    onRefresh={render === 'View' && (() => {
+                        return refetch && refetch();
+                    })}
+                />
+            </Layout>
+        </KeyboardAvoidingLayout>
     );
 }
 
