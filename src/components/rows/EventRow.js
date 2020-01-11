@@ -11,7 +11,7 @@ export default function EventRow({ item, navigation }) {
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
-                {item.state && (
+                {value && state && (
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Icon
                             fixedWidth

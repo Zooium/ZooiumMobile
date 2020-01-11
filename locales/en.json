@@ -112,6 +112,7 @@
         "Bought": "Bought",
         "Inactive": "Inactive",
         "Deceased": "Deceased",
+        "No change": "No change",
 
         "Incomplete Submission": "Incomplete Submission",
         "The following fields are required: {{fields}}": "The following fields are required: {{fields}}",

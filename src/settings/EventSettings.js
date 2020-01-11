@@ -74,6 +74,10 @@ export default class EventSettings {
      */
     static states = [
         {
+            key: 'none',
+            text: i18n.t('No change'),
+        },
+        {
             key: 'active',
             text: i18n.t('Active'),
 
@@ -142,7 +146,9 @@ export default class EventSettings {
      * @return {object|null}
      */
     static getEventStateSettings(resource) {
-        const state = EventSettings.states.find(state => state.key === resource.state) || EventSettings.states[0];
+        if (! resource.state) return {};
+
+        const state = EventSettings.states.find(state => state.key === resource.state) || EventSettings.states[1];
         const value = state.items.find(item => item.key === resource.value) || state.fallback;
         const isFallback = value.isFallback === true;
 
@@ -334,6 +340,7 @@ export default class EventSettings {
                 {
                     key: 'occurred_at',
                     title: i18n.t('Occurred'),
+                    required: () => true,
                     renderView: resource => resource.occurred_at && (new Date(resource.occurred_at)).toLocaleString() || undefined,
                     renderEdit: function OccurredEditRender([state, mergeState]) {
                         return (
@@ -349,14 +356,18 @@ export default class EventSettings {
                     renderView: function StateViewRender(resource) {
                         const { value, state } = EventSettings.getEventStateSettings(resource);
 
-                        return (
+                        return value && state && (
                             <Text style={{ color: value.color }}>
                                 {state.text} ({value.text})
                             </Text>
                         );
                     },
                     renderEdit: function StateEditRender([state, mergeState]) {
-                        const { value, isFallback } = EventSettings.getEventStateSettings(state);
+                        let { value, isFallback } = EventSettings.getEventStateSettings(state);
+                        if (! state.state) {
+                            value = EventSettings.states[0];
+                            isFallback = false;
+                        }
 
                         return (
                             <Select
@@ -364,7 +375,16 @@ export default class EventSettings {
                                 keyExtractor={item => item.key}
                                 selectedOption={! isFallback && value}
                                 onSelect={(value) => {
-                                    const parent = EventSettings.states.find(state => state.items.find(item => item.key === value.key));
+                                    if (value.key === 'none') {
+                                        return mergeState({
+                                            state: null,
+                                            value: null,
+                                        });
+                                    }
+
+                                    const parent = EventSettings.states.find(state => {
+                                        return state.items.find(item => item.key === value.key);
+                                    });
 
                                     mergeState({
                                         state: parent.key,
