@@ -40,10 +40,15 @@ function ResourceList({ fetch, variables = {}, List, navigation, routes, sorting
             setSearch,
             setShowSettings,
 
-            createItem: () => navigation.navigate({
-                key: routes.view + Math.random().toString(36).slice(2),
-                routeName: routes.edit,
-            }),
+            createItem: () => {
+                navigation.navigate({
+                    key: routes.view + Math.random().toString(36).slice(2),
+                    routeName: routes.edit,
+                    params: {
+                        defaults: navigation.getParam('defaults'),
+                    },
+                });
+            },
         });
     }, []),
 

@@ -39,10 +39,10 @@ export default class EventSettings {
         }
 
         // Parse polymorphic relationships.
-        item.resource_id = item.resource && item.resource.id || undefined;
-        item.resource_type = item.resource && item.resource.__typename || undefined;
-        item.connection_id = item.connection && item.connection.id || undefined;
-        item.connection_type = item.connection && item.connection.__typename || undefined;
+        item.resource_id = item.resource_id || item.resource && item.resource.id || undefined;
+        item.resource_type = item.resource_type || item.resource && item.resource.__typename || undefined;
+        item.connection_id = item.connection_id || item.connection && item.connection.id || undefined;
+        item.connection_type = item.connection_type || item.connection && item.connection.__typename || undefined;
     }
 
     /**
@@ -412,11 +412,4 @@ export default class EventSettings {
             ],
         },
     ]
-
-    /**
-     * The entity field headers.
-     *
-     * @var {array}
-     */
-    static headers = []
 }

@@ -11,7 +11,6 @@ export default function EventViewScreen() {
             <ResourceView
                 items={EventSettings.fields}
                 parser={EventSettings.parser}
-                headers={EventSettings.headers}
                 fetch={VIEW_EVENT}
 
                 mutations={{

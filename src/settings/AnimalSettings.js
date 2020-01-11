@@ -386,13 +386,21 @@ export default class AnimalSettings {
             icon: 'baby',
             title: i18n.t('Cubs'),
             color: theme['color-primary-500'],
-            navigate: ({ response }) =>  ({
+            navigate: ({ response }) => ({
                 routeName: (route = 'AnimalList'),
                 key: route + (search = 'parent:'+response.id),
                 params: {
-                    search: search,
-                    showSearch: true,
-                    focusSearch: false,
+                    appendSearch: search,
+                    defaults: {
+                        father: response.sex === 'male' && response || undefined,
+                        father_id: response.sex === 'male' && response.id || undefined,
+
+                        mother: response.sex === 'female' && response || undefined,
+                        mother_id: response.sex === 'female' && response.id || undefined,
+
+                        specie: response.specie || undefined,
+                        specie_id:  response.specie && response.specie.id || undefined,
+                    },
                 },
             }),
         },
@@ -406,6 +414,11 @@ export default class AnimalSettings {
                 key: route + (search = 'source:animal:'+response.id),
                 params: {
                     appendSearch: search,
+                    defaults: {
+                        resource: response,
+                        resource_id: response.id,
+                        resource_type: 'Animal',
+                    },
                 },
             }),
         },
