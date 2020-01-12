@@ -3,8 +3,12 @@ import { initReactI18next } from 'react-i18next';
 import * as Localization from 'expo-localization';
 
 // Import Internationalization API.
-import 'intl';
+import Intl from 'intl';
 import 'intl/locale-data/jsonp/en.js';
+
+// Disable intl regex caching.
+// @see https://github.com/andyearnshaw/Intl.js/issues/231
+Intl.__disableRegExpRestore();
 
 // Import application locales.
 import en from '@locales/en.json';
