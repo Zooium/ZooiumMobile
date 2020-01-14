@@ -30,12 +30,10 @@ function InputButton({ themedStyle, ...props }) {
 
     // Return button styled as input.
     return (
-        <Button status="basic" appearance="outline" style={[themedStyle, {
+        <Button status="basic" appearance="outline" activeOpacity={0.2} style={[themedStyle, {
             flexDirection: 'row-reverse',
             justifyContent: 'flex-start',
-        }]} textStyle={[textStyles, {
-            flex: 1,
-        }]} {...parsedProps}>
+        }]} textStyle={[textStyles, { flex: 1 }]} {...parsedProps}>
             {props.children || ' '}
         </Button>
     );
