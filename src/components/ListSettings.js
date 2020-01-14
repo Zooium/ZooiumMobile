@@ -2,14 +2,11 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import { View, TouchableOpacity } from 'react-native';
-import { Text, Icon, Select } from '@ui-kitten/components';
+import { Text, Icon, Select, Layout } from '@ui-kitten/components';
 
 export default function ListSettings({ sort, setSort, sorting, filter, setFilter, filters }) {
     return (
-        <View style={{
-            padding: 8,
-            backgroundColor: theme['color-basic-200'],
-        }}>
+        <Layout level="2" style={{ padding: 8 }}>
             {filters && (
                 <View style={{ paddingBottom: sorting ? 10 : 0 }}>
                     <Text category="label" style={{ paddingBottom: 4, color: theme['color-basic-600'] }}>
@@ -70,6 +67,6 @@ export default function ListSettings({ sort, setSort, sorting, filter, setFilter
                     </View>
                 </View>
             )}
-        </View>
+        </Layout>
     )
 }
