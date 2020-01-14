@@ -17,11 +17,10 @@ export default createStackNavigator({
     BarcodeNearby: {
         screen: BarcodeNearby,
         params: {
-            isModal: true,
             hideTabBar: true,
         },
         navigationOptions: {
-            header: null,
+            headerShown: false,
         },
     },
 

@@ -135,12 +135,8 @@ ResourceEdit.navigationOptions = ({ title, canModify, navigation }) => {
 
     return {
         title: title && title(item),
-        headerTitleStyle: {
-            flex: 1,
-            textAlign: 'center',
-        },
 
-        headerRight: (
+        headerRight: () => (
             <HeaderButtons>
                 {item && (
                     <Item title="delete" iconName="trash-alt" onPress={() => {

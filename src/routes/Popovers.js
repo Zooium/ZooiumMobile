@@ -98,11 +98,10 @@ export default {
     MapView: {
         screen: MapView,
         params: {
-            isModal: true,
             hideTabBar: true,
         },
         navigationOptions: {
-            header: null,
+            headerShown: false,
         },
     },
 
@@ -110,7 +109,6 @@ export default {
     AuthorizedWebView: {
         screen: AuthorizedWebView,
         params: {
-            isModal: true,
             hideTabBar: true,
         },
     },

@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 import Loader from '@components/Loader.js';
 import { useDebounce } from 'use-debounce';
 import AuthState from '@utils/AuthState.js';
-import { View, TextInput } from 'react-native';
+import { Layout } from '@ui-kitten/components';
 import { useQuery } from '@apollo/react-hooks';
+import { View, TextInput } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import React, { useState, useEffect } from 'react';
 import parseQuery from '@utils/apollo/parseQuery.js';
 import ListSettings from '@components/ListSettings.js';
 import ResourceSwipeList from './ResourceSwipeList.js';
+import React, { Fragment, useState, useEffect } from 'react';
 import parsePagination from '@utils/apollo/parsePagination.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
+import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 
 function ResourceList({ fetch, variables = {}, List, navigation, routes, sorting, defaultSort = 'id', filters, ...props }) {
     const [showSettings, setShowSettings] = useState(false);
@@ -81,35 +83,40 @@ function ResourceList({ fetch, variables = {}, List, navigation, routes, sorting
     const { init, list } = parsePagination(response);
 
     // Return the resource list view.
-    return (loading && init && ! search ? <Loader /> : (
-        <View style={{flex:1}}>
-            {showSettings && (
-                <ListSettings
-                    sort={sort}
-                    setSort={setSort}
-                    sorting={sorting}
-                    filter={filter}
-                    setFilter={setFilter}
-                    filters={filters}
-                />
-            )}
+    return (
+        <KeyboardAvoidingLayout>
+            <Layout style={{ flex: 1 }}>
+                {(loading && init && ! search) && <Loader /> || (
+                    <Fragment>
+                        {showSettings && (
+                            <ListSettings
+                                sort={sort}
+                                setSort={setSort}
+                                sorting={sorting}
+                                filter={filter}
+                                setFilter={setFilter}
+                                filters={filters}
+                            />
+                        )}
 
-            {List && (
-                <List list={list} query={query} {...props} />
-            ) || (
-                <ResourceSwipeList routes={routes} list={list} query={query} {...props} />
-            )}
-        </View>
-    ));
+                        {List && (
+                            <List list={list} query={query} {...props} />
+                        ) || (
+                            <ResourceSwipeList routes={routes} list={list} query={query} {...props} />
+                        )}
+                    </Fragment>
+                )}
+            </Layout>
+        </KeyboardAvoidingLayout>
+    );
 }
 
 ResourceList.navigationOptions = ({ navigation, onSearchCancel = undefined, hasRightSearchItem = false }) => {
     // Return search based header options if requested.
     if (navigation.getParam('showSearch', false)) {
-        // Define default search options.
-        let options = {
-            headerRight: null,
-            headerLeft: (
+        return {
+            headerRight: () => null,
+            headerLeft: () => (
                 <HeaderButtons left={true}>
                     <Item title="return" iconName="arrow-left" onPress={() => {
                         if (onSearchCancel) return onSearchCancel();
@@ -124,7 +131,13 @@ ResourceList.navigationOptions = ({ navigation, onSearchCancel = undefined, hasR
                 </HeaderButtons>
             ),
     
-            headerTitle: (
+            headerTitleAlign: 'left',
+            headerTitleContainerStyle: {
+                flex: 1,
+                right: hasRightSearchItem ? 48 : 14,
+            },
+
+            headerTitle: () => (
                 <TextInput
                     clearButtonMode="always"
                     selectionColor="white"
@@ -140,16 +153,6 @@ ResourceList.navigationOptions = ({ navigation, onSearchCancel = undefined, hasR
                 />
             ),
         };
-
-        // Remove right spacing if missing item.
-        if (! hasRightSearchItem) {
-            options.headerTitleContainerStyle = {
-                right: 14,
-            };
-        }
-
-        // Return the options.
-        return options;
     }
 
     // Determine if can go back.
@@ -157,7 +160,7 @@ ResourceList.navigationOptions = ({ navigation, onSearchCancel = undefined, hasR
 
     // Return default navigation options.
     return {
-        headerLeft: (
+        headerLeft: () => (
             <HeaderButtons left={true}>
                 {canGoBack && (
                     <Item title="return" iconName="arrow-left" onPress={() => navigation.goBack()} />
@@ -185,11 +188,6 @@ ResourceList.navigationOptions = ({ navigation, onSearchCancel = undefined, hasR
                 { items && items() }
             </HeaderButtons>
         ),
-
-        headerTitleStyle: {
-            flex: 1,
-            textAlign: 'center',
-        },
     }
 }
 

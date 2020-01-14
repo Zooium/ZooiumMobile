@@ -1,7 +1,8 @@
 import i18n from '@src/i18n.js';
+import { FlatList } from 'react-native';
 import Loader from '@components/Loader.js';
 import AuthState from '@utils/AuthState.js';
-import { View, FlatList } from 'react-native';
+import { Layout } from '@ui-kitten/components';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import MediaRow from '@components/rows/MediaRow.js';
@@ -9,13 +10,14 @@ import parseQuery from '@utils/apollo/parseQuery.js';
 import { ReactNativeFile } from 'apollo-upload-client';
 import LoadingModal from '@components/LoadingModal.js';
 import * as DocumentPicker from 'expo-document-picker';
-import React, { useState, useEffect, useCallback } from 'react';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import UPLOAD_FILE from '@graphql/mutations/File/uploadFile.gql.js';
 import DELETE_FILE from '@graphql/mutations/File/deleteFiles.gql.js';
 import { useEvent, usePrivateChannel } from '@utils/SocketProvider.js';
-import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import ResourceListEmpty from '@components/resource/ResourceListEmpty.js';
+import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
+import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import VIEW_ANIMAL_MEDIA from '@graphql/queries/Animal/viewAnimalMedia.gql.js';
 import { useActionSheet, connectActionSheet } from '@expo/react-native-action-sheet';
 
@@ -176,38 +178,40 @@ function AnimalMediaScreen({ navigation }) {
     ), [newIds]);
 
     // Return the grid list view.
-    return (loading ? <Loader /> : (
-        <View style={{flex: 1}}>
-            <FlatList
-                numColumns={3}
-                keyExtractor={item => item.id}
-                data={response && response.files || []}
-                renderItem={itemCallback}
-                ListEmptyComponent={emptyCallback}
-                onRefresh={() => {
-                    refetch();
-                    setNewIds([]);
-                }}
-                refreshing={loading}
-                contentContainerStyle={{
-                    flexGrow: 1,
-                }}
-            />
+    return (
+        <KeyboardAvoidingLayout>
+            <Layout style={{ flex: 1 }}>
+                {loading && <Loader /> || (
+                    <Fragment>
+                        <FlatList
+                            numColumns={3}
+                            keyExtractor={item => item.id}
+                            data={response && response.files || []}
+                            renderItem={itemCallback}
+                            ListEmptyComponent={emptyCallback}
+                            onRefresh={() => {
+                                refetch();
+                                setNewIds([]);
+                            }}
+                            refreshing={loading}
+                            contentContainerStyle={{
+                                flexGrow: 1,
+                            }}
+                        />
 
-            {uploading && <LoadingModal text={i18n.t('Uploading...')} />}
-        </View>
-    ));
+                        {uploading && <LoadingModal text={i18n.t('Uploading...')} />}
+                    </Fragment>
+                )}
+            </Layout>
+        </KeyboardAvoidingLayout>
+    );
 }
 
 AnimalMediaScreen.navigationOptions = ({ navigation: { getParam } }) => {
     return {
         title: i18n.t('Media'),
-        headerTitleStyle: {
-            flex: 1,
-            textAlign: 'center',
-        },
 
-        headerRight: (
+        headerRight: () => (
             <HeaderButtons>
                 <Item title="upload" iconName="upload" onPress={() => {
                     getParam('selectFile')();

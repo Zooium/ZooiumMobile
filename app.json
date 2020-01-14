@@ -4,7 +4,7 @@
     "slug": "zooium",
     "scheme": "zooium",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
+    "sdkVersion": "36.0.0",
     "githubUrl": "https://github.com/Zooium/ZooiumMobile",
     "platforms": [
       "ios",

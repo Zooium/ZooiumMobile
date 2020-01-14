@@ -1,14 +1,11 @@
 import React from 'react';
 import ResourceList from '@components/resource/ResourceList.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
-import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import ResourceSelectList from '@components/resource/ResourceSelectList.js';
 
 export default function Typeahead(props) {
     return (
-        <KeyboardAvoidingLayout>
-            <ResourceList List={ResourceSelectList} {...props} />
-        </KeyboardAvoidingLayout>
+        <ResourceList List={ResourceSelectList} {...props} />
     );
 }
 
@@ -20,7 +17,7 @@ Typeahead.navigationOptions = ({ navigation }) => {
             navigation.goBack();
         } }),
 
-        headerRight: add && (
+        headerRight: add && (() => (
             <HeaderButtons>
                 <Item title="add" iconName="plus" onPress={() => {
                     const rand = Math.random().toString(36).slice(2);
@@ -31,6 +28,6 @@ Typeahead.navigationOptions = ({ navigation }) => {
                     });
                 }} />
             </HeaderButtons>
-        ) || undefined,
+        )) || undefined,
     };
 }

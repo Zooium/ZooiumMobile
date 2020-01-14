@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Constants from 'expo-constants';
 import AppStyles from '@utils/AppStyles.js';
 import AuthManager from '@utils/AuthManager.js';
-import { Text, Icon } from '@ui-kitten/components';
+import { Text, Icon, Layout } from '@ui-kitten/components';
 import { View, Alert, SectionList, TouchableHighlight } from 'react-native';
 
 const menu = [
@@ -83,7 +83,7 @@ const menu = [
 export default function MenuScreen({ navigation }) {
     const renderItem = ({ item }) => {
         return (
-            <TouchableHighlight underlayColor="#AAA" onPress={() => item.onPress(navigation)}>
+            <TouchableHighlight underlayColor={theme['color-basic-200']} style={{ backgroundColor: 'white' }} onPress={() => item.onPress(navigation)}>
                 <View style={[AppStyles.listItem, {
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -118,7 +118,7 @@ export default function MenuScreen({ navigation }) {
     }
 
     return (
-        <View style={{ flex: 1 }}>
+        <Layout style={{ flex: 1 }}>
             <SectionList
                 sections={menu}
                 initialNumToRender={25}
@@ -130,7 +130,6 @@ export default function MenuScreen({ navigation }) {
                 ListFooterComponent={(
                     <View style={{
                         padding: 10,
-                        marginTop: 12,
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                     }}>
@@ -163,7 +162,7 @@ export default function MenuScreen({ navigation }) {
                     </View>
                 )}
             />
-        </View>
+        </Layout>
     );
 }
 

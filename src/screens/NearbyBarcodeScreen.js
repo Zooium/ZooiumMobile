@@ -4,11 +4,11 @@ import Loader from '@components/Loader.js';
 import * as Permissions from 'expo-permissions';
 import { View, StyleSheet } from 'react-native';
 import ModalClose from '@components/ModalClose.js';
-import { Icon, Text } from '@ui-kitten/components';
 import { useLazyQuery } from '@apollo/react-hooks';
 import React, { useState, useEffect } from 'react';
 import { NavigationEvents } from 'react-navigation';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Icon, Text, Layout } from '@ui-kitten/components';
 import PermissionDenied from '@components/PermissionDenied.js';
 import VIEW_SHORTLINK from '@graphql/queries/Shortlink/viewShortlink.gql.js';
 
@@ -113,7 +113,7 @@ export default function NearbyBarcodeScreen({ navigation, ...props }) {
 
     // Return bar code scanner view.
     return (
-        <View {...props} style={{flex: 1, backgroundColor: status === 'granted' && 'black'}}>
+        <Layout {...props} style={{flex: 1, backgroundColor: status === 'granted' && 'black'}}>
             <NavigationEvents
                 onWillFocus={() => setRender(true)}
                 onDidBlur={() => setRender(false)}
@@ -144,6 +144,6 @@ export default function NearbyBarcodeScreen({ navigation, ...props }) {
                     )}
                 </View>
             </BarCodeScanner>}
-        </View>
+        </Layout>
     );
 }

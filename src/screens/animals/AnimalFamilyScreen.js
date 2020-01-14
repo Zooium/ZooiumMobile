@@ -2,11 +2,13 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import { View } from 'react-native';
 import Loader from '@components/Loader.js';
+import { Layout } from '@ui-kitten/components';
 import { useQuery } from '@apollo/react-hooks';
 import { withNavigation } from 'react-navigation';
 import parseQuery from '@utils/apollo/parseQuery.js';
 import FamilyRow from '@components/rows/FamilyRow.js';
 import ResourceSwipeList from '@components/resource/ResourceSwipeList.js';
+import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import DELETE_ANIMALS from '@graphql/mutations/Animal/deleteAnimals.gql.js';
 import VIEW_ANIMAL_FAMILY from '@graphql/queries/Animal/viewAnimalFamily.gql.js';
 
@@ -53,42 +55,41 @@ function AnimalFamilyScreen({ navigation }) {
     });
 
     // Return the resource list view.
-    return (loading ? <Loader /> : (
-        <View style={{flex: 1}}>
-            <ResourceSwipeList
-                list={list}
-                query={query}
-                keyExtractor={item => {
-                    return item.family_parent_side
-                        + item.family_level
-                        + item.family_side
-                        + item.id;
-                }}
+    return (
+        <KeyboardAvoidingLayout>
+            <Layout style={{ flex: 1 }}>
+                {loading && <Loader /> || (
+                    <ResourceSwipeList
+                        list={list}
+                        query={query}
+                        keyExtractor={item => {
+                            return item.family_parent_side
+                                + item.family_level
+                                + item.family_side
+                                + item.id;
+                        }}
 
-                preview={FamilyRow}
-                name={i18n.t('Animal', { count: 2 })}
-                
-                routes={{
-                    view: 'AnimalView',
-                    edit: 'AnimalEdit',
-                }}
+                        preview={FamilyRow}
+                        name={i18n.t('Animal', { count: 2 })}
+                        
+                        routes={{
+                            view: 'AnimalView',
+                            edit: 'AnimalEdit',
+                        }}
 
-                mutations={{
-                    remove: DELETE_ANIMALS,
-                }}
-            />
-        </View>
-    ));
+                        mutations={{
+                            remove: DELETE_ANIMALS,
+                        }}
+                    />
+                )}
+            </Layout>
+        </KeyboardAvoidingLayout>
+    );
 }
 
 AnimalFamilyScreen.navigationOptions = {
     title: i18n.t('Family'),
-    headerTitleStyle: {
-        flex: 1,
-        textAlign: 'center',
-    },
-    
-    headerRight: <View />,
+    headerRight: () => <View />,
 }
 
 export default withNavigation(AnimalFamilyScreen);

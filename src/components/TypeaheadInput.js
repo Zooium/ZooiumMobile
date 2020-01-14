@@ -1,17 +1,18 @@
 import React from 'react';
-import i18n from '@src/i18n.js';
+import theme from '@src/theme.js';
 import PropTypes from 'prop-types';
 import { Icon } from '@ui-kitten/components';
+import { TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import InputButton from '@components/InputButton.js';
 
-function TypeaheadInput({ view, preview, appendSearch, add, resource, value, onChange, navigation }) {
+function TypeaheadInput({ view, preview, appendSearch, add, value, onChange, navigation }) {
     return (
         <InputButton
-            icon={value && (() => (
-                <Icon name="times" size={22} color="#000" style={{ opacity: .4 }} onPress={() => {
-                    onChange(null);
-                }} />
+            icon={value && ((style) => (
+                <TouchableOpacity style={style} onPress={() => onChange(null)}>
+                    <Icon name="times" size={22} color={theme['color-basic-600']} />
+                </TouchableOpacity>
             ))}
             onPress={() => {
                 const rand = Math.random().toString(36).slice(2);

@@ -111,27 +111,25 @@ function ResourceView({ items, headers, fetch, parser, variables = {}, routes: {
     );
 
     // Return resource view.
-    return (loading || fetching) ? (
-        <Layout style={{ flex: 1 }}>
-            <Loader />
-        </Layout>
-    ) : (
+    return (
         <KeyboardAvoidingLayout>
             <Layout style={{ flex: 1 }}>
-                <SectionList
-                    sections={items}
-                    initialNumToRender={25}
-                    keyExtractor={(item, index) => index.toString()}
-
-                    renderItem={renderItem}
-                    renderSectionHeader={renderSectionHeader}
-                    ListHeaderComponent={renderHeaderActions}
-
-                    refreshing={loading || fetching}
-                    onRefresh={render === 'View' && (() => {
-                        return refetch && refetch();
-                    })}
-                />
+                {(loading || fetching) && <Loader /> || (
+                    <SectionList
+                        sections={items}
+                        initialNumToRender={25}
+                        keyExtractor={(item, index) => index.toString()}
+    
+                        renderItem={renderItem}
+                        renderSectionHeader={renderSectionHeader}
+                        ListHeaderComponent={renderHeaderActions}
+    
+                        refreshing={loading || fetching}
+                        onRefresh={render === 'View' && (() => {
+                            return refetch && refetch();
+                        })}
+                    />
+                )}
             </Layout>
         </KeyboardAvoidingLayout>
     );
@@ -173,12 +171,8 @@ ResourceView.navigationOptions = ({ title, canModify, showEdit = true, navigatio
 
     return {
         title: title && title(item),
-        headerTitleStyle: {
-            flex: 1,
-            textAlign: 'center',
-        },
 
-        headerRight: showEdit && (
+        headerRight: showEdit && (() => (
             <HeaderButtons>
                 <Item title="delete" iconName="trash-alt" onPress={() => {
                     // Skip if not allowed to modify item. 
@@ -200,7 +194,7 @@ ResourceView.navigationOptions = ({ title, canModify, showEdit = true, navigatio
                     editItem && editItem(item);
                 }} />
             </HeaderButtons>
-        ) || <View />,
+        ) || (() => <View />)),
     };
 };
 

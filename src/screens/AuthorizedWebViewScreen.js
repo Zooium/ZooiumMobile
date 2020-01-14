@@ -34,12 +34,7 @@ export default function AuthorizedWebViewScreen({ navigation }) {
 
 AuthorizedWebViewScreen.navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('title'),
-    headerTitleStyle: {
-        flex: 1,
-        textAlign: 'center',
-    },
-
-    headerRight: <View />,
+    headerRight: () => <View />,
 })
 
 AuthorizedWebViewScreen.propTypes = {

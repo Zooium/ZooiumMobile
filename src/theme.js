@@ -1,4 +1,5 @@
 import { light } from '@eva-design/eva';
+import { Platform } from 'react-native';
 
 export default {
     ...light,
@@ -53,3 +54,28 @@ export default {
     "color-danger-800": "#8E114D",
     "color-danger-900": "#750A48",
 };
+
+// @see https://github.com/facebook/react-native/issues/25696
+export const customMapping = Platform.select({
+    android: {
+        "strict": {
+            "text-heading-1-font-weight": "bold",       // 800
+            "text-heading-2-font-weight": "bold",       // 800
+            "text-heading-3-font-weight": "bold",       // 800
+            "text-heading-4-font-weight": "bold",       // 800
+            "text-heading-5-font-weight": "bold",       // 800
+            "text-heading-6-font-weight": "bold",       // 800
+    
+            "text-subtitle-1-font-weight": "bold",      // 600
+            "text-subtitle-2-font-weight": "bold",      // 600
+    
+            "text-paragraph-1-font-weight": "normal",   // 400
+            "text-paragraph-2-font-weight": "normal",   // 400
+    
+            "text-caption-1-font-weight": "normal",     // 400
+            "text-caption-2-font-weight": "bold",       // 600
+    
+            "text-label-font-weight": "bold",           // 800
+        },
+    },
+});

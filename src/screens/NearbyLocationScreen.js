@@ -67,48 +67,38 @@ function NearbyLocationScreen({ isFocused }) {
 
     // Return nearby list.
     return (
-        <View style={{ flex: 1 }}>
-            <EnclosureList showRefresh={false} variables={{
-                coordinate: {
-                    latitude: location.coords && location.coords.latitude,
-                    longitude: location.coords && location.coords.longitude,
-                },
-            }} header={({ item }) => item.distance ? (
-                <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginBottom: 4,
-                    opacity: 0.4,
-                }}>
-                    <Icon name="location-arrow" size={10} style={{ marginRight: 6 }} />
-                    <Text category="label">
-                        {item.distance < 1000
-                            ? i18n.t('{{distance}} meter', {
-                                distance: item.distance,
-                            })
-                            : i18n.t('{{distance}} km', {
-                                distance: +(item.distance/1000).toFixed(2),
-                            })
-                        }
-                    </Text>
-                </View>
-            ) : null} />
-        </View>
+        <EnclosureList showRefresh={false} variables={{
+            coordinate: {
+                latitude: location.coords && location.coords.latitude,
+                longitude: location.coords && location.coords.longitude,
+            },
+        }} header={({ item }) => item.distance ? (
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 4,
+                opacity: 0.4,
+            }}>
+                <Icon name="location-arrow" size={10} style={{ marginRight: 6 }} />
+                <Text category="label">
+                    {item.distance < 1000
+                        ? i18n.t('{{distance}} meter', {
+                            distance: item.distance,
+                        })
+                        : i18n.t('{{distance}} km', {
+                            distance: +(item.distance/1000).toFixed(2),
+                        })
+                    }
+                </Text>
+            </View>
+        ) : null} />
     )
 }
 
 NearbyLocationScreen.navigationOptions = ({ navigation }) => {
     return {
-        headerTitleStyle: {
-            flex: 1,
-            textAlign: 'left',
-        },
-
-        headerTitleContainerStyle: {
-            left: 0,
-        },
-    
-        headerRight: (
+        headerTitleAlign: 'left',
+        headerRight: () => (
             <HeaderButtons>
                 <Item
                     title="toggle"

@@ -1,35 +1,31 @@
-import i18n from '@src/i18n.js';
+import React from 'react';
+import theme from '@src/theme.js';
 import PropTypes from 'prop-types';
-import React, { Fragment, useState } from 'react';
-import InputButton from '@components/InputButton.js';
-import Picker from 'react-native-modal-datetime-picker';
-import { useColorScheme } from 'react-native-appearance';
+import { TouchableOpacity } from 'react-native';
+import { Icon, Datepicker } from '@ui-kitten/components';
 
-export default function DateTimePicker({ value, onChange }) {
-    const date = value && new Date(value) || new Date();
-    const [show, setShow] = useState(false);
+/**
+ * Awaiting time picker implementation.
+ * @see https://github.com/akveo/react-native-ui-kitten/issues/778
+ */
+export default function DateTimePicker({ value, onChange, ...props }) {
+    const date = value && new Date(value);
 
     return (
-        <Fragment>
-            <InputButton onPress={() => setShow(true)}>
-                {value && date.toLocaleString()}
-            </InputButton>
-
-            <Picker
-                mode="datetime"
-                date={date}
-                isVisible={show}
-                locale={i18n.language}
-                onConfirm={date => {
-                    setShow(false);
-                    onChange(date.toISOString());
-                }}
-                onCancel={() => {
-                    setShow(false);
-                }}
-                isDarkModeEnabled={useColorScheme() === 'dark'}
-            />
-        </Fragment>
+        <Datepicker
+            date={date}
+            placeholder={null}
+            min={new Date(1800, 1, 1)}
+            icon={value && ((style) => (
+                <TouchableOpacity style={style} onPress={() => onChange(null)}>
+                    <Icon name="times" size={22} color={theme['color-basic-600']} />
+                </TouchableOpacity>
+            ))}
+            onSelect={date => {
+                onChange(date.toISOString());
+            }}
+            {...props}
+        />
     );
 }
 
