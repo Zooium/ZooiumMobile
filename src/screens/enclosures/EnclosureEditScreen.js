@@ -10,8 +10,8 @@ export default function EnclosureEditScreen() {
     return (
         <ResourceEdit
             items={EnclosureSettings.fields}
+            parser={EnclosureSettings.parser}
             formInit={EnclosureSettings.formInit}
-            formParser={EnclosureSettings.formParser}
 
             fetch={VIEW_ENCLOSURE}
             mutations={{

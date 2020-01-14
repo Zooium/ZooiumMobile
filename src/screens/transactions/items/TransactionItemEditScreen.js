@@ -9,8 +9,8 @@ export default function TransactionItemEditScreen() {
     return (
         <ResourceEdit
             items={TransactionItemSettings.fields}
+            parser={TransactionItemSettings.parser}
             formInit={TransactionItemSettings.formInit}
-            formParser={TransactionItemSettings.formParser}
             
             mutations={{
                 save: UPDATE_TRANSACTION_ITEM,

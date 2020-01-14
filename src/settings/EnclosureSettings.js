@@ -31,12 +31,13 @@ export default class EnclosureSettings {
     })
 
     /**
-     * Parse resource to form object.
+     * Parses additional details from response.
+     *
+     * @param {object} item
      */
-    static formParser = (resource) => ({
-        ...resource,
-        location_id: resource.location && resource.location.id,
-    })
+    static parser(item) {
+        item.location_id = item.location_id || item.location && item.location.id || undefined;
+    }
 
     /**
      * The entity fields.

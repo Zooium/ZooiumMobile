@@ -10,8 +10,8 @@ export default function TransactionEditScreen() {
     return (
         <ResourceEdit
             items={TransactionSettings.fields}
+            parser={TransactionSettings.parser}
             formInit={TransactionSettings.formInit}
-            formParser={TransactionSettings.formParser}
             
             fetch={VIEW_TRANSACTION}
             mutations={{

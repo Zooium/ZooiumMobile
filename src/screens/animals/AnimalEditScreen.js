@@ -10,8 +10,8 @@ export default function AnimalEditScreen() {
     return (
         <ResourceEdit
             items={AnimalSettings.fields}
+            parser={AnimalSettings.parser}
             formInit={AnimalSettings.formInit}
-            formParser={AnimalSettings.formParser}
             
             fetch={VIEW_ANIMAL}
             mutations={{

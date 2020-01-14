@@ -38,14 +38,15 @@ export default class TransactionItemSettings {
     })
 
     /**
-     * Parse resource to form object.
+     * Parses additional details from response.
+     *
+     * @param {object} item
      */
-    static formParser = (resource) => ({
-        ...resource,
-        resource_id: resource.resource && resource.resource.id,
-        relation_id: resource.relation && resource.relation.id,
-        transaction_id: resource.transaction && resource.transaction.id,
-    })
+    static parser(item) {
+        item.resource_id = item.resource_id || item.resource && item.resource.id || undefined;
+        item.relation_id = item.relation_id || item.relation && item.relation.id || undefined;
+        item.transaction_id = item.transaction_id || item.transaction && item.transaction.id || undefined;
+    }
 
     /**
      * The entity fields.

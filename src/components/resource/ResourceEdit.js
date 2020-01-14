@@ -10,7 +10,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
-function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: { save, create, remove }, navigation, ...props }) {
+function ResourceEdit({ formInit, routes: { view } = {}, mutations: { save, create, remove }, navigation, ...props }) {
     // Create form state from passed init function.
     const defaults = navigation.getParam('defaults') || {};
     const form = useState({...formInit(), ...defaults});
@@ -100,15 +100,14 @@ function ResourceEdit({ formInit, formParser, routes: { view } = {}, mutations: 
         });
     }, []);
 
-    // Get item and prepare parsing state.
+    // Get item from navigation.
     const item = navigation.getParam('item');
     const [parsing, setParsing] = useState(item !== undefined);
 
-    // Parse form and disable parsing on item change.
+    // Parse item into state if available.
     useEffect(() => {
         if (item) {
-            // TODO - Switch out with standard parser.
-            setState(formParser && formParser(item) || item);
+            setState({ ...state, ...item });
             setParsing(false);
         }
     }, [item]);
@@ -171,7 +170,6 @@ ResourceEdit.navigationOptions = ({ title, canModify, navigation }) => {
 ResourceEdit.propTypes = {
     ...ResourceView.propTypes,
 
-    formParser: PropTypes.func,
     formInit: PropTypes.func.isRequired,
     
     routes: PropTypes.shape({

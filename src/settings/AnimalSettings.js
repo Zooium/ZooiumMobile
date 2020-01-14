@@ -46,15 +46,16 @@ export default class AnimalSettings {
     })
 
     /**
-     * Parse resource to form object.
+     * Parses additional details from response.
+     *
+     * @param {object} item
      */
-    static formParser = (resource) => ({
-        ...resource,
-        father_id: resource.father && resource.father.id,
-        mother_id: resource.mother && resource.mother.id,
-        enclosure_id: resource.enclosure && resource.enclosure.id,
-        specie_id: resource.specie && resource.specie.id,
-    })
+    static parser(item) {
+        item.father_id = item.father_id || item.father && item.father.id || undefined;
+        item.mother_id = item.mother_id || item.mother && item.mother.id || undefined;
+        item.specie_id = item.specie_id || item.specie && item.specie.id || undefined;
+        item.enclosure_id = item.enclosure_id || item.enclosure && item.enclosure.id || undefined;
+    }
 
     /**
      * The entity fields.

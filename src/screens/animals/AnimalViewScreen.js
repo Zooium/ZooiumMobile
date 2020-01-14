@@ -8,6 +8,7 @@ export default function AnimalViewScreen() {
     return (
         <ResourceView
             items={AnimalSettings.fields}
+            parser={AnimalSettings.parser}
             headers={AnimalSettings.headers}
             fetch={VIEW_ANIMAL}
 

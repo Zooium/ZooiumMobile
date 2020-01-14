@@ -8,6 +8,7 @@ export default function EnclosureViewScreen() {
     return (
         <ResourceView
             items={EnclosureSettings.fields}
+            parser={EnclosureSettings.parser}
             headers={EnclosureSettings.headers}
             fetch={VIEW_ENCLOSURE}
 

@@ -8,6 +8,7 @@ export default function TransactionViewScreen() {
     return (
         <ResourceView
             items={TransactionSettings.fields}
+            parser={TransactionSettings.parser}
             headers={TransactionSettings.headers}
             fetch={VIEW_TRANSACTION}
 
