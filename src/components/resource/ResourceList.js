@@ -160,6 +160,8 @@ ResourceList.navigationOptions = ({ navigation, onSearchCancel = undefined, hasR
 
     // Return default navigation options.
     return {
+        headerTitle: navigation.getParam('overrideTitle'),
+
         headerLeft: () => (
             <HeaderButtons left={true}>
                 {canGoBack && (

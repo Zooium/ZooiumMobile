@@ -391,6 +391,8 @@ export default class AnimalSettings {
                 key: route + (search = 'parent:'+response.id),
                 params: {
                     appendSearch: search,
+                    overrideTitle: i18n.t('Cubs'),
+
                     defaults: {
                         father: response.sex === 'male' && response || undefined,
                         father_id: response.sex === 'male' && response.id || undefined,
