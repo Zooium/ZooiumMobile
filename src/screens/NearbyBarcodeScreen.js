@@ -73,12 +73,12 @@ export default function NearbyBarcodeScreen({ navigation, ...props }) {
         const { __typename: type } = item;
 
         // Navigate to the type and pass item.
-        const route = 'View'+type;
+        const route = type+'View';
         navigation.navigate({
             key: route + item.id,
             routeName: route,
             params: { item },
-        })
+        });
     }, [data, error]);
 
     // Callback on barcode scan result.
