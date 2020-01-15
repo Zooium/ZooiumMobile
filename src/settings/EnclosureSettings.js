@@ -145,9 +145,9 @@ export default class EnclosureSettings {
             icon: 'dove',
             title: i18n.t('Animal', { count: 2 }),
             color: theme['color-primary-500'],
-            navigate: ({ response }) =>  ({
-                routeName: (route = 'AnimalList'),
-                key: route + (search = 'enclosure:'+response.id),
+            navigate: ({ response, route = 'AnimalList', search = 'enclosure:'+response.id }) =>  ({
+                routeName: route,
+                key: route + search,
                 params: {
                     search: search,
                     showSearch: true,

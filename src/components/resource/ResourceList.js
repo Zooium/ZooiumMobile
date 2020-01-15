@@ -1,10 +1,10 @@
 import i18n from '@src/i18n.js';
+import { TextInput } from 'react-native';
 import Loader from '@components/Loader.js';
 import { useDebounce } from 'use-debounce';
 import AuthState from '@utils/AuthState.js';
 import { Layout } from '@ui-kitten/components';
 import { useQuery } from '@apollo/react-hooks';
-import { View, TextInput } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import parseQuery from '@utils/apollo/parseQuery.js';
 import ListSettings from '@components/ListSettings.js';
@@ -115,20 +115,22 @@ ResourceList.navigationOptions = ({ navigation, onSearchCancel = undefined, hasR
     if (navigation.getParam('showSearch', false)) {
         return {
             headerRight: () => null,
-            headerLeft: () => (
-                <HeaderButtons left={true}>
-                    <Item title="return" iconName="arrow-left" onPress={() => {
-                        if (onSearchCancel) return onSearchCancel();
-                        if (navigation.state && navigation.state.key && navigation.goBack()) return;
+            headerLeft: function SearchReturnButton() {
+                return (
+                    <HeaderButtons left={true}>
+                        <Item title="return" iconName="arrow-left" onPress={() => {
+                            if (onSearchCancel) return onSearchCancel();
+                            if (navigation.state && navigation.state.key && navigation.goBack()) return;
 
-                        navigation.getParam('setSearch')(null);
-                        navigation.setParams({
-                            search: null,
-                            showSearch: false
-                        });
-                    }} />
-                </HeaderButtons>
-            ),
+                            navigation.getParam('setSearch')(null);
+                            navigation.setParams({
+                                search: null,
+                                showSearch: false
+                            });
+                        }} />
+                    </HeaderButtons>
+                );
+            },
     
             headerTitleAlign: 'left',
             headerTitleContainerStyle: {
@@ -136,21 +138,23 @@ ResourceList.navigationOptions = ({ navigation, onSearchCancel = undefined, hasR
                 right: hasRightSearchItem ? 48 : 14,
             },
 
-            headerTitle: () => (
-                <TextInput
-                    clearButtonMode="always"
-                    selectionColor="white"
-                    placeholder={i18n.t('Enter criteria to search...')}
-                    autoFocus={navigation.getParam('focusSearch', true)}
-                    defaultValue={navigation.getParam('search')}
-                    onChangeText={navigation.getParam('setSearch')}
-                    style={{
-                        width: '100%',
-                        color: 'white',
-                        fontSize: 18,
-                    }}
-                />
-            ),
+            headerTitle: function SearchBarRender() {
+                return (
+                    <TextInput
+                        clearButtonMode="always"
+                        selectionColor="white"
+                        placeholder={i18n.t('Enter criteria to search...')}
+                        autoFocus={navigation.getParam('focusSearch', true)}
+                        defaultValue={navigation.getParam('search')}
+                        onChangeText={navigation.getParam('setSearch')}
+                        style={{
+                            width: '100%',
+                            color: 'white',
+                            fontSize: 18,
+                        }}
+                    />
+                );
+            },
         };
     }
 
@@ -161,34 +165,38 @@ ResourceList.navigationOptions = ({ navigation, onSearchCancel = undefined, hasR
     return {
         headerTitle: navigation.getParam('overrideTitle'),
 
-        headerLeft: () => (
-            <HeaderButtons left={true}>
-                {canGoBack && (
-                    <Item title="return" iconName="arrow-left" onPress={() => navigation.goBack()} />
-                )}
+        headerLeft: function ReturnAndAddButtons() {
+            return (
+                <HeaderButtons left={true}>
+                    {canGoBack && (
+                        <Item title="return" iconName="arrow-left" onPress={() => navigation.goBack()} />
+                    )}
 
-                <Item title="add" iconName="plus" onPress={() => {
-                    navigation.getParam('createItem') && navigation.getParam('createItem')();
-                }} />
-            </HeaderButtons>
-        ),
+                    <Item title="add" iconName="plus" onPress={() => {
+                        navigation.getParam('createItem') && navigation.getParam('createItem')();
+                    }} />
+                </HeaderButtons>
+            );
+        },
 
-        headerRight: ({ items = undefined } = {}) => (
-            <HeaderButtons>
-                <Item title="search" iconName="search" onPress={() => {
-                    navigation.setParams({
-                        showSearch: true,
-                        focusSearch: true,
-                    });
-                }} />
+        headerRight: function SearchOptionButtons({ items = undefined } = {}) {
+            return (
+                <HeaderButtons>
+                    <Item title="search" iconName="search" onPress={() => {
+                        navigation.setParams({
+                            showSearch: true,
+                            focusSearch: true,
+                        });
+                    }} />
 
-                <Item title="filter" iconName="filter" onPress={() => {
-                    navigation.getParam('setShowSettings')(! navigation.getParam('showSettings', false));
-                }} />
+                    <Item title="filter" iconName="filter" onPress={() => {
+                        navigation.getParam('setShowSettings')(! navigation.getParam('showSettings', false));
+                    }} />
 
-                { items && items() }
-            </HeaderButtons>
-        ),
+                    { items && items() }
+                </HeaderButtons>
+            );
+        },
     }
 }
 

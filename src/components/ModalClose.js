@@ -1,6 +1,5 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import AppStyles from '@utils/AppStyles.js';
 import { Text } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';

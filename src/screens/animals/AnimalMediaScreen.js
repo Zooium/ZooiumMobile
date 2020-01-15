@@ -211,17 +211,19 @@ AnimalMediaScreen.navigationOptions = ({ navigation: { getParam } }) => {
     return {
         title: i18n.t('Media'),
 
-        headerRight: () => (
-            <HeaderButtons>
-                <Item title="upload" iconName="upload" onPress={() => {
-                    getParam('selectFile')();
-                }} />
+        headerRight: function UploadButtons() {
+            return (
+                <HeaderButtons>
+                    <Item title="upload" iconName="upload" onPress={() => {
+                        getParam('selectFile')();
+                    }} />
 
-                <Item title="camera" iconName="camera" onPress={() => {
-                    getParam('captureImage')();
-                }} />
-            </HeaderButtons>
-        ),
+                    <Item title="camera" iconName="camera" onPress={() => {
+                        getParam('captureImage')();
+                    }} />
+                </HeaderButtons>
+            );
+        },
     };
 }
 

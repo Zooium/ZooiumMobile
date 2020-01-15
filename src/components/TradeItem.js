@@ -72,7 +72,7 @@ export const tradeTypeSettings = {
     },
 }
 
-export default function TradeItem({ item, editing = false, style, onPress, ...props }) {
+export default function TradeItem({ item, style, onPress, ...props }) {
     const settings = tradeTypeSettings[item.type] || tradeTypeSettings['other'];
     const color = item.direction === 'to'
         ? theme['color-danger-200']

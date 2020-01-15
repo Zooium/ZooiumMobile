@@ -205,7 +205,7 @@ export default class EventSettings {
                     key: 'resource_type',
                     title: i18n.t('Type'),
                     required: () => true,
-                    shouldRender: (view, form) => view === 'edit',
+                    shouldRender: (view) => view === 'edit',
                     renderEdit: function TypeEditRender([state, mergeState]) {
                         return (
                             <RadioGroup

@@ -1,8 +1,8 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
+import { Text } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native';
 import TradeItems from '@components/TradeItems.js';
-import { Text, Input } from '@ui-kitten/components';
 import MultilineInput from '@components/MultilineInput.js';
 import TypeaheadInput from '@components/TypeaheadInput.js';
 import DataTimePicker from '@components/DateTimePicker.js';

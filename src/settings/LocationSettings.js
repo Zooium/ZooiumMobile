@@ -116,9 +116,9 @@ export default class LocationSettings {
             icon: 'dove',
             title: i18n.t('Animal', { count: 2 }),
             color: theme['color-primary-500'],
-            navigate: ({ response }) =>  ({
-                routeName: (route = 'AnimalList'),
-                key: route + (search = 'location:'+response.id),
+            navigate: ({ response, route = 'AnimalList', search = 'location:'+response.id }) =>  ({
+                routeName: route,
+                key: route + search,
                 params: {
                     search: search,
                     showSearch: true,
@@ -131,9 +131,9 @@ export default class LocationSettings {
             icon: 'map-marked-alt',
             title: i18n.t('Enclosure', { count: 2 }),
             color: theme['color-success-500'],
-            navigate: ({ response }) =>  ({
-                routeName: (route = 'EnclosureList'),
-                key: route + (search = 'location:'+response.id),
+            navigate: ({ response, route = 'EnclosureList', search = 'location:'+response.id }) =>  ({
+                routeName: route,
+                key: route + search,
                 params: {
                     search: search,
                     showSearch: true,

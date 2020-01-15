@@ -1,5 +1,4 @@
 import React from 'react';
-import AppStyles from '@utils/AppStyles.js';
 import { Icon } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native';
 

@@ -33,5 +33,7 @@ export default function AuthorizedWebViewScreen({ navigation }) {
 
 AuthorizedWebViewScreen.navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('title'),
-    headerRight: () => <View />,
+    headerRight: function SpacerItem() {
+        return <View />;
+    },
 })

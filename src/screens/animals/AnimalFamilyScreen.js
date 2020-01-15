@@ -89,7 +89,9 @@ function AnimalFamilyScreen({ navigation }) {
 
 AnimalFamilyScreen.navigationOptions = {
     title: i18n.t('Family'),
-    headerRight: () => <View />,
+    headerRight: function SpacerItem() {
+        return <View />;
+    },
 }
 
 export default withNavigation(AnimalFamilyScreen);

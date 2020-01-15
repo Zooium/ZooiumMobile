@@ -387,9 +387,9 @@ export default class AnimalSettings {
             icon: 'baby',
             title: i18n.t('Cubs'),
             color: theme['color-primary-500'],
-            navigate: ({ response }) => ({
-                routeName: (route = 'AnimalList'),
-                key: route + (search = 'parent:'+response.id),
+            navigate: ({ response, route = 'AnimalList', search = 'parent:'+response.id }) => ({
+                routeName: route,
+                key: route + search,
                 params: {
                     appendSearch: search,
                     overrideTitle: i18n.t('Cubs'),
@@ -412,9 +412,9 @@ export default class AnimalSettings {
             icon: 'calendar-star',
             title: i18n.t('Event', { count: 2 }),
             color: theme['color-success-500'],
-            navigate: ({ response }) =>  ({
-                routeName: (route = 'EventList'),
-                key: route + (search = 'source:animal:'+response.id),
+            navigate: ({ response, route = 'EventList', search = 'source:animal:'+response.id }) =>  ({
+                routeName: route,
+                key: route + search,
                 params: {
                     appendSearch: search,
                     defaults: {
@@ -430,8 +430,8 @@ export default class AnimalSettings {
             icon: 'dna',
             title: i18n.t('Family'),
             color: theme['color-warning-500'],
-            navigate: ({ response }) =>  ({
-                routeName: (route = 'AnimalFamily'),
+            navigate: ({ response, route = 'AnimalFamily' }) =>  ({
+                routeName: route,
                 key: route + response.id,
                 params: {
                     item: response,
@@ -443,8 +443,8 @@ export default class AnimalSettings {
             icon: 'photo-video',
             title: i18n.t('Media'),
             color: theme['color-danger-500'],
-            navigate: ({ response }) =>  ({
-                routeName: (route = 'AnimalMedia'),
+            navigate: ({ response, route = 'AnimalMedia' }) =>  ({
+                routeName: route,
                 key: route + response.id,
                 params: {
                     item: response,

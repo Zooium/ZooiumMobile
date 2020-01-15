@@ -3,10 +3,9 @@ import theme from '@src/theme.js';
 import { View } from 'react-native';
 import React, { useState } from 'react';
 import TradeItem from '@components/TradeItem.js';
-import { withNavigation } from 'react-navigation';
 import { Text, Icon, Button, Tooltip } from '@ui-kitten/components';
 
-function TradeLine({ line, item: current, editing = false, editItem, transaction, navigation, ...props }) {
+export default function TradeLine({ line, item: current, editing = false, editItem, transaction, ...props }) {
     const [showTooltips, setShowTooltips] = useState(false);
 
     const leftItems = (transaction.origItems || transaction.items).filter(item => {
@@ -111,5 +110,3 @@ function TradeLine({ line, item: current, editing = false, editItem, transaction
         </View>
     );
 }
-
-export default withNavigation(TradeLine);

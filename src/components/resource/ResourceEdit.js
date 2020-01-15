@@ -134,35 +134,37 @@ ResourceEdit.navigationOptions = ({ title, canModify, navigation }) => {
     return {
         title: title && title(item),
 
-        headerRight: () => (
-            <HeaderButtons>
-                {item && (
-                    <Item title="delete" iconName="trash-alt" onPress={() => {
+        headerRight: function ModifyButtons() {
+            return (
+                <HeaderButtons>
+                    {item && (
+                        <Item title="delete" iconName="trash-alt" onPress={() => {
+                            // Skip if not allowed to modify item. 
+                            const msg = item && canModify && canModify(item);
+                            if (typeof msg === 'string') return Alert.alert(msg);
+
+                            // Show deletion confirmation.
+                            deleteItem && DeletionConfirmation(title(item), () => {
+                                deleteItem(item);
+                            });
+                        }} />
+                    )}
+
+                    <Item title={item ? 'save' : 'create'} iconName={item ? 'save' : 'plus'} onPress={() => {
                         // Skip if not allowed to modify item. 
                         const msg = item && canModify && canModify(item);
                         if (typeof msg === 'string') return Alert.alert(msg);
 
-                        // Show deletion confirmation.
-                        deleteItem && DeletionConfirmation(title(item), () => {
-                            deleteItem(item);
+                        // Save or create item.
+                        navigation.getParam('save')({
+                            item: navigation.getParam('item'),
+                            items: navigation.getParam('items'),
+                            state: navigation.getParam('state'),
                         });
                     }} />
-                )}
-
-                <Item title={item ? 'save' : 'create'} iconName={item ? 'save' : 'plus'} onPress={() => {
-                    // Skip if not allowed to modify item. 
-                    const msg = item && canModify && canModify(item);
-                    if (typeof msg === 'string') return Alert.alert(msg);
-
-                    // Save or create item.
-                    navigation.getParam('save')({
-                        item: navigation.getParam('item'),
-                        items: navigation.getParam('items'),
-                        state: navigation.getParam('state'),
-                    });
-                }} />
-            </HeaderButtons>
-        ),
+                </HeaderButtons>
+            );
+        },
     };
 }
 

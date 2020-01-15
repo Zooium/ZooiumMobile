@@ -107,32 +107,34 @@ NearbyLocationScreen.navigationOptions = ({ navigation }) => {
             left: 0,
         },
 
-        headerRight: () => (
-            <HeaderButtons>
-                <Item
-                    title="toggle"
-                    onPress={() => navigation.navigate({
-                        routeName: 'BarcodeNearby',
-                    })}
-                    ButtonElement={
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{
-                                color: 'white',
-                                fontSize: 16,
-                                marginRight: 14,
-                            }}>
-                                {i18n.t('Scan code')}
-                            </Text>
+        headerRight: function BarcodeToggleButton() {
+            return (
+                <HeaderButtons>
+                    <Item
+                        title="toggle"
+                        onPress={() => navigation.navigate({
+                            routeName: 'BarcodeNearby',
+                        })}
+                        ButtonElement={
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={{
+                                    color: 'white',
+                                    fontSize: 16,
+                                    marginRight: 14,
+                                }}>
+                                    {i18n.t('Scan code')}
+                                </Text>
 
-                            <Icon color="white" size={20} name={'qrcode'} />
-                        </View>
-                    }
-                    style={{
-                        marginRight: 10,
-                    }}
-                />
-            </HeaderButtons>
-        ),
+                                <Icon color="white" size={20} name={'qrcode'} />
+                            </View>
+                        }
+                        style={{
+                            marginRight: 10,
+                        }}
+                    />
+                </HeaderButtons>
+            );
+        },
     }
 }
 
