@@ -11,7 +11,7 @@
       "android",
       "web"
     ],
-    "version": "1.2.0",
+    "version": "1.3.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "primaryColor": "#4D65DC",
@@ -35,7 +35,7 @@
       "bundleIdentifier": "com.zooium.mobile"
     },
     "android": {
-      "versionCode": 3,
+      "versionCode": 4,
       "package": "com.zooium.mobile",
       "permissions": [
         "ACCESS_FINE_LOCATION",
