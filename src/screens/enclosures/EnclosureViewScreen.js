@@ -1,28 +1,36 @@
 import React from 'react';
 import EnclosureSettings from '@settings/EnclosureSettings.js';
-import ResourceView from '@components/resource/ResourceView.js';
+import ResourceWrapper from '@components/resource/ResourceWrapper.js';
 import VIEW_ENCLOSURE from '@graphql/queries/Enclosure/viewEnclosure.gql.js';
+import UPDATE_ENCLOSURE from '@graphql/mutations/Enclosure/updateEnclosure.gql.js';
+import CREATE_ENCLOSURE from '@graphql/mutations/Enclosure/createEnclosure.gql.js';
 import DELETE_ENCLOSURES from '@graphql/mutations/Enclosure/deleteEnclosures.gql.js';
 
-export default function EnclosureViewScreen() {
+export default function EnclosureViewScreen(props) {
     return (
-        <ResourceView
+        <ResourceWrapper
             items={EnclosureSettings.fields}
             parser={EnclosureSettings.parser}
             headers={EnclosureSettings.headers}
-            fetch={VIEW_ENCLOSURE}
+            formInit={EnclosureSettings.formInit}
 
+            fetch={VIEW_ENCLOSURE}
             mutations={{
+                save: UPDATE_ENCLOSURE,
+                create: CREATE_ENCLOSURE,
                 remove: DELETE_ENCLOSURES,
             }}
                 
             routes={{
+                view: 'EnclosureView',
                 edit: 'EnclosureEdit',
             }}
+
+            {...props}
         />
     );
 }
 
-EnclosureViewScreen.navigationOptions = (props) => ResourceView.navigationOptions({
+EnclosureViewScreen.navigationOptions = (props) => ResourceWrapper.navigationOptions({
     ...props, title: EnclosureSettings.title,
 });

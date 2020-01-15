@@ -2,7 +2,7 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import { Input } from '@ui-kitten/components';
 import FileSettings from '@settings/FileSettings.js';
-import ResourceEdit from '@components/resource/ResourceEdit.js';
+import ResourceWrapper from '@components/resource/ResourceWrapper.js';
 import UPDATE_FILE from '@graphql/mutations/File/updateFile.gql.js';
 import UPLOAD_FILE from '@graphql/mutations/File/uploadFile.gql.js';
 import DELETE_FILES from '@graphql/mutations/File/deleteFiles.gql.js';
@@ -27,9 +27,9 @@ const formInit = () => ({
     name: '',
 })
 
-export default function FileEditScreen() {
+export default function FileViewScreen(props) {
     return (
-        <ResourceEdit
+        <ResourceWrapper
             items={items}
             mutations={{
                 save: UPDATE_FILE,
@@ -38,10 +38,12 @@ export default function FileEditScreen() {
             }}
 
             formInit={formInit}
+
+            {...props}
         />
     );
 }
 
-FileEditScreen.navigationOptions = (props) => ResourceEdit.navigationOptions({
+FileViewScreen.navigationOptions = (props) => ResourceWrapper.navigationOptions({
     ...props, title: FileSettings.title,
 });

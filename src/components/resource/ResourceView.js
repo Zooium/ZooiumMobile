@@ -96,7 +96,7 @@ function ResourceView({ items, headers, fetch, parser, variables = {}, routes: {
     // Prepare render functions.
     const renderItem = ({ item, index, section }) => <ResourceViewItem item={item} index={index} section={section} form={form} response={response || fallback} render={render} />;
     const renderSectionHeader = ({ section }) => <ResourceViewHeader section={section} render={render} />;
-    const renderHeaderActions = (
+    const renderHeaderActions = render === 'View' && headers && (
         <FlatList
             data={headers}
             horizontal={true}
