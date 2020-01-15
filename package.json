@@ -63,7 +63,7 @@
 		"react-native-webview": "7.4.3",
 		"react-navigation": "^4.0.5",
 		"react-navigation-header-buttons": "^3.0.3",
-		"react-navigation-stack": "^1.10.3",
+		"react-navigation-stack": "^2.0.14",
 		"react-navigation-tabs": "^2.5.3",
 		"redux": "^4.0.4",
 		"sentry-expo": "~2.0.0",
