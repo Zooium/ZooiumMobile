@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Constants from 'expo-constants';
-import { useHeaderHeight } from 'react-navigation-stack';
+import { Header } from 'react-navigation-stack';
 import { Platform, KeyboardAvoidingView } from 'react-native';
 
 export default function KeyboardAvoidingLayout(props) {
-    const offset = useHeaderHeight() + Platform.select({
+    const offset = Header.HEIGHT + Platform.select({
         android: Constants.statusBarHeight,
         default: 0,
     });

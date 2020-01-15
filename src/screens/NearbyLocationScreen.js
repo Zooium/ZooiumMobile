@@ -98,6 +98,15 @@ function NearbyLocationScreen({ isFocused }) {
 NearbyLocationScreen.navigationOptions = ({ navigation }) => {
     return {
         headerTitleAlign: 'left',
+        headerTitleStyle: {
+            flex: 1,
+            fontWeight: 'bold',
+            textAlign: 'left',
+        },
+        headerTitleContainerStyle: {
+            left: 0,
+        },
+
         headerRight: () => (
             <HeaderButtons>
                 <Item

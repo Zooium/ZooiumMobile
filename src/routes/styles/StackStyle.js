@@ -11,7 +11,9 @@ export default {
             // Center header text and make title bold.
             headerTitleAlign: 'center',
             headerTitleStyle: {
+                flex: 1,
                 fontWeight: 'bold',
+                textAlign: 'center',
             },
 
             // Change header to primary color.
