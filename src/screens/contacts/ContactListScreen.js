@@ -1,6 +1,5 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
 import ContactRow from '@components/rows/ContactRow.js';
 import ContactSettings from '@settings/ContactSettings.js';
@@ -41,14 +40,4 @@ function ContactListScreen({ layout, showRefresh = true, variables = {}, navigat
 }
 
 ContactListScreen.navigationOptions = ResourceList.navigationOptions;
-ContactListScreen.propTypes = {
-    showRefresh: PropTypes.bool,
-    variables: PropTypes.object,
-    layout: PropTypes.shape({
-        showCount: PropTypes.bool,
-    }),
-
-    item: PropTypes.object,
-}
-
 export default withNavigation(ContactListScreen);

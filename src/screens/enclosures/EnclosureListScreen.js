@@ -1,6 +1,5 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
 import EnclosureRow from '@components/rows/EnclosureRow.js';
 import EnclosureSettings from '@settings/EnclosureSettings.js';
@@ -47,15 +46,4 @@ function EnclosureListScreen({ header, layout, showRefresh = true, variables = {
 }
 
 EnclosureListScreen.navigationOptions = ResourceList.navigationOptions;
-EnclosureListScreen.propTypes = {
-    header: PropTypes.elementType,
-    showRefresh: PropTypes.bool,
-    variables: PropTypes.object,
-    layout: PropTypes.shape({
-        showCount: PropTypes.bool,
-    }),
-
-    item: PropTypes.object,
-}
-
 export default withNavigation(EnclosureListScreen);

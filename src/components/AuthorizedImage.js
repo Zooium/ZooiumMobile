@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Image } from 'react-native';
 import AuthState from '@utils/AuthState.js';
 
@@ -12,8 +11,4 @@ export default function AuthorizedImage({ uri, ...props }) {
             },
         }} {...props} />
     );
-}
-
-AuthorizedImage.propTypes = {
-    uri: PropTypes.string,
 }

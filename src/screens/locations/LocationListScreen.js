@@ -1,6 +1,5 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
 import LocationRow from '@components/rows/LocationRow.js';
 import LocationSettings from '@settings/LocationSettings.js';
@@ -39,14 +38,4 @@ function LocationListScreen({ layout, showRefresh = true, variables = {}, naviga
 }
 
 LocationListScreen.navigationOptions = ResourceList.navigationOptions;
-LocationListScreen.propTypes = {
-    showRefresh: PropTypes.bool,
-    variables: PropTypes.object,
-    layout: PropTypes.shape({
-        showCount: PropTypes.bool,
-    }),
-
-    item: PropTypes.object,
-}
-
 export default withNavigation(LocationListScreen);

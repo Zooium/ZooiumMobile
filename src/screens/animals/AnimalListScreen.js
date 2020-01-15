@@ -1,6 +1,5 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
 import AnimalRow from '@components/rows/AnimalRow.js';
 import AnimalSettings from '@settings/AnimalSettings.js';
@@ -45,8 +44,4 @@ function AnimalListScreen({ navigation }) {
 }
 
 AnimalListScreen.navigationOptions = ResourceList.navigationOptions;
-AnimalListScreen.propTypes = {
-    item: PropTypes.object,
-}
-
 export default withNavigation(AnimalListScreen);

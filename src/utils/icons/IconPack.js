@@ -1,6 +1,5 @@
 import './IconLibrary.js';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { StyleSheet } from 'react-native';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome';
 
@@ -20,11 +19,6 @@ function FontAwesome5({ name, style, ...otherProps }) {
             {...otherProps}
         />
     )
-}
-
-FontAwesome5.propTypes = {
-    name: PropTypes.string.isRequired,
-    style: Icon.propTypes.style,
 }
 
 function IconProvider(name) {

@@ -29,11 +29,6 @@ module.exports = {
         "react"
     ],
     "rules": {
-        "react/prop-types": ["error", {
-            "ignore": [
-                // Module: React Navigation
-                "isFocused", "navigation"
-            ]
-        }],
+        "react/prop-types": ["off"],
     }
 };

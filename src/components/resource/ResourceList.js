@@ -1,5 +1,4 @@
 import i18n from '@src/i18n.js';
-import PropTypes from 'prop-types';
 import Loader from '@components/Loader.js';
 import { useDebounce } from 'use-debounce';
 import AuthState from '@utils/AuthState.js';
@@ -191,24 +190,6 @@ ResourceList.navigationOptions = ({ navigation, onSearchCancel = undefined, hasR
             </HeaderButtons>
         ),
     }
-}
-
-ResourceList.propTypes = {
-    name: PropTypes.string.isRequired,
-    fetch: PropTypes.object.isRequired,
-    preview: PropTypes.elementType.isRequired,
-    variables: PropTypes.object,
-    showRefresh: PropTypes.bool,
-    extraData: PropTypes.object,
-    
-    routes: PropTypes.shape({
-        view: PropTypes.string.isRequired,
-        edit: PropTypes.string.isRequired,
-    }),
-    
-    mutations: PropTypes.shape({
-        remove: PropTypes.object.isRequired,
-    }),
 }
 
 export default withNavigation(ResourceList);

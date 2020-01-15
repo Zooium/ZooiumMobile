@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import Loader from '@components/Loader.js';
 import { Layout } from '@ui-kitten/components';
@@ -133,35 +132,6 @@ function ResourceView({ items, headers, fetch, parser, variables = {}, routes: {
             </Layout>
         </KeyboardAvoidingLayout>
     );
-}
-
-ResourceView.propTypes = {
-    fetch: PropTypes.object,
-    variables: PropTypes.object,
-
-    routes: PropTypes.shape({
-        edit: PropTypes.string,
-    }),
-
-    items: PropTypes.arrayOf(PropTypes.object),
-    item: PropTypes.shape({
-        required: PropTypes.bool,
-        title: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.elementType,
-        ]).isRequired,
-
-        
-        text: PropTypes.string,
-        description: PropTypes.string,
-        render: PropTypes.elementTypeType,
-        onPress: PropTypes.func,
-        multiline: PropTypes.func,
-    }),
-
-    section: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-    }),
 }
 
 ResourceView.navigationOptions = ({ title, canModify, showEdit = true, navigation }) => {

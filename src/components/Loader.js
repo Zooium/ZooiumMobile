@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { View, Animated } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 
@@ -80,9 +79,4 @@ export default function Loader({ size = 'large', fill = '#ced4da', style, childr
             {children}
         </View>
     );
-}
-
-Loader.propTypes = {
-    size: PropTypes.oneOf(['small', 'large']),
-    fill: PropTypes.string,
 }

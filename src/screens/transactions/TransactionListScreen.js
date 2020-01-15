@@ -1,6 +1,5 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
 import ResourceList from '@components/resource/ResourceList.js';
 import TransactionRow from '@components/rows/TransactionRow.js';
@@ -39,14 +38,4 @@ function TransactionListScreen({ layout, showRefresh = true, variables = {}, nav
 }
 
 TransactionListScreen.navigationOptions = ResourceList.navigationOptions;
-TransactionListScreen.propTypes = {
-    showRefresh: PropTypes.bool,
-    variables: PropTypes.object,
-    layout: PropTypes.shape({
-        showCount: PropTypes.bool,
-    }),
-
-    item: PropTypes.object,
-}
-
 export default withNavigation(TransactionListScreen);

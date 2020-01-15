@@ -1,6 +1,5 @@
 import React from 'react';
 import theme from '@src/theme.js';
-import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native';
 import { Icon, Datepicker } from '@ui-kitten/components';
 
@@ -27,9 +26,4 @@ export default function DateTimePicker({ value, onChange, ...props }) {
             {...props}
         />
     );
-}
-
-DateTimePicker.propTypes = {
-    value: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
 }

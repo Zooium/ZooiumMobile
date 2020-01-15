@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import React, { useEffect } from 'react';
 import { ScreenOrientation } from 'expo';
@@ -36,7 +35,3 @@ AuthorizedWebViewScreen.navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('title'),
     headerRight: () => <View />,
 })
-
-AuthorizedWebViewScreen.propTypes = {
-    uri: PropTypes.string,
-}

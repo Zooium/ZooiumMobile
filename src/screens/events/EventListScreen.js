@@ -1,6 +1,5 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
 import EventRow from '@components/rows/EventRow.js';
 import EventSettings from '@settings/EventSettings.js';
@@ -41,8 +40,4 @@ function EventListScreen({ navigation }) {
 }
 
 EventListScreen.navigationOptions = ResourceList.navigationOptions;
-EventListScreen.propTypes = {
-    item: PropTypes.object,
-}
-
 export default withNavigation(EventListScreen);

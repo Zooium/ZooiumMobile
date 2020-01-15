@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Constants from 'expo-constants';
 import { Header } from 'react-navigation-stack';
 import { Platform, KeyboardAvoidingView } from 'react-native';
@@ -15,9 +14,4 @@ export default function KeyboardAvoidingLayout(props) {
             {props.children}
         </KeyboardAvoidingView>
     );
-}
-
-KeyboardAvoidingLayout.propTypes = {
-    offset: PropTypes.number,
-    children: PropTypes.any,
 }

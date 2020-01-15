@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Loader from '@components/Loader.js';
 import { styled, Button } from '@ui-kitten/components';
 
@@ -11,12 +10,6 @@ function LoadingButton({ size = 'medium', loading, children, themedStyle, ...pro
             {! loading && children }
         </Button>
     );
-}
-
-LoadingButton.propTypes = {
-    size: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
-    children: PropTypes.any,
 }
 
 LoadingButton.styledComponentName = 'Button';

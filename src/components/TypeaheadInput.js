@@ -1,6 +1,5 @@
 import React from 'react';
 import theme from '@src/theme.js';
-import PropTypes from 'prop-types';
 import { Icon } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
@@ -30,17 +29,6 @@ function TypeaheadInput({ view, preview, appendSearch, add, value, onChange, nav
             {value && preview(value)}
         </InputButton>
     );
-}
-
-TypeaheadInput.propTypes = {
-    add: PropTypes.string,
-    appendSearch: PropTypes.string,
-    view: PropTypes.string.isRequired,
-    preview: PropTypes.func.isRequired,
-    resource: PropTypes.string.isRequired,
-    
-    value: PropTypes.object,
-    onChange: PropTypes.func.isRequired,
 }
 
 export default withNavigation(TypeaheadInput);

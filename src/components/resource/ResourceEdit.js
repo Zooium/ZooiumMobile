@@ -1,5 +1,4 @@
 import i18n from '@src/i18n.js';
-import PropTypes from 'prop-types';
 import AuthState from '@utils/AuthState.js';
 import ResourceView from './ResourceView.js';
 import { Alert, Keyboard } from 'react-native';
@@ -165,21 +164,6 @@ ResourceEdit.navigationOptions = ({ title, canModify, navigation }) => {
             </HeaderButtons>
         ),
     };
-}
-
-ResourceEdit.propTypes = {
-    ...ResourceView.propTypes,
-
-    formInit: PropTypes.func.isRequired,
-    
-    routes: PropTypes.shape({
-        view: PropTypes.string,
-    }),
-
-    mutations: PropTypes.shape({
-        create: PropTypes.object,
-        save: PropTypes.object.isRequired,
-    }),
 }
 
 export default withNavigation(ResourceEdit);

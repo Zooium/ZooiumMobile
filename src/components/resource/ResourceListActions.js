@@ -1,5 +1,4 @@
 import theme from '@src/theme.js';
-import PropTypes from 'prop-types';
 import React, { memo } from 'react';
 import { Icon } from '@ui-kitten/components';
 import { View, TouchableOpacity } from 'react-native';
@@ -35,12 +34,6 @@ function ResourceListAction({ item, editItem, deleteItem }) {
             </TouchableOpacity>
         </View>
     );
-}
-
-ResourceListAction.propTypes = {
-    item: PropTypes.object.isRequired,
-    editItem: PropTypes.func.isRequired,
-    deleteItem: PropTypes.func.isRequired,
 }
 
 export default memo(ResourceListAction);
