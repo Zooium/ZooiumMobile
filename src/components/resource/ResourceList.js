@@ -5,7 +5,6 @@ import { useDebounce } from 'use-debounce';
 import AuthState from '@utils/AuthState.js';
 import { Layout } from '@ui-kitten/components';
 import { useQuery } from '@apollo/react-hooks';
-import { withNavigation } from 'react-navigation';
 import parseQuery from '@utils/apollo/parseQuery.js';
 import ListSettings from '@components/ListSettings.js';
 import ResourceSwipeList from './ResourceSwipeList.js';
@@ -13,8 +12,10 @@ import React, { Fragment, useState, useEffect } from 'react';
 import parsePagination from '@utils/apollo/parsePagination.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
+import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
-function ResourceList({ fetch, variables = {}, List, navigation, routes, sorting, defaultSort = 'id', filters, ...props }) {
+export default function ResourceList({ fetch, variables = {}, List, routes, sorting, defaultSort = 'id', filters, ...props }) {
+    const navigation = useNavigation();
     const [showSettings, setShowSettings] = useState(false);
 
     // Define sorting related variables.
@@ -25,8 +26,8 @@ function ResourceList({ fetch, variables = {}, List, navigation, routes, sorting
     });
 
     // Define search related variables.
-    const navSearch = navigation.getParam('search', null);
-    const appendSearch = navigation.getParam('appendSearch', null);
+    const navSearch = useNavigationParam('search', null);
+    const appendSearch = useNavigationParam('appendSearch', null);
     const [search, setSearch] = useState(navSearch);
     const [debouncedSearch] = useDebounce(search, 500);
 
@@ -36,6 +37,7 @@ function ResourceList({ fetch, variables = {}, List, navigation, routes, sorting
         : undefined;
 
     // Share set search, show settings, and create item.
+    const defaults = useNavigationParam('defaults');
     useEffect(() => {
         navigation.setParams({
             setSearch,
@@ -45,9 +47,7 @@ function ResourceList({ fetch, variables = {}, List, navigation, routes, sorting
                 navigation.navigate({
                     key: routes.view + Math.random().toString(36).slice(2),
                     routeName: routes.edit,
-                    params: {
-                        defaults: navigation.getParam('defaults'),
-                    },
+                    params: { defaults },
                 });
             },
         });
@@ -55,7 +55,7 @@ function ResourceList({ fetch, variables = {}, List, navigation, routes, sorting
 
     // Share settings show state.
     useEffect(() => {
-        navigation.setParams({ showSettings })
+        navigation.setParams({ showSettings });
     }, [showSettings]);
 
     // Set search on navbar search text change.
@@ -199,5 +199,3 @@ ResourceList.navigationOptions = ({ navigation, onSearchCancel = undefined, hasR
         },
     }
 }
-
-export default withNavigation(ResourceList);

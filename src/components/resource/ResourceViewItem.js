@@ -2,11 +2,14 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import { View } from 'react-native';
 import AppStyles from '@utils/AppStyles.js';
-import { withNavigation } from 'react-navigation';
 import { Text, Icon } from '@ui-kitten/components';
+import { useNavigation } from 'react-navigation-hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function ResourceViewItem({ item, index, section, form, response, render = 'View', navigation }) {
+export default function ResourceViewItem({ item, index, section, form, response, render = 'View' }) {
+    // Get navigation state.
+    const navigation = useNavigation();
+
     // Skip if item or header has render condition and not valid.
     if (
         item.shouldRender && ! item.shouldRender(render.toLowerCase(), form && form[0] || response) ||
@@ -120,5 +123,3 @@ function ResourceViewItem({ item, index, section, form, response, render = 'View
         </View>
     )
 }
-
-export default withNavigation(ResourceViewItem);

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import Loader from '@components/Loader.js';
 import { Layout } from '@ui-kitten/components';
-import { withNavigation } from 'react-navigation';
 import ResourceViewItem from './ResourceViewItem.js';
 import ResourceViewHeader from './ResourceViewHeader.js';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -9,10 +8,12 @@ import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 import { View, Alert, FlatList, SectionList } from 'react-native';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
+import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
-function ResourceView({ items, headers, fetch, parser, variables = {}, routes: { edit } = {}, mutations: { remove } = {}, render = 'View', loading = false, form, navigation }) {    
+export default function ResourceView({ items, headers, fetch, parser, variables = {}, routes: { edit } = {}, mutations: { remove } = {}, render = 'View', loading = false, form }) {    
     // Get item from navigation params.
-    const item = navigation.getParam('item');
+    const navigation = useNavigation();
+    const item = useNavigationParam('item');
     const creating = ! item;
 
     // Prepare removal mutation.
@@ -88,7 +89,7 @@ function ResourceView({ items, headers, fetch, parser, variables = {}, routes: {
     // Set fallback response while viewing deleted item.
     let fallback = undefined;
     if (! response && ! fetching && ! creating) {
-        fallback = navigation.getParam('item');
+        fallback = item;
         if (! fallback) return null;
     }
 
@@ -167,5 +168,3 @@ ResourceView.navigationOptions = ({ title, canModify, showEdit = true, navigatio
         ) || (() => <View />)),
     };
 };
-
-export default withNavigation(ResourceView);

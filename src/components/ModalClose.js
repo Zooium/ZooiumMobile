@@ -2,9 +2,11 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import { Text } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from 'react-navigation-hooks';
 
-function ModalClose({ navigation }) {
+export default function ModalClose() {
+    const navigation = useNavigation();
+
     return (
         <TouchableOpacity onPress={() => {
             navigation.goBack();
@@ -26,5 +28,3 @@ function ModalClose({ navigation }) {
         </TouchableOpacity>
     )
 }
-
-export default withNavigation(ModalClose);

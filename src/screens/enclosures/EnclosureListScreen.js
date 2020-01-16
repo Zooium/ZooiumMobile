@@ -1,6 +1,5 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import { withNavigation } from 'react-navigation';
 import EnclosureRow from '@components/rows/EnclosureRow.js';
 import EnclosureSettings from '@settings/EnclosureSettings.js';
 import ResourceList from '@components/resource/ResourceList.js';

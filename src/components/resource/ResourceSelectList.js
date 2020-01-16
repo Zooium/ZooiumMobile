@@ -1,17 +1,18 @@
 import theme from '@src/theme.js';
 import React, { useCallback } from 'react';
 import AppStyles from '@utils/AppStyles.js';
-import { withNavigation } from 'react-navigation';
 import ResourceListEmpty from './ResourceListEmpty.js';
 import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
 import { View, FlatList, TouchableHighlight } from 'react-native';
+import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
-function ResourceSelectList({ name, list, query, preview: Preview, extraData, navigation }) {
+export default function ResourceSelectList({ name, list, query, preview: Preview, extraData }) {
     // Seperate out variables.
     const { loading, refetch } = query;
 
     // Define resource item view functions.
-    const onChange = navigation.getParam('onChange');
+    const navigation = useNavigation();
+    const onChange = useNavigationParam('onChange');
     const viewItem = (item) => {
         onChange && onChange(item);
         navigation.goBack();
@@ -46,5 +47,3 @@ function ResourceSelectList({ name, list, query, preview: Preview, extraData, na
         />
     );
 }
-
-export default withNavigation(ResourceSelectList);

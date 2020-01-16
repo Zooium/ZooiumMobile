@@ -2,18 +2,21 @@ import theme from '@src/theme.js';
 import React, { useCallback } from 'react';
 import AppStyles from '@utils/AppStyles.js';
 import { useMutation } from '@apollo/react-hooks';
-import { withNavigation } from 'react-navigation';
 import ResourceListEmpty from './ResourceListEmpty.js';
+import { useNavigation } from 'react-navigation-hooks';
 import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
 import ResourceListActions from './ResourceListActions.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Alert, View, TouchableHighlight } from 'react-native';
 import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 
-function ResourceSwipeList({ name, list, title, query, routes, mutations: { remove }, preview: Preview, extraData, showRefresh = true, canModify, navigation, ...props }) {
+export default function ResourceSwipeList({ name, list, title, query, routes, mutations: { remove }, preview: Preview, extraData, showRefresh = true, canModify, ...props }) {
     // Seperate out variables.
     const { view, edit } = routes;
     const { loading, refetch } = query;
+
+    // Get navigation state.
+    const navigation = useNavigation();
 
     // Prepare item removal mutation.
     const [removeItems] = useMutation(remove, {
@@ -25,11 +28,13 @@ function ResourceSwipeList({ name, list, title, query, routes, mutations: { remo
     });
 
     // Define resource item CRUD functions.
-    const viewItem = (item) => navigation.navigate({
-        key: view + item.id,
-        routeName: view,
-        params: { item },
-    });
+    const viewItem = (item) => {
+        navigation.navigate({
+            key: view + item.id,
+            routeName: view,
+            params: { item },
+        });
+    }
 
     const editItem = (item = undefined) => {
         // Skip if not allowed to modify item. 
@@ -37,7 +42,7 @@ function ResourceSwipeList({ name, list, title, query, routes, mutations: { remo
         if (typeof msg === 'string') return Alert.alert(msg);
 
         // Navigate to resource edit view.
-        return navigation.navigate({
+        navigation.navigate({
             key: view + ((item && item.id) || Math.random().toString(36).slice(2)),
             routeName: edit,
             params: { item },
@@ -95,5 +100,3 @@ function ResourceSwipeList({ name, list, title, query, routes, mutations: { remo
         />
     );
 }
-
-export default withNavigation(ResourceSwipeList);

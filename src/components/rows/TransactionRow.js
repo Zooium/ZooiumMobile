@@ -1,10 +1,13 @@
 import i18n from '@src/i18n.js';
 import React, { memo } from 'react';
 import { Text } from '@ui-kitten/components';
+import { useNavigation } from 'react-navigation-hooks';
 import { View, TouchableOpacity  } from 'react-native';
 import TransactionSettings from '@settings/TransactionSettings.js';
 
 function TransactionRow({ item }) {
+    const navigation = useNavigation();
+
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>

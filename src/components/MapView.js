@@ -1,10 +1,13 @@
 import * as Location from 'expo-location';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from 'react-navigation-hooks';
 import { default as Map, Marker } from 'react-native-maps';
 import React, { Fragment, useRef, useEffect } from 'react';
 import MapViewExpander from '@components/MapViewExpander.js';
 
-function MapView({ latitude, longitude, setCoordinates, editable = false, isFullscreen = false, style, navigation }) {
+export default function MapView({ latitude, longitude, setCoordinates, editable = false, isFullscreen = false, style }) {
+    // Get navigation state.
+    const navigation = useNavigation();
+    
     // Hold map view reference.
     const mapRef = useRef(null);
 
@@ -81,15 +84,15 @@ function MapView({ latitude, longitude, setCoordinates, editable = false, isFull
             </Map>
 
             {! isFullscreen && (
-                <MapViewExpander onPress={() => navigation.navigate('MapView', {
-                    editable,
-                    latitude,
-                    longitude,
-                    setCoordinates,
-                })} />
+                <MapViewExpander onPress={() => {
+                    navigation.navigate('MapView', {
+                        editable,
+                        latitude,
+                        longitude,
+                        setCoordinates,
+                    });
+                }} />
             )}
         </Fragment>
     )
 }
-
-export default withNavigation(MapView);

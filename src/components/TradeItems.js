@@ -3,32 +3,36 @@ import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import { View } from 'react-native';
 import TradeLine from '@components/TradeLine.js';
-import { withNavigation } from 'react-navigation';
 import { Text, Button } from '@ui-kitten/components';
+import { useNavigation } from 'react-navigation-hooks';
 
-function TradeItems({ editing = false, transaction, onItemChange, navigation, ...props }) {
+export default function TradeItems({ editing = false, transaction, onItemChange, ...props }) {
     let lineNumber = 1;
 
     const route = 'TransactionItemEdit';
-    const editItem = (item = undefined, defaults = {}) => navigation.navigate({
-        key: route + ((item && item.id) || Math.random().toString(36).slice(2)),
-        routeName: route,
-        params: {
-            item: item,
-            defaults: {
-                ...defaults,
-                transaction_id: transaction.id,
-            },
+    const navigation = useNavigation();
 
-            onSave: (item, isSaving) => {
-                onItemChange && onItemChange(item, isSaving ? 'save' : 'create');
-            },
+    const editItem = (item = undefined, defaults = {}) => {
+        navigation.navigate({
+            key: route + ((item && item.id) || Math.random().toString(36).slice(2)),
+            routeName: route,
+            params: {
+                item: item,
+                defaults: {
+                    ...defaults,
+                    transaction_id: transaction.id,
+                },
 
-            onDelete: (item) => {
-                onItemChange && onItemChange(item, 'remove');
+                onSave: (item, isSaving) => {
+                    onItemChange && onItemChange(item, isSaving ? 'save' : 'create');
+                },
+
+                onDelete: (item) => {
+                    onItemChange && onItemChange(item, 'remove');
+                },
             },
-        },
-    });
+        });
+    }
 
     const list = transaction.origItems || transaction.items;
 
@@ -81,5 +85,3 @@ function TradeItems({ editing = false, transaction, onItemChange, navigation, ..
         </View>
     );
 }
-
-export default withNavigation(TradeItems);

@@ -2,10 +2,12 @@ import React from 'react';
 import theme from '@src/theme.js';
 import { Icon } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native';
-import { withNavigation } from 'react-navigation';
 import InputButton from '@components/InputButton.js';
+import { useNavigation } from 'react-navigation-hooks';
 
-function TypeaheadInput({ view, preview, appendSearch, add, value, onChange, navigation }) {
+export default function TypeaheadInput({ view, preview, appendSearch, add, value, onChange }) {
+    const navigation = useNavigation();
+
     return (
         <InputButton
             icon={value && ((style) => (
@@ -23,12 +25,10 @@ function TypeaheadInput({ view, preview, appendSearch, add, value, onChange, nav
                         focusSearch: true,
                         onChange, appendSearch, add,
                     },
-                })
+                });
             }}
         >
             {value && preview(value)}
         </InputButton>
     );
 }
-
-export default withNavigation(TypeaheadInput);

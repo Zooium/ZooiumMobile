@@ -2,16 +2,17 @@ import i18n from '@src/i18n.js';
 import AuthState from '@utils/AuthState.js';
 import ResourceView from './ResourceView.js';
 import { Alert, Keyboard } from 'react-native';
-import { withNavigation } from 'react-navigation';
 import { useMutation } from '@apollo/react-hooks';
 import LoadingModal from '@components/LoadingModal.js';
 import React, { useState, useEffect, Fragment } from 'react';
 import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
+import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
-function ResourceEdit({ formInit, routes: { view } = {}, mutations: { save, create, remove }, navigation, ...props }) {
+export default function ResourceEdit({ formInit, routes: { view } = {}, mutations: { save, create, remove }, ...props }) {
     // Create form state from passed init function.
-    const defaults = navigation.getParam('defaults') || {};
+    const navigation = useNavigation();
+    const defaults = useNavigationParam('defaults') || {};
     const form = useState({...formInit(), ...defaults});
     const [state, setState] = form;
 
@@ -100,7 +101,7 @@ function ResourceEdit({ formInit, routes: { view } = {}, mutations: { save, crea
     }, []);
 
     // Get item from navigation.
-    const item = navigation.getParam('item');
+    const item = useNavigationParam('item');
     const [parsing, setParsing] = useState(item !== undefined);
 
     // Parse item into state if available.
@@ -168,4 +169,3 @@ ResourceEdit.navigationOptions = ({ title, canModify, navigation }) => {
     };
 }
 
-export default withNavigation(ResourceEdit);

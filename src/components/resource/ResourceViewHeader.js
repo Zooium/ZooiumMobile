@@ -1,9 +1,8 @@
 import React from 'react';
 import AppStyles from '@utils/AppStyles.js';
 import { Text } from '@ui-kitten/components';
-import { withNavigation } from 'react-navigation';
 
-function ResourceViewHeader({ section, render = 'View' }) {
+export default function ResourceViewHeader({ section, render = 'View' }) {
     // Skip if header has render condition and not valid.
     if (section.shouldRender && ! section.shouldRender(render.toLowerCase())) {
         return null;
@@ -16,5 +15,3 @@ function ResourceViewHeader({ section, render = 'View' }) {
         </Text>
     );
 }
-
-export default withNavigation(ResourceViewHeader);

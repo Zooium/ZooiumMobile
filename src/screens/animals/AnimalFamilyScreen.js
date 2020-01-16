@@ -4,9 +4,9 @@ import { View } from 'react-native';
 import Loader from '@components/Loader.js';
 import { Layout } from '@ui-kitten/components';
 import { useQuery } from '@apollo/react-hooks';
-import { withNavigation } from 'react-navigation';
 import parseQuery from '@utils/apollo/parseQuery.js';
 import FamilyRow from '@components/rows/FamilyRow.js';
+import { useNavigationParam } from 'react-navigation-hooks';
 import ResourceSwipeList from '@components/resource/ResourceSwipeList.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import DELETE_ANIMALS from '@graphql/mutations/Animal/deleteAnimals.gql.js';
@@ -32,9 +32,9 @@ const parseFamily = (item, list = [], level = 0, side = null, parent = null) => 
     return list;
 }
 
-function AnimalFamilyScreen({ navigation }) {
+export default function AnimalFamilyScreen() {
     // Get passed item and define family query.
-    const item = navigation.getParam('item');
+    const item = useNavigationParam('item');
     const query = useQuery(VIEW_ANIMAL_FAMILY, {
         variables: {
             id: item && item.id,
@@ -93,5 +93,3 @@ AnimalFamilyScreen.navigationOptions = {
         return <View />;
     },
 }
-
-export default withNavigation(AnimalFamilyScreen);
