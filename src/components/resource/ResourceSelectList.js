@@ -1,13 +1,12 @@
 import theme from '@src/theme.js';
-import { FlatList } from 'react-native';
 import React, { useCallback } from 'react';
+import AppStyles from '@utils/AppStyles.js';
 import { withNavigation } from 'react-navigation';
-import { TouchableHighlight } from 'react-native';
-import ResourceListItem from './ResourceListItem.js';
 import ResourceListEmpty from './ResourceListEmpty.js';
 import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
+import { View, FlatList, TouchableHighlight } from 'react-native';
 
-function ResourceSelectList({ name, list, deps = [], query, preview, itemProps, navigation }) {
+function ResourceSelectList({ name, list, query, preview: Preview, extraData, navigation }) {
     // Seperate out variables.
     const { loading, refetch } = query;
 
@@ -19,12 +18,14 @@ function ResourceSelectList({ name, list, deps = [], query, preview, itemProps, 
     };
 
     // Create callbacks for resource item renderings.
-    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, deps);
+    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []);
     const itemCallback = useCallback(({ item }) => (
         <TouchableHighlight underlayColor={theme['color-basic-200']} style={{ backgroundColor: 'white' }} onPress={() => viewItem(item)}>
-            <ResourceListItem item={item} preview={preview} {...itemProps} />
+            <View style={AppStyles.listItem}>
+                <Preview item={item} {...extraData} />
+            </View>
         </TouchableHighlight>
-    ), deps);
+    ), [Preview, extraData]);
 
     // Return the flat list view.
     return (
@@ -38,6 +39,7 @@ function ResourceSelectList({ name, list, deps = [], query, preview, itemProps, 
             refreshing={loading}
             onEndReached={() => mergeLoadMore(query)}
             onEndReachedThreshold={0.2}
+            extraData={extraData}
             contentContainerStyle={{
                 flexGrow: 1,
             }}

@@ -1,24 +1,23 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import { withNavigation } from 'react-navigation';
 import ContactRow from '@components/rows/ContactRow.js';
 import ContactSettings from '@settings/ContactSettings.js';
 import ResourceList from '@components/resource/ResourceList.js';
 import LIST_CONTACTS from '@graphql/queries/Contact/listContacts.gql.js';
 import DELETE_CONTACTS from '@graphql/mutations/Contact/deleteContacts.gql.js';
 
-function ContactListScreen({ layout, showRefresh = true, variables = {}, navigation }) {
-    const preview = ({ item }) => ContactRow({ item, navigation, layout });
-
+export default function ContactListScreen({ layout, ...props }) {
     return (
         <ResourceList
-            preview={preview}
+            preview={ContactRow}
             fetch={LIST_CONTACTS}
             title={ContactSettings.title}
-            variables={variables}
-            showRefresh={showRefresh}
             name={i18n.t('Contact', { count: 2 })}
-            
+
+            extraData={{
+                layout,
+            }}
+
             routes={{
                 view: 'ContactView',
                 edit: 'ContactEdit',
@@ -35,9 +34,10 @@ function ContactListScreen({ layout, showRefresh = true, variables = {}, navigat
                 { key: 'phone', text: i18n.t('Phone') },
                 { key: 'address', text: i18n.t('Address') },
             ]}
+
+            {...props}
         />
     );
 }
 
 ContactListScreen.navigationOptions = ResourceList.navigationOptions;
-export default withNavigation(ContactListScreen);

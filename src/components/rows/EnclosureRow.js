@@ -1,10 +1,13 @@
-import React from 'react';
 import i18n from '@src/i18n.js';
+import React, { memo } from 'react';
 import { Text, Icon } from '@ui-kitten/components';
+import { useNavigation } from 'react-navigation-hooks';
 import { View, TouchableOpacity  } from 'react-native';
 import EnclosureSettings from '@settings/EnclosureSettings.js';
 
-export default function EnclosureRow({ item, header: Header, navigation, layout: { showCount = true } = {} }) {
+function EnclosureRow({ item, header: Header, layout: { showCount = true } = {} }) {
+    const navigation = useNavigation();
+
     const locationText = item && item.location && item.location.name
         || '(' + i18n.t('not provided') + ')';
 
@@ -55,3 +58,5 @@ export default function EnclosureRow({ item, header: Header, navigation, layout:
         </View>
     );
 }
+
+export default memo(EnclosureRow);

@@ -1,10 +1,13 @@
-import React from 'react';
 import i18n from '@src/i18n.js';
+import React, { memo } from 'react';
 import { Text, Icon } from '@ui-kitten/components';
+import { useNavigation } from 'react-navigation-hooks';
 import { View, TouchableOpacity  } from 'react-native';
 import LocationSettings from '@settings/LocationSettings.js';
 
-export default function LocationRow({ item, navigation, layout: { showCount = true } = {} }) {
+function LocationRow({ item, layout: { showCount = true } = {} }) {    
+    const navigation = useNavigation();
+
     const locationText = item &&
         [
             item.address,
@@ -55,3 +58,5 @@ export default function LocationRow({ item, navigation, layout: { showCount = tr
         </View>
     );
 }
+
+export default memo(LocationRow);

@@ -1,6 +1,6 @@
-import React from 'react';
 import i18n from '@src/i18n.js';
 import { View } from 'react-native';
+import React, { memo } from 'react';
 import { Text } from '@ui-kitten/components';
 import SexPreview from '@components/SexPreview.js';
 import AnimalSettings from '@settings/AnimalSettings.js';
@@ -11,7 +11,7 @@ const familyNames = [
     [i18n.t('Grandfather'), i18n.t('Grandmother')],
 ];
 
-export default function FamilyRow({ item }) {
+function FamilyRow({ item }) {
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
@@ -50,3 +50,5 @@ export default function FamilyRow({ item }) {
         </View>
     );
 }
+
+export default memo(FamilyRow);

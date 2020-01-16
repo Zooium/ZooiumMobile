@@ -1,10 +1,13 @@
-import React from 'react';
 import i18n from '@src/i18n.js';
+import React, { memo } from 'react';
 import { Text, Icon } from '@ui-kitten/components';
+import { useNavigation } from 'react-navigation-hooks';
 import { View, TouchableOpacity  } from 'react-native';
 import ContactSettings from '@settings/ContactSettings.js';
 
-export default function ContactRow({ item, navigation, layout: { showCount = true } = {} }) {
+function ContactRow({ item, layout: { showCount = true } = {} }) {
+    const navigation = useNavigation();
+
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
@@ -50,3 +53,5 @@ export default function ContactRow({ item, navigation, layout: { showCount = tru
         </View>
     );
 }
+
+export default memo(ContactRow);

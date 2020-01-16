@@ -15,7 +15,7 @@ export default function EnclosureTypeaheadScreen() {
             name={i18n.t('Enclosure', { count: 2 })}
             preview={EnclosureRow}
             fetch={LIST_ENCLOSURES}
-            itemProps={{
+            extraData={{
                 layout: {
                     showCount: false,
                 },

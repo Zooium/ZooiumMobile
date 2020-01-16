@@ -1,11 +1,14 @@
-import React from 'react';
 import i18n from '@src/i18n.js';
+import React, { memo } from 'react';
 import { Text } from '@ui-kitten/components';
 import SexPreview from '@components/SexPreview.js';
 import { View, TouchableOpacity } from 'react-native';
+import { useNavigation } from 'react-navigation-hooks';
 import SpecieSettings from '@settings/SpecieSettings.js';
 
-export default function AnimalRow({ item, navigation }) {
+function AnimalRow({ item }) {
+    const navigation = useNavigation();
+
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
@@ -43,3 +46,5 @@ export default function AnimalRow({ item, navigation }) {
         </View>
     );
 }
+
+export default memo(AnimalRow);

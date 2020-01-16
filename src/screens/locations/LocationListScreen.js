@@ -1,23 +1,22 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import { withNavigation } from 'react-navigation';
 import LocationRow from '@components/rows/LocationRow.js';
 import LocationSettings from '@settings/LocationSettings.js';
 import ResourceList from '@components/resource/ResourceList.js';
 import LIST_LOCATIONS from '@graphql/queries/Location/listLocations.gql.js';
 import DELETE_LOCATIONS from '@graphql/mutations/Location/deleteLocations.gql.js';
 
-function LocationListScreen({ layout, showRefresh = true, variables = {}, navigation }) {
-    const preview = ({ item }) => LocationRow({ item, navigation, layout });
-
+export default function LocationListScreen({ layout, ...props }) {
     return (
         <ResourceList
-            preview={preview}
+            preview={LocationRow}
             fetch={LIST_LOCATIONS}
             title={LocationSettings.title}
-            variables={variables}
-            showRefresh={showRefresh}
             name={i18n.t('Location', { count: 2 })}
+
+            extraData={{
+                layout,
+            }}
             
             routes={{
                 view: 'LocationView',
@@ -33,9 +32,10 @@ function LocationListScreen({ layout, showRefresh = true, variables = {}, naviga
                 { key: 'name', text: i18n.t('Name') },
                 { key: 'address', text: i18n.t('Address') },
             ]}
+
+            {...props}
         />
     );
 }
 
 LocationListScreen.navigationOptions = ResourceList.navigationOptions;
-export default withNavigation(LocationListScreen);

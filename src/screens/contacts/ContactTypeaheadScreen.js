@@ -15,7 +15,7 @@ export default function ContactTypeaheadScreen() {
             name={i18n.t('Contact', { count: 2 })}
             preview={ContactRow}
             fetch={LIST_CONTACTS}
-            itemProps={{
+            extraData={{
                 layout: {
                     showCount: false,
                 },

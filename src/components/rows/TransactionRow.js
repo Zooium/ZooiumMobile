@@ -1,10 +1,10 @@
-import React from 'react';
 import i18n from '@src/i18n.js';
+import React, { memo } from 'react';
 import { Text } from '@ui-kitten/components';
 import { View, TouchableOpacity  } from 'react-native';
 import TransactionSettings from '@settings/TransactionSettings.js';
 
-export default function TransactionRow({ item, navigation }) {
+function TransactionRow({ item }) {
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
@@ -40,3 +40,5 @@ export default function TransactionRow({ item, navigation }) {
         </View>
     );
 }
+
+export default memo(TransactionRow);

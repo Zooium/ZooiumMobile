@@ -7,22 +7,14 @@ import ResourceList from '@components/resource/ResourceList.js';
 import LIST_ENCLOSURES from '@graphql/queries/Enclosure/listEnclosures.gql.js';
 import DELETE_ENCLOSURES from '@graphql/mutations/Enclosure/deleteEnclosures.gql.js';
 
-function EnclosureListScreen({ header, layout, showRefresh = true, variables = {}, navigation }) {
-    const preview = ({ item }) => EnclosureRow({ item, header, navigation, layout });
-
+export default function EnclosureListScreen({ header, layout, ...props }) {
     return (
         <ResourceList
-            preview={preview}
+            preview={EnclosureRow}
             fetch={LIST_ENCLOSURES}
             title={EnclosureSettings.title}
-            variables={variables}
-            showRefresh={showRefresh}
             name={i18n.t('Enclosure', { count: 2 })}
 
-            deps={[
-                header, layout,
-            ]}
-            
             extraData={{
                 header, layout,
             }}
@@ -41,9 +33,10 @@ function EnclosureListScreen({ header, layout, showRefresh = true, variables = {
                 { key: 'name', text: i18n.t('Name') },
                 { key: 'location', text: i18n.t('Location', { count: 1 }) },
             ]}
+
+            {...props}
         />
     );
 }
 
 EnclosureListScreen.navigationOptions = ResourceList.navigationOptions;
-export default withNavigation(EnclosureListScreen);

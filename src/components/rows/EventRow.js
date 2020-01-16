@@ -1,10 +1,11 @@
-import React from 'react';
 import i18n from '@src/i18n.js';
+import React, { memo } from 'react';
 import { Text, Icon } from '@ui-kitten/components';
 import { View, TouchableOpacity } from 'react-native';
 import EventSettings from '@settings/EventSettings.js';
 
-export default function EventRow({ item, navigation }) {
+function EventRow({ item }) {
+    const navigation = useNavigation();
     const { value, state } = EventSettings.getEventStateSettings(item);
     const connection = EventSettings.getEventConnectionSettings(item);
 
@@ -57,3 +58,5 @@ export default function EventRow({ item, navigation }) {
         </View>
     );
 }
+
+export default memo(EventRow);

@@ -15,7 +15,7 @@ export default function LocationTypeaheadScreen() {
             name={i18n.t('Location', { count: 2 })}
             preview={LocationRow}
             fetch={LIST_LOCATIONS}
-            itemProps={{
+            extraData={{
                 layout: {
                     showCount: false,
                 },

@@ -1,21 +1,22 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
-import { withNavigation } from 'react-navigation';
 import AnimalRow from '@components/rows/AnimalRow.js';
 import AnimalSettings from '@settings/AnimalSettings.js';
 import ResourceList from '@components/resource/ResourceList.js';
 import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js';
 import DELETE_ANIMALS from '@graphql/mutations/Animal/deleteAnimals.gql.js';
 
-function AnimalListScreen({ navigation }) {
-    const preview = ({ item }) => AnimalRow({ item, navigation });
-
+export default function AnimalListScreen({ layout, ...props }) {
     return (
         <ResourceList
-            preview={preview}
+            preview={AnimalRow}
             fetch={LIST_ANIMALS}
             name={i18n.t('Animal', { count: 2 })}
             title={AnimalSettings.title}
+
+            extraData={{
+                layout,
+            }}
             
             routes={{
                 view: 'AnimalView',
@@ -39,9 +40,10 @@ function AnimalListScreen({ navigation }) {
                 { key: 'specie', text: i18n.t('Specie', { count: 1 }) },
                 { key: 'enclosure', text: i18n.t('Enclosure', { count: 1 }) },
             ]}
+
+            {...props}
         />
     );
 }
 
 AnimalListScreen.navigationOptions = ResourceList.navigationOptions;
-export default withNavigation(AnimalListScreen);

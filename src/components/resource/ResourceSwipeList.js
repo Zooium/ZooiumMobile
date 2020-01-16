@@ -1,16 +1,16 @@
 import theme from '@src/theme.js';
 import React, { useCallback } from 'react';
+import AppStyles from '@utils/AppStyles.js';
 import { useMutation } from '@apollo/react-hooks';
 import { withNavigation } from 'react-navigation';
-import { TouchableHighlight, Alert } from 'react-native';
-import ResourceListItem from './ResourceListItem.js';
 import ResourceListEmpty from './ResourceListEmpty.js';
 import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
 import ResourceListActions from './ResourceListActions.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import { Alert, View, TouchableHighlight } from 'react-native';
 import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 
-function ResourceSwipeList({ name, list, deps = [], title, query, routes, mutations: { remove }, preview, itemProps, extraData, showRefresh = true, canModify, navigation, ...props }) {
+function ResourceSwipeList({ name, list, title, query, routes, mutations: { remove }, preview: Preview, extraData, showRefresh = true, canModify, navigation, ...props }) {
     // Seperate out variables.
     const { view, edit } = routes;
     const { loading, refetch } = query;
@@ -60,13 +60,15 @@ function ResourceSwipeList({ name, list, deps = [], title, query, routes, mutati
     }
 
     // Create callbacks for resource item renderings.
-    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, deps);
-    const actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, deps);
+    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []);
+    const actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, [editItem, deleteItem]);
     const itemCallback = useCallback(({ item }) => (
         <TouchableHighlight underlayColor={theme['color-basic-200']} style={{ backgroundColor: 'white' }} onPress={() => viewItem(item)}>
-            <ResourceListItem item={item} preview={preview} {...itemProps} />
+            <View style={AppStyles.listItem}>
+                <Preview item={item} {...extraData} />
+            </View>
         </TouchableHighlight>
-    ), deps);
+    ), [Preview, extraData, viewItem]);
 
     // Return the swipe list view.
     return (

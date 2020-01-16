@@ -1,12 +1,12 @@
-import React from 'react';
 import theme from '@src/theme.js';
+import React, { memo } from 'react';
 import Loader from '@components/Loader.js';
 import AppStyles from '@utils/AppStyles.js';
 import { Text, Icon } from '@ui-kitten/components';
 import { View, TouchableHighlight } from 'react-native';
 import AuthorizedImage from '@components/AuthorizedImage.js';
 
-export default function MediaRow({ item, index, viewItem, isNew }) {
+function MediaRow({ item, index, viewItem, isNew }) {
     const showBorder = (index + 1) % 3 !== 0;
 
     return (
@@ -46,3 +46,5 @@ export default function MediaRow({ item, index, viewItem, isNew }) {
         </TouchableHighlight>
     )
 }
+
+export default memo(MediaRow);
