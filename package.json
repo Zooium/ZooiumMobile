@@ -29,6 +29,7 @@
 		"apollo-upload-client": "^12.1.0",
 		"buffer": "^5.4.3",
 		"currency-codes": "^1.5.1",
+		"eslint-plugin-react-hooks": "^0.0.0-b53ea6ca0",
 		"expo": "^36.0.0",
 		"expo-barcode-scanner": "~8.0.0",
 		"expo-constants": "~8.0.0",
