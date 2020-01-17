@@ -26,34 +26,31 @@ export default function App() {
         ScreenOrientation.OrientationLock.PORTRAIT_UP
     );
 
-    // Check for updates on application focus.
-    const [updating, setUpdating] = useState(false);
+    // Listen for app state changes. 
+    const [state, setState] = useState('active');
     useEffect(() => {
-        // Define check for updates function.
-        const checkForUpdates = (state) => {
-            // Skip if updating or app is not in foreground.
-            if (updating || state !== 'active') return;
+        // Register app state listener.
+        const listener = AppState.addEventListener('change', (state) => {
+            setState(state);
+        });
 
-            // Check for application updates.
-            Updates.checkForUpdateAsync().then(({ isAvailable }) => {
-                // Reload from source if available.
-                if (isAvailable) {
-                    Updates.reload();
-                } else {
-                    setUpdating(false);
-                }
-            }).catch(() => { /* Left blank intentionally */ });
-        }
-
-        // Register app state listener and run on boot.
-        const listener = AppState.addEventListener('change', checkForUpdates);
-        checkForUpdates('active');
-
-        // Remove app state listener.
+        // Remove app state listener on cleanup.
         return () => {
             listener && AppState.removeEventListener(listener);
         }
-    }, []);
+    }, [setState]);
+
+    // Check for updates on active.
+    useEffect(() => {
+        // Skip if not active state.
+        if (state !== 'active') return;
+
+        // Check for application updates.
+        Updates.checkForUpdateAsync().then(({ isAvailable }) => {
+            // Reload from source if available.
+            if (isAvailable) Updates.reload();
+        }).catch(() => { /* Left blank intentionally */ });
+    }, [state]);
 
     // Return application.
     return (

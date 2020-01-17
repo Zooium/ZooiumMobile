@@ -86,38 +86,39 @@ function AnimalMediaScreen({ navigation }) {
         },
     });
 
-    // Parse file from file request response.
-    const parseFile = (response) => {
-        // Get values from file request response.
-        let { uri, name, type, cancelled } = response;
-        if (cancelled || type && type === 'cancel') return;
-
-        // Find file extension and name.
-        const parts = uri.split('.');
-        const extension = parts[parts.length - 1];
-        const fileName = name || (new Date()).toLocaleString();
-
-        // Create file instance holder variable.
-        const fileInstance = new ReactNativeFile({
-            uri: uri,
-            type: type + '/' + extension,
-            name: fileName,
-        });
-
-        // Upload file to back-end.
-        uploadFile({
-            variables: {
-                team_id: AuthState.currentTeam().id,
-                resource_id: item.id,
-                resource_type: 'Animal',
-                file: fileInstance,
-                name: fileName,
-            },
-        });
-    }
-
     // Share upload actions with navigation.
     useEffect(() => {
+        // Parse file from file request response.
+        const parseFile = (response) => {
+            // Get values from file request response.
+            let { uri, name, type, cancelled } = response;
+            if (cancelled || type && type === 'cancel') return;
+
+            // Find file extension and name.
+            const parts = uri.split('.');
+            const extension = parts[parts.length - 1];
+            const fileName = name || (new Date()).toLocaleString();
+
+            // Create file instance holder variable.
+            const fileInstance = new ReactNativeFile({
+                uri: uri,
+                type: type + '/' + extension,
+                name: fileName,
+            });
+
+            // Upload file to back-end.
+            uploadFile({
+                variables: {
+                    team_id: AuthState.currentTeam().id,
+                    resource_id: item.id,
+                    resource_type: 'Animal',
+                    file: fileInstance,
+                    name: fileName,
+                },
+            });
+        }
+
+        // Share upload actions with navigation.
         navigation.setParams({
             selectFile: async () => parseFile(await DocumentPicker.getDocumentAsync()),
             captureImage: async () => {
@@ -130,52 +131,52 @@ function AnimalMediaScreen({ navigation }) {
                 } catch { /* Left blank intentionally */ }
             },
         })
-    }, []);
-
-    // Define media action sheet.
-    const { showActionSheetWithOptions } = useActionSheet();
-    const onPress = (item) => showActionSheetWithOptions({
-        options: [
-            i18n.t('View'),
-            i18n.t('Rename'),
-            i18n.t('Delete'),
-            i18n.t('Cancel'),
-        ],
-        cancelButtonIndex: 3,
-        destructiveButtonIndex: 2,
-    }, (index) => {
-        switch (index) {
-            case 0: { // View
-                return navigation.navigate('AuthorizedWebView', {
-                    uri: item.view_url,
-                    title: item.name,
-                });
-            }
-
-            case 1: { // Rename
-                const route = 'FileEdit';
-                return navigation.navigate({
-                    key: route + item.id,
-                    routeName: route,
-                    params: { item },
-                });
-            }
-
-            case 2: { // Delete
-                return deleteFile({
-                    variables: {
-                        ids: [item.id],
-                    },
-                });
-            }
-        }
-    });
+    }, [item, uploadFile]);
 
     // Create callbacks for resource item renderings.
+    const { showActionSheetWithOptions } = useActionSheet();
     const emptyCallback = useCallback(() => <ResourceListEmpty resource={i18n.t('Media').toLowerCase()} />, []);
     const itemCallback = useCallback(({ item, index }) => (
-        <MediaRow item={item} index={index} viewItem={onPress} isNew={newIds.includes(item.id)} />
-    ), [newIds]);
+        <MediaRow item={item} index={index} viewItem={() => {
+            // Show action sheet options.
+            showActionSheetWithOptions({
+                options: [
+                    i18n.t('View'),
+                    i18n.t('Rename'),
+                    i18n.t('Delete'),
+                    i18n.t('Cancel'),
+                ],
+                cancelButtonIndex: 3,
+                destructiveButtonIndex: 2,
+            }, (index) => {
+                switch (index) {
+                    case 0: { // View
+                        return navigation.navigate('AuthorizedWebView', {
+                            uri: item.view_url,
+                            title: item.name,
+                        });
+                    }
+        
+                    case 1: { // Rename
+                        const route = 'FileEdit';
+                        return navigation.navigate({
+                            key: route + item.id,
+                            routeName: route,
+                            params: { item },
+                        });
+                    }
+        
+                    case 2: { // Delete
+                        return deleteFile({
+                            variables: {
+                                ids: [item.id],
+                            },
+                        });
+                    }
+                }
+            });
+        }} isNew={newIds.includes(item.id)} />
+    ), [newIds, deleteFile, showActionSheetWithOptions]);
 
     // Return the grid list view.
     return (

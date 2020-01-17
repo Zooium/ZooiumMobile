@@ -4,9 +4,9 @@ import ResourceView from './ResourceView.js';
 import { Alert, Keyboard } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
 import LoadingModal from '@components/LoadingModal.js';
-import React, { useState, useEffect, Fragment } from 'react';
 import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
+import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
 export default function ResourceEdit({ formInit, routes: { view } = {}, mutations: { save, create, remove }, ...props }) {
@@ -17,12 +17,14 @@ export default function ResourceEdit({ formInit, routes: { view } = {}, mutation
     const [state, setState] = form;
 
     // Add merge state function as second param.
-    form[1] = (change) => {
-        setState({
-            ...state,
+    const mergeState = useCallback((change) => {
+        setState(previous => ({
+            ...previous,
             ...change,
-        });
-    }
+        }));
+    }, [setState]);
+
+    form[1] = mergeState;
 
     // Share form state and items with navigation.
     useEffect(() => {
@@ -98,7 +100,7 @@ export default function ResourceEdit({ formInit, routes: { view } = {}, mutation
                 });
             },
         });
-    }, []);
+    }, [view, saveItem, createItem]);
 
     // Get item from navigation.
     const item = useNavigationParam('item');
@@ -107,10 +109,10 @@ export default function ResourceEdit({ formInit, routes: { view } = {}, mutation
     // Parse item into state if available.
     useEffect(() => {
         if (item) {
-            setState({ ...state, ...item });
+            mergeState(item);
             setParsing(false);
         }
-    }, [item]);
+    }, [item, mergeState, setParsing]);
 
     // Return the resource view.
     return (

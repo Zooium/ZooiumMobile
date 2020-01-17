@@ -3,23 +3,21 @@ import { View } from 'react-native';
 import * as Location from 'expo-location';
 import Loader from '@components/Loader.js';
 import * as Permissions from 'expo-permissions';
-import React, { useState, useEffect } from 'react';
 import { Text, Icon } from '@ui-kitten/components';
-import { withNavigationFocus } from 'react-navigation';
+import { useIsFocused } from 'react-navigation-hooks';
 import PermissionDenied from '@components/PermissionDenied.js';
+import React, { useState, useCallback, useEffect } from 'react';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import EnclosureList from '@screens/enclosures/EnclosureListScreen.js';
 
-function NearbyLocationScreen({ isFocused }) {
+export default function NearbyLocationScreen() {
+    // Hold permission, watcher, and location states.
     const [status, setStatus] = useState('undetermined');
     const [watcher, setWatcher] = useState(undefined);
     const [location, setLocation] = useState(undefined);
 
-    // Start the location watcher instance.
-    const startWatcher = async () => {
-        // Remove watcher if exists.
-        if (watcher) watcher.remove();
-
+    // Define location watcher start function.
+    const startWatcher = useCallback(async () => {
         // Start location watcher service.
         const instance = await Location.watchPositionAsync({
             accuracy: Location.Accuracy.BestForNavigation,
@@ -29,11 +27,11 @@ function NearbyLocationScreen({ isFocused }) {
 
         // Save watcher instance on view.
         setWatcher(instance);
-    }
+    }, [setWatcher, setLocation]);
 
-    // Request location permissions and start watcher if granted.
-    const requestPermission = async () => {
-        // Request the user permission to location services.
+    // Define request user location permission function.
+    const requestPermission = useCallback(async () => {
+        // Request permission and save status.
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
         setStatus(status);
 
@@ -41,22 +39,35 @@ function NearbyLocationScreen({ isFocused }) {
         if (status === 'granted') {
             startWatcher();
         }
-    }
+    }, [setStatus, startWatcher]);
 
-    // Request permission on focus and cleanup.
+    // Cleanup watcher on remove. 
     useEffect(() => {
-        // Request permission or remove.
-        if (isFocused) {
-            requestPermission();
-        } else if (watcher) {
-            watcher.remove();
-        }
+        // Skip if has no watcher instance.
+        if (! watcher) return;
 
         // Remove watcher if set.
         return () => {
-            if (watcher) watcher.remove();
-        };
-    }, [isFocused]);
+            watcher && watcher.remove();
+        }
+    }, [watcher]);
+
+    // Get screen focus state.
+    const isFocused = useIsFocused();
+
+    // Start on focus and cleanup on defocus.
+    useEffect(() => {
+        // Skip if screen is not focused.
+        if (! isFocused) return;
+
+        // Request permission and start watcher.
+        requestPermission();
+
+        // Cleanup watcher on defocus. 
+        return () => {
+            setWatcher(null);
+        }
+    }, [isFocused, setWatcher, requestPermission]);
 
     // Return permission status based views.
     if (status === 'undetermined' || status === 'granted' && ! location) {
@@ -137,5 +148,3 @@ NearbyLocationScreen.navigationOptions = ({ navigation }) => {
         },
     }
 }
-
-export default withNavigationFocus(NearbyLocationScreen);

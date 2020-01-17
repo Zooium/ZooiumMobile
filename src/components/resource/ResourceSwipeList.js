@@ -28,15 +28,15 @@ export default function ResourceSwipeList({ name, list, title, query, routes, mu
     });
 
     // Define resource item CRUD functions.
-    const viewItem = (item) => {
+    const viewItem = useCallback((item) => {
         navigation.navigate({
             key: view + item.id,
             routeName: view,
             params: { item },
         });
-    }
+    }, [view]);
 
-    const editItem = (item = undefined) => {
+    const editItem = useCallback((item = undefined) => {
         // Skip if not allowed to modify item. 
         const msg = item && canModify && canModify(item);
         if (typeof msg === 'string') return Alert.alert(msg);
@@ -47,9 +47,9 @@ export default function ResourceSwipeList({ name, list, title, query, routes, mu
             routeName: edit,
             params: { item },
         });
-    }
+    }, [view, edit, canModify]);
 
-    const deleteItem = (item) => {
+    const deleteItem = useCallback((item) => {
         // Skip if not allowed to modify item. 
         const msg = item && canModify && canModify(item);
         if (typeof msg === 'string') return Alert.alert(msg);
@@ -62,10 +62,10 @@ export default function ResourceSwipeList({ name, list, title, query, routes, mu
                 },
             });
         });
-    }
+    }, [canModify, title, removeItems]);
 
     // Create callbacks for resource item renderings.
-    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []);
+    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, [name]);
     const actionsCallback = useCallback(({ item }) => <ResourceListActions item={item} editItem={editItem} deleteItem={deleteItem} />, [editItem, deleteItem]);
     const itemCallback = useCallback(({ item }) => (
         <TouchableHighlight underlayColor={theme['color-basic-200']} style={{ backgroundColor: 'white' }} onPress={() => viewItem(item)}>
@@ -73,7 +73,7 @@ export default function ResourceSwipeList({ name, list, title, query, routes, mu
                 <Preview item={item} {...extraData} />
             </View>
         </TouchableHighlight>
-    ), [Preview, extraData, viewItem]);
+    ), [extraData, viewItem]);
 
     // Return the swipe list view.
     return (

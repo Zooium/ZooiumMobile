@@ -13,20 +13,20 @@ export default function ResourceSelectList({ name, list, query, preview: Preview
     // Define resource item view functions.
     const navigation = useNavigation();
     const onChange = useNavigationParam('onChange');
-    const viewItem = (item) => {
+    const viewItem = useCallback((item) => {
         onChange && onChange(item);
         navigation.goBack();
-    };
+    }, [onChange]);
 
     // Create callbacks for resource item renderings.
-    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, []);
+    const emptyCallback = useCallback(() => <ResourceListEmpty resource={name.toLowerCase()} />, [name]);
     const itemCallback = useCallback(({ item }) => (
         <TouchableHighlight underlayColor={theme['color-basic-200']} style={{ backgroundColor: 'white' }} onPress={() => viewItem(item)}>
             <View style={AppStyles.listItem}>
                 <Preview item={item} {...extraData} />
             </View>
         </TouchableHighlight>
-    ), [Preview, extraData]);
+    ), [viewItem, extraData]);
 
     // Return the flat list view.
     return (

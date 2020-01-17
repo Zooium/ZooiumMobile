@@ -37,6 +37,7 @@ export default function ResourceList({ fetch, variables = {}, List, routes, sort
         : undefined;
 
     // Share set search, show settings, and create item.
+    const { view, edit } = routes || {};
     const defaults = useNavigationParam('defaults');
     useEffect(() => {
         navigation.setParams({
@@ -45,13 +46,13 @@ export default function ResourceList({ fetch, variables = {}, List, routes, sort
 
             createItem: () => {
                 navigation.navigate({
-                    key: routes.view + Math.random().toString(36).slice(2),
-                    routeName: routes.edit,
+                    key: view + Math.random().toString(36).slice(2),
+                    routeName: edit,
                     params: { defaults },
                 });
             },
         });
-    }, []),
+    }, [view, edit, defaults, setSearch, setShowSettings]),
 
     // Share settings show state.
     useEffect(() => {

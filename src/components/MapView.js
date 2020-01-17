@@ -48,7 +48,7 @@ export default function MapView({ latitude, longitude, setCoordinates, editable 
                 });
             }
         })();
-    }, []);
+    }, [editable, latitude, longitude]);
 
     // Set coordinates on parent on edit event.
     const handleEvent = ({ nativeEvent: { coordinate } }) => {

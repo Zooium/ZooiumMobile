@@ -7,6 +7,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 import { View, Alert, FlatList, SectionList } from 'react-native';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
+import PLACEHOLDER_QUERY from '@graphql/queries/placeholder.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
@@ -26,13 +27,13 @@ export default function ResourceView({ items, headers, fetch, parser, variables 
     });
 
     // Prepare fetch query if passed.
-    const { loading: fetching, data, refetch } = fetch && useQuery(fetch, {
-        skip: creating,
+    const { loading: fetching, data, refetch } = useQuery(fetch || PLACEHOLDER_QUERY, {
+        skip: ! fetch || creating,
         variables: {
             id: item && item.id,
             ...variables,
         },
-    }) || {};
+    });
 
     // Parse the response or fallback to item.
     const key = data && Object.keys(data)[0];
@@ -69,7 +70,7 @@ export default function ResourceView({ items, headers, fetch, parser, variables 
                 onDelete && onDelete(item);
             }),
         });
-    }, []);
+    }, [edit, creating, removeItems]);
 
     // Share response on change.
     useEffect(() => {
@@ -84,7 +85,7 @@ export default function ResourceView({ items, headers, fetch, parser, variables 
                 item: response,
             });
         }
-    }, [response]);
+    }, [response, creating, fetching]);
 
     // Set fallback response while viewing deleted item.
     let fallback = undefined;
