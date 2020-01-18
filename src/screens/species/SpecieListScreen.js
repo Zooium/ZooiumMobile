@@ -18,4 +18,10 @@ export default function SpecieListScreen(props) {
     );
 }
 
-SpecieListScreen.navigationOptions = ResourceList.navigationOptions;
+SpecieListScreen.navigationOptions = (props) => {
+    return ResourceList.navigationOptions({
+        ...props,
+        showAdding: false,
+        showFilters: false,
+    });
+}

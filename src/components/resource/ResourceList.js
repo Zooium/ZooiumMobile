@@ -111,7 +111,7 @@ export default function ResourceList({ fetch, variables = {}, List, routes, sort
     );
 }
 
-ResourceList.navigationOptions = ({ navigation }) => {
+ResourceList.navigationOptions = ({ navigation, showAdding = true, showFilters = true }) => {
     // Get show search status and if can return.
     const showSearch = navigation.getParam('showSearch', false);
     let canGoBack = navigation.isFocused() && navigation.dangerouslyGetParent().state.index > 0;
@@ -138,7 +138,7 @@ ResourceList.navigationOptions = ({ navigation }) => {
                         }} />
                     )}
 
-                    {! showSearch && (
+                    {! showSearch && showAdding && (
                         <Item title="add" iconName="plus" onPress={() => {
                             navigation.getParam('createItem') && navigation.getParam('createItem')();
                         }} />
@@ -150,11 +150,11 @@ ResourceList.navigationOptions = ({ navigation }) => {
         headerRight: function ResourceListRightItems() {
             return (
                 <HeaderButtons>
-                    {showSearch && (
+                    {showSearch && showAdding && (
                         <Item title="add" iconName="plus" onPress={() => {
                             navigation.getParam('createItem') && navigation.getParam('createItem')();
                         }} />
-                    ) || (
+                    ) || ! showSearch && (
                         <Item title="search" iconName="search" onPress={() => {
                             navigation.setParams({
                                 showSearch: true,
@@ -163,9 +163,11 @@ ResourceList.navigationOptions = ({ navigation }) => {
                         }} />
                     )}
 
-                    <Item title="filter" iconName="filter" onPress={() => {
-                        navigation.getParam('setShowSettings')(! navigation.getParam('showSettings', false));
-                    }} />
+                    {showFilters && (
+                        <Item title="filter" iconName="filter" onPress={() => {
+                            navigation.getParam('setShowSettings')(! navigation.getParam('showSettings', false));
+                        }} />
+                    )}
                 </HeaderButtons>
             );
         },
