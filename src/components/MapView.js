@@ -15,9 +15,12 @@ export default function MapView({ latitude, longitude, setCoordinates, editable 
     useEffect(() => {
         // Animate camera to new coordinates.
         if (mapRef && mapRef.current && latitude && longitude) {
-            mapRef.current.animateCamera({
-                center: { latitude, longitude },
-            }, 1);
+            mapRef.current.animateToRegion({
+                latitude: latitude,
+                longitude: longitude,
+                latitudeDelta: 0.002,
+                longitudeDelta: 0.002,
+            }, 300);
         }
     }, [latitude, longitude]);
 
@@ -37,15 +40,16 @@ export default function MapView({ latitude, longitude, setCoordinates, editable 
             if (! location || ! location.coords) return;
 
             // Extract coordinate data from location. 
-            const { coords: { latitude, longitude, altitude } } = location;
+            const { coords: { latitude, longitude } } = location;
 
             // Set camera to new coordinates.
             if (mapRef && mapRef.current) {
-                mapRef.current.setCamera({
-                    zoom: 16,
-                    altitude: altitude+500,
-                    center: { latitude, longitude },
-                });
+                mapRef.current.animateToRegion({
+                    latitude: latitude,
+                    longitude: longitude,
+                    latitudeDelta: 0.002,
+                    longitudeDelta: 0.002,
+                }, 0);
             }
         })();
     }, [editable, latitude, longitude]);
@@ -63,12 +67,6 @@ export default function MapView({ latitude, longitude, setCoordinates, editable 
                 mapType="hybrid"
                 showsUserLocation={editable && true}
                 onPress={editable && handleEvent || undefined}
-                initialRegion={latitude && longitude && ({
-                    latitude: latitude,
-                    longitude: longitude,
-                    latitudeDelta: 0.01,
-                    longitudeDelta: 0.01,
-                })}
                 style={[{
                     width: '100%',
                     aspectRatio: 1,
