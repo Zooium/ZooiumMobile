@@ -3,7 +3,7 @@ import { useNavigationParam } from 'react-navigation-hooks';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
 import ResourceView from '@components/resource/ResourceView.js';
 
-export default function ResourceWrapper(props ) {
+export default function ResourceWrapper(props) {
     const Resource = useNavigationParam('editing') ? ResourceEdit : ResourceView;
     return <Resource {...props} />;
 }

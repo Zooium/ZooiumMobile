@@ -25,6 +25,7 @@ export default function TradeItems({ editing = false, transaction, onItemChange,
 
                 onSave: (item, isSaving) => {
                     onItemChange && onItemChange(item, isSaving ? 'save' : 'create');
+                    return 1;
                 },
 
                 onDelete: (item) => {

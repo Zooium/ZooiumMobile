@@ -24,6 +24,16 @@ export default function TypeaheadInput({ view, preview, appendSearch, add, value
                         showSearch: true,
                         focusSearch: true,
                         onChange, appendSearch, add,
+                        
+                        createParams: {
+                            onSave: (item) => {
+                                // Bind item to input.
+                                onChange(item);
+
+                                // Pop navigation 2 levels (create screen, typeahead).
+                                return 2;
+                            },
+                        },
                     },
                 });
             }}

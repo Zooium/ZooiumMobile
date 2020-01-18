@@ -78,15 +78,13 @@ export default function ResourceEdit({ formInit, routes: { view } = {}, mutation
                     // Get item from response.
                     const item = data[Object.keys(data)[0]];
 
-                    // Go back if missing view route.
-                    if (! view) {
-                        // Go back to the previous screen.
-                        navigation.goBack();
+                    // Check if has on save action. 
+                    const onSave = navigation.getParam('onSave');
+                    const popCount = onSave && onSave(item, isSaving);
+                    if (popCount && navigation.pop(+popCount)) return;
 
-                        // Check if has on save action and halt execution.
-                        const onSave = navigation.getParam('onSave');
-                        return onSave && onSave(item, isSaving);
-                    }
+                    // Go back if missing view route.
+                    if (! view && navigation.goBack()) return;
 
                     // Navigate to view route on success.
                     navigation.navigate({

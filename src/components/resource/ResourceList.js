@@ -38,7 +38,7 @@ export default function ResourceList({ fetch, variables = {}, List, routes, sort
 
     // Share set search, show settings, and create item.
     const { view, edit } = routes || {};
-    const defaults = useNavigationParam('defaults');
+    const createParams = useNavigationParam('createParams');
     useEffect(() => {
         navigation.setParams({
             setSearch,
@@ -48,11 +48,11 @@ export default function ResourceList({ fetch, variables = {}, List, routes, sort
                 navigation.navigate({
                     key: view + Math.random().toString(36).slice(2),
                     routeName: edit,
-                    params: { defaults },
+                    params: createParams,
                 });
             },
         });
-    }, [view, edit, defaults, setSearch, setShowSettings]),
+    }, [view, edit, createParams, setSearch, setShowSettings]),
 
     // Share settings show state.
     useEffect(() => {
@@ -111,92 +111,82 @@ export default function ResourceList({ fetch, variables = {}, List, routes, sort
     );
 }
 
-ResourceList.navigationOptions = ({ navigation, onSearchCancel = undefined, hasRightSearchItem = false }) => {
-    // Return search based header options if requested.
-    if (navigation.getParam('showSearch', false)) {
-        return {
-            headerRight: () => null,
-            headerLeft: function SearchReturnButton() {
-                return (
-                    <HeaderButtons left={true}>
-                        <Item title="return" iconName="arrow-left" onPress={() => {
-                            if (onSearchCancel) return onSearchCancel();
-                            if (navigation.state && navigation.state.key && navigation.goBack()) return;
+ResourceList.navigationOptions = ({ navigation, hasRightSearchItem = false }) => {
+    // Get show search status and if can return.
+    const showSearch = navigation.getParam('showSearch', false);
+    let canGoBack = navigation.isFocused() && navigation.dangerouslyGetParent().state.index > 0;
 
+    // Return navigation options.
+    return {
+        headerTitle: navigation.getParam('overrideTitle'),
+        headerTitleAlign: showSearch ? 'left' : 'center',
+
+        headerLeft: function ResourceListLeftItems() {
+            return (
+                <HeaderButtons left={true}>
+                    {(canGoBack || showSearch) && (
+                        <Item title="return" iconName="arrow-left" onPress={() => {
+                            // Navigate to previous view if not searching or has state.
+                            if (! showSearch && navigation.goBack()) return;
+                            if (navigation.state && navigation.state.key && navigation.goBack()) return;
+                    
+                            // Cancel searching.
                             navigation.getParam('setSearch')(null);
                             navigation.setParams({
                                 search: null,
                                 showSearch: false
                             });
                         }} />
-                    </HeaderButtons>
-                );
-            },
-    
-            headerTitleAlign: 'left',
-            headerTitleContainerStyle: {
-                flex: 1,
-                right: hasRightSearchItem ? 48 : 14,
-            },
-
-            headerTitle: function SearchBarRender() {
-                return (
-                    <TextInput
-                        clearButtonMode="always"
-                        selectionColor="white"
-                        placeholder={i18n.t('Enter criteria to search...')}
-                        autoFocus={navigation.getParam('focusSearch', true)}
-                        defaultValue={navigation.getParam('search')}
-                        onChangeText={navigation.getParam('setSearch')}
-                        style={{
-                            width: '100%',
-                            color: 'white',
-                            fontSize: 18,
-                        }}
-                    />
-                );
-            },
-        };
-    }
-
-    // Determine if can go back.
-    let canGoBack = navigation.isFocused() && navigation.dangerouslyGetParent().state.index > 0;
-
-    // Return default navigation options.
-    return {
-        headerTitle: navigation.getParam('overrideTitle'),
-
-        headerLeft: function ReturnAndAddButtons() {
-            return (
-                <HeaderButtons left={true}>
-                    {canGoBack && (
-                        <Item title="return" iconName="arrow-left" onPress={() => navigation.goBack()} />
                     )}
 
-                    <Item title="add" iconName="plus" onPress={() => {
-                        navigation.getParam('createItem') && navigation.getParam('createItem')();
-                    }} />
+                    {! showSearch && (
+                        <Item title="add" iconName="plus" onPress={() => {
+                            navigation.getParam('createItem') && navigation.getParam('createItem')();
+                        }} />
+                    )}
                 </HeaderButtons>
             );
         },
 
-        headerRight: function SearchOptionButtons({ items = undefined } = {}) {
+        headerRight: function ResourceListRightItems() {
             return (
                 <HeaderButtons>
-                    <Item title="search" iconName="search" onPress={() => {
-                        navigation.setParams({
-                            showSearch: true,
-                            focusSearch: true,
-                        });
-                    }} />
+                    {showSearch && (
+                        <Item title="add" iconName="plus" onPress={() => {
+                            navigation.getParam('createItem') && navigation.getParam('createItem')();
+                        }} />
+                    ) || (
+                        <Item title="search" iconName="search" onPress={() => {
+                            navigation.setParams({
+                                showSearch: true,
+                                focusSearch: true,
+                            });
+                        }} />
+                    )}
 
                     <Item title="filter" iconName="filter" onPress={() => {
                         navigation.getParam('setShowSettings')(! navigation.getParam('showSettings', false));
                     }} />
-
-                    { items && items() }
                 </HeaderButtons>
             );
         },
+
+        headerTitle: showSearch && (function SearchBarRender() {
+            return (
+                <TextInput
+                    clearButtonMode="always"
+                    selectionColor="white"
+                    placeholder={i18n.t('Enter criteria to search...')}
+                    autoFocus={navigation.getParam('focusSearch', true)}
+                    defaultValue={navigation.getParam('search')}
+                    onChangeText={navigation.getParam('setSearch')}
+                    style={{
+                        width: '100%',
+                        color: 'white',
+                        fontSize: 18,
+                    }}
+                />
+            );
+        }),
     }
 }

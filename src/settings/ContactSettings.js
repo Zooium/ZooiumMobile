@@ -128,9 +128,12 @@ export default class ContactSettings {
                     search: search,
                     showSearch: true,
                     focusSearch: false,
-                    defaults: {
-                        contact: response || undefined,
-                        contact_id: response.id || undefined,
+                    
+                    createParams: {
+                        defaults: {
+                            contact: response || undefined,
+                            contact_id: response.id || undefined,
+                        },
                     },
                 },
             }),

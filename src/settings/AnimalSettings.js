@@ -394,15 +394,17 @@ export default class AnimalSettings {
                     appendSearch: search,
                     overrideTitle: i18n.t('Cubs'),
 
-                    defaults: {
-                        father: response.sex === 'male' && response || undefined,
-                        father_id: response.sex === 'male' && response.id || undefined,
+                    createParams: {
+                        defaults: {
+                            father: response.sex === 'male' && response || undefined,
+                            father_id: response.sex === 'male' && response.id || undefined,
 
-                        mother: response.sex === 'female' && response || undefined,
-                        mother_id: response.sex === 'female' && response.id || undefined,
+                            mother: response.sex === 'female' && response || undefined,
+                            mother_id: response.sex === 'female' && response.id || undefined,
 
-                        specie: response.specie || undefined,
-                        specie_id:  response.specie && response.specie.id || undefined,
+                            specie: response.specie || undefined,
+                            specie_id:  response.specie && response.specie.id || undefined,
+                        },
                     },
                 },
             }),
@@ -417,10 +419,13 @@ export default class AnimalSettings {
                 key: route + search,
                 params: {
                     appendSearch: search,
-                    defaults: {
-                        resource: response,
-                        resource_id: response.id,
-                        resource_type: 'Animal',
+                    
+                    createParams: {
+                        defaults: {
+                            resource: response,
+                            resource_id: response.id,
+                            resource_type: 'Animal',
+                        },
                     },
                 },
             }),

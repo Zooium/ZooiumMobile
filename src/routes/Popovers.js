@@ -4,19 +4,15 @@ import AnimalList from '@screens/animals/AnimalListScreen.js';
 import AnimalView from '@screens/animals/AnimalViewScreen.js';
 import AnimalMedia from '@screens/animals/AnimalMediaScreen.js';
 import AnimalFamily from '@screens/animals/AnimalFamilyScreen.js';
-import AnimalTypeahead from '@screens/animals/AnimalTypeaheadScreen.js';
 
 import EnclosureList from '@screens/enclosures/EnclosureListScreen.js';
 import EnclosureView from '@screens/enclosures/EnclosureViewScreen.js';
-import EnclosureTypeahead from '@screens/enclosures/EnclosureTypeaheadScreen.js';
 
 import LocationList from '@screens/locations/LocationListScreen.js';
 import LocationView from '@screens/locations/LocationViewScreen.js';
-import LocationTypeahead from '@screens/locations/LocationTypeaheadScreen.js';
 
 import ContactList from '@screens/contacts/ContactListScreen.js';
 import ContactView from '@screens/contacts/ContactViewScreen.js';
-import ContactTypeahead from '@screens/contacts/ContactTypeaheadScreen.js';
 
 import TransactionList from '@screens/transactions/TransactionListScreen.js';
 import TransactionView from '@screens/transactions/TransactionViewScreen.js';
@@ -27,8 +23,9 @@ import EventView from '@screens/events/EventViewScreen.js';
 
 import MapView from '@screens/MapViewScreen.js';
 import FileView from '@screens/FileViewScreen.js';
-import SpecieTypeahead from '@screens/SpecieTypeaheadScreen.js';
+import SpecieList from '@screens/species/SpecieListScreen.js';
 import AuthorizedWebView from '@screens/AuthorizedWebViewScreen.js';
+import ResourceTypeahead from '@components/resource/ResourceTypeahead.js';
 
 export default {
     // Animals
@@ -40,6 +37,7 @@ export default {
     },
     AnimalEdit: { screen: AnimalView, params: { editing: true } },
     AnimalView: { screen: AnimalView, params: { editing: false } },
+    AnimalTypeahead: { screen: ResourceTypeahead, params: { list: AnimalList } },
     AnimalMedia, AnimalFamily,
 
     // Enclosures
@@ -51,6 +49,7 @@ export default {
     },
     EnclosureEdit: { screen: EnclosureView, params: { editing: true } },
     EnclosureView: { screen: EnclosureView, params: { editing: false } },
+    EnclosureTypeahead: { screen: ResourceTypeahead, params: { list: EnclosureList } },
 
     // Locations
     LocationList: {
@@ -61,6 +60,7 @@ export default {
     },
     LocationEdit: { screen: LocationView, params: { editing: true } },
     LocationView: { screen: LocationView, params: { editing: false } },
+    LocationTypeahead: { screen: ResourceTypeahead, params: { list: LocationList } },
 
     // Contacts
     ContactList: {
@@ -71,6 +71,7 @@ export default {
     },
     ContactEdit: { screen: ContactView, params: { editing: true } },
     ContactView: { screen: ContactView, params: { editing: false } },
+    ContactTypeahead: { screen: ResourceTypeahead, params: { list: ContactList } },
 
     // Transactions
     TransactionList: {
@@ -93,10 +94,8 @@ export default {
     EventEdit: { screen: EventView, params: { editing: true } },
     EventView: { screen: EventView, params: { editing: false } },
 
-    // Typeaheads
-    AnimalTypeahead, SpecieTypeahead,
-    LocationTypeahead, EnclosureTypeahead,
-    ContactTypeahead,
+    // Species
+    SpecieTypeahead: { screen: ResourceTypeahead, params: { list: SpecieList } },
 
     // Files
     FileEdit: { screen: FileView, params: { editing: true } },

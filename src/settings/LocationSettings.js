@@ -138,9 +138,12 @@ export default class LocationSettings {
                     search: search,
                     showSearch: true,
                     focusSearch: false,
-                    defaults: {
-                        location: response || undefined,
-                        location_id: response.id || undefined,
+
+                    createParams: {
+                        defaults: {
+                            location: response || undefined,
+                            location_id: response.id || undefined,
+                        },
                     },
                 },
             }),

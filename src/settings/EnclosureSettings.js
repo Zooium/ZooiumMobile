@@ -152,9 +152,12 @@ export default class EnclosureSettings {
                     search: search,
                     showSearch: true,
                     focusSearch: false,
-                    defaults: {
-                        enclosure: response || undefined,
-                        enclosure_id: response.id || undefined,
+                    
+                    createParams: {
+                        defaults: {
+                            enclosure: response || undefined,
+                            enclosure_id: response.id || undefined,
+                        },
                     },
                 },
             }),

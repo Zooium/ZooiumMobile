@@ -3,11 +3,19 @@ import theme from '@src/theme.js';
 import Constants from 'expo-constants';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
+export const TITLE_OFFSET_ALIGN = 80;
+
 export default {
     defaultNavigationOptions: ({ navigation }) => {
         const canGoBack = navigation.dangerouslyGetParent().state.index > 0;
 
         return {
+            // Change default header spacing.
+            headerTitleContainerStyle: {
+                left: TITLE_OFFSET_ALIGN,
+                right: TITLE_OFFSET_ALIGN,
+            },
+
             // Center header text and make title bold.
             headerTitleAlign: 'center',
             headerTitleStyle: {
