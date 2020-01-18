@@ -1,12 +1,12 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
+import Specie from '@models/Specie.model.js';
+import Animal from '@models/Animal.model.js';
 import SexPreview from '@components/SexPreview.js';
 import { Icon, Text } from '@ui-kitten/components';
 import { View, TouchableOpacity } from 'react-native';
 import CitesListing from '@components/CitesListing.js';
-import AnimalSettings from '@settings/AnimalSettings.js';
-import SpecieSettings from '@settings/SpecieSettings.js';
 
 export const tradeTypeSettings = {
     animal: {
@@ -23,7 +23,7 @@ export const tradeTypeSettings = {
                             <SexPreview sex={item.resource.sex} size={16} style={{ marginRight: 4 }} />
 
                             <Text style={{ fontWeight: 'bold', flexShrink: 1 }}>
-                                {AnimalSettings.title(item.resource)}
+                                {Animal.title(item.resource)}
                             </Text>
 
                             {item.resource.name && item.resource.identifier && (
@@ -34,7 +34,7 @@ export const tradeTypeSettings = {
                         </View>
 
                         <Text style={{ fontSize: 14 }}>
-                            {SpecieSettings.title(item.resource.specie, '(' + i18n.t('not provided') + ')')}
+                            {Specie.title(item.resource.specie, '(' + i18n.t('not provided') + ')')}
                         </Text>
                     </View>
 

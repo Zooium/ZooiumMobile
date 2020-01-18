@@ -1,7 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
+import Contact from '@models/Contact.model.js';
 import ContactRow from '@components/rows/ContactRow.js';
-import ContactSettings from '@settings/ContactSettings.js';
 import ResourceList from '@components/resource/ResourceList.js';
 import LIST_CONTACTS from '@graphql/queries/Contact/listContacts.gql.js';
 import DELETE_CONTACTS from '@graphql/mutations/Contact/deleteContacts.gql.js';
@@ -11,7 +11,7 @@ export default function ContactListScreen({ layout, ...props }) {
         <ResourceList
             preview={ContactRow}
             fetch={LIST_CONTACTS}
-            title={ContactSettings.title}
+            title={Contact.title}
             name={i18n.t('Contact', { count: 2 })}
 
             extraData={{

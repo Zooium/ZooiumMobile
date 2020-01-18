@@ -1,9 +1,9 @@
 import i18n from '@src/i18n.js';
 import React, { memo } from 'react';
+import Contact from '@models/Contact.model.js';
 import { Text, Icon } from '@ui-kitten/components';
 import { useNavigation } from 'react-navigation-hooks';
 import { View, TouchableOpacity  } from 'react-native';
-import ContactSettings from '@settings/ContactSettings.js';
 
 function ContactRow({ item, layout: { showCount = true } = {} }) {
     const navigation = useNavigation();
@@ -12,7 +12,7 @@ function ContactRow({ item, layout: { showCount = true } = {} }) {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
                 <Text category="h6">
-                    {ContactSettings.title(item)}
+                    {Contact.title(item)}
                 </Text>
 
                 <Text>

@@ -1,6 +1,6 @@
 import i18n, { localeName } from '@src/i18n.js';
 
-export default new class SpecieSettings {
+export default new class Specie {
     /**
      * Returns the resource title.
      *

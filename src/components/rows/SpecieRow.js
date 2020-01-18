@@ -1,13 +1,13 @@
 import React, { memo } from 'react';
 import { View  } from 'react-native';
 import { Text } from '@ui-kitten/components';
-import SpecieSettings from '@settings/SpecieSettings.js';
+import Specie from '@models/Specie.model.js';
 
 function SpecieRow({ item }) {    
     return (
         <View>
             <Text category="h6">
-                {SpecieSettings.title(item)}
+                {Specie.title(item)}
             </Text>
 
             <Text appearance="hint">

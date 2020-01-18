@@ -111,14 +111,13 @@ export default function ResourceList({ fetch, variables = {}, List, routes, sort
     );
 }
 
-ResourceList.navigationOptions = ({ navigation, hasRightSearchItem = false }) => {
+ResourceList.navigationOptions = ({ navigation }) => {
     // Get show search status and if can return.
     const showSearch = navigation.getParam('showSearch', false);
     let canGoBack = navigation.isFocused() && navigation.dangerouslyGetParent().state.index > 0;
 
     // Return navigation options.
     return {
-        headerTitle: navigation.getParam('overrideTitle'),
         headerTitleAlign: showSearch ? 'left' : 'center',
 
         headerLeft: function ResourceListLeftItems() {
@@ -187,6 +186,6 @@ ResourceList.navigationOptions = ({ navigation, hasRightSearchItem = false }) =>
                     }}
                 />
             );
-        }),
+        }) || navigation.getParam('overrideTitle'),
     }
 }

@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { Text } from '@ui-kitten/components';
 import { useNavigation } from 'react-navigation-hooks';
 import { View, TouchableOpacity  } from 'react-native';
-import TransactionSettings from '@settings/TransactionSettings.js';
+import Transaction from '@models/Transaction.model.js';
 
 function TransactionRow({ item }) {
     const navigation = useNavigation();
@@ -12,7 +12,7 @@ function TransactionRow({ item }) {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
                 <Text category="h6">
-                    {TransactionSettings.title(item)}
+                    {Transaction.title(item)}
                 </Text>
 
                 <Text style={{ marginRight: 6 }} numberOfLines={1}>

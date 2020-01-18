@@ -1,7 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
+import Event from '@models/Event.model.js';
 import EventRow from '@components/rows/EventRow.js';
-import EventSettings from '@settings/EventSettings.js';
 import ResourceList from '@components/resource/ResourceList.js';
 import LIST_EVENTS from '@graphql/queries/Event/listEvents.gql.js';
 import DELETE_EVENTS from '@graphql/mutations/Event/deleteEvents.gql.js';
@@ -11,8 +11,8 @@ export default function EventListScreen({ layout, ...props }) {
         <ResourceList
             preview={EventRow}
             fetch={LIST_EVENTS}
-            title={EventSettings.title}
-            canModify={EventSettings.canModify}
+            title={Event.title}
+            canModify={Event.canModify}
             name={i18n.t('Event', { count: 2 })}
 
             extraData={{

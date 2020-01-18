@@ -1,7 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
+import Animal from '@models/Animal.model.js';
 import AnimalRow from '@components/rows/AnimalRow.js';
-import AnimalSettings from '@settings/AnimalSettings.js';
 import ResourceList from '@components/resource/ResourceList.js';
 import LIST_ANIMALS from '@graphql/queries/Animal/listAnimals.gql.js';
 import DELETE_ANIMALS from '@graphql/mutations/Animal/deleteAnimals.gql.js';
@@ -12,7 +12,7 @@ export default function AnimalListScreen({ layout, ...props }) {
             preview={AnimalRow}
             fetch={LIST_ANIMALS}
             name={i18n.t('Animal', { count: 2 })}
-            title={AnimalSettings.title}
+            title={Animal.title}
 
             extraData={{
                 layout,

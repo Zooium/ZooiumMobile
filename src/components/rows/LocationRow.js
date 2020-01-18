@@ -1,9 +1,9 @@
 import i18n from '@src/i18n.js';
 import React, { memo } from 'react';
+import Location from '@models/Location.model.js';
 import { Text, Icon } from '@ui-kitten/components';
 import { useNavigation } from 'react-navigation-hooks';
 import { View, TouchableOpacity  } from 'react-native';
-import LocationSettings from '@settings/LocationSettings.js';
 
 function LocationRow({ item, layout: { showCount = true } = {} }) {    
     const navigation = useNavigation();
@@ -19,7 +19,7 @@ function LocationRow({ item, layout: { showCount = true } = {} }) {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
                 <Text category="h6">
-                    {LocationSettings.title(item)}
+                    {Location.title(item)}
                 </Text>
 
                 <Text>{locationText}</Text>

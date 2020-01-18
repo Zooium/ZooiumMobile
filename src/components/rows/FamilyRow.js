@@ -1,9 +1,9 @@
 import i18n from '@src/i18n.js';
 import { View } from 'react-native';
 import React, { memo } from 'react';
+import Animal from '@models/Animal.model.js';
 import { Text } from '@ui-kitten/components';
 import SexPreview from '@components/SexPreview.js';
-import AnimalSettings from '@settings/AnimalSettings.js';
 
 const familyNames = [
     [i18n.t('Current'), i18n.t('Current')],
@@ -19,7 +19,7 @@ function FamilyRow({ item }) {
                     <SexPreview sex={item.sex} size={20} style={{marginRight: 10}} />
 
                     <Text category="h6">
-                        {AnimalSettings.title(item)}
+                        {Animal.title(item)}
                     </Text>
                 </View>
 

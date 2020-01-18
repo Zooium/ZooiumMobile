@@ -1,10 +1,11 @@
 import i18n from '@src/i18n.js';
 import React, { memo } from 'react';
+import Animal from '@models/Animal.model.js';
+import Specie from '@models/Specie.model.js';
 import { Text } from '@ui-kitten/components';
 import SexPreview from '@components/SexPreview.js';
 import { View, TouchableOpacity } from 'react-native';
 import { useNavigation } from 'react-navigation-hooks';
-import SpecieSettings from '@settings/SpecieSettings.js';
 
 function AnimalRow({ item }) {
     const navigation = useNavigation();
@@ -16,11 +17,11 @@ function AnimalRow({ item }) {
                     <SexPreview sex={item.sex} size={20} style={{marginRight: 10}} />
 
                     <Text category="h6">
-                        {item && (item.name || item.identifier || '(' + i18n.t('name not set') + ')')}
+                        {Animal.title(item)}
                     </Text>
                 </View>
 
-                <Text>{SpecieSettings.title(item.specie, '(' + i18n.t('not provided') + ')')}</Text>
+                <Text>{Specie.title(item.specie, '(' + i18n.t('not provided') + ')')}</Text>
             </View>
 
             {item.enclosure && (

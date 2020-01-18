@@ -1,9 +1,9 @@
 import i18n from '@src/i18n.js';
 import React, { memo } from 'react';
+import Enclosure from '@models/Enclosure.model.js';
 import { Text, Icon } from '@ui-kitten/components';
 import { useNavigation } from 'react-navigation-hooks';
 import { View, TouchableOpacity  } from 'react-native';
-import EnclosureSettings from '@settings/EnclosureSettings.js';
 
 function EnclosureRow({ item, header: Header, layout: { showCount = true } = {} }) {
     const navigation = useNavigation();
@@ -18,7 +18,7 @@ function EnclosureRow({ item, header: Header, layout: { showCount = true } = {} 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 1 }}>
                     <Text category="h6">
-                        {EnclosureSettings.title(item)}
+                        {Enclosure.title(item)}
                     </Text>
 
                     <Text>{locationText}</Text>

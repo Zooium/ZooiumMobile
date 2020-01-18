@@ -1,7 +1,7 @@
 import React from 'react';
 import i18n from '@src/i18n.js';
+import Enclosure from '@models/Enclosure.model.js';
 import EnclosureRow from '@components/rows/EnclosureRow.js';
-import EnclosureSettings from '@settings/EnclosureSettings.js';
 import ResourceList from '@components/resource/ResourceList.js';
 import LIST_ENCLOSURES from '@graphql/queries/Enclosure/listEnclosures.gql.js';
 import DELETE_ENCLOSURES from '@graphql/mutations/Enclosure/deleteEnclosures.gql.js';
@@ -11,7 +11,7 @@ export default function EnclosureListScreen({ header, layout, ...props }) {
         <ResourceList
             preview={EnclosureRow}
             fetch={LIST_ENCLOSURES}
-            title={EnclosureSettings.title}
+            title={Enclosure.title}
             name={i18n.t('Enclosure', { count: 2 })}
 
             extraData={{

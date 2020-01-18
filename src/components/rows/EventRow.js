@@ -1,14 +1,14 @@
 import i18n from '@src/i18n.js';
 import React, { memo } from 'react';
+import Event from '@models/Event.model.js';
 import { Text, Icon } from '@ui-kitten/components';
 import { View, TouchableOpacity } from 'react-native';
-import EventSettings from '@settings/EventSettings.js';
 import { useNavigation } from 'react-navigation-hooks';
 
 function EventRow({ item }) {
     const navigation = useNavigation();
-    const { value, state } = EventSettings.getEventStateSettings(item);
-    const connection = EventSettings.getEventConnectionSettings(item);
+    const { value, state } = Event.getEventStateSettings(item);
+    const connection = Event.getEventConnectionSettings(item);
 
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
