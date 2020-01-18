@@ -67,6 +67,12 @@ export default function MapView({ latitude, longitude, setCoordinates, editable 
                 mapType="hybrid"
                 showsUserLocation={editable && true}
                 onPress={editable && handleEvent || undefined}
+                initialRegion={{
+                    latitude: latitude,
+                    longitude: longitude,
+                    latitudeDelta: 0.002,
+                    longitudeDelta: 0.002,
+                }}
                 style={[{
                     width: '100%',
                     aspectRatio: 1,
