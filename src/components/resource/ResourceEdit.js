@@ -9,7 +9,7 @@ import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
-export default function ResourceEdit({ formInit, routes: { view } = {}, mutations: { save, create, remove }, ...props }) {
+export default function ResourceEdit({ formInit, routes: { view } = {}, mutations: { save, create, remove }, items, ...props }) {
     // Create form state from passed init function.
     const navigation = useNavigation();
     const defaults = useNavigationParam('defaults') || {};
@@ -26,85 +26,96 @@ export default function ResourceEdit({ formInit, routes: { view } = {}, mutation
 
     form[1] = mergeState;
 
-    // Share form state and items with navigation.
-    useEffect(() => {
-        navigation.setParams({ state, items: props.items });
-    }, [state, props.items]);
+    // Get item from navigation.
+    const item = useNavigationParam('item');
+    const isCreating = ! item;
 
     // Define update/create mutations.
-    const [saveItem, { loading: saving }] = useMutation(save);
-    const [createItem, { loading: creating }] = useMutation(create);
+    const variables = { team_id: AuthState.currentTeam().id, ...state };
+    const [saveItem, { loading: saving }] = useMutation(save, { variables });
+    const [createItem, { loading: creating }] = useMutation(create, { variables });
 
-    // Pass save function to navigation.
+    // Check for incomplete items on state change.
     useEffect(() => {
-        navigation.setParams({
-            save: ({ item, items, state }) => {
-                // Dismiss the keyboard.
-                Keyboard.dismiss();
-
-                // Gather incomplete required items.
-                let incomplete = [];
-                items.forEach(category => {
-                    category.data.forEach(item => {
-                        // Push title to incomplete if required and not set.
-                        if (item.required && item.required(state) && ! state[item.key]) {
-                            incomplete.push(item.title);
-                        }
-                    });
-                });
-
-                // Show error if has incomplete items.
-                if (incomplete.length) {
-                    // Return incomplete submission alert.
-                    return Alert.alert(
-                        i18n.t('Incomplete Submission'),
-                        i18n.t('The following fields are required: {{fields}}', {
-                            fields: incomplete.join(', '),
-                        })
-                    );
+        // Gather incomplete required items.
+        let incomplete = [];
+        items.forEach(category => {
+            category.data.forEach(item => {
+                // Push title to incomplete if required and not set.
+                if (item.required && item.required(state) && ! state[item.key]) {
+                    incomplete.push(item.title);
                 }
+            });
+        });
 
-                // Determine save function based on item existing.
-                const isSaving = item !== undefined;
-                const saveFunction = item ? saveItem : createItem;
+        // Share incomplete items with navigation.
+        navigation.setParams({
+            incomplete: incomplete.length && incomplete,
+        });
+    }, [items, state]);
 
-                // Attempt to save the item.
-                saveFunction({
-                    variables: {
-                        team_id: AuthState.currentTeam().id,
-                        ...state,
-                    },
-                }).then(({ data }) => {
-                    // Get item from response.
-                    const item = data[Object.keys(data)[0]];
+    // Share save form with navigation. 
+    useEffect(() => {
+        // Define save form function.
+        const saveForm = () => {
+            // Dismiss the keyboard.
+            Keyboard.dismiss();
 
-                    // Check if has on save action. 
-                    const onSave = navigation.getParam('onSave');
-                    const popCount = onSave && onSave(item, isSaving);
-                    if (popCount && navigation.pop(+popCount)) return;
+            // Show error if has incomplete items.
+            const incomplete = navigation.getParam('incomplete');
+            if (incomplete && incomplete.length) {
+                // Return incomplete submission alert.
+                return Alert.alert(
+                    i18n.t('Incomplete Submission'),
+                    i18n.t('The following fields are required: {{fields}}', {
+                        fields: incomplete.join(', '),
+                    })
+                );
+            }
+    
+            // Determine save function based on creating.
+            const saveFunction = isCreating ? createItem : saveItem;
+    
+            // Attempt to save the item.
+            saveFunction().then(({ data }) => {
+                // Get item from response.
+                const item = data[Object.keys(data)[0]];
+    
+                // Check if has on save action. 
+                const onSave = navigation.getParam('onSave');
+                const popCount = onSave && onSave(item, ! isCreating);
+                if (popCount && navigation.pop(+popCount)) return;
+    
+                // Go back if missing view route.
+                if (! view && navigation.goBack()) return;
 
-                    // Go back if missing view route.
-                    if (! view && navigation.goBack()) return;
-
-                    // Navigate to view route on success.
+                // Check if creating new item.
+                if (isCreating) {
+                    // Navigate to new item view.
                     navigation.navigate({
                         key: view + item.id,
                         routeName: view,
                         params: { item },
                     });
-                }).catch(error => {
-                    // TODO Implement validation handler.
-                    console.log(error);
-                });
-            },
-        });
-    }, [view, saveItem, createItem]);
+                } else {
+                    // Replace edit screen with view.
+                    navigation.replace({
+                        routeName: view,
+                        params: { item },
+                    });
+                }
+            }).catch(error => {
+                // TODO Implement validation handler.
+                console.error(error);
+            });
+        };
 
-    // Get item from navigation.
-    const item = useNavigationParam('item');
-    const [parsing, setParsing] = useState(item !== undefined);
+        // Set save form param on navigation.
+        navigation.setParams({ save: saveForm });
+    }, [isCreating, view, saveItem, createItem]);
 
     // Parse item into state if available.
+    const [parsing, setParsing] = useState(! isCreating);
     useEffect(() => {
         if (item) {
             mergeState(item);
@@ -117,6 +128,7 @@ export default function ResourceEdit({ formInit, routes: { view } = {}, mutation
         <Fragment>
             <ResourceView
                 form={form}
+                items={items}
                 render="Edit"
                 loading={parsing}
                 mutations={{ remove }}
@@ -152,16 +164,12 @@ ResourceEdit.navigationOptions = ({ title, canModify, navigation }) => {
                     )}
 
                     <Item title={item ? 'save' : 'create'} iconName={item ? 'save' : 'plus'} onPress={() => {
-                        // Skip if not allowed to modify item. 
+                        // Skip if not allowed to modify item.
                         const msg = item && canModify && canModify(item);
                         if (typeof msg === 'string') return Alert.alert(msg);
 
                         // Save or create item.
-                        navigation.getParam('save')({
-                            item: navigation.getParam('item'),
-                            items: navigation.getParam('items'),
-                            state: navigation.getParam('state'),
-                        });
+                        navigation.getParam('save')({ navigation });
                     }} />
                 </HeaderButtons>
             );

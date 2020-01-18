@@ -45,7 +45,10 @@ export default function ResourceSwipeList({ name, list, title, query, routes, mu
         navigation.navigate({
             key: view + ((item && item.id) || Math.random().toString(36).slice(2)),
             routeName: edit,
-            params: { item },
+            params: {
+                item,
+                editing: true, // TODO - Forcing edit as if key exists it will not use route name.
+            },
         });
     }, [view, edit, canModify]);
 

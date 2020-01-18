@@ -47,8 +47,7 @@ export default function ResourceView({ items, headers, fetch, parser, variables 
     useEffect(() => {
         navigation.setParams({
             editItem: edit && ((item) => {
-                navigation.navigate({
-                    key: edit + item.id,
+                navigation.replace({
                     routeName: edit,
                     params: { item },
                 });
