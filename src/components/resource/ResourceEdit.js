@@ -57,7 +57,7 @@ export default function ResourceEdit({ formInit, routes: { view } = {}, mutation
     // Share save form with navigation. 
     useEffect(() => {
         // Define save form function.
-        const saveForm = () => {
+        const saveForm = ({ navigation }) => {
             // Dismiss the keyboard.
             Keyboard.dismiss();
 
