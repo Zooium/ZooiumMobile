@@ -2,10 +2,10 @@ import i18n from '@src/i18n.js';
 import { TextInput } from 'react-native';
 import Loader from '@components/Loader.js';
 import { useDebounce } from 'use-debounce';
-import AuthState from '@utils/AuthState.js';
 import { Layout } from '@ui-kitten/components';
 import { useQuery } from '@apollo/react-hooks';
 import parseQuery from '@utils/apollo/parseQuery.js';
+import { useTeam } from '@providers/AuthProvider.js';
 import ListSettings from '@components/ListSettings.js';
 import ResourceSwipeList from './ResourceSwipeList.js';
 import React, { Fragment, useState, useEffect } from 'react';
@@ -65,11 +65,12 @@ export default function ResourceList({ fetch, variables = {}, List, routes, sort
     }, [navSearch]);
 
     // Prepare resource list query.
+    const team = useTeam();
     const query = useQuery(fetch, {
         notifyOnNetworkStatusChange: true,
         variables: {
             ...variables,
-            team_id: AuthState.currentTeamID(),
+            team_id: team && team.id,
 
             search: finalSearch,
             filter: filter || undefined,

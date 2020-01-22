@@ -1,13 +1,15 @@
 import React from 'react';
 import { Image } from 'react-native';
-import AuthState from '@utils/AuthState.js';
+import { useToken } from '@providers/AuthProvider.js';
 
 export default function AuthorizedImage({ uri, ...props }) {
+    const token = useToken();
+
     return (
         <Image source={{
             uri: uri,
             headers: {
-                Authorization: 'Bearer ' + AuthState.accessToken(),
+                Authorization: 'Bearer ' + token.accessToken,
             },
         }} {...props} />
     );

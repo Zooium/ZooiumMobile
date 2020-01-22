@@ -1,11 +1,11 @@
 import i18n from '@src/i18n.js';
 import { FlatList } from 'react-native';
 import Loader from '@components/Loader.js';
-import AuthState from '@utils/AuthState.js';
 import { Layout } from '@ui-kitten/components';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import MediaRow from '@components/rows/MediaRow.js';
+import { useTeam } from '@providers/AuthProvider.js';
 import parseQuery from '@utils/apollo/parseQuery.js';
 import { ReactNativeFile } from 'apollo-upload-client';
 import LoadingModal from '@components/LoadingModal.js';
@@ -13,10 +13,10 @@ import * as DocumentPicker from 'expo-document-picker';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import UPLOAD_FILE from '@graphql/mutations/File/uploadFile.gql.js';
 import DELETE_FILE from '@graphql/mutations/File/deleteFiles.gql.js';
-import { useEvent, usePrivateChannel } from '@utils/SocketProvider.js';
 import ResourceListEmpty from '@components/resource/ResourceListEmpty.js';
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
+import { useEvent, usePrivateChannel } from '@providers/SocketProvider.js';
 import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import VIEW_ANIMAL_MEDIA from '@graphql/queries/Animal/viewAnimalMedia.gql.js';
 import { useActionSheet, connectActionSheet } from '@expo/react-native-action-sheet';
@@ -32,8 +32,9 @@ function AnimalMediaScreen({ navigation }) {
     });
 
     // Connect to socket and listen for thumbnail events.
+    const team = useTeam();
     const client = useApolloClient();
-    const channel = usePrivateChannel('Team.' + AuthState.currentTeam().id);
+    const channel = usePrivateChannel('Team.' + team && team.id);
     useEvent(channel, 'ThumbnailGenerated', event => {
         // Update thumbnail url in query cache.
         query.updateQuery(results => {
@@ -109,7 +110,7 @@ function AnimalMediaScreen({ navigation }) {
             // Upload file to back-end.
             uploadFile({
                 variables: {
-                    team_id: AuthState.currentTeam().id,
+                    team_id: team && team.id,
                     resource_id: item.id,
                     resource_type: 'Animal',
                     file: fileInstance,
@@ -131,7 +132,7 @@ function AnimalMediaScreen({ navigation }) {
                 } catch { /* Left blank intentionally */ }
             },
         })
-    }, [item, uploadFile]);
+    }, [item, team, uploadFile]);
 
     // Create callbacks for resource item renderings.
     const { showActionSheetWithOptions } = useActionSheet();

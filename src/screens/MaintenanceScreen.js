@@ -1,31 +1,42 @@
-import React from 'react';
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
-import apollo from '@src/apollo.js';
+import React, { useEffect } from 'react';
 import SafeView from '@components/SafeView.js';
 import PING from '@graphql/queries/ping.gql.js';
+import { useLazyQuery } from '@apollo/react-hooks';
 import { Text, Layout } from '@ui-kitten/components';
 import { View, Image, StyleSheet } from 'react-native';
 
 export default function MaintenanceScreen({ navigation }) {
-    // Start 10 sec ping interval.
-    let interval = setInterval(() => {
-        apollo.query({
-            query: PING,
-        }).then(({ data }) => {
-            // Redirect to main if available.
-            if (data.ping === 'pong') {
-                clearInterval(interval);
-                navigation.navigate('Login');
-            }
-        }).catch(() => { /* Left blank intentionally */ });
-    }, 10000);
+    // Create lazy status checking query.
+    const [checkStatus, { data }] = useLazyQuery(PING);
 
+    // Redirect to login screen when online.
+    useEffect(() => {
+        if (data && data.ping === 'pong') {
+            navigation.navigate('Login');
+        }
+    }, [data]);
+
+    // Create interval on show. 
+    useEffect(() => {
+        // Define 10 seconds interval.
+        const interval = setInterval(() => {
+            checkStatus();
+        }, 10000);
+
+        // Clear interval on cleanup.
+        return () => {
+            clearInterval(interval);
+        }
+    }, [checkStatus]);
+
+    // Return maintenance view.
     return (
         <Layout style={s.background}>
             <SafeView>
                 <View style={s.brand}>
-                    <Image style={s.logo} source={require('@assets/icon.png')} />
+                    <Image style={s.logo} source={require('@assets/icon-foreground-close.png')} />
                     <Text category="h3" style={s.brandText}>Zooium</Text>
                 </View>
 
@@ -51,6 +62,8 @@ let s = StyleSheet.create({
     },
 
     logo: {
+        width: 192,
+        height: 192,
         marginBottom: 20,
     },
 

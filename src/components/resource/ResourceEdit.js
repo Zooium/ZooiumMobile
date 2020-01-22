@@ -1,8 +1,8 @@
 import i18n from '@src/i18n.js';
-import AuthState from '@utils/AuthState.js';
 import ResourceView from './ResourceView.js';
 import { Alert, Keyboard } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
+import { useTeam } from '@providers/AuthProvider.js';
 import LoadingModal from '@components/LoadingModal.js';
 import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
@@ -31,7 +31,8 @@ export default function ResourceEdit({ formInit, routes: { view } = {}, mutation
     const isCreating = ! item;
 
     // Define update/create mutations.
-    const variables = { team_id: AuthState.currentTeam().id, ...state };
+    const team = useTeam();
+    const variables = { team_id: team && team.id, ...state };
     const [saveItem, { loading: saving }] = useMutation(save, { variables });
     const [createItem, { loading: creating }] = useMutation(create, { variables });
 

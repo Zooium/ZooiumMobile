@@ -1,7 +1,14 @@
 export default {
     client: 3,
-    authUrl: 'https://app.zooium.com/oauth',
     queryUrl: 'https://app.zooium.com/graphql',
+
+    auth: {
+        client: '3',
+        endpoints: {
+            token: 'https://app.zooium.com/oauth/token',
+            authorize: 'https://app.zooium.com/oauth/authorize',
+        },
+    },
 
     socket: {
         broadcaster: 'pusher',
