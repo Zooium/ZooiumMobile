@@ -3,7 +3,7 @@ import Settings from '@utils/Settings.js';
 import ME from '@graphql/queries/me.gql.js';
 import * as SecureStore from 'expo-secure-store';
 import ContextStore from '@utils/ContextStore.js';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery, useApolloClient } from '@apollo/react-hooks';
 import React, { useMemo, useState, useEffect, useCallback, useContext, createContext } from 'react';
 
 // Define auth secure storage key.
@@ -44,6 +44,7 @@ export default function AuthProvider(props) {
     }, [setLoading, setToken, loadUser]);
 
     // Define logout action.
+    const apollo = useApolloClient();
     const logout = useCallback(() => {
         // TODO Attempt to revoke token if set.
         /*if (token && token.accessToken) {
@@ -57,7 +58,10 @@ export default function AuthProvider(props) {
         // Unset token and user.
         setUser(undefined);
         setToken(undefined);
-    }, [setUser, setToken]);
+
+        // Clear apollo cache store.
+        apollo.clearStore();
+    }, [apollo, setUser, setToken]);
 
     // Set user state when me query resolves. 
     useEffect(() => {
