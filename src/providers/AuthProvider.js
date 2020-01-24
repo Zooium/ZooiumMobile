@@ -6,15 +6,6 @@ import ContextStore from '@utils/ContextStore.js';
 import { useLazyQuery } from '@apollo/react-hooks';
 import React, { useMemo, useState, useEffect, useCallback, useContext, createContext } from 'react';
 
-// Define instance settings.
-const settings = {
-    clientId: Settings.auth.client,
-    serviceConfiguration: {
-        tokenEndpoint: Settings.auth.endpoints.token,
-        authorizationEndpoint: Settings.auth.endpoints.authorize,
-    },
-}
-
 // Define auth secure storage key.
 export const AUTH_STORAGE = 'APP-AUTH';
 
@@ -40,7 +31,7 @@ export default function AuthProvider(props) {
         try {
             // Enable loading and attempt to auth user.
             setLoading(true);
-            const newToken = await AppAuth.authAsync(settings);
+            const newToken = await AppAuth.authAsync(Settings.auth);
 
             // Save new token and load user.
             setToken(newToken);
@@ -57,7 +48,7 @@ export default function AuthProvider(props) {
         // TODO Attempt to revoke token if set.
         /*if (token && token.accessToken) {
             try {
-                AppAuth.revokeAsync(settings, {
+                AppAuth.revokeAsync(Settings.auth, {
                     token: token.accessToken,
                 });
             } catch {}

@@ -3,10 +3,11 @@ export default {
     queryUrl: 'https://app.zooium.com/graphql',
 
     auth: {
-        client: '3',
-        endpoints: {
-            token: 'https://app.zooium.com/oauth/token',
-            authorize: 'https://app.zooium.com/oauth/authorize',
+        clientId: '3',
+        serviceConfiguration: {
+            // TODO revocationEndpoint: '',
+            tokenEndpoint: 'https://app.zooium.com/oauth/token',
+            authorizationEndpoint: 'https://app.zooium.com/oauth/authorize',
         },
     },
 
