@@ -4,7 +4,7 @@ import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
 import Constants from 'expo-constants';
 import AppStyles from '@utils/AppStyles.js';
-import AuthManager from '@utils/AuthManager.js';
+import { useAuth } from '@providers/AuthProvider.js';
 import { Text, Icon, Layout } from '@ui-kitten/components';
 import { View, Alert, SectionList, TouchableHighlight } from 'react-native';
 
@@ -15,19 +15,19 @@ const menu = [
             {
                 icon: 'dove',
                 title: i18n.t('Animal', { count: 2 }),
-                onPress: (navigation) => navigation.navigate('Animals'),
+                onPress: ({ navigation }) => navigation.navigate('Animals'),
             },
         
             {
                 icon: 'map-marked-alt',
                 title: i18n.t('Enclosure', { count: 2 }),
-                onPress: (navigation) => navigation.navigate('Enclosures'),
+                onPress: ({ navigation }) => navigation.navigate('Enclosures'),
             },
         
             {
                 icon: 'globe-europe',
                 title: i18n.t('Location', { count: 2 }),
-                onPress: (navigation) => navigation.navigate('LocationList'),
+                onPress: ({ navigation }) => navigation.navigate('LocationList'),
             },
         ],
     },
@@ -38,13 +38,13 @@ const menu = [
             {
                 icon: 'address-book',
                 title: i18n.t('Contact', { count: 2 }),
-                onPress: (navigation) => navigation.navigate('ContactList'),
+                onPress: ({ navigation }) => navigation.navigate('ContactList'),
             },
         
             {
                 icon: 'wallet',
                 title: i18n.t('Transaction', { count: 2 }),
-                onPress: (navigation) => navigation.navigate('TransactionList'),
+                onPress: ({ navigation }) => navigation.navigate('TransactionList'),
             },
         ],
     },
@@ -55,13 +55,13 @@ const menu = [
             {
                 icon: 'location-arrow',
                 title: i18n.t('Nearby'),
-                onPress: (navigation) => navigation.navigate('LocationNearby'),
+                onPress: ({ navigation }) => navigation.navigate('LocationNearby'),
             },
         
             {
                 icon: 'qrcode',
                 title: i18n.t('Scanner'),
-                onPress: (navigation) => navigation.navigate('BarcodeNearby'),
+                onPress: ({ navigation }) => navigation.navigate('BarcodeNearby'),
             },
         ],
     },
@@ -73,16 +73,23 @@ const menu = [
                 icon: 'sign-out-alt',
                 title: i18n.t('Logout'),
                 color: theme['color-danger-500'],
-                onPress: () => AuthManager.logout(),
+                onPress: ({ auth, navigation }) => {
+                    auth.logout();
+                    navigation.navigate('Auth');
+                },
             },
         ],
     },
 ];
 
 export default function MenuScreen({ navigation }) {
+    const auth = useAuth();
+
     const renderItem = ({ item }) => {
         return (
-            <TouchableHighlight underlayColor={theme['color-basic-200']} style={{ backgroundColor: 'white' }} onPress={() => item.onPress(navigation)}>
+            <TouchableHighlight underlayColor={theme['color-basic-200']} style={{ backgroundColor: 'white' }} onPress={() => {
+                item.onPress({ auth, navigation })
+            }}>
                 <View style={[AppStyles.listItem, {
                     flexDirection: 'row',
                     alignItems: 'center',

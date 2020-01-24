@@ -1,5 +1,6 @@
+import Settings from '@utils/Settings.js';
 import Pusher from 'pusher-js/react-native';
-import AuthState from '@utils/AuthState.js';
+import { useToken } from '@providers/AuthProvider.js';
 import React, { useRef, useState, useEffect, useContext, useCallback, createContext } from 'react';
 
 // Create socket holder context.
@@ -8,18 +9,18 @@ export const SocketContext = createContext(null);
 /**
  * Initializes socket provider instance.
  */
-export function SocketProvider({ settings, ...props }) {
+export default function SocketProvider(props) {
     // Define reference for client.
     const client = useRef();
 
     // Run on settings changes.
     useEffect(() => {
         // Create new Pusher client for settings.
-        client.current = new Pusher(settings.key, settings);
+        client.current = new Pusher(Settings.socket.key, Settings.socket);
 
         // Disconnect from client on cleanup.
         return () => { client.current && client.current.disconnect(); }
-    }, [settings]);
+    }, []);
 
     // Returns the context provider with default value.
     return <SocketContext.Provider value={client} {...props} />;
@@ -73,11 +74,14 @@ export function useChannel(name) {
     const [channel, setChannel] = useState();
 
     // Run on channel name or client change.
+    const token = useToken();
     useEffect(() => {
         // Set client auth settings.
         client.config.auth = {
             headers: {
-                Authorization: 'Bearer ' + AuthState.accessToken(),
+                Authorization: token.accessToken
+                    ? 'Bearer ' + token.accessToken
+                    : undefined,
             },
         };
 
@@ -87,7 +91,7 @@ export function useChannel(name) {
 
         // Unsubscribe from channel on cleanup.
         return () => { client.unsubscribe(name); }
-    }, [name, client]);
+    }, [name, token, client]);
 
     // Return current channel instance.
     return channel;

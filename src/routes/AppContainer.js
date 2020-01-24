@@ -1,4 +1,5 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
+import ContextStore from '@utils/ContextStore.js';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 // Import navigator instances.
@@ -14,7 +15,6 @@ const AppNavigationContainer = createAppContainer(
 );
 
 // Create and return new app container.
-export default forwardRef(function AppContainer(props, ref) {
-    // Return app navigation container.
-    return <AppNavigationContainer ref={ref} />;
-})
+export default function AppContainer() {
+    return <AppNavigationContainer ref={i => ContextStore.saveContext('router', i)} />;
+}

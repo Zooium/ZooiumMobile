@@ -1,7 +1,15 @@
 export default {
     client: 3,
-    authUrl: 'https://app.zooium.com/oauth',
     queryUrl: 'https://app.zooium.com/graphql',
+
+    auth: {
+        clientId: '3',
+        serviceConfiguration: {
+            tokenEndpoint: 'https://app.zooium.com/oauth/token',
+            revocationEndpoint: 'https://app.zooium.com/oauth/revoke',
+            authorizationEndpoint: 'https://app.zooium.com/oauth/authorize',
+        },
+    },
 
     socket: {
         broadcaster: 'pusher',

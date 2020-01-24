@@ -6,7 +6,7 @@ function LoadingButton({ size = 'medium', loading, children, themedStyle, ...pro
     return (
         <Button size={size} icon={loading && (() => (
             <Loader style={{ width: '100%', height: themedStyle.textLineHeight }} />
-        ))} {...props}>
+        ))} disabled={loading} {...props}>
             {! loading && children }
         </Button>
     );

@@ -1,18 +1,16 @@
 import i18n from '@src/i18n.js';
-import client from '@src/apollo.js';
 import * as Sentry from 'sentry-expo';
 import Constants from 'expo-constants';
-import Settings from '@utils/Settings.js';
 import { mapping } from '@eva-design/eva';
 import { I18nextProvider } from 'react-i18next';
 import { Updates, ScreenOrientation } from 'expo';
 import AppContainer from '@routes/AppContainer.js';
 import { AppState, StatusBar } from 'react-native';
 import theme, { customMapping } from '@src/theme.js';
-import { ApolloProvider } from '@apollo/react-hooks';
+import AuthProvider from '@providers/AuthProvider.js';
 import FontAwesome5Pack from '@utils/icons/IconPack.js';
-import { SocketProvider } from '@utils/SocketProvider.js';
-import NavigationService from '@utils/NavigationService.js';
+import SocketProvider from '@providers/SocketProvider.js';
+import ApolloProvider from '@providers/ApolloProvider.js';
 import React, { Fragment, useState, useEffect } from 'react';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
@@ -58,14 +56,16 @@ export default function App() {
             <StatusBar barStyle="light-content" />
             <IconRegistry icons={[FontAwesome5Pack]} />
             <ApplicationProvider mapping={mapping} theme={theme} customMapping={customMapping}>
-                <ApolloProvider client={client}>
-                    <SocketProvider settings={Settings.socket}>
-                        <I18nextProvider i18n={i18n}>
-                            <ActionSheetProvider>
-                                <AppContainer ref={i => NavigationService.setInstance(i)} />
-                            </ActionSheetProvider>
-                        </I18nextProvider>
-                    </SocketProvider>
+                <ApolloProvider>
+                    <AuthProvider>
+                        <SocketProvider>
+                            <I18nextProvider i18n={i18n}>
+                                <ActionSheetProvider>
+                                    <AppContainer />
+                                </ActionSheetProvider>
+                            </I18nextProvider>
+                        </SocketProvider>
+                    </AuthProvider>
                 </ApolloProvider>
             </ApplicationProvider>
         </Fragment>

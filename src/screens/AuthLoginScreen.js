@@ -1,49 +1,35 @@
 import i18n from '@src/i18n.js';
 import theme from '@src/theme.js';
+import React, { useEffect } from 'react';
 import SafeView from '@components/SafeView.js';
-import AuthManager from '@utils/AuthManager.js';
-import React, { useState, useEffect } from 'react';
 import { Text, Layout } from '@ui-kitten/components';
 import { View, Image, StyleSheet } from 'react-native';
 import LoadingButton from '@components/LoadingButton.js';
+import { useLoading, useAuthed, useLogin } from '@providers/AuthProvider.js';
 
 export default function AuthLoginScreen({ navigation }) {
-    const [loading, setLoading] = useState(true);
+    // Get authentication states. 
+    const loading = useLoading();
+    const authed = useAuthed();
 
+    // Allow unauthorized network attempts.
     useEffect(() => {
-        // Allow unauthorized network attempts.
         navigation.setParams({
             allowUnauthorized: true,
         });
-
-        // Load auth state from storage.
-        AuthManager.init().then(loggedIn => {
-            // Navigate to main if authenticated or disable loading.
-            if (loggedIn) {
-                navigation.navigate('Main');
-            } else {
-                setLoading(false);
-            }
-        });
     }, []);
 
-    const authenticate = async () => {
-        // Enable loading state.
-        setLoading(true);
-
-        // Wait for authorization response.
-        let authed = await AuthManager.authorize();
-        if (authed === undefined) return;
-
-        // Disable loading state.
-        setLoading(false);
-
-        // Redirect to app if authed.
+    // Navigate to main when authenticated.
+    useEffect(() => {
         if (authed) {
             navigation.navigate('Main');
         }
-    };
+    }, [authed]);
 
+    // Get authentication trigger. 
+    const authenticate = useLogin();
+
+    // Return login view.
     return (
         <Layout style={s.background}>
             <SafeView>

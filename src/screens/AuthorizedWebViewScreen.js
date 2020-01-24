@@ -1,10 +1,11 @@
 import { View } from 'react-native';
 import React, { useEffect } from 'react';
 import { ScreenOrientation } from 'expo';
-import AuthState from '@utils/AuthState.js';
 import { WebView } from 'react-native-webview';
+import { useToken } from '@providers/AuthProvider.js';
 
 export default function AuthorizedWebViewScreen({ navigation }) {
+    const token = useToken();
     const uri = navigation.getParam('uri');
 
     useEffect(() => {
@@ -24,7 +25,7 @@ export default function AuthorizedWebViewScreen({ navigation }) {
             source={{
                 uri: uri,
                 headers: {
-                    Authorization: 'Bearer ' + AuthState.accessToken(),
+                    Authorization: 'Bearer ' + token.accessToken,
                 },
             }}
         />

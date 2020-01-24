@@ -16,6 +16,7 @@ module.exports = function(api) {
                     '@models': './src/models',
                     '@screens': './src/screens',
                     '@graphql': './src/graphql',
+                    '@providers': './src/providers',
                     '@components': './src/components',
                 },
             }],
