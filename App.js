@@ -1,7 +1,6 @@
 import i18n from '@src/i18n.js';
 import * as Sentry from 'sentry-expo';
 import Constants from 'expo-constants';
-import Settings from '@utils/Settings.js';
 import { mapping } from '@eva-design/eva';
 import { I18nextProvider } from 'react-i18next';
 import { Updates, ScreenOrientation } from 'expo';
@@ -59,7 +58,7 @@ export default function App() {
             <ApplicationProvider mapping={mapping} theme={theme} customMapping={customMapping}>
                 <ApolloProvider>
                     <AuthProvider>
-                        <SocketProvider settings={Settings.socket}>
+                        <SocketProvider>
                             <I18nextProvider i18n={i18n}>
                                 <ActionSheetProvider>
                                     <AppContainer />
