@@ -5,8 +5,8 @@ export default {
     auth: {
         clientId: '3',
         serviceConfiguration: {
-            // TODO revocationEndpoint: '',
             tokenEndpoint: 'https://app.zooium.com/oauth/token',
+            revocationEndpoint: 'https://app.zooium.com/oauth/revoke',
             authorizationEndpoint: 'https://app.zooium.com/oauth/authorize',
         },
     },

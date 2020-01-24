@@ -50,13 +50,13 @@ export default function AuthProvider(props) {
     const apollo = useApolloClient();
     const logout = useCallback(() => {
         // TODO Attempt to revoke token if set.
-        /*if (token && token.accessToken) {
+        if (token && token.accessToken) {
             try {
                 AppAuth.revokeAsync(Settings.auth, {
                     token: token.accessToken,
                 });
             } catch {}
-        }*/
+        }
 
         // Unset token and user.
         setUser(undefined);
