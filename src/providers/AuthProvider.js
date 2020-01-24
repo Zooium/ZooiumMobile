@@ -36,6 +36,9 @@ export default function AuthProvider(props) {
             // Save new token and load user.
             setToken(newToken);
             loadUser();
+
+            // Save token to secure storage.
+            SecureStore.setItemAsync(AUTH_STORAGE, JSON.stringify(newToken));
         } catch (error) {
             // Unset token and disable loading.
             setToken(undefined);
@@ -61,6 +64,9 @@ export default function AuthProvider(props) {
 
         // Clear apollo cache store.
         apollo.clearStore();
+
+        // Delete token from storage.
+        SecureStore.deleteItemAsync(AUTH_STORAGE);
     }, [apollo, setUser, setToken]);
 
     // Set user state when me query resolves. 
@@ -79,20 +85,8 @@ export default function AuthProvider(props) {
         }
     }, [error, logout, setLoading]);
 
-    // Manage token in storage on change. 
-    useEffect(() => {
-        if (token) {
-            // Save new token info to storage.
-            SecureStore.setItemAsync(AUTH_STORAGE, JSON.stringify(token));
-        } else {
-            // Delete existing token info from storage.
-            SecureStore.deleteItemAsync(AUTH_STORAGE);
-        }
-    }, [token]);
-
     // Load saved token on boot.
     useEffect(() => {
-        // TODO Double check implementation, may reach byte limit?
         (async () => {
             // Get stored token from storage and save.
             const stored = await SecureStore.getItemAsync(AUTH_STORAGE);
