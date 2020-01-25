@@ -1,7 +1,7 @@
 import i18n from '@src/i18n.js';
 import React, { memo } from 'react';
 import { Text } from '@ui-kitten/components';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 import { View, TouchableOpacity  } from 'react-native';
 import Transaction from '@models/Transaction.model.js';
 
@@ -25,7 +25,7 @@ function TransactionRow({ item }) {
                     const route = 'ContactView';
                     navigation.navigate({
                         key: route + item.contact.id,
-                        routeName: route,
+                        name: route,
                         params: {
                             item: item.contact,
                         },

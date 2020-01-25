@@ -2,9 +2,10 @@ import theme from '@src/theme.js';
 import React, { useCallback } from 'react';
 import AppStyles from '@utils/AppStyles.js';
 import ResourceListEmpty from './ResourceListEmpty.js';
+import { useNavigation } from '@react-navigation/native';
 import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
+import useNavigationParam from '@hooks/useNavigationParam.js';
 import { View, FlatList, TouchableHighlight } from 'react-native';
-import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
 export default function ResourceSelectList({ name, list, query, preview: Preview, extraData }) {
     // Seperate out variables.

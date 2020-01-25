@@ -73,9 +73,8 @@ const menu = [
                 icon: 'sign-out-alt',
                 title: i18n.t('Logout'),
                 color: theme['color-danger-500'],
-                onPress: ({ auth, navigation }) => {
+                onPress: ({ auth }) => {
                     auth.logout();
-                    navigation.navigate('Auth');
                 },
             },
         ],

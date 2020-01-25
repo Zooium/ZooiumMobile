@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import AppStyles from '@utils/AppStyles.js';
 import { useMutation } from '@apollo/react-hooks';
 import ResourceListEmpty from './ResourceListEmpty.js';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 import mergeLoadMore from '@utils/apollo/mergeLoadMore.js';
 import ResourceListActions from './ResourceListActions.js';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -31,7 +31,7 @@ export default function ResourceSwipeList({ name, list, title, query, routes, mu
     const viewItem = useCallback((item) => {
         navigation.navigate({
             key: view + item.id,
-            routeName: view,
+            name: view,
             params: { item },
         });
     }, [view]);
@@ -44,7 +44,7 @@ export default function ResourceSwipeList({ name, list, title, query, routes, mu
         // Navigate to resource edit view.
         navigation.navigate({
             key: view + ((item && item.id) || Math.random().toString(36).slice(2)),
-            routeName: edit,
+            name: edit,
             params: {
                 item,
                 editing: true, // TODO - Forcing edit as if key exists it will not use route name.

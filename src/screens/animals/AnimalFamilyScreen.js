@@ -6,7 +6,7 @@ import { Layout } from '@ui-kitten/components';
 import { useQuery } from '@apollo/react-hooks';
 import parseQuery from '@utils/apollo/parseQuery.js';
 import FamilyRow from '@components/rows/FamilyRow.js';
-import { useNavigationParam } from 'react-navigation-hooks';
+import useNavigationParam from '@hooks/useNavigationParam.js';
 import ResourceSwipeList from '@components/resource/ResourceSwipeList.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
 import DELETE_ANIMALS from '@graphql/mutations/Animal/deleteAnimals.gql.js';

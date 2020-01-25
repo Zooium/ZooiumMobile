@@ -3,7 +3,7 @@ import i18n from '@src/i18n.js';
 import { View } from 'react-native';
 import AppStyles from '@utils/AppStyles.js';
 import { Text, Icon } from '@ui-kitten/components';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function ResourceViewItem({ item, index, section, form, response, render = 'View' }) {

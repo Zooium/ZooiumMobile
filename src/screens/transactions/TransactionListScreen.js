@@ -38,4 +38,7 @@ export default function TransactionListScreen({ layout, ...props }) {
     );
 }
 
-TransactionListScreen.navigationOptions = ResourceList.navigationOptions;
+TransactionListScreen.navigationOptions = (props) => ({
+    ...ResourceList.navigationOptions(props),
+    title: i18n.t('Transaction', { count: 2 }),
+});

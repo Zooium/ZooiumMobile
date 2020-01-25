@@ -4,7 +4,7 @@ import * as Location from 'expo-location';
 import Loader from '@components/Loader.js';
 import * as Permissions from 'expo-permissions';
 import { Text, Icon } from '@ui-kitten/components';
-import { useIsFocused } from 'react-navigation-hooks';
+import { useIsFocused } from '@react-navigation/native';
 import PermissionDenied from '@components/PermissionDenied.js';
 import React, { useState, useCallback, useEffect } from 'react';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
@@ -106,45 +106,36 @@ export default function NearbyLocationScreen() {
     )
 }
 
-NearbyLocationScreen.navigationOptions = ({ navigation }) => {
-    return {
-        headerTitleAlign: 'left',
-        headerTitleStyle: {
-            flex: 1,
-            fontWeight: 'bold',
-            textAlign: 'left',
-        },
-        headerTitleContainerStyle: {
-            left: 0,
-        },
+NearbyLocationScreen.navigationOptions = ({ navigation }) => ({
+    title: i18n.t('Nearby'),
+    
+    headerTitleAlign: 'left',
+    headerRight: function BarcodeToggleButton() {
+        return (
+            <HeaderButtons>
+                <Item
+                    title="toggle"
+                    onPress={() => navigation.navigate({
+                        name: 'BarcodeNearby',
+                    })}
+                    ButtonElement={
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Text style={{
+                                color: 'white',
+                                fontSize: 16,
+                                marginRight: 14,
+                            }}>
+                                {i18n.t('Scan code')}
+                            </Text>
 
-        headerRight: function BarcodeToggleButton() {
-            return (
-                <HeaderButtons>
-                    <Item
-                        title="toggle"
-                        onPress={() => navigation.navigate({
-                            routeName: 'BarcodeNearby',
-                        })}
-                        ButtonElement={
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={{
-                                    color: 'white',
-                                    fontSize: 16,
-                                    marginRight: 14,
-                                }}>
-                                    {i18n.t('Scan code')}
-                                </Text>
-
-                                <Icon color="white" size={20} name={'qrcode'} />
-                            </View>
-                        }
-                        style={{
-                            marginRight: 10,
-                        }}
-                    />
-                </HeaderButtons>
-            );
-        },
-    }
-}
+                            <Icon color="white" size={20} name={'qrcode'} />
+                        </View>
+                    }
+                    style={{
+                        marginRight: 10,
+                    }}
+                />
+            </HeaderButtons>
+        );
+    },
+})

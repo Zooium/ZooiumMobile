@@ -10,6 +10,7 @@ import parseQuery from '@utils/apollo/parseQuery.js';
 import { ReactNativeFile } from 'apollo-upload-client';
 import LoadingModal from '@components/LoadingModal.js';
 import * as DocumentPicker from 'expo-document-picker';
+import useNavigationParam from '@hooks/useNavigationParam.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import UPLOAD_FILE from '@graphql/mutations/File/uploadFile.gql.js';
 import DELETE_FILE from '@graphql/mutations/File/deleteFiles.gql.js';
@@ -24,7 +25,7 @@ import { useActionSheet, connectActionSheet } from '@expo/react-native-action-sh
 // TODO - refactor
 function AnimalMediaScreen({ navigation }) {
     // Get passed item and define media query.
-    const [item] = useState(navigation.getParam('item'));
+    const [item] = useState(useNavigationParam('item'));
     const query = useQuery(VIEW_ANIMAL_MEDIA, {
         variables: {
             id: item && item.id,
@@ -162,7 +163,7 @@ function AnimalMediaScreen({ navigation }) {
                         const route = 'FileEdit';
                         return navigation.navigate({
                             key: route + item.id,
-                            routeName: route,
+                            name: route,
                             params: { item },
                         });
                     }
@@ -209,24 +210,22 @@ function AnimalMediaScreen({ navigation }) {
     );
 }
 
-AnimalMediaScreen.navigationOptions = ({ navigation: { getParam } }) => {
-    return {
-        title: i18n.t('Media'),
+AnimalMediaScreen.navigationOptions = ({ route: { params = {} } }) => ({
+    title: i18n.t('Media'),
 
-        headerRight: function UploadButtons() {
-            return (
-                <HeaderButtons>
-                    <Item title="upload" iconName="upload" onPress={() => {
-                        getParam('selectFile')();
-                    }} />
+    headerRight: function UploadButtons() {
+        return (
+            <HeaderButtons>
+                <Item title="upload" iconName="upload" onPress={() => {
+                    params.selectFile();
+                }} />
 
-                    <Item title="camera" iconName="camera" onPress={() => {
-                        getParam('captureImage')();
-                    }} />
-                </HeaderButtons>
-            );
-        },
-    };
-}
+                <Item title="camera" iconName="camera" onPress={() => {
+                    params.captureImage();
+                }} />
+            </HeaderButtons>
+        );
+    },
+})
 
 export default connectActionSheet(AnimalMediaScreen);

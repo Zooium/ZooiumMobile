@@ -5,7 +5,7 @@ import Specie from '@models/Specie.model.js';
 import { Text } from '@ui-kitten/components';
 import SexPreview from '@components/SexPreview.js';
 import { View, TouchableOpacity } from 'react-native';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 
 function AnimalRow({ item }) {
     const navigation = useNavigation();
@@ -29,7 +29,7 @@ function AnimalRow({ item }) {
                     const route = 'EnclosureView';
                     navigation.navigate({
                         key: route + item.enclosure.id,
-                        routeName: route,
+                        name: route,
                         params: {
                             item: item.enclosure,
                         },

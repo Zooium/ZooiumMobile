@@ -38,4 +38,7 @@ export default function EnclosureListScreen({ header, layout, ...props }) {
     );
 }
 
-EnclosureListScreen.navigationOptions = ResourceList.navigationOptions;
+EnclosureListScreen.navigationOptions = (props) => ({
+    ...ResourceList.navigationOptions(props),
+    title: i18n.t('Enclosure', { count: 2 }),
+});

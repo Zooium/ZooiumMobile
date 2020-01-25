@@ -46,4 +46,7 @@ export default function AnimalListScreen({ layout, ...props }) {
     );
 }
 
-AnimalListScreen.navigationOptions = ResourceList.navigationOptions;
+AnimalListScreen.navigationOptions = (props) => ({
+    ...ResourceList.navigationOptions(props),
+    title: i18n.t('Animal', { count: 2 }),
+});

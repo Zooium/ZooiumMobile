@@ -40,4 +40,7 @@ export default function ContactListScreen({ layout, ...props }) {
     );
 }
 
-ContactListScreen.navigationOptions = ResourceList.navigationOptions;
+ContactListScreen.navigationOptions = (props) => ({
+    ...ResourceList.navigationOptions(props),
+    title: i18n.t('Contact', { count: 2 }),
+});

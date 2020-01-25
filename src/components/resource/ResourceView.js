@@ -2,14 +2,15 @@ import React, { useEffect } from 'react';
 import Loader from '@components/Loader.js';
 import { Layout } from '@ui-kitten/components';
 import ResourceViewItem from './ResourceViewItem.js';
+import { useNavigation } from '@react-navigation/native';
 import ResourceViewHeader from './ResourceViewHeader.js';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import useNavigationParam from '@hooks/useNavigationParam.js';
 import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 import { View, Alert, FlatList, SectionList } from 'react-native';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import PLACEHOLDER_QUERY from '@graphql/queries/placeholder.gql.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
-import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
 export default function ResourceView({ items, headers, fetch, parser, variables = {}, routes: { edit } = {}, mutations: { remove } = {}, render = 'View', loading = false, form }) {    
     // Get item from navigation params.
@@ -44,11 +45,12 @@ export default function ResourceView({ items, headers, fetch, parser, variables 
     if (response && parser) parser(response);
 
     // Share edit and delete actions with header.
+    const onDelete = useNavigationParam('onDelete');
     useEffect(() => {
         navigation.setParams({
             editItem: edit && ((item) => {
                 navigation.replace({
-                    routeName: edit,
+                    name: edit,
                     params: { item },
                 });
             }),
@@ -64,12 +66,11 @@ export default function ResourceView({ items, headers, fetch, parser, variables 
                 // Return back to previous view.
                 navigation.goBack();
 
-                // Check if has on delete action.
-                const onDelete = navigation.getParam('onDelete');
+                // Trigger on delete action if set.
                 onDelete && onDelete(item);
             }),
         });
-    }, [edit, creating, removeItems]);
+    }, [edit, creating, onDelete, removeItems]);
 
     // Share response on change.
     useEffect(() => {
@@ -135,10 +136,10 @@ export default function ResourceView({ items, headers, fetch, parser, variables 
     );
 }
 
-ResourceView.navigationOptions = ({ title, canModify, showEdit = true, navigation }) => {
-    const item = navigation.getParam('item');
-    const editItem = navigation.getParam('editItem');
-    const deleteItem = navigation.getParam('deleteItem');
+ResourceView.navigationOptions = ({ title, canModify, showEdit = true, route: { params = {} } }) => {
+    const item = params.item;
+    const editItem = params.editItem;
+    const deleteItem = params.deleteItem;
 
     return {
         title: title && title(item),

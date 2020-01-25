@@ -3,7 +3,7 @@ import theme from '@src/theme.js';
 import { Icon } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native';
 import InputButton from '@components/InputButton.js';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 
 export default function TypeaheadInput({ view, preview, appendSearch, add, value, onChange }) {
     const navigation = useNavigation();
@@ -19,7 +19,7 @@ export default function TypeaheadInput({ view, preview, appendSearch, add, value
                 const rand = Math.random().toString(36).slice(2);
                 navigation.navigate({
                     key: view + rand,
-                    routeName: view,
+                    name: view,
                     params: {
                         showSearch: true,
                         focusSearch: true,

@@ -123,7 +123,7 @@ export default class Event {
                 const view = 'TransactionView';
                 navigation.navigate({
                     key: view + transaction.id,
-                    routeName: view,
+                    name: view,
                     params: { item: transaction },
                 });
             },

@@ -4,14 +4,17 @@ import { Alert, Keyboard } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
 import { useTeam } from '@providers/AuthProvider.js';
 import LoadingModal from '@components/LoadingModal.js';
+import useNavigationParam from '@hooks/useNavigationParam.js';
 import DeletionConfirmation from '@utils/DeletionConfirmation.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import React, { useState, useEffect, useCallback, Fragment } from 'react';
-import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
 
 export default function ResourceEdit({ formInit, routes: { view } = {}, mutations: { save, create, remove }, items, ...props }) {
-    // Create form state from passed init function.
+    // TODO
     const navigation = useNavigation();
+
+    // Create form state from passed init function.
     const defaults = useNavigationParam('defaults') || {};
     const form = useState({...formInit(), ...defaults});
     const [state, setState] = form;
@@ -58,12 +61,12 @@ export default function ResourceEdit({ formInit, routes: { view } = {}, mutation
     // Share save form with navigation. 
     useEffect(() => {
         // Define save form function.
-        const saveForm = ({ navigation }) => {
+        const saveForm = ({ params, navigation }) => {
             // Dismiss the keyboard.
             Keyboard.dismiss();
 
             // Show error if has incomplete items.
-            const incomplete = navigation.getParam('incomplete');
+            const incomplete = params.incomplete;
             if (incomplete && incomplete.length) {
                 // Return incomplete submission alert.
                 return Alert.alert(
@@ -83,7 +86,7 @@ export default function ResourceEdit({ formInit, routes: { view } = {}, mutation
                 const item = data[Object.keys(data)[0]];
     
                 // Check if has on save action. 
-                const onSave = navigation.getParam('onSave');
+                const onSave = params.onSave;
                 const popCount = onSave && onSave(item, ! isCreating);
                 if (popCount && navigation.pop(+popCount)) return;
     
@@ -95,13 +98,13 @@ export default function ResourceEdit({ formInit, routes: { view } = {}, mutation
                     // Navigate to new item view.
                     navigation.navigate({
                         key: view + item.id,
-                        routeName: view,
+                        name: view,
                         params: { item },
                     });
                 } else {
                     // Replace edit screen with view.
                     navigation.replace({
-                        routeName: view,
+                        name: view,
                         params: { item },
                     });
                 }
@@ -141,9 +144,9 @@ export default function ResourceEdit({ formInit, routes: { view } = {}, mutation
     );
 }
 
-ResourceEdit.navigationOptions = ({ title, canModify, navigation }) => {
-    const item = navigation.getParam('item');
-    const deleteItem = navigation.getParam('deleteItem');
+ResourceEdit.navigationOptions = ({ title, canModify, navigation, route: { params = {} } }) => {
+    const item = params.item;
+    const deleteItem = params.deleteItem;
 
     return {
         title: title && title(item),
@@ -170,7 +173,7 @@ ResourceEdit.navigationOptions = ({ title, canModify, navigation }) => {
                         if (typeof msg === 'string') return Alert.alert(msg);
 
                         // Save or create item.
-                        navigation.getParam('save')({ navigation });
+                        params.save({ params, navigation });
                     }} />
                 </HeaderButtons>
             );

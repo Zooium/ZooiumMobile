@@ -5,6 +5,7 @@ import SafeView from '@components/SafeView.js';
 import PING from '@graphql/queries/ping.gql.js';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { Text, Layout } from '@ui-kitten/components';
+import { useAuthed } from '@providers/AuthProvider.js';
 import { View, Image, StyleSheet } from 'react-native';
 
 export default function MaintenanceScreen({ navigation }) {
@@ -12,9 +13,14 @@ export default function MaintenanceScreen({ navigation }) {
     const [checkStatus, { data }] = useLazyQuery(PING);
 
     // Redirect to login screen when online.
+    const authed = useAuthed();
     useEffect(() => {
         if (data && data.ping === 'pong') {
-            navigation.navigate('Login');
+            if (authed) {
+                navigation.navigate('Animal');
+            } else {
+                navigation.navigate('Login');
+            }
         }
     }, [data]);
 

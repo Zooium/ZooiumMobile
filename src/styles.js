@@ -1,27 +1,27 @@
 import React from 'react';
 import theme from '@src/theme.js';
-import Constants from 'expo-constants';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 
 export const TITLE_OFFSET_ALIGN = 80;
 
 export default {
-    defaultNavigationOptions: ({ navigation }) => {
-        const canGoBack = navigation.dangerouslyGetParent().state.index > 0;
+    /**
+     * Theme and change logic for navigation stacks.
+     */
+    navigationStack: ({ navigation }) => {
+        let canGoBack = navigation.dangerouslyGetState().index > 0;
 
         return {
             // Change default header spacing.
-            headerTitleContainerStyle: {
+            /* TODO: headerTitleContainerStyle: {
                 left: TITLE_OFFSET_ALIGN,
                 right: TITLE_OFFSET_ALIGN,
-            },
+            }, */
 
             // Center header text and make title bold.
             headerTitleAlign: 'center',
             headerTitleStyle: {
-                flex: 1,
                 fontWeight: 'bold',
-                textAlign: 'center',
             },
 
             // Change header to primary color.
@@ -38,12 +38,6 @@ export default {
                     }} />
                 </HeaderButtons>
             )) || (() => null),
-
-            // Hard-code top safe area insert to prevent jumping when switching stacks.
-            // Possible 'react-native-safe-area-context' issue, past stack v2.
-            safeAreaInsets: {
-                top: Constants.statusBarHeight,
-            },
-        }
+        };
     },
 }

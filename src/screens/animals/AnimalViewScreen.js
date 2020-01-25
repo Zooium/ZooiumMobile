@@ -85,7 +85,7 @@ export const headers = [
         title: i18n.t('Cubs'),
         color: theme['color-primary-500'],
         navigate: ({ response, route = 'AnimalList', search = 'parent:'+response.id }) => ({
-            routeName: route,
+            name: route,
             key: route + search,
             params: {
                 appendSearch: search,
@@ -112,7 +112,7 @@ export const headers = [
         title: i18n.t('Event', { count: 2 }),
         color: theme['color-success-500'],
         navigate: ({ response, route = 'EventList', search = 'source:animal:'+response.id }) =>  ({
-            routeName: route,
+            name: route,
             key: route + search,
             params: {
                 appendSearch: search,
@@ -133,7 +133,7 @@ export const headers = [
         title: i18n.t('Family'),
         color: theme['color-warning-500'],
         navigate: ({ response, route = 'AnimalFamily' }) =>  ({
-            routeName: route,
+            name: route,
             key: route + response.id,
             params: {
                 item: response,
@@ -146,7 +146,7 @@ export const headers = [
         title: i18n.t('Media'),
         color: theme['color-danger-500'],
         navigate: ({ response, route = 'AnimalMedia' }) =>  ({
-            routeName: route,
+            name: route,
             key: route + response.id,
             params: {
                 item: response,
@@ -192,7 +192,7 @@ export const fields = [
                             const route = 'EventView';
                             navigation.navigate({
                                 key: route + resource.state.id,
-                                routeName: route,
+                                name: route,
                                 params: {
                                     item: resource.state,
                                 },
@@ -285,7 +285,7 @@ export const fields = [
                             const route = 'EnclosureView';
                             navigation.navigate({
                                 key: route + resource.enclosure.id,
-                                routeName: route,
+                                name: route,
                                 params: {
                                     item: resource.enclosure,
                                 },

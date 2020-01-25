@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import Event from '@models/Event.model.js';
 import { Text, Icon } from '@ui-kitten/components';
 import { View, TouchableOpacity } from 'react-native';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 
 function EventRow({ item }) {
     const navigation = useNavigation();

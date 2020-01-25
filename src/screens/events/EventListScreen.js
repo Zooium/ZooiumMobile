@@ -41,4 +41,7 @@ export default function EventListScreen({ layout, ...props }) {
     );
 }
 
-EventListScreen.navigationOptions = ResourceList.navigationOptions;
+EventListScreen.navigationOptions = (props) => ({
+    ...ResourceList.navigationOptions(props),
+    title: i18n.t('Event', { count: 2 }),
+});

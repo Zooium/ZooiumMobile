@@ -4,9 +4,8 @@ import { ScreenOrientation } from 'expo';
 import { WebView } from 'react-native-webview';
 import { useToken } from '@providers/AuthProvider.js';
 
-export default function AuthorizedWebViewScreen({ navigation }) {
+export default function AuthorizedWebViewScreen({ route: { params: { uri } } }) {
     const token = useToken();
-    const uri = navigation.getParam('uri');
 
     useEffect(() => {
         // Unlock screen orientation.
@@ -32,8 +31,8 @@ export default function AuthorizedWebViewScreen({ navigation }) {
     );
 }
 
-AuthorizedWebViewScreen.navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam('title'),
+AuthorizedWebViewScreen.navigationOptions = ({ route: { params = {} } }) => ({
+    title: params.title,
     headerRight: function SpacerItem() {
         return <View />;
     },

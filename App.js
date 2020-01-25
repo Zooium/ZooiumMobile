@@ -1,10 +1,10 @@
 import i18n from '@src/i18n.js';
 import * as Sentry from 'sentry-expo';
+import Router from '@routes/Router.js';
 import Constants from 'expo-constants';
 import { mapping } from '@eva-design/eva';
 import { I18nextProvider } from 'react-i18next';
 import { Updates, ScreenOrientation } from 'expo';
-import AppContainer from '@routes/AppContainer.js';
 import { AppState, StatusBar } from 'react-native';
 import theme, { customMapping } from '@src/theme.js';
 import AuthProvider from '@providers/AuthProvider.js';
@@ -61,7 +61,7 @@ export default function App() {
                         <SocketProvider>
                             <I18nextProvider i18n={i18n}>
                                 <ActionSheetProvider>
-                                    <AppContainer />
+                                    <Router />
                                 </ActionSheetProvider>
                             </I18nextProvider>
                         </SocketProvider>

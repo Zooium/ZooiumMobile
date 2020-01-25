@@ -92,7 +92,7 @@ export const fields = [
                             const route = 'ContactView';
                             navigation.navigate({
                                 key: route + resource.contact.id,
-                                routeName: route,
+                                name: route,
                                 params: {
                                     item: resource.contact,
                                 },

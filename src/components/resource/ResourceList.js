@@ -8,11 +8,12 @@ import parseQuery from '@utils/apollo/parseQuery.js';
 import { useTeam } from '@providers/AuthProvider.js';
 import ListSettings from '@components/ListSettings.js';
 import ResourceSwipeList from './ResourceSwipeList.js';
+import { useNavigation } from '@react-navigation/native';
 import React, { Fragment, useState, useEffect } from 'react';
+import useNavigationParam from '@hooks/useNavigationParam.js';
 import parsePagination from '@utils/apollo/parsePagination.js';
 import { HeaderButtons, Item } from '@components/HeaderButtons.js';
 import KeyboardAvoidingLayout from '@components/KeyboardAvoidingLayout.js';
-import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
 export default function ResourceList({ fetch, variables = {}, List, routes, sorting, defaultSort = 'id', filters, ...props }) {
     const navigation = useNavigation();
@@ -39,25 +40,20 @@ export default function ResourceList({ fetch, variables = {}, List, routes, sort
     // Share set search, show settings, and create item.
     const { view, edit } = routes || {};
     const createParams = useNavigationParam('createParams');
-    useEffect(() => {
-        navigation.setParams({
-            setSearch,
-            setShowSettings,
+    navigation.setOptions({
+        showSearch: search,
 
-            createItem: () => {
-                navigation.navigate({
-                    key: view + Math.random().toString(36).slice(2),
-                    routeName: edit,
-                    params: createParams,
-                });
-            },
-        });
-    }, [view, edit, createParams, setSearch, setShowSettings]),
+        setSearch,
+        setShowSettings,
 
-    // Share settings show state.
-    useEffect(() => {
-        navigation.setParams({ showSettings });
-    }, [showSettings]);
+        createItem: () => {
+            navigation.navigate({
+                key: view + Math.random().toString(36).slice(2),
+                name: edit,
+                params: createParams,
+            });
+        },
+    });
 
     // Set search on navbar search text change.
     useEffect(() => {
@@ -112,10 +108,11 @@ export default function ResourceList({ fetch, variables = {}, List, routes, sort
     );
 }
 
-ResourceList.navigationOptions = ({ navigation, showAdding = true, showFilters = true }) => {
+ResourceList.navigationOptions = ({ navigation, route, showAdding = true, showFilters = true }) => {
     // Get show search status and if can return.
-    const showSearch = navigation.getParam('showSearch', false);
-    let canGoBack = navigation.isFocused() && navigation.dangerouslyGetParent().state.index > 0;
+    const params = route.params || {};
+    const showSearch = params.showSearch || false;
+    let canGoBack = navigation.isFocused() && navigation.dangerouslyGetState().index > 0;
 
     // Return navigation options.
     return {
@@ -128,10 +125,10 @@ ResourceList.navigationOptions = ({ navigation, showAdding = true, showFilters =
                         <Item title="return" iconName="arrow-left" onPress={() => {
                             // Navigate to previous view if not searching or has state.
                             if (! showSearch && navigation.goBack()) return;
-                            if (navigation.state && navigation.state.key && navigation.goBack()) return;
+                            if (route && route.key && navigation.goBack()) return;
                     
                             // Cancel searching.
-                            navigation.getParam('setSearch')(null);
+                            params.setSearch(null);
                             navigation.setParams({
                                 search: null,
                                 showSearch: false
@@ -141,7 +138,7 @@ ResourceList.navigationOptions = ({ navigation, showAdding = true, showFilters =
 
                     {! showSearch && showAdding && (
                         <Item title="add" iconName="plus" onPress={() => {
-                            navigation.getParam('createItem') && navigation.getParam('createItem')();
+                            params.createItem && params.createItem();
                         }} />
                     )}
                 </HeaderButtons>
@@ -153,7 +150,7 @@ ResourceList.navigationOptions = ({ navigation, showAdding = true, showFilters =
                 <HeaderButtons>
                     {showSearch && showAdding && (
                         <Item title="add" iconName="plus" onPress={() => {
-                            navigation.getParam('createItem') && navigation.getParam('createItem')();
+                            params.createItem && params.createItem();
                         }} />
                     ) || ! showSearch && (
                         <Item title="search" iconName="search" onPress={() => {
@@ -166,7 +163,7 @@ ResourceList.navigationOptions = ({ navigation, showAdding = true, showFilters =
 
                     {showFilters && (
                         <Item title="filter" iconName="filter" onPress={() => {
-                            navigation.getParam('setShowSettings')(! navigation.getParam('showSettings', false));
+                            params.setShowSettings(show => ! show);
                         }} />
                     )}
                 </HeaderButtons>
@@ -179,9 +176,9 @@ ResourceList.navigationOptions = ({ navigation, showAdding = true, showFilters =
                     clearButtonMode="always"
                     selectionColor="white"
                     placeholder={i18n.t('Enter criteria to search...')}
-                    autoFocus={navigation.getParam('focusSearch', true)}
-                    defaultValue={navigation.getParam('search')}
-                    onChangeText={navigation.getParam('setSearch')}
+                    autoFocus={params.focusSearch || true}
+                    defaultValue={params.search}
+                    onChangeText={params.setSearch}
                     style={{
                         width: '100%',
                         color: 'white',
@@ -189,6 +186,6 @@ ResourceList.navigationOptions = ({ navigation, showAdding = true, showFilters =
                     }}
                 />
             );
-        }) || navigation.getParam('overrideTitle'),
+        }) || params.overrideTitle,
     }
 }

@@ -19,13 +19,6 @@ export default function AuthLoginScreen({ navigation }) {
         });
     }, []);
 
-    // Navigate to main when authenticated.
-    useEffect(() => {
-        if (authed) {
-            navigation.navigate('Main');
-        }
-    }, [authed]);
-
     // Get authentication trigger. 
     const authenticate = useLogin();
 

@@ -130,7 +130,7 @@ export const fields = [
                             const route = 'AnimalView';
                             navigation.navigate({
                                 key: route + resource.resource.id,
-                                routeName: route,
+                                name: route,
                                 params: {
                                     item: resource.resource,
                                 },
@@ -171,7 +171,7 @@ export const fields = [
                             const route = 'EnclosureView';
                             navigation.navigate({
                                 key: route + resource.resource.id,
-                                routeName: route,
+                                name: route,
                                 params: {
                                     item: resource.resource,
                                 },
@@ -214,7 +214,7 @@ export const fields = [
                             const route = 'TransactionView';
                             navigation.navigate({
                                 key: route + transaction.id,
-                                routeName: route,
+                                name: route,
                                 params: {
                                     item: transaction,
                                 },

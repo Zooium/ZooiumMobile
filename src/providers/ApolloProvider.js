@@ -6,8 +6,8 @@ import { onError } from 'apollo-link-error';
 import { ApolloClient } from 'apollo-client';
 import { setContext } from 'apollo-link-context';
 import ContextStore from '@utils/ContextStore.js';
-import { NavigationActions } from 'react-navigation';
 import { createUploadLink } from 'apollo-upload-client';
+import { CommonActions } from '@react-navigation/native';
 import { ApolloProvider as Provider } from '@apollo/react-hooks';
 import introspectionQueryResultData from '@graphql/FragmentTypes.json';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
@@ -43,24 +43,18 @@ export const Client = new ApolloClient({
 
                 // Redirect back to login.
                 router.dispatch(
-                    NavigationActions.navigate({
-                        routeName: 'Auth',
-                        action: NavigationActions.navigate({
-                            routeName: 'Login',
-                        }),
+                    CommonActions.navigate({
+                        name: 'Login',
                     })
                 );
             }
 
             // Check if back-end is in maintenance mode.
-            if (network && network.statusCode && network.statusCode === 503 && route.routeName !== 'Maintenance') {
+            if (network && network.statusCode && network.statusCode === 503 && route.name !== 'Maintenance') {
                 // Redirect to maintenance page.
                 router.dispatch(
-                    NavigationActions.navigate({
-                        routeName: 'Auth',
-                        action: NavigationActions.navigate({
-                            routeName: 'Maintenance',
-                        }),
+                    CommonActions.navigate({
+                        name: 'Maintenance',
                     })
                 );
             }

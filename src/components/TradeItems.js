@@ -4,7 +4,7 @@ import theme from '@src/theme.js';
 import { View } from 'react-native';
 import TradeLine from '@components/TradeLine.js';
 import { Text, Button } from '@ui-kitten/components';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 
 export default function TradeItems({ editing = false, transaction, onItemChange, ...props }) {
     let lineNumber = 1;
@@ -15,7 +15,7 @@ export default function TradeItems({ editing = false, transaction, onItemChange,
     const editItem = (item = undefined, defaults = {}) => {
         navigation.navigate({
             key: route + ((item && item.id) || Math.random().toString(36).slice(2)),
-            routeName: route,
+            name: route,
             params: {
                 item: item,
                 defaults: {

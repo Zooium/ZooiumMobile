@@ -59,7 +59,7 @@ export const headers = [
         title: i18n.t('Transaction', { count: 2 }),
         color: theme['color-primary-500'],
         navigate: ({ response, route = 'TransactionList', search = 'contact:'+response.id }) =>  ({
-            routeName: route,
+            name: route,
             key: route + search,
             params: {
                 search: search,

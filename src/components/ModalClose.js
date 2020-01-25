@@ -2,7 +2,7 @@ import React from 'react';
 import i18n from '@src/i18n.js';
 import { Text } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ModalClose() {
     const navigation = useNavigation();

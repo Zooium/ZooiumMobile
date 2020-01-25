@@ -59,7 +59,7 @@ export const headers = [
         title: i18n.t('Animal', { count: 2 }),
         color: theme['color-primary-500'],
         navigate: ({ response, route = 'AnimalList', search = 'location:'+response.id }) =>  ({
-            routeName: route,
+            name: route,
             key: route + search,
             params: {
                 search: search,
@@ -74,7 +74,7 @@ export const headers = [
         title: i18n.t('Enclosure', { count: 2 }),
         color: theme['color-success-500'],
         navigate: ({ response, route = 'EnclosureList', search = 'location:'+response.id }) =>  ({
-            routeName: route,
+            name: route,
             key: route + search,
             params: {
                 search: search,

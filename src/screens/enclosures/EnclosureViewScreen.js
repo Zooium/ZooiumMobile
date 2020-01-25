@@ -68,7 +68,7 @@ export const headers = [
         title: i18n.t('Animal', { count: 2 }),
         color: theme['color-primary-500'],
         navigate: ({ response, route = 'AnimalList', search = 'enclosure:'+response.id }) =>  ({
-            routeName: route,
+            name: route,
             key: route + search,
             params: {
                 search: search,
@@ -115,7 +115,7 @@ export const fields = [
                             const route = 'LocationView';
                             navigation.navigate({
                                 key: route + location.id,
-                                routeName: route,
+                                name: route,
                                 params: {
                                     item: location,
                                 },

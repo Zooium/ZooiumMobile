@@ -2,7 +2,7 @@ import i18n from '@src/i18n.js';
 import React, { memo } from 'react';
 import Location from '@models/Location.model.js';
 import { Text, Icon } from '@ui-kitten/components';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 import { View, TouchableOpacity  } from 'react-native';
 
 function LocationRow({ item, layout: { showCount = true } = {} }) {    
@@ -32,7 +32,7 @@ function LocationRow({ item, layout: { showCount = true } = {} }) {
 
                     navigation.navigate({
                         key: route + search,
-                        routeName: route,
+                        name: route,
                         params: {
                             search: search,
                             showSearch: true,

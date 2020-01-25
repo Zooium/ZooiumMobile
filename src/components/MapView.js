@@ -1,5 +1,5 @@
 import * as Location from 'expo-location';
-import { useNavigation } from 'react-navigation-hooks';
+import { useNavigation } from '@react-navigation/native';
 import { default as Map, Marker } from 'react-native-maps';
 import React, { Fragment, useRef, useEffect } from 'react';
 import MapViewExpander from '@components/MapViewExpander.js';

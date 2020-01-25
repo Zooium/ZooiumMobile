@@ -5,11 +5,11 @@ import * as Permissions from 'expo-permissions';
 import { View, StyleSheet } from 'react-native';
 import ModalClose from '@components/ModalClose.js';
 import { useLazyQuery } from '@apollo/react-hooks';
-import React, { useState, useEffect } from 'react';
-import { NavigationEvents } from 'react-navigation';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { useFocusEffect } from '@react-navigation/native';
 import { Icon, Text, Layout } from '@ui-kitten/components';
 import PermissionDenied from '@components/PermissionDenied.js';
+import React, { useState, useEffect, useCallback } from 'react';
 import VIEW_SHORTLINK from '@graphql/queries/Shortlink/viewShortlink.gql.js';
 
 export default function NearbyBarcodeScreen({ navigation, ...props }) {
@@ -18,6 +18,12 @@ export default function NearbyBarcodeScreen({ navigation, ...props }) {
     const [invalid, setInvalid] = useState(false);
     const [timer, setTimer] = useState(undefined);
     const [hash, setHash] =  useState(undefined);
+
+    // Toggle camera rendering on focus.
+    useFocusEffect(useCallback(() => {
+        setRender(true);
+        return () => { setRender(false); }
+    }, [setRender]));
 
     // Request camera usage permissions.
     const requestPermission = async () => {
@@ -76,7 +82,7 @@ export default function NearbyBarcodeScreen({ navigation, ...props }) {
         const route = type+'View';
         navigation.navigate({
             key: route + item.id,
-            routeName: route,
+            name: route,
             params: { item },
         });
     }, [data, error]);
@@ -114,36 +120,33 @@ export default function NearbyBarcodeScreen({ navigation, ...props }) {
     // Return bar code scanner view.
     return (
         <Layout {...props} style={{flex: 1, backgroundColor: status === 'granted' && 'black'}}>
-            <NavigationEvents
-                onWillFocus={() => setRender(true)}
-                onDidBlur={() => setRender(false)}
-            />
+            {render && (
+                <BarCodeScanner
+                    barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+                    onBarCodeScanned={scan}
+                    style={StyleSheet.absoluteFillObject}
+                >
+                    <View style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        opacity: 0.8,
+                    }}>
+                        <ModalClose />
 
-            {render && <BarCodeScanner
-                barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
-                onBarCodeScanned={scan}
-                style={StyleSheet.absoluteFillObject}
-            >
-                <View style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    opacity: 0.8,
-                }}>
-                    <ModalClose />
-
-                    {invalid && (
-                        <View>
-                            <Icon name="times" size={150} color={theme['color-danger-500']} />
-                            <Text status="danger" category="h6">
-                                {i18n.t('Invalid code').toUpperCase()}
-                            </Text>
-                        </View>
-                    ) || loading && (
-                        <Loader />
-                    )}
-                </View>
-            </BarCodeScanner>}
+                        {invalid && (
+                            <View>
+                                <Icon name="times" size={150} color={theme['color-danger-500']} />
+                                <Text status="danger" category="h6">
+                                    {i18n.t('Invalid code').toUpperCase()}
+                                </Text>
+                            </View>
+                        ) || loading && (
+                            <Loader />
+                        )}
+                    </View>
+                </BarCodeScanner>
+            )}
         </Layout>
     );
 }

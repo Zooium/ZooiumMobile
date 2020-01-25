@@ -1,4 +1,5 @@
 import i18n from '@src/i18n.js';
+import React, { Fragment } from 'react';
 
 import AnimalList from '@screens/animals/AnimalListScreen.js';
 import AnimalView from '@screens/animals/AnimalViewScreen.js';
@@ -24,98 +25,63 @@ import EventView from '@screens/events/EventViewScreen.js';
 import MapView from '@screens/MapViewScreen.js';
 import FileView from '@screens/FileViewScreen.js';
 import SpecieList from '@screens/species/SpecieListScreen.js';
+import ResourceList from '@components/resource/ResourceList.js';
 import AuthorizedWebView from '@screens/AuthorizedWebViewScreen.js';
 import ResourceTypeahead from '@components/resource/ResourceTypeahead.js';
 
-export default {
-    // Animals
-    AnimalList: {
-        screen: AnimalList,
-        navigationOptions: {
-            title: i18n.t('Animal', { count: 2 }),
-        },
-    },
-    AnimalEdit: { screen: AnimalView, params: { editing: true } },
-    AnimalView: { screen: AnimalView, params: { editing: false } },
-    AnimalTypeahead: { screen: ResourceTypeahead, params: { list: AnimalList } },
-    AnimalMedia, AnimalFamily,
+export default function Popovers(Stack) {
+    return (
+        <Fragment>
 
-    // Enclosures
-    EnclosureList: {
-        screen: EnclosureList,
-        navigationOptions: {
-            title: i18n.t('Enclosure', { count: 2 }),
-        },
-    },
-    EnclosureEdit: { screen: EnclosureView, params: { editing: true } },
-    EnclosureView: { screen: EnclosureView, params: { editing: false } },
-    EnclosureTypeahead: { screen: ResourceTypeahead, params: { list: EnclosureList } },
+            {/* Animals */}
+            <Stack.Screen name="AnimalList" component={AnimalList} options={AnimalList.navigationOptions} />
+            <Stack.Screen name="AnimalView" component={AnimalView} options={AnimalView.navigationOptions} initialParams={{ editing: false }} />
+            <Stack.Screen name="AnimalEdit" component={AnimalView} options={AnimalView.navigationOptions} initialParams={{ editing: true }} />
+            <Stack.Screen name="AnimalTypeahead" component={ResourceTypeahead} options={ResourceTypeahead.navigationOptions} initialParams={{ list: AnimalList }} />
+            <Stack.Screen name="AnimalMedia" component={AnimalMedia} options={AnimalMedia.navigationOptions} />
+            <Stack.Screen name="AnimalFamily" component={AnimalFamily} options={AnimalFamily.navigationOptions} />
 
-    // Locations
-    LocationList: {
-        screen: LocationList,
-        navigationOptions: {
-            title: i18n.t('Location', { count: 2 }),
-        },
-    },
-    LocationEdit: { screen: LocationView, params: { editing: true } },
-    LocationView: { screen: LocationView, params: { editing: false } },
-    LocationTypeahead: { screen: ResourceTypeahead, params: { list: LocationList } },
+            {/* Enclosures */}
+            <Stack.Screen name="EnclosureList" component={EnclosureList} options={EnclosureList.navigationOptions} />
+            <Stack.Screen name="EnclosureView" component={EnclosureView} options={EnclosureView.navigationOptions} initialParams={{ editing: false }} />
+            <Stack.Screen name="EnclosureEdit" component={EnclosureView} options={EnclosureView.navigationOptions} initialParams={{ editing: true }} />
+            <Stack.Screen name="EnclosureTypeahead" component={ResourceTypeahead} options={ResourceTypeahead.navigationOptions} initialParams={{ list: EnclosureList }} />
 
-    // Contacts
-    ContactList: {
-        screen: ContactList,
-        navigationOptions: {
-            title: i18n.t('Contact', { count: 2 }),
-        },
-    },
-    ContactEdit: { screen: ContactView, params: { editing: true } },
-    ContactView: { screen: ContactView, params: { editing: false } },
-    ContactTypeahead: { screen: ResourceTypeahead, params: { list: ContactList } },
+            {/* Locations */}
+            <Stack.Screen name="LocationList" component={LocationList} options={LocationList.navigationOptions} />
+            <Stack.Screen name="LocationView" component={LocationView} options={LocationView.navigationOptions} initialParams={{ editing: false }} />
+            <Stack.Screen name="LocationEdit" component={LocationView} options={LocationView.navigationOptions} initialParams={{ editing: true }} />
+            <Stack.Screen name="LocationTypeahead" component={ResourceTypeahead} options={ResourceTypeahead.navigationOptions} initialParams={{ list: LocationList }} />
 
-    // Transactions
-    TransactionList: {
-        screen: TransactionList,
-        navigationOptions: {
-            title: i18n.t('Transaction', { count: 2 }),
-        },
-    },
-    TransactionEdit: { screen: TransactionView, params: { editing: true } },
-    TransactionView: { screen: TransactionView, params: { editing: false } },
-    TransactionItemEdit: { screen: TransactionItemView, params: { editing: true } },
+            {/* Contacts */}
+            <Stack.Screen name="ContactList" component={ContactList} options={ContactList.navigationOptions} />
+            <Stack.Screen name="ContactView" component={ContactView} options={ContactView.navigationOptions} initialParams={{ editing: false }} />
+            <Stack.Screen name="ContactEdit" component={ContactView} options={ContactView.navigationOptions} initialParams={{ editing: true }} />
+            <Stack.Screen name="ContactTypeahead" component={ResourceTypeahead} options={ResourceTypeahead.navigationOptions} initialParams={{ list: ContactList }} />
 
-    // Events
-    EventList: {
-        screen: EventList,
-        navigationOptions: {
-            title: i18n.t('Event', { count: 2 }),
-        },
-    },
-    EventEdit: { screen: EventView, params: { editing: true } },
-    EventView: { screen: EventView, params: { editing: false } },
+            {/* Transactions */}
+            <Stack.Screen name="TransactionList" component={TransactionList} options={TransactionList.navigationOptions} />
+            <Stack.Screen name="TransactionView" component={TransactionView} options={TransactionView.navigationOptions} initialParams={{ editing: false }} />
+            <Stack.Screen name="TransactionEdit" component={TransactionView} options={TransactionView.navigationOptions} initialParams={{ editing: true }} />
+            <Stack.Screen name="TransactionItemEdit" component={TransactionItemView} options={TransactionItemView.navigationOptions} initialParams={{ editing: true }} />
 
-    // Species
-    SpecieTypeahead: { screen: ResourceTypeahead, params: { list: SpecieList } },
+            {/* Events */}
+            <Stack.Screen name="EventList" component={EventList} options={EventList.navigationOptions} />
+            <Stack.Screen name="EventView" component={EventView} options={EventView.navigationOptions} initialParams={{ editing: false }} />
+            <Stack.Screen name="EventEdit" component={EventView} options={EventView.navigationOptions} initialParams={{ editing: true }} />
 
-    // Files
-    FileEdit: { screen: FileView, params: { editing: true } },
+            {/* Files */}
+            <Stack.Screen name="FileEdit" component={FileView} options={FileView.navigationOptions} initialParams={{ editing: true }} />
 
-    // Map
-    MapView: {
-        screen: MapView,
-        params: {
-            hideTabBar: true,
-        },
-        navigationOptions: {
-            headerShown: false,
-        },
-    },
+            {/* Species */}
+            <Stack.Screen name="SpecieTypeahead" component={ResourceTypeahead} options={ResourceTypeahead.navigationOptions} initialParams={{ list: SpecieList }} />
 
-    // Utils
-    AuthorizedWebView: {
-        screen: AuthorizedWebView,
-        params: {
-            hideTabBar: true,
-        },
-    },
+            {/* Maps */}
+            <Stack.Screen name="MapView" component={MapView} initialParams={{ hideTabBar: true }} options={{ headerShown: false }} />
+
+            {/* Utils */}
+            <Stack.Screen name="AuthorizedWebView" component={AuthorizedWebView} options={AuthorizedWebView.navigationOptions} initialParams={{ hideTabBar: true }} />
+
+        </Fragment>
+    );
 }

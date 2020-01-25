@@ -38,4 +38,7 @@ export default function LocationListScreen({ layout, ...props }) {
     );
 }
 
-LocationListScreen.navigationOptions = ResourceList.navigationOptions;
+LocationListScreen.navigationOptions = (props) => ({
+    ...ResourceList.navigationOptions(props),
+    title: i18n.t('Location', { count: 2 }),
+});

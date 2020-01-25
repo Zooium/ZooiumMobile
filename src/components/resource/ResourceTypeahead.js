@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigationParam } from 'react-navigation-hooks';
+import useNavigationParam from '@hooks/useNavigationParam.js';
 import ResourceList from '@components/resource/ResourceList.js';
 import ResourceSelectList from '@components/resource/ResourceSelectList.js';
 
@@ -8,7 +8,7 @@ export default function ResourceTypeahead(props) {
     return <Resource List={ResourceSelectList} {...props} />;
 }
 
-ResourceTypeahead.navigationOptions = ({ navigation }) => {
-    const Resource = navigation.getParam('list') ?? ResourceList;
+ResourceTypeahead.navigationOptions = ({ route: { params = {} }, navigation }) => {
+    const Resource = params.list ?? ResourceList;
     return Resource.navigationOptions({ navigation });
 }

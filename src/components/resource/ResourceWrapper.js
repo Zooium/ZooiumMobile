@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigationParam } from 'react-navigation-hooks';
+import useNavigationParam from '@hooks/useNavigationParam.js';
 import ResourceEdit from '@components/resource/ResourceEdit.js';
 import ResourceView from '@components/resource/ResourceView.js';
 
@@ -8,7 +8,7 @@ export default function ResourceWrapper(props) {
     return <Resource {...props} />;
 }
 
-ResourceWrapper.navigationOptions = ({ navigation, ...props }) => {
-    const Resource = navigation.getParam('editing') ? ResourceEdit : ResourceView;
-    return Resource.navigationOptions({ navigation, ...props });
+ResourceWrapper.navigationOptions = ({ route: { params = {} }, ...props }) => {
+    const Resource = params.editing ? ResourceEdit : ResourceView;
+    return Resource.navigationOptions(props);
 }
